@@ -33,7 +33,7 @@ _asutus_ - eIDAS konnektorteenust kasutava autentimisrakenduse omanikasutus.
 
 ## 3.1 Teenuse kasutusvoog
 
-![](img/SUURPILT.PNG)
+<img src='img/SUURPILT.PNG' style='width:600px'>
 
 Joonis 1. eIDAS taristu
 
@@ -112,7 +112,7 @@ Lisaks võib asutus soovi korral testida konnektorteenusega ühendumist demoteen
 
 Testimise ülesehitust kirjeldab allolev joonis. Märkus. Arvestada, et autentimispäringud- ja autentimisvastused saadetakse kasutaja veebisirvija ümbersuunamise abil (_Re-direct_). 
 
-![](img/TESTIMINE.PNG)
+<img src='img/TESTIMINE.PNG' style='width:600px'>
 
 Testimine tugineb RIA poolt paigaldanud eIDAS konnektorteenuse testinstantsi kasutamisele (joonisel _eIDAS konnektorteenus TEST_).
 

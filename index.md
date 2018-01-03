@@ -1,5 +1,5 @@
 ---
-
+permalink: /
 ---
 
 eIDAS konnektorteenus on pääsupunkt Euroopa Liidu piiriülesesse autentimistaristusse (nn eIDAS-taristusse).
