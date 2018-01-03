@@ -3,7 +3,7 @@ title: eIDAS konnektorteenus. Liidestamisjuhend
 permalink: Liidestamisjuhend
 ---
 
-# Liidestamisjuhend
+# RIA eIDAS konnektorteenus. Liidestamisjuhend
 {:.no_toc}
 
 versioon 1.1, 03.01.2018
