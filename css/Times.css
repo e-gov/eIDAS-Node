@@ -1,0 +1,145 @@
+/*#region Paigutus */
+body {
+  max-width: 60em;
+  margin: 0 0; 
+  padding: 0.6em 1.5em 2em 2em; 
+  font-family: 'Times New Roman', serif;
+  font-size: 12pt; 
+  color: black !important;
+  line-height: 1.25 !important;
+  }
+
+/* Päis */
+.pais { font-family: 'Anonymous Pro', sans-serif;
+  font-size: 13pt; margin-bottom: 8px; }
+
+#Tekst { width: 40rem; }
+
+/* ---- Avalehe paigutus ---- */  
+#Container { display: flex; max-width: 60em; }
+#Avatekst {
+  flex-grow: 1; margin-left: 2rem;
+  max-width: 63rem; /* Teksti loetavuse huvides */
+}  
+/*#endregion */
+
+/*#region Pealkirjad */
+h1 {
+  font-size: 16pt !important;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 1rem;
+}
+h2 {
+  font-size: 14pt !important;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+h3 {
+  font-size: 12pt !important;
+  font-weight: bold;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+/*#endregion */
+
+/*#region Tekst */
+p { margin: 0 0 1em 0; }
+
+.vaike { font-size: 9pt; }
+
+/* Allkriipsutus */
+.u { text-decoration: underline; }
+
+/*#endregion */
+
+/*#region Loetelud */
+#Tekst > ul {
+  list-style-type: none;
+  margin: 0 0 1em 0;
+  padding-left: 1em;
+}  
+#Tekst > ol {
+  padding-left: 1em;
+}  
+/*#endregion */
+
+/*#region TOC genereeritud === */
+#markdown-toc { padding-left: 0 !important; }
+#markdown-toc li:before {
+    content: none !important;
+    margin-left: 0 !important;
+}    
+#markdown-toc > li {
+  list-style: none;
+}  
+/*#endregion */
+
+/*#region Tabelid */
+table { width: 100%; margin: 0 4em 2em 0; }
+table { border-collapse: collapse; }    
+table, th, td { border: 1px solid black; }
+th, td { padding: 2px; }
+/*#endregion */
+
+/*#region Kood; asciiflow joonised */
+pre, code, samp {
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 16px; color: black !important;
+  background-color: lavender !important;
+  overflow-y: hidden; overflow-x: hidden;
+  page-break-inside: avoid; hyphens: none;
+  text-transform: none;
+}
+pre code,
+code code {
+  font-size: 100%;
+}
+pre { margin-top: 1em; margin-bottom: 1em; }
+/*#endregion */
+
+/*#region Lingid */
+a[href] {
+  color: #607D8B;
+  text-decoration: none;
+  border-bottom: 1px dotted #607D8B;
+  padding: 0 1px 0;
+  margin: 0 -1px 0;
+}
+a:visited {
+  border-bottom-color: #607D8B;
+}
+
+a[href]:focus,
+a[href]:hover {
+  background: #607D8B;
+  background: rgba(75%, 75%, 75%, .25);
+  border-bottom-width: 3px;
+  margin-bottom: -2px;
+}
+/*#endregion */
+
+/*#region Paneelid */
+.note, .teade { border-radius: 8px; padding: 1rem; }
+/* Märkus */
+.note { 
+  border: 1px solid coral;
+  background-color: lavenderblush;
+  color: coral;
+}
+.teade {
+  border: 1px solid darkcyan;
+  background-color: Azure;
+}
+
+/* Plokktsitaat */
+blockquote { 
+  font-style: italic; 
+  font-family: 'Anonymous Pro', monospace;
+  font-size: 16px;
+  margin-left: 0;
+}
+
+/*#endregion */

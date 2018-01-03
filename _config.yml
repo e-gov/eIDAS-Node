@@ -1,0 +1,11 @@
+# 
+baseurl: "https://e-gov.github.io/eidas-Connector"
+viimatiMuudetud: '03.01.2018'
+
+defaults:
+  -
+    scope:
+      path: "" # Kõik failid
+    values:
+      layout: "Times"
+
