@@ -114,6 +114,8 @@ Testimise ülesehitust kirjeldab allolev joonis. Märkus. Arvestada, et autentim
 
 <img src='img/TESTIMINE.PNG' style='width:600px'>
 
+Joonis 2. Testimisvõimalused
+
 Testimine tugineb RIA poolt paigaldanud eIDAS konnektorteenuse testinstantsi kasutamisele (joonisel _eIDAS konnektorteenus TEST_).
 
 ## 5.4 Demoteenuse abil testimine (valikuline)
