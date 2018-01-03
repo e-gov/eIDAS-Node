@@ -33,19 +33,9 @@ _asutus_ - eIDAS konnektorteenust kasutava autentimisrakenduse omanikasutus.
 
 ## 3.1 Teenuse kasutusvoog
 
-```
-                           autentimispäring
-                               (SAML)
-  ,+.
-  `|'        +---------------        +---------------+
-  /|\        |    Asutuse    +---->  |     eIDAS     |       EL
-   +         |  autentimis-  |       |   konnektor-  |      eIDAS-
-  / \        |    lahendus   |  <----+     teenus    |     taristu
-             +---------------+       +---------------+
-KASUTAJA
-                          autentimisvastus
-                               (SAML)
-```
+![](img/SUURPILT.PNG)
+
+Joonis 1. eIDAS taristu
 
 eIDAS konnektorteenus on ühendajaks asutuse autentimisrakenduse ja EL eIDAS-taristu vahel.
 
@@ -54,7 +44,7 @@ Autentimisrakenduse ja eIDAS konnektorteenuse vaheline suhtlus on osa eIDAS aute
 - autentimispäringut esitava SAML tõendi (_token_) saatmine autentimisrakendusest eIDAS konnektorteenusele (vt joonisel lisas 1 sõnumiedastus nr 4);
 - autentimisvastust esitava SAML tõendi saatmine eIDAS konnektorteenuselt autentimisrakendusele (vt joonisel lisas 1 sõnumiedastus nr 9).
 
-Sõnumiedastus teostatakse veebisirvija ümbersuunamise (_Re-direct_) abil.
+Sõnumiedastus teostatakse veebisirvija ümbersuunamise (_redirect_) abil.
 
 ## 3.2 Tehniline spetsifikatsioon
 
@@ -122,7 +112,7 @@ Lisaks võib asutus soovi korral testida konnektorteenusega ühendumist demoteen
 
 Testimise ülesehitust kirjeldab allolev joonis. Märkus. Arvestada, et autentimispäringud- ja autentimisvastused saadetakse kasutaja veebisirvija ümbersuunamise abil (_Re-direct_). 
 
-![](img/eIDAS-SKEEM-01.PNG)
+![](img/TESTIMINE.PNG)
 
 Testimine tugineb RIA poolt paigaldanud eIDAS konnektorteenuse testinstantsi kasutamisele (joonisel _eIDAS konnektorteenus TEST_).
 
