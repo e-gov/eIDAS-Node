@@ -2,6 +2,8 @@
 permalink: /
 ---
 
+# RIA eIDAS konnektorteenus
+
 eIDAS konnektorteenus on pääsupunkt Euroopa Liidu piiriülesesse autentimistaristusse (nn eIDAS-taristusse).
 
 Konnektorteenus on mõeldud asutustele, kes soovivad piiriülese autentimistaristuga liituda SAML protokolli alusel.
