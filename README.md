@@ -12,3 +12,10 @@ Konnektorteenus on mõeldud asutustele, kes soovivad piiriülese autentimistaris
 Teenuse ärikirjeldus on [liidestamisjuhendis](Liidestamisjuhend) ja tehnilised üksikasjad [tehnilises spetsifikatsioonis](Spetsifikatsioon).
 
 Mudeliks ja näiteks liidese ehitamisel võib kasutada [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) tarkvara.
+
+----
+
+Dokumentatsiooni täiendamisel arvestada:
+- kasutusel on Markdown ja Jekyll
+- dokumentatsioon publitseeritakse Github.io abil.
+
