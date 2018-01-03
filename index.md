@@ -2,6 +2,8 @@
 permalink: /
 ---
 
+<img src='img/LOVID.png' style='width: 80px;'>
+
 # RIA eIDAS konnektorteenus
 
 eIDAS konnektorteenus on pääsupunkt Euroopa Liidu piiriülesesse autentimistaristusse (nn eIDAS-taristusse).
