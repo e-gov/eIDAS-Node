@@ -6,9 +6,15 @@ permalink: Spetsifikatsioon
 
 (väljatöötamisel)
 
-Mida on vaja oma rakenduse RIA eIDAS konnektorteenusega liidestamiseks?
+Konnektorteenuse kasutuselevõtmiseks soovitame kõigepealt proovida RIAs ülepandud demorakendust. Seejärel võiks proovida demorakenduse või RIA arendatava eIDAS klientrakenduse enda taristus üles panna ja läbi teha liidestamine RIA eIDAS test-konnektorteenusega. Selle käigus saate aru, kuidas SAML-sõnumivahetus käib. Alles seejärel arendada välja oma rakendus. Eeskujuks võib võtta nii demorakenduse kui ka RIA eIDAS klientrakenduse. Lõpuks lõimida liidest teostab komponent oma e-teenusesse. Tehniliste tegevuste järjekord on vastavalt:
 
-__Tutvu RIA-s ülespandud Demo SP rakendusega__ (soovitatav). Demo SP (Demo Service Provider) on näide e-teenuse liidestamisest eIDAS konnektorteenusega. Rakenduse aadress on:
+1. Tutvu RIA-s ülespandud Demo SP rakendusega
+2. Tutvu konnektorteenuse SAML metaandmetega
+3. Proovi rakenduse ühendamist RIA test-konnektorteenusega
+4. Kohanda rakendust oma vajadustele
+5. Lõimi rakendus oma e-teenusega
+
+__1. Tutvu RIA-s ülespandud Demo SP rakendusega__ (soovitatav). Demo SP (Demo Service Provider) on näide e-teenuse liidestamisest eIDAS konnektorteenusega. Rakenduse aadress on:
 
   [https://eidastest.eesti.ee/SP/populateIndexPage](https://eidastest.eesti.ee/SP/populateIndexPage)
 
@@ -102,11 +108,11 @@ GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
   
   Uuri, kuidas Demo-SP metaandmed on kirjeldatud.
 
-__Tutvu konnektorteenuse SAML metaandmetega__. RIA eIDAS Node SAML metaandmete otspunkti aadress on:
+__2. Tutvu konnektorteenuse SAML metaandmetega__. RIA eIDAS Node SAML metaandmete otspunkti aadress on:
 
   [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ServiceMetadata)
 
-__Proovi rakenduse ühendamist RIA test-konnektorteenusega__.
+__3. Proovi rakenduse ühendamist RIA test-konnektorteenusega__.
 Kõigepealt tuleb rakendus liidestada konnektorteenuse testinstantsi vastu. Rakenduseks võib olla:
 - eIDAS Node tarkvara koosseisus tarnitud Demo SP (Demo Service Provider) või
 - RIA pakutav eIDAS klient [https://github.com/e-gov/eIDAS-Client](https://github.com/e-gov/eIDAS-Client) või
@@ -119,4 +125,9 @@ RIA-le tuleb esitada:
 Liidestuja poolt võib olla vajalik:
 - tulemüüris läbipääsu tegemine, et RIA poolt tulevad meta ja returnUrl oleks väljaspoolt kättesaadavad.
 
+__4. Kohanda rakendust oma vajadustele__.
+
+(koostamisel)
+
+__5. Lõimi rakendus oma e-teenusega__.
 
