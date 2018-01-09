@@ -4,8 +4,6 @@ permalink: Spetsifikatsioon
 
 # RIA eIDAS konnektorteenus. Tehniline spetsifikatsioon
 
-(väljatöötamisel)
-
 Konnektorteenuse kasutuselevõtmiseks soovitame kõigepealt proovida RIAs ülepandud demorakendust. Seejärel võiks proovida demorakenduse või RIA arendatava eIDAS klientrakenduse enda taristus üles panna ja läbi teha liidestamine RIA eIDAS test-konnektorteenusega. Selle käigus saate aru, kuidas SAML-sõnumivahetus käib. Alles seejärel arendada välja oma rakendus. Eeskujuks võib võtta nii demorakenduse kui ka RIA eIDAS klientrakenduse. Lõpuks lõimida liidest teostab komponent oma e-teenusesse. Tehniliste tegevuste järjekord on vastavalt:
 
 1. Tutvu RIA-s ülespandud Demo SP rakendusega
@@ -14,12 +12,14 @@ Konnektorteenuse kasutuselevõtmiseks soovitame kõigepealt proovida RIAs ülepa
 4. Kohanda rakendust oma vajadustele
 5. Lõimi rakendus oma e-teenusega
 
-__1. Tutvu RIA-s ülespandud Demo SP rakendusega__ (soovitatav). Demo SP (Demo Service Provider) on näide e-teenuse liidestamisest eIDAS konnektorteenusega. Rakenduse aadress on:
+## 1. Tutvu RIA-s ülespandud Demo SP rakendusega
+
+(Tutvumine on soovitatav, kuid mitte kohustuslik). Demo SP (Demo Service Provider) on näide e-teenuse liidestamisest eIDAS konnektorteenusega. Rakenduse aadress on:
 
   [https://eidastest.eesti.ee/SP/populateIndexPage](https://eidastest.eesti.ee/SP/populateIndexPage)
 
 - Uuri, kuidas SAML-päring moodustatakse, uuri päringu struktuuri
-- taustaks uuri eIDAS Node-i dokumentatsiooni [https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release), sh dokumenti "eIDAS-Node Demo Tools Installation and Configuration Guide".
+- Taustaks uuri eIDAS Node-i dokumentatsiooni [https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release), sh dokumenti "eIDAS-Node Demo Tools Installation and Configuration Guide".
 
 Näide.
 
@@ -28,8 +28,8 @@ Näide.
 3. Vali `Citizen country` väärtuseks `EE` (autenditav isik on Eesti e-ID kasutaja)
 4. Vali `Submit`
 5. Uuri koostatud SAML-autentimispäringu sisu. Selleks võid:
-  - kopeerida välja `SAML request` sisu töövahendisse [SAML Tool Decoder](https://www.samltool.com/decode.php)
-  - dekodeerida XML-i ja vaadata seda süntaksivärvitud kujul samas töövahendis [SAML Tool Pretty Print](https://www.samltool.com/prettyprint.php)
+  - kopeeri välja `SAML request` sisu töövahendisse [SAML Tool Decoder](https://www.samltool.com/decode.php)
+  - dekodeeri XML-i ja vaadata seda süntaksivärvitud kujul samas töövahendis [SAML Tool Pretty Print](https://www.samltool.com/prettyprint.php)
 
 ````xml
 <?xml version="1.0"?>
@@ -106,13 +106,16 @@ GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
 
   [https://eidastest.eesti.ee/SP/metadata](https://eidastest.eesti.ee/SP/metadata).
   
-  Uuri, kuidas Demo-SP metaandmed on kirjeldatud.
+  - Uuri, kuidas Demo-SP metaandmed on kirjeldatud.
 
-__2. Tutvu konnektorteenuse SAML metaandmetega__. RIA eIDAS Node SAML metaandmete otspunkti aadress on:
+## 2. Tutvu konnektorteenuse SAML metaandmetega
+
+RIA eIDAS Node SAML metaandmete otspunkti aadress on:
 
   [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ServiceMetadata)
 
-__3. Proovi rakenduse ühendamist RIA test-konnektorteenusega__.
+## 3. Proovi rakenduse ühendamist RIA test-konnektorteenusega
+
 Kõigepealt tuleb rakendus liidestada konnektorteenuse testinstantsi vastu. Rakenduseks võib olla:
 - eIDAS Node tarkvara koosseisus tarnitud Demo SP (Demo Service Provider) või
 - RIA pakutav eIDAS klient [https://github.com/e-gov/eIDAS-Client](https://github.com/e-gov/eIDAS-Client) või
@@ -125,9 +128,11 @@ RIA-le tuleb esitada:
 Liidestuja poolt võib olla vajalik:
 - tulemüüris läbipääsu tegemine, et RIA poolt tulevad meta ja returnUrl oleks väljaspoolt kättesaadavad.
 
-__4. Kohanda rakendust oma vajadustele__.
+## 4. Kohanda rakendust oma vajadustele
 
 (koostamisel)
 
-__5. Lõimi rakendus oma e-teenusega__.
+## 5. Lõimi rakendus oma e-teenusega
+
+(koostamisel)
 
