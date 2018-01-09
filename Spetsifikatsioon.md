@@ -29,7 +29,7 @@ Näide.
 4. Vali `Submit`
 5. Uuri koostatud SAML-autentimispäringu sisu. Selleks võid:
   - kopeeri välja `SAML request` sisu töövahendisse [SAML Tool Decoder](https://www.samltool.com/decode.php)
-  - dekodeeri XML-i ja vaadata seda süntaksivärvitud kujul samas töövahendis [SAML Tool Pretty Print](https://www.samltool.com/prettyprint.php)
+  - dekodeeri XML-i ja vaata seda süntaksivärvitud kujul samas töövahendis [SAML Tool Pretty Print](https://www.samltool.com/prettyprint.php)
 
 ````xml
 <?xml version="1.0"?>
