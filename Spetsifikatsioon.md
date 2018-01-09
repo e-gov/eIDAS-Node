@@ -12,7 +12,7 @@ __Tutvu RIA-s ülespandud Demo SP rakendusega__ (soovitatav). Demo SP (Demo Serv
 
   [https://eidastest.eesti.ee/SP/populateIndexPage](https://eidastest.eesti.ee/SP/populateIndexPage)
 
-- Uuri, kuidas SAML-päring moodusta, uuri päringu struktuuri
+- Uuri, kuidas SAML-päring moodustatakse, uuri päringu struktuuri
 - taustaks uuri eIDAS Node-i dokumentatsiooni [https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release), sh dokumenti "eIDAS-Node Demo Tools Installation and Configuration Guide".
 
 __Tutvu konnektorteenuse SAML metaandmetega__. RIA eIDAS Node SAML metaandmete otspunkti aadress on:
