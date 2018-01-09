@@ -96,6 +96,12 @@ GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
 </saml2p:AuthnRequest>
 ````
 
+6. SAML-autentimispäringust leiad Demo SP SAML-metaandmete otspunkti aadressi:
+
+  [https://eidastest.eesti.ee/SP/metadata](https://eidastest.eesti.ee/SP/metadata).
+  
+  Uuri, kuidas Demo-SP metaandmed on kirjeldatud.
+
 __Tutvu konnektorteenuse SAML metaandmetega__. RIA eIDAS Node SAML metaandmete otspunkti aadress on:
 
   [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ServiceMetadata)
