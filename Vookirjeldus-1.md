@@ -3,31 +3,32 @@
 Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autentimisel, Demo SP näitel, HTTP redirect binding-u kasutamisel.
 
 Kirjelduse eesmärk on:
-- luua arusaamine, mis sõnumid ja kuidas liiguvad ning 
+- luua arusaamine, mis sõnumid ja kuidas liiguvad
 - luua alus, mille põhjalt spetsifitseerida protokoll Eesti e-teenusepakkujate ja samuti TARA liidestamiseks RIA eIDAS konnektorteenusega.
 
 Siin ei kirjeldata:
 - laadilehtede ja skriptide laadimise päringuid
 - sisuturbepoliitikaga seotud abistavaid päringuid
-- serveripoolte omavahelisi päringuid SAML metaandmete otspunktide poole.
+- serveripoolte omavahelisi päringuid SAML metaandmete otspunktide poole
+- HTTP POST bindingu kasutamise juhtu - see väärib eraldi dokumenti.
 
 ### Suhtluse osapooled
 
-- ___Demo SP___ (Demo Service Provider) - etendab e-teenust eIDASe mõistes
+- ___Demo SP___ (Demo Service Provider) - etendab e-teenust eIDASe mõistes (s.t süsteemi, mis kasutaja autentimist vajab)
 
 Host: `eidastest.eesti.ee`<br>
 Otspunktid:<br>
 `https://eidastest.eesti.ee/SP/populateIndexPage`<br>
 `https://eidastest.eesti.ee/SP/changeProtocolBinding.action`<br>
 
-- ___RIA eIDAS konnektorteenus___ (testpaigaldus); kasutame ka nimetust ___RIA eIDAS test-Node___ - etendab saatva riigi eIDAS Node-i (saatev riik - riik, mille e-teenusest kasutaja autentimisele saadetakse)
+- ___RIA eIDAS konnektorteenus___ (testpaigaldus); kasutame ka nimetust ___RIA eIDAS test-Node___ - etendab saatva riigi eIDAS Node-i. Saatev riik - riik, mille e-teenusest kasutaja autentimisele saadetakse
 
 Host: `eidastest.eesti.ee`<br>
 Otspunktid:<br>
 `https://eidastest.eesti.ee/EidasNode/ServiceProvider`<br>
 `https://eidastest.eesti.ee/EidasNode/ColleagueResponse`
 
-- ___CEF eIDAS test-Node___ - etendab vastuvõtva riigi eIDAS Node-i (vastuvõttev riik - riik, mille autentimisteenuses kasutaja autenditakse); ühtlasi etendab ka vastuvõtva riigi autentimisteenust; neid funktsionaalsusi pakutakse nime ___CEF eIDAS Validation Service___ all.
+- ___CEF eIDAS test-Node___ - etendab vastuvõtva riigi eIDAS Node-i. Vastuvõttev riik - riik, mille autentimisteenuses kasutaja autenditakse; ühtlasi etendab ka vastuvõtva riigi autentimisteenust; neid funktsionaalsusi pakutakse nime ___CEF eIDAS Validation Service___ all.
 
 Host: `ec.europa.eu`<br>
 Otspunktid:<br>
@@ -42,14 +43,14 @@ Otspunktid:<br>
 
 ### Voo sisu
 
-Siinkirjeldatu on demovoog. Validation Service etendab, et tuvastatakse isik nimega `Javier Garcia`. Demovoog lõpeb veaolukorra tekkimisega RIA eIDAS test-Node-s (selle põhjus vajab selgitamist).
+Siinkirjeldatu on demo- ja test-, mitte tootmisvoog. Validation Service etendab, et tuvastatakse isik nimega `Javier Garcia`. Demovoog lõpeb veaolukorra tekkimisega RIA eIDAS test-Node-s (selle põhjus vajab selgitamist - v-o on viga seadistuses?).
 
 Voos tehakse järgmised päringud (päringutele on antud tinglikud nimetused):
 1. Pöördumine Demo SP avalehe poole.
 2. Kasutaja valikute edastamine serverisse (1)
 3. Kasutaja valikute edastamine serverisse (2)
 4. Pöördumine eIDAS konnektorteenuse poole
-5. Pöördumine välisriigi eIDAS Node-i poole
+5. Pöördumine kasutaja koduriigi eIDAS Node-i poole
 6. Pöördumine koduriigi autentimisteenusesse
 7. Autentimistulemuse edastamine koduriigi autentimisteenusest (mängult) CEF test-Node-le
 8. Nõusoleku saatmise päring
@@ -162,7 +163,7 @@ function submitRedirectFormAction() {
 window.addEventListener('load', submitRedirectFormAction());
 ```
 
-### 5. Pöördumine välisriigi eIDAS Node-i poole
+### 5. Pöördumine kasutaja koduriigi eIDAS Node-i poole
 
 Välisriigi eIDAS Node-ks on praegu CEF- i käitatav eIDAS test-Node (edaspidi "CEF test-Node"), aadressiga `https://ec.europa.eu/eid-integration-test/EidasNode`.
 
