@@ -1,15 +1,64 @@
----
-permalink: Protokoll
----
+## eIDAS päringuvoog (Demo SP kasutamisel)
 
+Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autentimisel, Demo SP näitel, HTTP redirect binding-u kasutamisel.
 
-#
-{: .no_toc}
+Kirjelduse eesmärk on:
+- luua arusaamine, mis sõnumid ja kuidas liiguvad ning 
+- luua alus, mille põhjalt spetsifitseerida protokoll Eesti e-teenusepakkujate ja samuti TARA liidestamiseks RIA eIDAS konnektorteenusega.
 
-- TOC
-{:toc}
+Siin ei kirjeldata:
+- laadilehtede ja skriptide laadimise päringuid
+- sisuturbepoliitikaga seotud abistavaid päringuid
+- serveripoolte omavahelisi päringuid SAML metaandmete otspunktide poole.
 
-## 1. Pöördumine Demo SP avalehe poole.
+### Suhtluse osapooled
+
+- ___Demo SP___ (Demo Service Provider) - etendab e-teenust eIDASe mõistes
+
+Host: `eidastest.eesti.ee`<br>
+Otspunktid:<br>
+`https://eidastest.eesti.ee/SP/populateIndexPage`<br>
+`https://eidastest.eesti.ee/SP/changeProtocolBinding.action`<br>
+
+- ___RIA eIDAS konnektorteenus___ (testpaigaldus); kasutame ka nimetust ___RIA eIDAS test-Node___ - etendab saatva riigi eIDAS Node-i (saatev riik - riik, mille e-teenusest kasutaja autentimisele saadetakse)
+
+Host: `eidastest.eesti.ee`<br>
+Otspunktid:<br>
+`https://eidastest.eesti.ee/EidasNode/ServiceProvider`<br>
+`https://eidastest.eesti.ee/EidasNode/ColleagueResponse`
+
+- ___CEF eIDAS test-Node___ - etendab vastuvõtva riigi eIDAS Node-i (vastuvõttev riik - riik, mille autentimisteenuses kasutaja autenditakse); ühtlasi etendab ka vastuvõtva riigi autentimisteenust; neid funktsionaalsusi pakutakse nime ___CEF eIDAS Validation Service___ all.
+
+Host: `ec.europa.eu`<br>
+Otspunktid:<br>
+`https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest`<br>
+`https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen`<br>
+`https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse`<br>
+`https://ec.europa.eu/eid-integration-test/AP/ConsentValue`<br>
+`https://ec.europa.eu/eid-integration-test/EidasNode/APSelector`<br>
+
+- kasutaja
+- sirvik.
+
+### Voo sisu
+
+Siinkirjeldatu on demovoog. Validation Service etendab, et tuvastatakse isik nimega `Javier Garcia`. Demovoog lõpeb veaolukorra tekkimisega RIA eIDAS test-Node-s (selle põhjus vajab selgitamist).
+
+Voos tehakse järgmised päringud (päringutele on antud tinglikud nimetused):
+1. Pöördumine Demo SP avalehe poole.
+2. Kasutaja valikute edastamine serverisse (1)
+3. Kasutaja valikute edastamine serverisse (2)
+4. Pöördumine eIDAS konnektorteenuse poole
+5. Pöördumine välisriigi eIDAS Node-i poole
+6. Pöördumine koduriigi autentimisteenusesse
+7. Autentimistulemuse edastamine koduriigi autentimisteenusest (mängult) CEF test-Node-le
+8. Nõusoleku saatmise päring
+9.
+10. Autentimisvastuse saatmine RIA eIDAS-Node-le
+
+Edasi kirjeldame päringuid ja nende vastuseid detailselt.
+
+### 1. Pöördumine Demo SP avalehe poole.
 
 ```
 GET
@@ -19,7 +68,7 @@ Vastuses saadab Demo SP serveripool sirvikusse Demo SP avaleht ja seatakse seans
 
 Kasutaja valib riigi jm parameetrid. 
 
-## 2. Kasutaja valikute edastamine serverisse (1)
+### 2. Kasutaja valikute edastamine serverisse (1)
 
 ```
 POST 
