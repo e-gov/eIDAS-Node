@@ -1,0 +1,840 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+
+
+
+
+
+
+
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="CEF eID - eIDAS Validator">
+    <meta name="author" content="CEF eID - eIDAS validator">
+    <link rel="stylesheet" href="tnode/resources/skin0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="tnode/resources/skin0/css/awesome-bootstrap-checkbox.css" />
+    <link rel="stylesheet" href="tnode/resources/css/dd.css">
+    <!-- link rel="stylesheet" href="tnode/resources/skin0/css/switchery.min.css" -->
+
+    <link rel="apple-touch-icon" sizes="57x57" href="tnode/resources/skin0/favicon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="tnode/resources/skin0/favicon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="tnode/resources/skin0/favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="tnode/resources/skin0/favicon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="tnode/resources/skin0/favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="tnode/resources/skin0/favicon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="tnode/resources/skin0/favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="tnode/resources/skin0/favicon/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="tnode/resources/skin0/favicon/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/eid-integration-test/EidasNode/resources/skin0/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/eid-integration-test/EidasNode/resources/skin0/favicon/android-chrome-192x192.png"
+        sizes="192x192">
+    <link rel="icon" type="image/png" href="/eid-integration-test/EidasNode/resources/skin0/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/eid-integration-test/EidasNode/resources/skin0/favicon/favicon-16x16.png" sizes="16x16">
+    <!-- link rel="manifest" href=tnode/resources/skin0/img/manifest.json"-->
+
+    <meta http-equiv='pragma' content='no-cache' />
+    <meta http-equiv='cache-control' content='no-cache, no-store, must-revalidate' />
+    <meta http-equiv="Expires" content="-1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="msapplication-TileColor" content="#ffc40d">
+    <meta name="msapplication-TileImage" content="tnode/resources/skin0/img/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+    <script type="text/javascript" src="/eid-integration-test/EidasNode/tnode/resources/skin0/js/jquery-1.12.0.js"></script>
+    <script type="text/javascript" src="/eid-integration-test/EidasNode/tnode/resources/skin0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/eid-integration-test/EidasNode/tnode/resources/skin0/js/function.js"></script>
+
+    <script type="text/javascript" src="/eid-integration-test/EidasNode/tnode/resources/js/dd-min.js"></script>
+
+    <link rel="stylesheet" href="tnode/resources/skin0/css/custom.css">
+    <title>Validation Node</title>
+</head>
+
+<body>
+    <!--START HEADER-->
+    <header class="header">
+        <div class="container">
+            <a href="http://ec.europa.eu/index_en.htm" class="logo" title="European Commission">
+                <span class="logo-title">European Commission</span>
+            </a>
+        </div>
+    </header>
+    <!--END HEADER-->
+    <!--START PAGE HEADER-->
+    <div class="page-header">
+        <div class="container">
+            <span class="slogan">Use your national
+                <span class="lowercase">e</span>ID and access online services</span>
+
+            <h1>Validation Node</h1>
+            <h1>
+                <span class="sub-title">
+                    VALIDATOR
+
+                    <label name="nodeType">Service</label>
+
+                </span>
+            </h1>
+        </div>
+    </div>
+    <!--END PAGE HEADER-->
+
+
+    <section class="main-content">
+        <div class="container">
+
+
+            <h3>LOGIN SUCCEEDED</h3>
+
+            <div class="row">
+                <div class="form-group">
+                    <h2 class="sub-title">REQUESTED DATA:</h2>
+                    <ul class="toogle-switch list-unstyled">
+                        <li class="attr_stork_li_slider2">
+                            <p>SAML ID :</p>
+                            <input type="text" name="SamlId" value="_8DEJfFjZY64rwn8_KOnyH5_YETqrSTenlhgVni_-U2SsKTlUqlTVgc9che9cyTX" id="input" class="form-control"
+                                readonly/>
+
+                            <input type="hidden" name="token" value="iK5Atmg8kvY39dsFJIuRggSAdDQ$" />
+                            <p/>
+
+                            <p>RELAY STATE</p>
+                            <input type="text" name="RelayState" class="form-control" value="MyRelayState" readonly/>
+                        </li>
+                        <li>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Attribute</th>
+                                            <th>Values</th>
+                                            <th>Complex Values</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td>TaxReference
+                                            </td>
+                                            <td>[Taxe]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>LegalPersonAddress
+                                            </td>
+                                            <td>[Legal Person address]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>LegalPersonIdentifier
+                                            </td>
+                                            <td>[CD/EE/LegalPersonUniqueId]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Gender
+                                            </td>
+                                            <td>[Male]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>BirthName
+                                            </td>
+                                            <td>[Ωνάσης, Onases]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>PlaceOfBirth
+                                            </td>
+                                            <td>[Place of Birth]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>CurrentFamilyName
+                                            </td>
+                                            <td>[Garcia]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>CurrentAddress
+                                            </td>
+                                            <td>[Current Address]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>SIC
+                                            </td>
+                                            <td>[Standard Industrial Classification (SIC)]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>PersonIdentifier
+                                            </td>
+                                            <td>[CD/EE/12345]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>EORI
+                                            </td>
+                                            <td>[Economic Operator Registration and Identification (EORI)]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>LegalName
+                                            </td>
+                                            <td>[Current Legal Name]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>CurrentGivenName
+                                            </td>
+                                            <td>[javier]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>LEI
+                                            </td>
+                                            <td>[Legal Entity Identifier (LEI)]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>SEED
+                                            </td>
+                                            <td>[System for Exchange of Excise Data (SEED)]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>DateOfBirth
+                                            </td>
+                                            <td>[1980-01-01]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>VATRegistrationNumber
+                                            </td>
+                                            <td>[VAT Registration Number]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>D-2012-17-EUIdentifier
+                                            </td>
+                                            <td>[Directive 2012/17/EU Identifier]
+                                            </td>
+                                            <td>{}
+                                            </td>
+                                            <td>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </li>
+                        <li>
+                            <p>SAML REQUEST XML</p>
+                            <textarea name="samlRequestXML" rows="8" readonly class="form-control">&lt;saml2p:AuthnRequest xmlns:saml2p=&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34; xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34; xmlns:eidas=&#34;http://eidas.europa.eu/saml-extensions&#34; xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34; Consent=&#34;urn:oasis:names:tc:SAML:2.0:consent:unspecified&#34; Destination=&#34;https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest&#34; ForceAuthn=&#34;true&#34; ID=&#34;_8DEJfFjZY64rwn8_KOnyH5_YETqrSTenlhgVni_-U2SsKTlUqlTVgc9che9cyTX&#34; IsPassive=&#34;false&#34; IssueInstant=&#34;2018-01-12T11:11:05.961Z&#34; ProviderName=&#34;DEMO-SP-EE&#34; Version=&#34;2.0&#34;&gt;&lt;saml2:Issuer Format=&#34;urn:oasis:names:tc:SAML:2.0:nameid-format:entity&#34;&gt;https://eidastest.eesti.ee/EidasNode/ConnectorMetadata&lt;/saml2:Issuer&gt;&lt;ds:Signature xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34;&gt;&lt;ds:SignedInfo&gt;&lt;ds:CanonicalizationMethod Algorithm=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;/&gt;&lt;ds:SignatureMethod Algorithm=&#34;http://www.w3.org/2001/04/xmldsig-more#rsa-sha512&#34;/&gt;&lt;ds:Reference URI=&#34;#_8DEJfFjZY64rwn8_KOnyH5_YETqrSTenlhgVni_-U2SsKTlUqlTVgc9che9cyTX&#34;&gt;&lt;ds:Transforms&gt;&lt;ds:Transform Algorithm=&#34;http://www.w3.org/2000/09/xmldsig#enveloped-signature&#34;/&gt;&lt;ds:Transform Algorithm=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;/&gt;&lt;/ds:Transforms&gt;&lt;ds:DigestMethod Algorithm=&#34;http://www.w3.org/2001/04/xmlenc#sha512&#34;/&gt;&lt;ds:DigestValue&gt;VrHecPhfMtAUiD56bkE4toz9rSf0VUv0bXvVC6fWxwi2nCmlwvsG4XBRn0BOnD1dA/c8ikM9ixkDojl60OM0Zg==&lt;/ds:DigestValue&gt;&lt;/ds:Reference&gt;&lt;/ds:SignedInfo&gt;&lt;ds:SignatureValue&gt;BTAte7d4GcJIE/AKQwWbP2f1iOxYTpC1DcI8gkEnxsppXo4B6bXWQDt8fR8eOPj0IVWCcgqXgsrTyIDu7XnsKcI8lTU4UaQejgehk26XVvkiVSuo5A3+ZejevRHDMFUxSZTemBC4QzgxXLvxUfwz7cy/rVkID/9tocL8yY072dRo2zFUzi04YfbUfGJPyzkcY8f9z1Xxj0z4po2cxShX3YdejAtzKhPFt57nN6O9ZIZ4XHCrp/ijhAF58Rg1WysPJdQdiDIe9FPXgx+SH2XHNidYo+ogteI4SYg0EhNVgzqqjI/3GprEpB8ZHW+Ac9S/vvTEojgDe2EDnAyHLuE+Rw==&lt;/ds:SignatureValue&gt;&lt;ds:KeyInfo&gt;&lt;ds:X509Data&gt;&lt;ds:X509Certificate&gt;MIIDdTCCAl2gAwIBAgIEalYjgDANBgkqhkiG9w0BAQsFADBrMQswCQYDVQQGEwJFRTELMAkGA1UE
+CBMCRVUxCzAJBgNVBAcTAkVVMQ4wDAYDVQQKEwVTUEVQUzEOMAwGA1UECxMFU1RPUksxIjAgBgNV
+BAMTGXNwZXBzLWVlLWRlbW8tY2VydGlmaWNhdGUwHhcNMTcwNTE5MTI0NjEzWhcNMTkwNTA5MTI0
+NjEzWjBrMQswCQYDVQQGEwJFRTELMAkGA1UECBMCRVUxCzAJBgNVBAcTAkVVMQ4wDAYDVQQKEwVT
+UEVQUzEOMAwGA1UECxMFU1RPUksxIjAgBgNVBAMTGXNwZXBzLWVlLWRlbW8tY2VydGlmaWNhdGUw
+ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCRD+0IV7lyNu+pW7RWQ5QyEjM3aSiyFmio
+7+1f0Iy0fS85jsFGGgI3jnPZL6d8tuuLZEBpHzMZhO5EFw1SaJwDpsmIg6efuaK0oL3DeVdRW3f5
+8V6FhsrL2sf2QezGxFfGtr60RU9LRm9Awt6yyhKdPahiWaUMiJNnP7r1HJ+3UENPfJEAqWUSNpop
+wLjZbo2T3muOAJ025CPQ2ITEeqo3T7DTjahxzQ3LyL859QsWWDz12ZSct/yxjGa1x01fDtwsgnv4
+3a58N2vgDsi+bDYXasgs6OM7mQktVge6J2pZZLT/yOfqLncFOTWeqgQrQ3+KmVDgh7m5QAlbNiQN
+ibghAgMBAAGjITAfMB0GA1UdDgQWBBRUpeHxPZ6D2IE7iuZxQ8cm8NzSeTANBgkqhkiG9w0BAQsF
+AAOCAQEAdbPNr0Jiq8P+RUcET5oDOwILbfhRYy0hwJGRS+4EMzAyvD/e9rXf5Tkxjldb4p1L/hII
+VQBcdwZsW2kUt3WeOY+2pQQlkcHEWYVaQGgMRMUJorbXwRxWXvRXSsge+kLeJMgtYJdtLxMUgBr/
+cl5ExMMlTvU09lrOi9VYfzg84drqlXVbFW+i79564cbTc7McqvmSemc4D/rLUlaTupMkI9nBW99M
+ADJsjguglIyiKUGwinxeXXuSfmpek17JxMSOfUhsNp7pmC6c0rpNvLxbLxNMpPFCR+tXXW/FOudZ
+21pIEIVckn9BTFsYlUUpXBL4kGYRTXqvHnGpVMGJSMUatg==&lt;/ds:X509Certificate&gt;&lt;/ds:X509Data&gt;&lt;/ds:KeyInfo&gt;&lt;/ds:Signature&gt;&lt;saml2p:Extensions&gt;&lt;eidas:RequestedAttributes&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;D-2012-17-EUIdentifier&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;EORI&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/EORI&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;LEI&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/LEI&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;LegalName&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/LegalName&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;true&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;LegalAddress&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;LegalPersonIdentifier&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;true&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;SEED&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/SEED&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;SIC&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/SIC&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;TaxReference&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/TaxReference&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;VATRegistration&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;BirthName&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/BirthName&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;CurrentAddress&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/CurrentAddress&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;FamilyName&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;true&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;FirstName&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;true&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;DateOfBirth&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/DateOfBirth&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;true&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;Gender&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/Gender&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;PersonIdentifier&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;true&#34;/&gt;&lt;eidas:RequestedAttribute FriendlyName=&#34;PlaceOfBirth&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34; isRequired=&#34;false&#34;/&gt;&lt;/eidas:RequestedAttributes&gt;&lt;/saml2p:Extensions&gt;&lt;saml2p:NameIDPolicy AllowCreate=&#34;true&#34; Format=&#34;urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified&#34;/&gt;&lt;saml2p:RequestedAuthnContext Comparison=&#34;minimum&#34;&gt;&lt;saml2:AuthnContextClassRef&gt;http://eidas.europa.eu/LoA/low&lt;/saml2:AuthnContextClassRef&gt;&lt;/saml2p:RequestedAuthnContext&gt;&lt;/saml2p:AuthnRequest&gt;</textarea>
+                        </li>
+
+                        <li>
+                            <p>ENCRYPTED SAML RESPONSE XML</p>
+                            <textarea name="samlResponseXMLEncrypted" rows="8" readonly class="form-control">&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; standalone=&#34;no&#34;?&gt;&lt;saml2p:Response xmlns:saml2p=&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34; xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34; xmlns:eidas=&#34;http://eidas.europa.eu/attributes/naturalperson&#34; xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34; Consent=&#34;urn:oasis:names:tc:SAML:2.0:consent:obtained&#34; Destination=&#34;https://eidastest.eesti.ee/EidasNode/ColleagueResponse&#34; ID=&#34;_ffebecd6c949bb70b0c14725880ffd50&#34; InResponseTo=&#34;_8DEJfFjZY64rwn8_KOnyH5_YETqrSTenlhgVni_-U2SsKTlUqlTVgc9che9cyTX&#34; IssueInstant=&#34;2018-01-12T11:11:13.611Z&#34; Version=&#34;2.0&#34;&gt;&lt;saml2:Issuer Format=&#34;urn:oasis:names:tc:SAML:2.0:nameid-format:entity&#34;&gt;https://ec.europa.eu/eid-integration-test/EidasNode/ServiceMetadata&lt;/saml2:Issuer&gt;&lt;ds:Signature&gt;&lt;ds:SignedInfo&gt;&lt;ds:CanonicalizationMethod Algorithm=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;/&gt;&lt;ds:SignatureMethod Algorithm=&#34;http://www.w3.org/2001/04/xmldsig-more#rsa-sha512&#34;/&gt;&lt;ds:Reference URI=&#34;#_ffebecd6c949bb70b0c14725880ffd50&#34;&gt;&lt;ds:Transforms&gt;&lt;ds:Transform Algorithm=&#34;http://www.w3.org/2000/09/xmldsig#enveloped-signature&#34;/&gt;&lt;ds:Transform Algorithm=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;/&gt;&lt;/ds:Transforms&gt;&lt;ds:DigestMethod Algorithm=&#34;http://www.w3.org/2001/04/xmlenc#sha512&#34;/&gt;&lt;ds:DigestValue&gt;8436YXISHI2spXxTk1GZY3HfSsmMQNY2klihmBKh9ROeKqvzuBALsr5pZMZe0A/8I1ByvmuVM998HV5isDCvmw==&lt;/ds:DigestValue&gt;&lt;/ds:Reference&gt;&lt;/ds:SignedInfo&gt;&lt;ds:SignatureValue&gt;m8aS8RKRPxBihBy4VNkkycPNhu6U7WsYXf47OgxygoAAFwsM805lu5FvLrOdLkUBbBkMPzJUI/BK/qNxoUoD9Kww/16OIv8IsdfAQlJtKFVa2lVaGZuEz0n22cn2t2OOuHcBc67gtB+Bt8zdKlXh0YCqhuBPAH22TPRRavuTiC6Mymq2N/gb5oABJ0uE+TeL6ca72/MH4EFCjkH/Kf9pJmiPZ5sljaTCAD2AuSeuExNcJUKxFgYKviau8T0upiud48G0ouI2L1aCG3XDUxrPR6seiaDjVm0XK1hlfXs1Kv4nMEfz/u/J72GWX7ZOWIA9xOQHbDwylDKlAfh8hJGyTFqlQ4GPdp+PWt5+USQmoSlBn1oND/z/YKEqmnAA5+NOQ/FmkolB9Q/C70ucxPTV18hziNz8FRGNzLyW8xxdnTIglFgQzVxO3NSmZ2eMeGe6PLzXOC1dwhPqVhCAu5Fr2nLe/2sk/o2SR9NjyZAs9ZX+MjswNIqo6iJBvZlEDeZJbwh1qnPz61JG/021rgn/sDc7YVL2jhpShYFGimsXXEnx2k1Yz3ojfhFWJgplLuj5cr8TQ44mPypze9KQIPFNvGgmMFZ9rweWwrkVJ4wiVCuSqp76tG1cUvPS/cxKSWyfqOeCm+LAOlCYXBkY/BCYRVvpaWyALV68EmCGS4ug53g=&lt;/ds:SignatureValue&gt;&lt;ds:KeyInfo&gt;&lt;ds:X509Data&gt;&lt;ds:X509Certificate&gt;MIIFTTCCAzUCBFjuGewwDQYJKoZIhvcNAQENBQAwazELMAkGA1UEBhMCQ0QxCzAJBgNVBAgMAkVV
+MQswCQYDVQQHDAJFVTEOMAwGA1UECgwFQ1BFUFMxDjAMBgNVBAsMBVNUT1JLMSIwIAYDVQQDDBlj
+cGVwcy1jZC1kZW1vLWNlcnRpZmljYXRlMB4XDTE3MDQxMjEyMTMzMloXDTI3MDQxMDEyMTMzMlow
+azELMAkGA1UEBhMCQ0QxCzAJBgNVBAgMAkVVMQswCQYDVQQHDAJFVTEOMAwGA1UECgwFQ1BFUFMx
+DjAMBgNVBAsMBVNUT1JLMSIwIAYDVQQDDBljcGVwcy1jZC1kZW1vLWNlcnRpZmljYXRlMIICIjAN
+BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4B03KPeYb/fyGO5/YKiEJgf5KTS2g7yasdXmen+e
+S5D8pl/0+W9OqSPCIApHjDMVCR9QGjhR1x1BBLT845LmgI1EjEeyq/gXC4nW3cCNPC8oE+XAaHZr
++nKFi2S650CmCnDtmG/MXXOpHXgu4E6nurGuVXhQGSQrPY0GpSZMSb9HGEH5UNX//DrJgYfk7hih
+rCPYYR3WfJL+PF14UjK9NlK0V0GncocQaY2cosZfxQ+MmgDMWLvTy3YDvUnfikNMd9lKQLi2kn29
+J8YY1K8krNMUiA50uX4ukuajkRvngMyq6RAf41ZvUhJP8bI9c7a07sniRNDz6LoBl8vK47jbyFUP
+IMNFXy8gaGBbZRbD0cnmJvSvBLxJkPSHl7KlBCI1limcI+i1Sqwx7yBCPQqt7pyarm2I8wFUw2cl
+Zf9WP285FU2aJMxqxyYRlqJTYwbMhL7uzDhUxziHujLLola0Nbfaek2erFPipn8oSLb6Mmo+WnCC
+jUYXSDoDey5w4XXx8/XChpbXew2wDF0W7xapXoghGvAO/CdZO4epgyr0mMe6XpyExFixvzFimU5h
+6GHcEkWReGW6U5ew4vtbPce4EKGbDO12frUb3leTH23csSj3VZLWQCg7jkgmjpzb6KeNs/JjLw5Z
+7Ysqz9uOJaiHsGK0iivdJ0tMMFCXjqAme4cCAwEAATANBgkqhkiG9w0BAQ0FAAOCAgEAxT4gcYDl
+CIVnKxaUr5Mw09+BYFYCw6b+DsJFqPDnrM+BGfzyL2wtdS9IebyISpspbty32yent8CNSup0K3Gk
+O6Wj7oNLI2njR3CbfZnE4i9OxipxRTsSpKR16HrutQBGF2La8SsJJd2teVxhUqdkzE0mSdjO/adv
+QPfI5tjxEndfa2pxr1zTeo+EqpDv7I+4L9cyxtddVRbweRi2gWNgpEQZSehRi+je7AX3z7OwriPi
+I/kXC55cwIlVtRIrLpi1OAh7UQ8Eh5w92N4QKpxrEtIPqc/4PPqmaQENtdmUluUPtP2qOp2NFtXi
+336gr5rQm9UXM6iHgIIsFCW4Gs9wx5y3At8+vptoGS20kgezS9lsn6uhC01qfOsMlvtoUcVe3GlT
+Xocyy7ScnyhnaUlMklwJ4E8ARFPkUsikmRxu2HEndUtt9CYsZSBmQLpIkJhIECfTKfo4qH5Kro3t
+z4VevNF6l8bfjQ9kNwWiZ1Yg1mF722nqZ8fJBFiOro2vUuodJEM0qwJEBQTExL8s2vngsq49pa0F
+36qFiv/9qgr7GMNzj1DpAfCPyX7tQZCN6IdaI8eNZjEE8YzgPpQ5dGlhrD/Ud1Njhejbss7BeYH4
+udWdNdH1kaK5b8scfYDVRk8b9ORmpG3VqMx96I35YogF5FjxkYETOSkgK4VM2ajjTk4=&lt;/ds:X509Certificate&gt;&lt;/ds:X509Data&gt;&lt;/ds:KeyInfo&gt;&lt;/ds:Signature&gt;&lt;saml2p:Status&gt;&lt;saml2p:StatusCode Value=&#34;urn:oasis:names:tc:SAML:2.0:status:Success&#34;/&gt;&lt;saml2p:StatusMessage&gt;urn:oasis:names:tc:SAML:2.0:status:Success&lt;/saml2p:StatusMessage&gt;&lt;/saml2p:Status&gt;&lt;saml2:EncryptedAssertion&gt;&lt;xenc:EncryptedData xmlns:xenc=&#34;http://www.w3.org/2001/04/xmlenc#&#34; Id=&#34;_a155b6f840cef06e61182f0fa78a9d8d&#34; Type=&#34;http://www.w3.org/2001/04/xmlenc#Element&#34;&gt;&lt;xenc:EncryptionMethod Algorithm=&#34;http://www.w3.org/2009/xmlenc11#aes256-gcm&#34;/&gt;&lt;ds:KeyInfo&gt;&lt;xenc:EncryptedKey Id=&#34;_917e2be21795c7089e7b9044cca0ab8f&#34;&gt;&lt;xenc:EncryptionMethod Algorithm=&#34;http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p&#34;&gt;&lt;ds:DigestMethod Algorithm=&#34;http://www.w3.org/2000/09/xmldsig#sha1&#34;/&gt;&lt;/xenc:EncryptionMethod&gt;&lt;ds:KeyInfo&gt;&lt;ds:X509Data&gt;&lt;ds:X509Certificate&gt;MIIFTTCCAzUCBFjuGewwDQYJKoZIhvcNAQENBQAwazELMAkGA1UEBhMCQ0QxCzAJBgNVBAgMAkVV
+MQswCQYDVQQHDAJFVTEOMAwGA1UECgwFQ1BFUFMxDjAMBgNVBAsMBVNUT1JLMSIwIAYDVQQDDBlj
+cGVwcy1jZC1kZW1vLWNlcnRpZmljYXRlMB4XDTE3MDQxMjEyMTMzMloXDTI3MDQxMDEyMTMzMlow
+azELMAkGA1UEBhMCQ0QxCzAJBgNVBAgMAkVVMQswCQYDVQQHDAJFVTEOMAwGA1UECgwFQ1BFUFMx
+DjAMBgNVBAsMBVNUT1JLMSIwIAYDVQQDDBljcGVwcy1jZC1kZW1vLWNlcnRpZmljYXRlMIICIjAN
+BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4B03KPeYb/fyGO5/YKiEJgf5KTS2g7yasdXmen+e
+S5D8pl/0+W9OqSPCIApHjDMVCR9QGjhR1x1BBLT845LmgI1EjEeyq/gXC4nW3cCNPC8oE+XAaHZr
++nKFi2S650CmCnDtmG/MXXOpHXgu4E6nurGuVXhQGSQrPY0GpSZMSb9HGEH5UNX//DrJgYfk7hih
+rCPYYR3WfJL+PF14UjK9NlK0V0GncocQaY2cosZfxQ+MmgDMWLvTy3YDvUnfikNMd9lKQLi2kn29
+J8YY1K8krNMUiA50uX4ukuajkRvngMyq6RAf41ZvUhJP8bI9c7a07sniRNDz6LoBl8vK47jbyFUP
+IMNFXy8gaGBbZRbD0cnmJvSvBLxJkPSHl7KlBCI1limcI+i1Sqwx7yBCPQqt7pyarm2I8wFUw2cl
+Zf9WP285FU2aJMxqxyYRlqJTYwbMhL7uzDhUxziHujLLola0Nbfaek2erFPipn8oSLb6Mmo+WnCC
+jUYXSDoDey5w4XXx8/XChpbXew2wDF0W7xapXoghGvAO/CdZO4epgyr0mMe6XpyExFixvzFimU5h
+6GHcEkWReGW6U5ew4vtbPce4EKGbDO12frUb3leTH23csSj3VZLWQCg7jkgmjpzb6KeNs/JjLw5Z
+7Ysqz9uOJaiHsGK0iivdJ0tMMFCXjqAme4cCAwEAATANBgkqhkiG9w0BAQ0FAAOCAgEAxT4gcYDl
+CIVnKxaUr5Mw09+BYFYCw6b+DsJFqPDnrM+BGfzyL2wtdS9IebyISpspbty32yent8CNSup0K3Gk
+O6Wj7oNLI2njR3CbfZnE4i9OxipxRTsSpKR16HrutQBGF2La8SsJJd2teVxhUqdkzE0mSdjO/adv
+QPfI5tjxEndfa2pxr1zTeo+EqpDv7I+4L9cyxtddVRbweRi2gWNgpEQZSehRi+je7AX3z7OwriPi
+I/kXC55cwIlVtRIrLpi1OAh7UQ8Eh5w92N4QKpxrEtIPqc/4PPqmaQENtdmUluUPtP2qOp2NFtXi
+336gr5rQm9UXM6iHgIIsFCW4Gs9wx5y3At8+vptoGS20kgezS9lsn6uhC01qfOsMlvtoUcVe3GlT
+Xocyy7ScnyhnaUlMklwJ4E8ARFPkUsikmRxu2HEndUtt9CYsZSBmQLpIkJhIECfTKfo4qH5Kro3t
+z4VevNF6l8bfjQ9kNwWiZ1Yg1mF722nqZ8fJBFiOro2vUuodJEM0qwJEBQTExL8s2vngsq49pa0F
+36qFiv/9qgr7GMNzj1DpAfCPyX7tQZCN6IdaI8eNZjEE8YzgPpQ5dGlhrD/Ud1Njhejbss7BeYH4
+udWdNdH1kaK5b8scfYDVRk8b9ORmpG3VqMx96I35YogF5FjxkYETOSkgK4VM2ajjTk4=&lt;/ds:X509Certificate&gt;&lt;/ds:X509Data&gt;&lt;/ds:KeyInfo&gt;&lt;xenc:CipherData&gt;&lt;xenc:CipherValue&gt;cIe0wfdUjCtCIRayNFfgtEqwC5k3i8o1n9yLnIHTIbcbPOp+b+Djf6WjLd28JQ+sbBef6+T636d6EHZSddY5rPP5ZLrYTxPnBO3yMM6ceVLHKV8J+h4FhpdM15xdt+mI+nQ615eyVWYaBvRpOwrfq9zsE9iiB3i09nEdj7sDgnWpDVDilEhII/aKVkUdMw1BJ/E+KoYkz1IrHHyBKcSv3BfPORBR8Dbuh96vuGo1VHwWlhGzmjMhOXEpAN1sXiCeYpxOxKDe+BJohN1ym3PB4be3ShgAh1NgvL5MZFVhUiuCjwlceg3iw7tn84hRAzFcEYxC8A1Y3GS/iQgSg7tDVSSnSDbHZwE8tZ2xszRI0UXf680yES6CQXZFWJlcr6xFT/lkDprIOfsuk7CyRA3YrSwE2+DPIyhP25GDD+2+c67ixHZ1+3ieSXsWSIy5wONP17X+6OPXb7uRXJn7kbkqVU2/K+aXfTIs7Wr/87jBimDa/VN+KYdEnLbuYunDLH0Z+FycM+VsJ0APOm0sl1F48ny09eg6q6kTL1DJ++Si6wTI78jEBTAvVyxlrJNWO16itka3yJ2g4igy1HPvYStCqVHXXISLslcypAUnQQrBdYMkNPtxnTYsl1m5HGb6DC8e8ZwGCf6S4IhcXYNSb2CJgm35sC7UOHXbRBneaVVZV/E=&lt;/xenc:CipherValue&gt;&lt;/xenc:CipherData&gt;&lt;/xenc:EncryptedKey&gt;&lt;/ds:KeyInfo&gt;&lt;xenc:CipherData&gt;&lt;xenc:CipherValue&gt;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&lt;/xenc:CipherValue&gt;&lt;/xenc:CipherData&gt;&lt;/xenc:EncryptedData&gt;&lt;/saml2:EncryptedAssertion&gt;&lt;/saml2p:Response&gt;</textarea>
+                        </li>
+
+                        <li>
+
+                            <p>DECRYPTED ASSERTION</p>
+
+
+                            <textarea name="samlResponseXML" class="form-control" rows="8" readonly>no assertion found</textarea>
+                        </li>
+
+
+                        <br/>
+
+                        <form action="https://eidastest.eesti.ee/EidasNode/ColleagueResponse" name="countrySelector" id="countrySelector" method="post">
+
+
+
+
+                            <input type="hidden" id="SAMLResponse" name="SAMLResponse" value="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHNhbWwycDpSZXNwb25zZSB4bWxuczpzYW1sMnA9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpwcm90b2NvbCIgeG1sbnM6ZHM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyMiIHhtbG5zOmVpZGFzPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbiIgeG1sbnM6ZWlkYXMtbGVnYWw9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9uYXR1cmFscGVyc29uIiB4bWxuczplaWRhcy1uYXR1cmFsPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbiIgeG1sbnM6c2FtbDI9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphc3NlcnRpb24iIENvbnNlbnQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpjb25zZW50Om9idGFpbmVkIiBEZXN0aW5hdGlvbj0iaHR0cHM6Ly9laWRhc3Rlc3QuZWVzdGkuZWUvRWlkYXNOb2RlL0NvbGxlYWd1ZVJlc3BvbnNlIiBJRD0iX2ZmZWJlY2Q2Yzk0OWJiNzBiMGMxNDcyNTg4MGZmZDUwIiBJblJlc3BvbnNlVG89Il84REVKZkZqWlk2NHJ3bjhfS09ueUg1X1lFVHFyU1RlbmxoZ1ZuaV8tVTJTc0tUbFVxbFRWZ2M5Y2hlOWN5VFgiIElzc3VlSW5zdGFudD0iMjAxOC0wMS0xMlQxMToxMToxMy42MTFaIiBWZXJzaW9uPSIyLjAiPjxzYW1sMjpJc3N1ZXIgRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6bmFtZWlkLWZvcm1hdDplbnRpdHkiPmh0dHBzOi8vZWMuZXVyb3BhLmV1L2VpZC1pbnRlZ3JhdGlvbi10ZXN0L0VpZGFzTm9kZS9TZXJ2aWNlTWV0YWRhdGE8L3NhbWwyOklzc3Vlcj48ZHM6U2lnbmF0dXJlPjxkczpTaWduZWRJbmZvPjxkczpDYW5vbmljYWxpemF0aW9uTWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8xMC94bWwtZXhjLWMxNG4jIi8+PGRzOlNpZ25hdHVyZU1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMDQveG1sZHNpZy1tb3JlI3JzYS1zaGE1MTIiLz48ZHM6UmVmZXJlbmNlIFVSST0iI19mZmViZWNkNmM5NDliYjcwYjBjMTQ3MjU4ODBmZmQ1MCI+PGRzOlRyYW5zZm9ybXM+PGRzOlRyYW5zZm9ybSBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyNlbnZlbG9wZWQtc2lnbmF0dXJlIi8+PGRzOlRyYW5zZm9ybSBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1sLWV4Yy1jMTRuIyIvPjwvZHM6VHJhbnNmb3Jtcz48ZHM6RGlnZXN0TWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8wNC94bWxlbmMjc2hhNTEyIi8+PGRzOkRpZ2VzdFZhbHVlPmk4blhjYVNWOVp1cXFqOUdGb3NsRXpDREdDWFF0ZGFkV2RQTk9JaDdUeWUrd2xlWjFBZUJIa2ZRTC9BbWFhc0VNM3ZGS2xSQmlqclpxcVZUaHIwSnVnPT08L2RzOkRpZ2VzdFZhbHVlPjwvZHM6UmVmZXJlbmNlPjwvZHM6U2lnbmVkSW5mbz48ZHM6U2lnbmF0dXJlVmFsdWU+QUFHQjQ4cDkvSkxlWFpnZVhOMGJUNVIyS2M5UUw1OTRNK3ZuTGFMb1daQUNuYm5Bbmhhckt6cFFGUjdZa3I5dnkvcWhid2pVbXRHc0RqblVZaTdKUUU4U1lVUGF1SXJncFI1RWhhUENQeWlxYm1DYVBKKzRVbE9OWVhiM0p2NFdRaVFCNXlKT0c1QnFZdnBMYzdMc2U0TXAzLzlrT2VSS2FZdE02L3d1UllsdXROc3IvTmkvTko0aHdtK0hrSXdjM0VSd3RZcWZETzBtRWVKdllRQy9UcnVjT3lpZ3BwcFlBeUNyTlk2S21ySlo5cThDdzdOcWR3aUxqdE5QU1BQVVo0VmEwN2FvWmZ1eWx3Y1hyTjduMndxc0VYbiszcFdreWsrdmpDQzZKSzN3Mm1zbHZzeCtyK3FXSzluTGlDRkhiV0hTdGNHd21NNk5LYUdKWnVyb2p6VlU2eFBOSW9TckZDWXpiODMxU2xlNDJMTzBzenErWWd6M29kektmVUNpNWNCWHp2QXQ1QWQ0ZXBzdnR6VTBIazRoejhkWktDOENzYlE5SkFWcnZUTVl0WEdLQjk2R29Qdm1IMnRGZE1mUkg5M3FuQVRqeTFINHE5UW1UR3BpMk5FaUJUcC9aZXZiVFpaN3BXaHI4cWY4VTJyN29uRk4wREhqMjA1OHppM1VYZ08yK3IwS3FvdjRNRGFOUGtuOUFKYkhUK2I0Zy92RnVnVWVWL3Z4YkNDMUZUdk1tYS9VN01ieUZidjY5UTFGSTEzamgyTVdwMCtWR2RVZ29BaWNpbnFJdnBYa01HRWZ1Q0krSUFtUFQ3QTVwNU9sa3ErenhZTjJkWmpyUUVIOVVReW1YdmllRWNjcEhxbUljNThBYVByTGFZV0dicnNTVjQvUkp3WEZJNkk9PC9kczpTaWduYXR1cmVWYWx1ZT48ZHM6S2V5SW5mbz48ZHM6WDUwOURhdGE+PGRzOlg1MDlDZXJ0aWZpY2F0ZT5NSUlGVFRDQ0F6VUNCRmp1R2V3d0RRWUpLb1pJaHZjTkFRRU5CUUF3YXpFTE1Ba0dBMVVFQmhNQ1EwUXhDekFKQmdOVkJBZ01Ba1ZWCk1Rc3dDUVlEVlFRSERBSkZWVEVPTUF3R0ExVUVDZ3dGUTFCRlVGTXhEakFNQmdOVkJBc01CVk5VVDFKTE1TSXdJQVlEVlFRRERCbGoKY0dWd2N5MWpaQzFrWlcxdkxXTmxjblJwWm1sallYUmxNQjRYRFRFM01EUXhNakV5TVRNek1sb1hEVEkzTURReE1ERXlNVE16TWxvdwphekVMTUFrR0ExVUVCaE1DUTBReEN6QUpCZ05WQkFnTUFrVlZNUXN3Q1FZRFZRUUhEQUpGVlRFT01Bd0dBMVVFQ2d3RlExQkZVRk14CkRqQU1CZ05WQkFzTUJWTlVUMUpMTVNJd0lBWURWUVFEREJsamNHVndjeTFqWkMxa1pXMXZMV05sY25ScFptbGpZWFJsTUlJQ0lqQU4KQmdrcWhraUc5dzBCQVFFRkFBT0NBZzhBTUlJQ0NnS0NBZ0VBNEIwM0tQZVliL2Z5R081L1lLaUVKZ2Y1S1RTMmc3eWFzZFhtZW4rZQpTNUQ4cGwvMCtXOU9xU1BDSUFwSGpETVZDUjlRR2poUjF4MUJCTFQ4NDVMbWdJMUVqRWV5cS9nWEM0blczY0NOUEM4b0UrWEFhSFpyCituS0ZpMlM2NTBDbUNuRHRtRy9NWFhPcEhYZ3U0RTZudXJHdVZYaFFHU1FyUFkwR3BTWk1TYjlIR0VINVVOWC8vRHJKZ1lmazdoaWgKckNQWVlSM1dmSkwrUEYxNFVqSzlObEswVjBHbmNvY1FhWTJjb3NaZnhRK01tZ0RNV0x2VHkzWUR2VW5maWtOTWQ5bEtRTGkya24yOQpKOFlZMUs4a3JOTVVpQTUwdVg0dWt1YWprUnZuZ015cTZSQWY0MVp2VWhKUDhiSTljN2EwN3NuaVJORHo2TG9CbDh2SzQ3amJ5RlVQCklNTkZYeThnYUdCYlpSYkQwY25tSnZTdkJMeEprUFNIbDdLbEJDSTFsaW1jSStpMVNxd3g3eUJDUFFxdDdweWFybTJJOHdGVXcyY2wKWmY5V1AyODVGVTJhSk14cXh5WVJscUpUWXdiTWhMN3V6RGhVeHppSHVqTExvbGEwTmJmYWVrMmVyRlBpcG44b1NMYjZNbW8rV25DQwpqVVlYU0RvRGV5NXc0WFh4OC9YQ2hwYlhldzJ3REYwVzd4YXBYb2doR3ZBTy9DZFpPNGVwZ3lyMG1NZTZYcHlFeEZpeHZ6RmltVTVoCjZHSGNFa1dSZUdXNlU1ZXc0dnRiUGNlNEVLR2JETzEyZnJVYjNsZVRIMjNjc1NqM1ZaTFdRQ2c3amtnbWpwemI2S2VOcy9Kakx3NVoKN1lzcXo5dU9KYWlIc0dLMGlpdmRKMHRNTUZDWGpxQW1lNGNDQXdFQUFUQU5CZ2txaGtpRzl3MEJBUTBGQUFPQ0FnRUF4VDRnY1lEbApDSVZuS3hhVXI1TXcwOStCWUZZQ3c2YitEc0pGcVBEbnJNK0JHZnp5TDJ3dGRTOUllYnlJU3BzcGJ0eTMyeWVudDhDTlN1cDBLM0drCk82V2o3b05MSTJualIzQ2JmWm5FNGk5T3hpcHhSVHNTcEtSMTZIcnV0UUJHRjJMYThTc0pKZDJ0ZVZ4aFVxZGt6RTBtU2RqTy9hZHYKUVBmSTV0anhFbmRmYTJweHIxelRlbytFcXBEdjdJKzRMOWN5eHRkZFZSYndlUmkyZ1dOZ3BFUVpTZWhSaStqZTdBWDN6N093cmlQaQpJL2tYQzU1Y3dJbFZ0UklyTHBpMU9BaDdVUThFaDV3OTJONFFLcHhyRXRJUHFjLzRQUHFtYVFFTnRkbVVsdVVQdFAycU9wMk5GdFhpCjMzNmdyNXJRbTlVWE02aUhnSUlzRkNXNEdzOXd4NXkzQXQ4K3ZwdG9HUzIwa2dlelM5bHNuNnVoQzAxcWZPc01sdnRvVWNWZTNHbFQKWG9jeXk3U2NueWhuYVVsTWtsd0o0RThBUkZQa1VzaWttUnh1MkhFbmRVdHQ5Q1lzWlNCbVFMcElrSmhJRUNmVEtmbzRxSDVLcm8zdAp6NFZldk5GNmw4YmZqUTlrTndXaVoxWWcxbUY3MjJucVo4ZkpCRmlPcm8ydlV1b2RKRU0wcXdKRUJRVEV4TDhzMnZuZ3NxNDlwYTBGCjM2cUZpdi85cWdyN0dNTnpqMURwQWZDUHlYN3RRWkNONklkYUk4ZU5aakVFOFl6Z1BwUTVkR2xockQvVWQxTmpoZWpic3M3QmVZSDQKdWRXZE5kSDFrYUs1YjhzY2ZZRFZSazhiOU9SbXBHM1ZxTXg5NkkzNVlvZ0Y1Rmp4a1lFVE9Ta2dLNFZNMmFqalRrND08L2RzOlg1MDlDZXJ0aWZpY2F0ZT48L2RzOlg1MDlEYXRhPjwvZHM6S2V5SW5mbz48L2RzOlNpZ25hdHVyZT48c2FtbDJwOlN0YXR1cz48c2FtbDJwOlN0YXR1c0NvZGUgVmFsdWU9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpzdGF0dXM6U3VjY2VzcyIvPjxzYW1sMnA6U3RhdHVzTWVzc2FnZT51cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6c3RhdHVzOlN1Y2Nlc3M8L3NhbWwycDpTdGF0dXNNZXNzYWdlPjwvc2FtbDJwOlN0YXR1cz48c2FtbDI6RW5jcnlwdGVkQXNzZXJ0aW9uPjx4ZW5jOkVuY3J5cHRlZERhdGEgeG1sbnM6eGVuYz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8wNC94bWxlbmMjIiBJZD0iXzhhZTE5OGQzZGE5MTIyYzkwZTYyOWZlMTM2NjViZmNjIiBUeXBlPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGVuYyNFbGVtZW50Ij48eGVuYzpFbmNyeXB0aW9uTWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwOS94bWxlbmMxMSNhZXMyNTYtZ2NtIi8+PGRzOktleUluZm8+PHhlbmM6RW5jcnlwdGVkS2V5IElkPSJfZjg5YzEzMmQzZWM2ZWU5YWZhNDU2NDUzYzBlYTQ3ZjQiPjx4ZW5jOkVuY3J5cHRpb25NZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGVuYyNyc2Etb2FlcC1tZ2YxcCI+PGRzOkRpZ2VzdE1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyNzaGExIi8+PC94ZW5jOkVuY3J5cHRpb25NZXRob2Q+PGRzOktleUluZm8+PGRzOlg1MDlEYXRhPjxkczpYNTA5Q2VydGlmaWNhdGU+TUlJRGRUQ0NBbDJnQXdJQkFnSUVhbFlqZ0RBTkJna3Foa2lHOXcwQkFRc0ZBREJyTVFzd0NRWURWUVFHRXdKRlJURUxNQWtHQTFVRQpDQk1DUlZVeEN6QUpCZ05WQkFjVEFrVlZNUTR3REFZRFZRUUtFd1ZUVUVWUVV6RU9NQXdHQTFVRUN4TUZVMVJQVWtzeElqQWdCZ05WCkJBTVRHWE53WlhCekxXVmxMV1JsYlc4dFkyVnlkR2xtYVdOaGRHVXdIaGNOTVRjd05URTVNVEkwTmpFeldoY05NVGt3TlRBNU1USTAKTmpFeldqQnJNUXN3Q1FZRFZRUUdFd0pGUlRFTE1Ba0dBMVVFQ0JNQ1JWVXhDekFKQmdOVkJBY1RBa1ZWTVE0d0RBWURWUVFLRXdWVApVRVZRVXpFT01Bd0dBMVVFQ3hNRlUxUlBVa3N4SWpBZ0JnTlZCQU1UR1hOd1pYQnpMV1ZsTFdSbGJXOHRZMlZ5ZEdsbWFXTmhkR1V3CmdnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUNSRCswSVY3bHlOdStwVzdSV1E1UXlFak0zYVNpeUZtaW8KNysxZjBJeTBmUzg1anNGR0dnSTNqblBaTDZkOHR1dUxaRUJwSHpNWmhPNUVGdzFTYUp3RHBzbUlnNmVmdWFLMG9MM0RlVmRSVzNmNQo4VjZGaHNyTDJzZjJRZXpHeEZmR3RyNjBSVTlMUm05QXd0Nnl5aEtkUGFoaVdhVU1pSk5uUDdyMUhKKzNVRU5QZkpFQXFXVVNOcG9wCndMalpibzJUM211T0FKMDI1Q1BRMklURWVxbzNUN0RUamFoeHpRM0x5TDg1OVFzV1dEejEyWlNjdC95eGpHYTF4MDFmRHR3c2dudjQKM2E1OE4ydmdEc2krYkRZWGFzZ3M2T003bVFrdFZnZTZKMnBaWkxUL3lPZnFMbmNGT1RXZXFnUXJRMytLbVZEZ2g3bTVRQWxiTmlRTgppYmdoQWdNQkFBR2pJVEFmTUIwR0ExVWREZ1FXQkJSVXBlSHhQWjZEMklFN2l1WnhROGNtOE56U2VUQU5CZ2txaGtpRzl3MEJBUXNGCkFBT0NBUUVBZGJQTnIwSmlxOFArUlVjRVQ1b0RPd0lMYmZoUll5MGh3SkdSUys0RU16QXl2RC9lOXJYZjVUa3hqbGRiNHAxTC9oSUkKVlFCY2R3WnNXMmtVdDNXZU9ZKzJwUVFsa2NIRVdZVmFRR2dNUk1VSm9yYlh3UnhXWHZSWFNzZ2Ura0xlSk1ndFlKZHRMeE1VZ0JyLwpjbDVFeE1NbFR2VTA5bHJPaTlWWWZ6Zzg0ZHJxbFhWYkZXK2k3OTU2NGNiVGM3TWNxdm1TZW1jNEQvckxVbGFUdXBNa0k5bkJXOTlNCkFESnNqZ3VnbEl5aUtVR3dpbnhlWFh1U2ZtcGVrMTdKeE1TT2ZVaHNOcDdwbUM2YzBycE52THhiTHhOTXBQRkNSK3RYWFcvRk91ZFoKMjFwSUVJVmNrbjlCVEZzWWxVVXBYQkw0a0dZUlRYcXZIbkdwVk1HSlNNVWF0Zz09PC9kczpYNTA5Q2VydGlmaWNhdGU+PC9kczpYNTA5RGF0YT48L2RzOktleUluZm8+PHhlbmM6Q2lwaGVyRGF0YT48eGVuYzpDaXBoZXJWYWx1ZT5LeFZCcXVtQlkrZzdpaEJrdis2Y0ZxWlZ4MjA5bXE2RVJhYVBxYTFEL1phVkgvUXVJM3JEdGt0TlJueWordnRnRFRKQlpUdzMrSDIvSXFUN3ZuNnR5MURzZGhIdTMxdHlyTnZNVER4bFd2a0ZKOUR4Ti91YlI5bW0ya2ZzbG41Yyt1WXN6NGhBdlQzVUhVOVd1dzdjMkttUEoxTjZxeDdaOXM4MlBUOFNYU1B2L2luTHRWN2xnbkRnVnNQVnV6WkdVbHRQdG16RkZ3QWlUUTFXWjloNTQ4RnNzbml0NGdJUm1NMytiZ1FsK3pCam5VSG5qVEpEN3pNNHdhUVJzTlBINjRzYmNzQTVod0tXWUoxckVYZGJWK0pad0MwY082ZmNXNERWRDdrNlFnZGdIN3NaMms4QkdiZndQczhwTFBSZG1JcHdoWkUrZVZOZm1xYnV0UmM0WHc9PTwveGVuYzpDaXBoZXJWYWx1ZT48L3hlbmM6Q2lwaGVyRGF0YT48L3hlbmM6RW5jcnlwdGVkS2V5PjwvZHM6S2V5SW5mbz48eGVuYzpDaXBoZXJEYXRhPjx4ZW5jOkNpcGhlclZhbHVlPjR2WW5nUTFxWCtkNnJBbzlIYjRhdm83VFFHK3RSR3RyMUcwcy9YNWFwRWpLZkRLQVRoY3RUVUFXQjVraXZzWmQ4ZXRPc3FDNGdGWjNqa0xRbXlpVUVqTUFOUFRLL09LZEZOL0JycTQ2d1hISFlibG9INkR0cVlLdFRsVkNEQUQxUlZVS2lVRForR3l4bUNxUU95cFpheFd3OVA4QmdUV2MyamFoOW1xOXl6bmIwaktNS3BlK3FzU3E4YjdrZ2dkaVdsOGtiRmtQZForQldLYVlFYjFQbkpFSzNwV2dGaUxmL2s4cTNITzNjOUpnNnM2YTJiemExTXhnNnBuY2hSaUg5NDJKdzRBQTJHOGlnbGRpSXdJVjRFdkhNbTZ1cjJUelk3eTkxblNoRkNybTkyOWtHK2lVMWNMcjgxazZFVDZOUHZoNUgyZityaEhaTWZQMFkwQ0xtZTIvaC9TRzJzWjYxWEFtZXRtcS9ZREQ1Snc1bndkUXpvdm90WXNVSHN0K2lQNTdSbm1JWDZrMDhmS1RncTdOdEJmUFYrU0tGcTg2M1ZGeE1Yczh5TitBUU1QcGd0U1hHUiswVGhOVHlTeXk2a2FnNk1VbzZvSCszd0YzY0VNTTJlNXpIRnhndElLOEFROENxUlFraDZmOEU4TkE1Y2dSek9JVlp4NzZ4L0xDeEFOM05uT2k5VEZsSmlYRk1UZWRDMmNpdDM0OVJLZHJvTEFWZWdRTGVqcVkvMXpKN3JWeXBONXhqS2IrZDRleGhDdXJnR09VeXpWYStRNXFXRERvYW5YR3ZCNkpWbmZ0clNsNmJhN004L1R6aVBIMUxZOGJwSm9waHdXWGtmNkdOb3hLL1krSk5Gb2h6blJMREYraFhvUUpYdHVkOVNyM1c4SXcrVXlnWkNDSkVGakFTTFNYeTBZeHZRSVVYcHUzWkcyM2VzS0NjWTdhRTc0bXZDOWtRRnZ1aHNUaEc4aVFBa1ZrRzR3Z0U0NlkvejRrOHI5Ly9va1NoYitFOU93VG5iYzV6K2ZZZUhXZ1JtdkFMY1ZkVnRJOUVwMy8vUmdoQUpuWVRXaUNsd2lLbUowU2VLQ2Z0REhBQmtVVHg2Vi9SSk13QzM0UzQrNHV3L0pxYldYSlBoMU1YaTd3YVNCZnFLU081NXBCa1V4dkhHaHdBQTUzbHliNjZKcWVVRnFpanV5eGFzUnk2RmgzSFptdTVQRzYwMEdtRkNlL2ZrVS9ETUxYVkZxbnRJY2pvQUpxZWUzcWYvL0lib2k4UVIvSGZoc1VjSGx6M285K1BMTlA2Qlgra2Z3Z2xUSWRRcHRTcm4yblZWRUVESmFjbThrRUw1eWlLc2JSMk1HakxLQ3pzUVBaQ253OHUybWlVT0tZMEpIRDViRFRSbkw5cUYzcUg2R085QjdQT3g3cFE0VFRjNkxtTmFUZG5oRVdlMXVGQUFrYnZ2NjBsNkx0LzB0amJnbkQxVXZoYlFqYkkyNy85cTZoK1l1SSt2MnhvTFdIemoxdkRVSlpRUGhFVXVZa2loWUlqRkVvT1JyQlVzS1hlZUhxOVFBcitVYUdJUEZXWE1UeHZiSUtQek1CaDV5aXBzWWdySjdjaHpIUzRWN3BUaE5JL0Y5NkQxU1pTNEY0SGhWQnBPT1VNR0JlZ3M0elFOaHM0YUZOTjlCd1hYZFpody9vTWJuYk0yYnhGaHVpZHdNUUJBQ2tWdEJabUdRbVd6QjRqQzRYY0dxOG4rSTFhckJvaFFhZkNhQXYrNzRyQlFOSXNKWmtlb2JnREdZRWoxdlQ2bFlWZDZpRU1ubUNxVVNGRytEaE9RMVZieWcvSUcxUGJwRDQzS1EyQVozSm1aQTRGcmtnKzRMODdZMUJUa3ByaWx1NXhaNGlHQW5HeWNwRXZvdXRFa3ZaWFlkb0ZUVjgvdWtkSjVsUDdUTG1GM3h2M212VDFJcVBBbWE4OEE1L2NzL3kvMFVBMWI1M3BTWGdhZmtITWJ2d0F3QjY0RVpQeE1EMWlOU1dDclBtMHNBbkdaUTRNamdpNk53TXlqM010b1VLaFZ4MG1LV2JSL0pIS00zWDkxTnZKZVZBQVNwc29QL1czU0w5eXUzbUZCeVlvRXVMYTYyWEN2dGtyTGZTQXE3Skw0VGdpR0thMytJZ0FwUUZDVEFzVWtHYUpUK3hpWXJFZk9ScHQ1bXF2cUVxeGRILzM5Mjg2U1ZwLzlDVVQ5UGE1WFI3eXhkTEQ0azlNTXNMYjUvSUJFd2h6TkRvcThtTlFvaEVwWUgrMVhxdWJkYjdXcDhwdmFpOGdiVm5YZEtOczNNNyt2SEVGc2hRNXlBakg4eWE1ZTJnZkd5anZiZkNVUEorMG1DRmlyMHhaQUo5dEF3Tkk4d3YwajJzVVJsR0tEZlpLSWV0aGMrTkpDRVJMditMR1dtQU03L2xLY0lDd2lnNWFiNllETkpVamJ5cUlWOGpaTGd6ZHVzaVJ0UWVZWm9FUlRNc1diWDJrQkUvN2txQWh0QTlVQjk2SmppVzFoS2RJVXRqM0thTzBVSnNvWjdCN0g5L2JHdlNzdWRZVzVCTWZoYXZZc3U3Y1d1S3lQYlduT0ROYklrYmNoTXFWK3h2SUFGcGk3QTgyeVBWS1FIQjRuRFhsTXJtcVJlWS9HdkNhWmU2Uk1lbGx5SHU3Lzk0RGZtMHJYM1NodHdrZkJZSVdqYXgvclR4dWNKTTFYSklBMWIyRnFrbEVwVHJIcUtWSW8zK0V3eU4wNFR5cTFxUW1hRmFOaEdNM2Y2RDhzd3J4ZFltRmk3MzQ5VHBtekFZS3E4a0Q1T2JyVzAvc3hSeFh6MWhnOWdJbVNuMzA0Zlk5dG9aNXlxNGVuZ1VncGlKcWhQTmRscnpkclZJUTAxTlB2MnV0c1JKeW9XRksyWFYzWlJraXV1Z1RyNFhCa2JaWXVjeFgrNmlmcExLQ0JUaFBhTlQzaHUrUjFRMzg4b0JCbmpraVRxT3lUZ2FlbkVGaEt1amFvMUNnVnpySFJvbE1ocWorME5TQzZTZ3d2ZHVsSVRsaktOdldrSTE5d3g0aFNMVlY3OHVnOThRUWR2S2hhYkJBSzU3L280K0d2bVNNejY3TitMdlgwamF6NTBGUDFVZkNOWFBUbHE3RytQK25SbFp6eFlxcGJKVmUzbnl5S3ZmSGRVL2V2bzc3VlFzc0RLcGt0Tk5yVFcveWhFVUhpSTRYLzB6alZDamlMemJUTEhYMUQzSFpObnVFRWpJV1ZqVGVEYWg0S2JsbnV5M3huL3ZCb3AzajRBZGxXcWpVOHV2Y2Y0MUQ5UGZONHRwWENsWU4yUFVUVUltOEFZR1NTVU5LNXNGL1BudWE1SjNPS0xMRGNtUTBIYTdpN3B5YTUyNHZXbThJNFJiUFJKZk1QN1JqOFR5b3MxSFRsUVJWVDVETUZieGk1c1hHRXdyZ0JLNVAvYkVqM2J3eXFXZGNqbmNFUngxM3RZYVdNVnllYmFPN3NTcit6QU9JR1daSDhyeHlOMlhGT2dZMmRORzQvc08zaGlhWHd6TUdJNzVLZjBZdkM4SXN5NGZaSmx0Z280U0IvS1luODU3RkZsTVljbXNzTTlZc2gzSWc3R0lmVFBNTGd4ZWJ1eW94cUpOSGpBS3BhcW5PSm44ZDNPRTZKTG5LTzNOZTNuUzBkc3RTei9lWnE1TVFoMzI5aTFVT0FnRlpGazFjcXUvcnN0VnRUdnlVOStZalZ1UDBWN0tTSTA0Z3J4blBOT1ZpdG05Z24rZVlqVFNGZERkR09tanJ1a1FLV0dVU0RBajZkRVpKdTFPWFhWZ3U5cjc4czhCd0ZybnVGT1pSNTZsYkg0VGQ2aWpxdW5DZFduT1hGbHpsUTJaZy8xeDJHeWxodTNPTldLQk4yNFpZQStOQTJpamkwOEU4MXN4Mk5FZTVTUW9UVWpMaXNoY3Y3WkxwMWk0K09Ma3FpMGFjZ0JUdzNuQ1BqaERWWDlKR3ZjNWE0TXJtdTQveFJVY1ozdnNMSG1mbFhLT3ZnZ2FYTWFsSjlsMXdMSVJod2hjRTNMQVVjTGF2bEYvS0JpUWtpa0ovQXFxdUpCUVQ1WnVJeGtyb1J2a0o1ZlBGRFlkYXJ2S2JZNExPbUZzRjU1emhOaUpQUUxueEpmT1JxQk1KRW94MlVQYlVPRmNYM1VvMkQrMEdPY1VRRDNlWnVHMDBWMWk4WGdoaVFjdjNJUnZ0Y3V6QnB3RUd3YTdHUklkK1kzbXRGbW0zNnVmWEtQTGtDZXdvTDI1eWdYSkNOR1AwbHJ6ZTgzR1BmMVlWLzFxZTJZL0ZhRUJiYmZlV3R1RHNNZldiTEthZ2JYSDN6S25Tb21LVGFRTUU1NFN2SnE5c1Y1UDdqcGc2TnM3Ni9aZkg5bC9COUV4eWs4L2VlSmxOTDMwZG1nNGZyMlFUQXFEbEJMRUxmcGU4VG92UUZ0NWtGMVMxdG90c2lydDNrSm0vZ2hQbXVpQUNJdTVic3BSTllrTFZwL2QyNG9td2hvSjhNVkMyd0VlWVJpdGtXcUphLzNSODl0ZWVxa0xHdVgreHhwci8zdE10ZGNGemNobWtxc1pKaUg2d1ozR2ZmQ29UakNWK0tFRzBUSElxcVBDOWJOaU9Wa3I3R1ZzeTl1Ulh1R0NFRDlXZVpGWTJwSXVkUlc5SzdkRUxKbVBwM01hTkR3Qys2aStRcUtCbmFaV2tZcVRJS2FhN1pzZis1MlBkNGhiZ2Nkelh0RDl1ZTIxb1NoWmU0TVJoQkVUSkd5QU1jWTROUGtPd3loVjYwenVUOTlCUDFiWjhjbFl0cW5BMy9QY2d0ZVhzK3IrRUJlUW51WXowWmVkdkNOZHBCY1BMcFc5bDFOQ2hsa2hDZWc5ZG80eE1icVcvVDdvc0g0YTM0cE9jcWxyM2orYTNxSldmN1R5em9Wdjh0RytmQUlJcVZoeVNlNjlRNWdobThtczBEN1FmZlY3bkU0RmRxWk90M1pIR0NWZ0ljM3RORTVxWE4yUVo2Zld5MUY2UzZwaDcrQ2MzNVROeEpiRmpmaXFBRDErTGticGdUSjUvQVJZejM2L0Z3M1ZaQmpGRDlQaFZvNm5JM09MVG9MOUJiM2hGaVZCaEc3SmFkV0ZlWDZGVEt1WkxsWi85K2xyVm84Y25tbUFzS1laR1RORTNUM0x2RTZ1dGRkVlp4bzVOaUhONVYxYjlsTVlONFVzd090Y2E4UEk1S3g3Ni9jMnNhdXFoQW1Oem0wQ2JlM2dYb3hWS0FHSGxnL3RuemxJMTJZeE9WamFNVEZ3OWdISzNGMFpNQWJWZzdRVU1Hck1NR1Ezb1RSRTRLSFVaS29XQml2WUVYRk9VUDZFcVl3MzFOMWVtSUMzWHpCcWFNWHlwRy9XWFhSMmo3WmQyWS9ERFc2OVZyOHNZUjdTQzY1MUYxd01UUDdQQi9QYTUwV01Oa205NXk2TDN2YllsUHN1eDkrMUk3OWNLK2dqY2RxK0FjQWpOWUVsYXErUHh3T1JzS2JGbGxnaXpCWHdvQkxiai9DZmJWb1hhb1QxZWtkUm5pRmFteE9GVEJnMUx2ZC85c0IvWjVIeStvek5wQXY0L2hkYkQ0NUpsTUVGRStwVC9jbzRUUmZBSko1bDdxakxTUjAxNjB0NVlFRDFDMGxZSmQ1Q01zcWdvRG9DbEpYbU1CMmt0bkFRcDVPSGg2WGowaURQNDN3MzBTMWN6ZmNNMFNOYlh1aGE2TGt2R1F3cS8vb2VIaC8rWFg2TUVJYnpNdWlFMnZHVWE4cjlWTDUxNmJTYlN0cHBQMkpwWDV1SEtxdTFRRW9DQVptY1lLMmV6QWQycGhteWtWR1dIWUlKSE9sWTdXT2c1NkxRcVBuNTNBZXB2NTNKTkRLTmhUNVdCeG13SmsxNXpUMEZxSDZGL1cxaDdORGZHUEc5WXY5SVgrT1l5dUVmMWY3WFpxNlM3OG5WemREeTNZc05vU2RMdHFybTRManhiZUFpdFVFeGFpSURGbEovbTh5THFVdXhtbUdVNXgzc3ZsbHlkSlNwbTRmWjBIZGxBM2RoZDE0dG93NXZRenZSa0xMaHJzbFlTZ0VpbXZ0bGRVYVc4OHZqRE8yNHd4YytiNGtlbStQSTRPU2JLWlo4U2FPZXVSQU1XUmkzRkdJZENVZ2NyZExVc0VIb2RCdTc3TWIzNzZ4OUxsUUNMbmJ5d1M1bnYvVURaZ0VUL1VMWUdzUWxzNUFtUldaeFN5NjhYSVV3bkgxcTlYbEFKcitKVjJhamxvVC9XTHRoTE9kcUNocGhWNEc5YWtWajNRN3BBM2d1aDZWb0ErOWpVVlJjSjY4TU1XTHdjNVZPRE5pcEV6WDNGZSt5SFFYT0hzUHJXUEVXcXduTEJnaVA3QmNmbUEySU5TNHY4ODNjSWpwdGEzQTJacGduSldvdHRwZkI4Q05hUFZZTVNvbnQzc2hydVArMEVWcXR5U1FzamJIbWJlRHBUN1pCdVZFRFpzM2dQNjhUakh2NW52eEdpOW9NSWwwL25XcUlXZnRVNjJEbSsxYnY0cnhGQUxrZmxRdFM3MUEvamVPTjdrZEdiYittVnhkU3oxRFlmNGFab1IvNjZwU2lCY2s2WTdoTGFwcFluTWJHUDg1cDZtQ0ZGa0RaekdXVkFOeUVCT2tGV1QyL29ZWjJpYzZmSk9NTFozMGdCZTJTY2JRdDJxbzIrUzgwL0dVcWJPSXd3aW9YbllQU1pOWlRqdVZrM3NSQWdmdFB2L2ZOcUJnd0RxZThFNWdqaWdKaVJoR3JwcmVPWkNRQSsyL2VPYmJLQjhRc2FkNXpKWSszWjgxQTBoNTFwS2ZQQnBDaG5KMlRoYUZjcEd2TytuSVpMTjR4ck85azRlVG41RXhkdGNNN1lQT0tHZWRmUElJakZlaGZlS0ZTRXJkSDVCZ0RXU0p5K0FWNUdpalE5R0pCZUphUTdadFp5dnJZeEpvV1k4U3ZNQVZTVnFQTTVxcXRBR0dVMDMxaW1RYmpjM0tCaEpmYms3SGlXR3dsTDljc0FYUFRrQjlJR0M1enNCRUdIb2lCeGFycEJhUWFiaEl4WHFYL2EycmlLdTByVjlnZmhaMW9Cb2t5KzZUdDFpSFIxdUxwZnpNendoSU5ISDlrVURTQ2IzRk1QcCtTdWpjTC9sYTlENzJBV1E1VWt2aGZxSmMvZE4xbkdOSGh3ZU1UT1cwT3MweDFndVZ0TnFJS3p4THJHT2tIbjJGYkpITzAxV252cWFPQmhxc1hkL0puMTU5TWNlZThLQkNialFLRHJwam9jRDlpM05iT2ZFM2lYUldmZCtiekttT0gwUWxEWWFYMVZDaGxZenNKbTR0TU9OQVdoSGtFQTc4TTVhbXhheStsREkwU0ZkMUptSitUaTl3ZEtaL01nS1hpRG9QSXN3VlVTTkZMbTRYY0hrMzF1VmVGb3BHMlIwRDVoUDVjdEpPQUsxMG90TGUwQ0JPOWNsWTBwODBqUjNhRmtVaEsxU3RpSktBYWVqZHB6bU42ZVJtZ1o3V0p6YjZyc2tKbFA3akRWa3lXQ25KZ0t0SnhiMVNwcXNORW9EbHF1c3d6WGV3OGErMEJEK05jY3B3bWN2QmkrRW0xMndkVXpRTHRycGdBUStGYTl5aXBmYXNKeXd1YWoyS0wrTkIvTzV1ODJNVnNsYXJZM3dlK3NPVWNpdWJWcjYrMW8vMldBTThHSkRMa09RYllBOU9uc2QyV2FJSStyRU50T0d5ZXkvakJLWTB3UTZQSENhSWV0QzdoTE85dDBYZ0h4SklOZlNyQ3ZiTUhnNjhBY0I2THlPeGdZUWoxT0svOGdxYUVRVDNMaTlKcmVNTTFxVG1IUHVQbHFLU01FdVhqVnhUZ0crZDVwZks3akpEbktWZzhueStmVk5Ebi9IZTZvb0ppd1lUa2dER2RoeU9BaDliVyt3NDRRUm83d1h4K1RBR1FTeFc0Q2t2andBVmRlY3dJTDQ5MTgzTkRKaUtFUTRuNllaZHlVVGZ2dGtsbjhNS2c1eVR4TVE2c0dBTVhqTnRtWnlnd1Q1SVlmOTNjYTdHRTBJMEQxWW9lcHFjdlJEanYyL0tDTmQ2ZXpJVk1JamlkSFJKYXYrcnBIWVVyZFpGWXZuYXNTNDRYZENDazBXUWo0cldZMjFpNHM4UWNXeHVqTTZybWV2Ulp1elFqYUNyREo5SXNaNkFYaW5ZSFZadFRPTGNlMmRjYkVlVWhKWHlRZjZjMitubnQ3QlhvV1NpVEFOcEVKMnlzRnFSNzlOZmJxcDRRTXFSaHlXa1ZSOE5KQ2NIa1BiWEkzU3ZocGo0aEtRZkxlbTJOUlBiQlZET3pWYzd0MFgyamU0eEY4KzZwRzJsVkdsM2ZldjVXOHF1M00zVlpJeXJkYnZBTmJ2RWVDemdBVTcraFFNUUI1RFZ5VllsbllFODBUVU5hZEo3K1hDbU51Q1QzY3pWcFNkYlh3dEZNcWlNRmFMUDlLV29nWnlFeStrM1JpUVZHTXY0QmxRZlRJQVR1WDgwd2JOaENqTURUaFM0WG5PamdFK1hCeFRrMFRDR3FSU1RoY1VLM0ZTL0hKR2FZbzJCblpLT3VQbFh3ajMyU29VblFGS1phWUFPdlZLRUdoVE1xYlQ0dkk1UXU0bU0vUnNFTDdQN1lGdTJDUnFUeUJweHRIdmlESWlRQ3lIbGdsTm5SVVFrVTgrM1JOZ2h5R0p3Z2NaRFdrbHJEYTROUTNoc3NzOFprZysxVW5KYk1XQ09kbmtzSG8wQzZlQmxwWHNETzI5WEZ1R2VKZHRycXJSMjErT201QmVBOURoYUZhRTV6QzEzMy9CZGNheUNYM2k3L3hkR1dTa0hicklCRjNWckNXbVdlYUsvcW5BbTE0UkpZQ2JzVXJYYUQwRlFzblI0L3gxYUdlZVB4bEM5aTBhMjdrUERBWnpvWTFaUWdBdXZPWW5qTEd5N295Yk1tYWEwVDZITVhXUkRtVWFwWkE1QVJSR2lXY1J2WUNDeEJzWEN5b3A2WFFzNTl3VG8rek5RS2t0aUtLV0Y5b2o5L2dVRTZOUTYrUGdhRlFUTzhsd3ZodEY5SFcvd2JFdk5mUUhyUXAwdGsvaCs0Tm9WeEpoS2tpOGQ2bjBGWjl5dlVpakRBMWZIc2szMnhCM3VhQjdQVXRRUmQzREsyclBCUjhaMWtZT1hXTXVyRDF5TkRkei96ZHVEa1JYeFY2UDBQL1VjcVk3SitGREdtZ0pJSlEvTnlocGlXTEE2b2dyMGR1ajZUUzZCcXBsNUxCQzNrR2NNNXB5SmUxcDg3UnB5NVdEL01BYlNyMXYwWjRVVTlMTkpGOGhXLzZnODczWExpcEpIbThWcDZ5UC96NW5Ea2R1anZzTjhnSW1XdERwV1kxTlg5QUlWSzhTdTRZVDBmbHFQZHpISEF6bFZUREpUNGZwK3ZiUTZ5MTFuSzRnRnpRZFFxcTBDN1Z0TjRxWHV2NGE3S0RMNW5qT2xCcmxZcEdiVmR2Y0VoRmlCTE0zeUQvZHExQVJxSlArUkxqdE1raFF6N1hXdis4Z3lSYTFBUHpSVEtTWFJBZStOVTlZaUdrTFB5YjFBdHltQkhsY2ZHWmRCUTZ4cFRPYUlRNnVYS0VVNXJPdHFMYlEzZUxYR3BTcDdGeW91MkZmUWtPeXdOWC95dUNrVWVLOENaZ2dBMlBieXZyMHllTkxrRzl5aGVRNis1VWJRUGRLWm1SamNDSjBmL0tOQ0QrNXZEeU9CUkgveTNIdzhUaVRwYlNRTXkzaXYwTXluSWpWOTVUN01ZOUdvSlNoUTZsTVRnRzB0WmVyd0RNVy9oUmJFaFFwTm1keWpFYUd4aGN2OUFienRPaXVja3RGeXZYUlRPUVlDdnUxYUJBRDhvNjhTMkdxSEZ3b2RXMWNSNkliaVNyQ2Urd2ZFMnFUaGdtaWVUL20yenNYWU8xNi8xRCtsSkRETVZPRkRwUTF5YWcwcG5pZ0ZhajNrbkkyenJvcVgwY05RMy9CdVZNTDVrODVLWUxRZ2d4aXd2VFE2U0NwRWRxYWFNQVpjd0MxektvRU1YbFlTYWh2KzYwTXhlYWhmTmMyOEdSTW16dkZBZkJ3S2g2YXJSbzNXTTNXNDF0TGt6bjVFYWFpbG9SK2xoajV6VGNRK1VTZHJBVVFtcE9ycndTVStjUERreUZOUFFQeUVNNkdCUXcwRUs5VERUWmMzOUltN3lLOElqeXJFMXJSM0Vud01nK0sxZC9BTXE1c0dLQ0FkU3BKaWs4OWpnUGpadE1YelZkbEFyb0pYc3Z5TW16Mmw3d2tjTUQ2OHVMT1J0WUV3Y0Y4UGR0aHJ5RTZVcDMveHdudDcrNkZrWFMrZHpzSVFzV2c2MUpObVJScndjOGpad0JDMFQ3U3RIbUV5VytCWUh4bWlQTWZEWmVocnhERVlseGxtc3l3a2pQUTh5NVFDY09lSTRpMFBYODJ5QlFwaEpDSm1LT2VrTTgyNy92TzU5VlphTGttcE8rdUY3TU1iQ1dPYWZzY3A0emZxcWNmclh4d2tCYXQ0OC9yTnJ4bHhMeWoxZllEcWNPVUNyQ3U1aUhhcFArWTlycUwweURvaGliODhIak82dWtyVHdjNmtDWFQ5S1VFNFZuY3JqelkvMDJXYmxtNysxa1JrZWkxVU5FdkIycSs3dForWDZzamVHSEZBY1ExZTdzQ01mYWhXYWFzU3VUcnRqc3V1MndzTlNGbTRuRTVxMDQ3ejAyLzhHM2lSU0xzSHp6TFBFTTNEeElpY1ZVUmpUTWpadFV0WkRzYWhURTRPVmRGVHkycktJeHI1VjY2MGpsZXZ1enQ4VWpGTXd1M1d3TUdzZGtCTnlta2pqUkVkT0tUZ2NsOGRLUEJJVkhnaTNUVGtOWXZmTnYyYlVCUkt0SEZpTVdWWEs5c3AzTi9haVJ3UmJLWHNRaGkwNmM1NllZalF5V0s4ZEJZd0JQUUpDR0ZMZlRJRXUvYzZSbFJ2VGlmNWY5TklESWlYN3ZSdHRndVFRdy9neXJKNDd6ZUN1cmVOcDdVaWZ2N08yeGdwMVMzcWZwd0psaitWUVNwMDFmK1NBRGJXWkJSbU1FZ2FPL2QzeTFsU2VpbzJmdUZFMld0d3ZXb0xvNkJFcEw0cVdaMjVDOCtFTUoreVVVdXFxM3kvWXlIcE9lVlZrbFphU0xzeFN6OXF6NXM0VnlQK3FFS05HMW1Fd1hMTDY2bVhyaE1VSzgrcjFjdFFnTWJ1b1VRZUxXVXBwTVRVS2dWQ2hUbDgrc0dUUWpaZTJZek9sQWtFcUFnTkpDYjhWZm1sRU9HYVluY0xUd2dpMDVuTmRJRW1DOVcrV0toTUxFZHN3SlA2WW9leEpUOW4xWmxaUnJNa0VmbzBGcTJhcjNyejhtZkdadlkydjYySUluWEorQ1gwbmUrdTBIdkxWQXl5OE04ZytYaUV1V3FjQ0VZTXVRQ3lTOUtOSm5FQXZwbVdTcm5JandWdGh0ckFTRktGMzBnTW5lNVBzZ2Z3QzhYbWtzV2VYQ29FeWU4N3RhYm96azNVUk9yeGRpK2xtbGlBODUrbmpvemhkM0RsZEovOUVRVHp1N1JOWC9FRmFGaDZXSnQwdmZPeFI5YXdmQ1RrVzZSQVRVSS83NXV0VG55ZTZ4UG1kUTZjdSt1RDhoZWJWMGhjMmpJZkluSHJSRXRlOHF2dFdjemZhc1NXNU1xNGtwbHlleUF5YVhKemVHbXVodmc3ekdIbmFtbjh4ZlMzR0VUUDRDcWVHWkVrSkdtajhEZU5JeXpuRGkxb3QwU0VMak12YVhlS3I2WVhEaWI0N01tcWhIeU90WWNpTkQ2YnhRZ1haMVhjazlhbXBQQ04yMnEwTkpZY3MxUTQ2L00rVTVEOWkrSVh4Y0daR0RMaXhEKzVOeTZhQTU4V0p2SU9tUkZtN0lHdmhYUVNzSkQ5VUxwWnVGemxNbjJCSytyQm5SbGpEYXZHTForSmZ5QnRKOU9GNE9YUHJGc2RPTCtnM2w5MlQwWDZVV3dKaStpU3JlRVFsNTMrNE9VWVdnNEhLRURKNVh6RU5obGt2TTB1TE1RbjlkQ3RyVGtxRVdyT3B4UTd3UGZXOTRvRnQyZWNiWkdrN2ZNSGRIckJzWTdUMzBJWEJYeW5wUzBaUGtRWEdqalM0aXM0YlNJMVNnVU44cTBpOU9nSHBLcUVvSU4yV1RJN3VLMEV5eDFtYytVK1N6L1NxUUdENENtcEs0dE40ektOcENzQ3BYVmMwTTJWcjQ2Z1VwdElPWG5TRGJSajdHamdURDhtQk9lQkVmSFFZdm9DNHQ4Q2J0L1ZrNk9FYXRwZGtzVy9qT1duTFVzeTM2NHJPbW90VG1qQ2VRSTEwbXo4TS85YkJpVmdBQi9hOHhVU1hyYytTR012OXMxNEFWbVFDYU81YzlCMHBFT2tNSjBIM3RvU2tyZGltcmZIR1kweXRwVUt2NjdUTDYwWjFiclE4MTl0UGJWam8wVWo5TklUV0VtU2xCQWhSNGVTTDVyZEZzbjlJMSszb05UaWFaSGhMQWVFNVI2TlhPSEtFUjI1ZWtuMFJMdE9NYm81cDZYSXpiWFhXTTRLMmdPOHJleStNSkVMTEM0Y1ZsR2w2VElScDBQU0xKcnVlaThRem1sVHViVkFSa3FtZnF4UWhMN3dYSk5TL1drbUIxc0JuTlhKS1ZkWGVSYzduS056S3B6Ry9rYjFhejFLY09xdm4yd3pBalhMTGlRamdkR20vYzdGeTJjTCtwalFmaDE5dVlVTmFRTGdvcjIyTHVpNkt3OEoyZUZlbXpPbFdEbEJMYVpZc3BQQUI5RHE4bXY2V0JKdTl6OGtGSUU0clVQbmtxM1dRaTRmcGxTbGhQY0xETy8wc0pBb3hvZklFS0dGWTV3V1RtYktSV1ZBaTFqMmhkbVlVNlBjeGdoYmFtTnV4UnZWUzkzbERBeDhsYTJVKzI2dnREYkhOUmZWWmJ0Vit6MEdOSWR1ei9FUDZxRVVHcGV5eE12WFN3QUtQbXFobWtRcVZUQk82MUVOc05DTEsxSWNqcWtweXZEQlBkN0ladzg1VmNVWTFLMzZsUkhJanYzREFxS1F6SGlwYzVVVFNWdUorWG92NzNucG4wbjh3eTh2YVJtc2lsQ09xVXhYN3ZmeDJFanpGRkYybVJyOFFLTk5jYzFUZzF1SHZCMTR3UE5YSUpjR1V0OEFxeSsyMWpFa01DZXdlV0tPaTlNeGhxSTd5bmVlOGpSVE9rYnBONWZiV1p5c1lmTlJrSUpuYkx2b2wwTkxMbVVkOXRLeXZmTGZJclVLbzh2OGNEN0ZZazYyRmZmYlhXVm42NGhWNjlncWpoaGhPdzcwcnVQWExiWmNEeXZtUmtEcDVCa3BBZ2FoREtxYTNtdytpTzFqcmM0RGg3T2ZST1pDRlVGTnhuUVFnTi9rcmFMNWlOc1NkUUFFSlc2RmxraGMvcmlOR0Y2Sy96RzJOVjB0S3I2VmxmakJiVmlNTVhBS0pDUTZOZEhjL0Z6aGEybFBZdjBRczdSYWxYVHR5K2hUTEZHQzZuY2lpVVBROWFQaTRPSjlzVzhpaVJST1lMcWtRZnRzZFhrRTBEcGVjdEVrYXRRLzVGVW83VG5Xak9IL3g4R0orakpEb2grWmlOTzBwb3VoY2Y4K0FZdE9KWEZsUlFVaTVSTDk3RDhWVm1HeVVwNmkzcTQ3QnVFbHZkMmtHR084NERKUTYrV3R4VEdnS3FWeHNPVUpqOU12QXA5NXVjOVBNS2JaOEJ4OTVrY3VBTWprTDJ6Rk9zNWdybnlMRjFIVFM5dlNWeGhqRnBXL0xwZFNtekVmNjFWV0hFZzZaVXlYUmlZYk5nQ3ptUUR1ZHlKUDFlRHJic2RxNnpTQ0ZWMUdBQTVFWkxtcUFueFJyS2Rwd05iYkkzdXNmZnZLNVN6SnZ5MkVOeC8wNm9rUUdLM3o5R2VqK0dxZisyUVZCamFuSDE0WHphRXNIVXgwUE1ydjNmVmp3NHBTM0U1NkhtSlZSUHNwMlBRSXFzUHFMWU9mTU5vVm4yM3FDYUJJb04zWmxYL1RMd3JvNEgwLys3WDZORUVVWXFpaHJsZDc2T2RCT3AzTkcvWXYxWFVWK3lhOS85UUY1UmlSRXpIQ3VCb05GVXZDYjJsV2FPY1dLdFNsMU9wd2pRcUlKRDljcGdMbHNjODJWb2NFd1JsdWtJUG9iOWZYT0NqL0Ryamh3bG5tUThRa3lqWXVFQURXbTVLQ200Mk81eTRyY0hrZFpqRi9JeWFNMG9icUUzNjRaM1IvenZsQmF3ZXE5d3MvTjRwdkp3dmtjWVRTaU9yT01JNS9DMWE4TTY4Skk3QStHRmJOR0NTQUx6ODU5Q1Q2VGt2aUpDU2hKUmI5TWw1VXJGdldrc0g3QTZlSnRJU2NDd3BjWURzcVRWbjFSV1IwRTMvTDlkN010Ny85amM1NXRXcFBEVVJQSFU4MlVwZTNmbGptS3FkcWdqU0dDMFdYRWNkcTVyc1V0OStCdlk5RGFIbnFNQlRGNkd4N0FHRndvYmRBY0k2dXpSMlVVNUxaa3ZyKzhvc0owM3FpV1RCL0g1WXF0azlYYXYvUWdta0ZmZVp4d3MxaUpwSG03c09PMUdSQmdnbHYwUmdPZ2ttWk5vOGUwcDNCWmw2UW1QaFo5SGtEb3FUQ0V2VzNCVHJHU21XSzcwK2NuOWovR2N4TDluRmZNcmdUM2RjZHAzYlk1dVA5MjVIMVVjblhQUlRuM2ZlZU9FTW1naGZNZ0h4SWZxNlUwcEpMa0pYdVZiUHdiaWY3eDNydDJvMWNhMU1rTGRGdkFPWjdrQXJUbkFZcjdPeCtsOW5vdVBLVzVhOE56YjZxM3lkZGt4SUlkTnBEaXZBSXFaMHUrVlVpdzQ1MU9RaWZMNnJpamxwN1NueWlPMTltYkw1RWNnMWFjZkJLZ2llRW9wd3E1VWlGYXNzRWNNK1p5REZaMGZFcHN0aEd0MjVSSE5weUg0MHNKNHUweUVYVHhGcVlsUlJXYzdDTTFnNjVROWZod1g2dnRmakR0ZnN3d0Yrc0dWWHJtalpOZVZpelFPVjlvb2ptSExwMlNYc0tNMVI5SC85L2ZET1owcXhXWFVBbXNGWmxsQVU1S1FOVzhtOXBZRGZnYVVBYVZ5RzBlcGpQMXpjaG9ZcVh4YWNHKzBTL2RKbDV2UjdDZjVpSkZHVlU5WTMwdUdhUEhPZzdSRTJnNkdFK0RQdHZPR3AyQ05zSGlubUtLemlhZzJ5SVIwUCtYUldtNUZwcmlydzNtbXJjSmFoT1ZHNTJWYWZxcytUMzM1dG5iKzk0MEp3cnZqZGcvQnFHZysyOEhEVzJnUmI0TUZBRTNabWRBMVBuaW1JWkNmRDZRcGRBa1ZyalViTFc0SDFTY21zMXc5U2dyVU1jcjA3VEhlTmFUMjc3MEN0bDZCMmJXOGcvRlpCQmpsL1MvQmM0d2NZY2cvWjgzdndHakY3UkE4eEgzS2JqZ3ROc0wwbVVUVCtEWU9UeVNremRnU2VXM2hwcHoxNmJpR3pjY2Y2UWdkVWprdkgxU251cGZWYmsvajBzMmkvOTZFTlNDR3hBcWFOb0tEd0YyQ2VzNGFTNHI5OWplQ2NmWEtjQ1krZkdxcGlNWnNBSElkQzBYUnQzRk5zMFlTd1JkNk1wOXgxcG5IcWhJdTZ3aXgwZUkyTVFtMWxpUzJsaG94dUY2bG1ReHJCNnRuTVczM25VdTdUcHhLcnkzeU5nY0xOQnBKUUVhL0dSMjBaZjBxalFwMjdkRlkrZGQvSDVSdWZ2UVZXRWxsY1hscS9PN2tBcUFTS2FTa0h0Wk94aThwSWdWbGdUUFdkVmZ4L1B5ZkFDOVFObG9xTlN3cFlSU3BBazV4ZTAyM2lrNmhIQ1pxc2dXTW5MbURMZiszSDFLQUdiTEl4c2ZHdFkvTXozd1R3dEtaWVBJUTdtZ0tUT1BTaU9lYkdVZ2ozN1FMNHc0SXZiTXJTK3FCOExTMGk4NjBPT0ZtREZWYUMyYWE3anZ0QjJHbVJHQkVSaW8xMDdRZktrYzRRYjBTOXAvVmljdjAvWmdaQmtFKytKK0ZNTGZIcmZ6bUhQVE5EeVRtZDNJaG00eVFNVjZTOGxiSndiUTZvd1BOMnE1bUdEaDFpaGlhVjdsVTVwOElRa3BFNkIwRHQ4OHhicUdsQmFPYTJqd2hvOVNDcHo0Q0NuZkhLWXhiUHNkZjB1OHBkblFpZ0tBcHlpMTBLdUFBUUM4NjJWOWNXWlVPSnBvekdpQUVvU3Z6YjZwTkZVRFJ4RkxOc0dObWNkZzFDREIrZTRHM1Y1WSs0VGpnRFA0a1BVNXlkWEhwR3VrWXBOMnRlamVJNTR2SGZtRmpFVjZPZG9JMlJ3dGM0YVZ2UzFDQnVLdDdWeFZ6OGJxWlhJQjdQalJlYUdsZnJuaDR0dkN2YnpKRTZwZklkMnk2RnBDejNDMmlYaHJkWXE3aldxN2F0TkttL3htVnFoZUc5aXdTbmVNb1o5S2ErQ2p5UHlqY0JmblY2MzE0aDhreVZUUWlJcHB3bjFENmxIc1htY1RqdjBXWmRka1ZJbEUrQmMyVlhFdTJhcitZQ1E9PC94ZW5jOkNpcGhlclZhbHVlPjwveGVuYzpDaXBoZXJEYXRhPjwveGVuYzpFbmNyeXB0ZWREYXRhPjwvc2FtbDI6RW5jcnlwdGVkQXNzZXJ0aW9uPjwvc2FtbDJwOlJlc3BvbnNlPg=="
+                            />
+
+                            <input type="hidden" id="nodeType" name="nodeType" value="Service" />
+                            <input type="hidden" id="relayState" name="RelayState" value="MyRelayState" />
+                            <input type="hidden" id="sAMLRequestTT" name="sAMLRequestTT" value="PHNhbWwycDpBdXRoblJlcXVlc3QgeG1sbnM6c2FtbDJwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJvdG9jb2wiIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIiB4bWxuczplaWRhcz0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9zYW1sLWV4dGVuc2lvbnMiIHhtbG5zOnNhbWwyPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIiBDb25zZW50PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6Y29uc2VudDp1bnNwZWNpZmllZCIgRGVzdGluYXRpb249Imh0dHBzOi8vZWMuZXVyb3BhLmV1L2VpZC1pbnRlZ3JhdGlvbi10ZXN0L0VpZGFzTm9kZS9Db2xsZWFndWVSZXF1ZXN0IiBGb3JjZUF1dGhuPSJ0cnVlIiBJRD0iXzhERUpmRmpaWTY0cnduOF9LT255SDVfWUVUcXJTVGVubGhnVm5pXy1VMlNzS1RsVXFsVFZnYzljaGU5Y3lUWCIgSXNQYXNzaXZlPSJmYWxzZSIgSXNzdWVJbnN0YW50PSIyMDE4LTAxLTEyVDExOjExOjA1Ljk2MVoiIFByb3ZpZGVyTmFtZT0iREVNTy1TUC1FRSIgVmVyc2lvbj0iMi4wIj48c2FtbDI6SXNzdWVyIEZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOm5hbWVpZC1mb3JtYXQ6ZW50aXR5Ij5odHRwczovL2VpZGFzdGVzdC5lZXN0aS5lZS9FaWRhc05vZGUvQ29ubmVjdG9yTWV0YWRhdGE8L3NhbWwyOklzc3Vlcj48ZHM6U2lnbmF0dXJlIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIj48ZHM6U2lnbmVkSW5mbz48ZHM6Q2Fub25pY2FsaXphdGlvbk1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1sLWV4Yy1jMTRuIyIvPjxkczpTaWduYXR1cmVNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhNTEyIi8+PGRzOlJlZmVyZW5jZSBVUkk9IiNfOERFSmZGalpZNjRyd244X0tPbnlINV9ZRVRxclNUZW5saGdWbmlfLVUyU3NLVGxVcWxUVmdjOWNoZTljeVRYIj48ZHM6VHJhbnNmb3Jtcz48ZHM6VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8wOS94bWxkc2lnI2VudmVsb3BlZC1zaWduYXR1cmUiLz48ZHM6VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8xMC94bWwtZXhjLWMxNG4jIi8+PC9kczpUcmFuc2Zvcm1zPjxkczpEaWdlc3RNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGVuYyNzaGE1MTIiLz48ZHM6RGlnZXN0VmFsdWU+VnJIZWNQaGZNdEFVaUQ1NmJrRTR0b3o5clNmMFZVdjBiWHZWQzZmV3h3aTJuQ21sd3ZzRzRYQlJuMEJPbkQxZEEvYzhpa005aXhrRG9qbDYwT00wWmc9PTwvZHM6RGlnZXN0VmFsdWU+PC9kczpSZWZlcmVuY2U+PC9kczpTaWduZWRJbmZvPjxkczpTaWduYXR1cmVWYWx1ZT5CVEF0ZTdkNEdjSklFL0FLUXdXYlAyZjFpT3hZVHBDMURjSThna0VueHNwcFhvNEI2YlhXUUR0OGZSOGVPUGowSVZXQ2NncVhnc3JUeUlEdTdYbnNLY0k4bFRVNFVhUWVqZ2VoazI2WFZ2a2lWU3VvNUEzK1plamV2UkhETUZVeFNaVGVtQkM0UXpneFhMdnhVZnd6N2N5L3JWa0lELzl0b2NMOHlZMDcyZFJvMnpGVXppMDRZZmJVZkdKUHl6a2NZOGY5ejFYeGowejRwbzJjeFNoWDNZZGVqQXR6S2hQRnQ1N25ONk85WklaNFhIQ3JwL2lqaEFGNThSZzFXeXNQSmRRZGlESWU5RlBYZ3grU0gyWEhOaWRZbytvZ3RlSTRTWWcwRWhOVmd6cXFqSS8zR3ByRXBCOFpIVytBYzlTL3Z2VEVvamdEZTJFRG5BeUhMdUUrUnc9PTwvZHM6U2lnbmF0dXJlVmFsdWU+PGRzOktleUluZm8+PGRzOlg1MDlEYXRhPjxkczpYNTA5Q2VydGlmaWNhdGU+TUlJRGRUQ0NBbDJnQXdJQkFnSUVhbFlqZ0RBTkJna3Foa2lHOXcwQkFRc0ZBREJyTVFzd0NRWURWUVFHRXdKRlJURUxNQWtHQTFVRQpDQk1DUlZVeEN6QUpCZ05WQkFjVEFrVlZNUTR3REFZRFZRUUtFd1ZUVUVWUVV6RU9NQXdHQTFVRUN4TUZVMVJQVWtzeElqQWdCZ05WCkJBTVRHWE53WlhCekxXVmxMV1JsYlc4dFkyVnlkR2xtYVdOaGRHVXdIaGNOTVRjd05URTVNVEkwTmpFeldoY05NVGt3TlRBNU1USTAKTmpFeldqQnJNUXN3Q1FZRFZRUUdFd0pGUlRFTE1Ba0dBMVVFQ0JNQ1JWVXhDekFKQmdOVkJBY1RBa1ZWTVE0d0RBWURWUVFLRXdWVApVRVZRVXpFT01Bd0dBMVVFQ3hNRlUxUlBVa3N4SWpBZ0JnTlZCQU1UR1hOd1pYQnpMV1ZsTFdSbGJXOHRZMlZ5ZEdsbWFXTmhkR1V3CmdnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUNSRCswSVY3bHlOdStwVzdSV1E1UXlFak0zYVNpeUZtaW8KNysxZjBJeTBmUzg1anNGR0dnSTNqblBaTDZkOHR1dUxaRUJwSHpNWmhPNUVGdzFTYUp3RHBzbUlnNmVmdWFLMG9MM0RlVmRSVzNmNQo4VjZGaHNyTDJzZjJRZXpHeEZmR3RyNjBSVTlMUm05QXd0Nnl5aEtkUGFoaVdhVU1pSk5uUDdyMUhKKzNVRU5QZkpFQXFXVVNOcG9wCndMalpibzJUM211T0FKMDI1Q1BRMklURWVxbzNUN0RUamFoeHpRM0x5TDg1OVFzV1dEejEyWlNjdC95eGpHYTF4MDFmRHR3c2dudjQKM2E1OE4ydmdEc2krYkRZWGFzZ3M2T003bVFrdFZnZTZKMnBaWkxUL3lPZnFMbmNGT1RXZXFnUXJRMytLbVZEZ2g3bTVRQWxiTmlRTgppYmdoQWdNQkFBR2pJVEFmTUIwR0ExVWREZ1FXQkJSVXBlSHhQWjZEMklFN2l1WnhROGNtOE56U2VUQU5CZ2txaGtpRzl3MEJBUXNGCkFBT0NBUUVBZGJQTnIwSmlxOFArUlVjRVQ1b0RPd0lMYmZoUll5MGh3SkdSUys0RU16QXl2RC9lOXJYZjVUa3hqbGRiNHAxTC9oSUkKVlFCY2R3WnNXMmtVdDNXZU9ZKzJwUVFsa2NIRVdZVmFRR2dNUk1VSm9yYlh3UnhXWHZSWFNzZ2Ura0xlSk1ndFlKZHRMeE1VZ0JyLwpjbDVFeE1NbFR2VTA5bHJPaTlWWWZ6Zzg0ZHJxbFhWYkZXK2k3OTU2NGNiVGM3TWNxdm1TZW1jNEQvckxVbGFUdXBNa0k5bkJXOTlNCkFESnNqZ3VnbEl5aUtVR3dpbnhlWFh1U2ZtcGVrMTdKeE1TT2ZVaHNOcDdwbUM2YzBycE52THhiTHhOTXBQRkNSK3RYWFcvRk91ZFoKMjFwSUVJVmNrbjlCVEZzWWxVVXBYQkw0a0dZUlRYcXZIbkdwVk1HSlNNVWF0Zz09PC9kczpYNTA5Q2VydGlmaWNhdGU+PC9kczpYNTA5RGF0YT48L2RzOktleUluZm8+PC9kczpTaWduYXR1cmU+PHNhbWwycDpFeHRlbnNpb25zPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGVzPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJELTIwMTItMTctRVVJZGVudGlmaWVyIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vRC0yMDEyLTE3LUVVSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9ImZhbHNlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkVPUkkiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9FT1JJIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iTEVJIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vTEVJIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iTGVnYWxOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vTGVnYWxOYW1lIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0idHJ1ZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbEFkZHJlc3MiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbFBlcnNvbkFkZHJlc3MiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbFBlcnNvbklkZW50aWZpZXIiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbFBlcnNvbklkZW50aWZpZXIiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IlNFRUQiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9TRUVEIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iU0lDIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vU0lDIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iVGF4UmVmZXJlbmNlIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vVGF4UmVmZXJlbmNlIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iVkFUUmVnaXN0cmF0aW9uIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vVkFUUmVnaXN0cmF0aW9uTnVtYmVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iQmlydGhOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9CaXJ0aE5hbWUiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJDdXJyZW50QWRkcmVzcyIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vQ3VycmVudEFkZHJlc3MiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJGYW1pbHlOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50RmFtaWx5TmFtZSIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iRmlyc3ROYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50R2l2ZW5OYW1lIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0idHJ1ZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJEYXRlT2ZCaXJ0aCIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vRGF0ZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkdlbmRlciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vR2VuZGVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGVyc29uSWRlbnRpZmllciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vUGVyc29uSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGxhY2VPZkJpcnRoIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9QbGFjZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjwvZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlcz48L3NhbWwycDpFeHRlbnNpb25zPjxzYW1sMnA6TmFtZUlEUG9saWN5IEFsbG93Q3JlYXRlPSJ0cnVlIiBGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjEuMTpuYW1laWQtZm9ybWF0OnVuc3BlY2lmaWVkIi8+PHNhbWwycDpSZXF1ZXN0ZWRBdXRobkNvbnRleHQgQ29tcGFyaXNvbj0ibWluaW11bSI+PHNhbWwyOkF1dGhuQ29udGV4dENsYXNzUmVmPmh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvTG9BL2xvdzwvc2FtbDI6QXV0aG5Db250ZXh0Q2xhc3NSZWY+PC9zYW1sMnA6UmVxdWVzdGVkQXV0aG5Db250ZXh0Pjwvc2FtbDJwOkF1dGhuUmVxdWVzdD4="
+                            />
+
+                            <input type="hidden" id="samlResponseDecriptedXMLEdit" name="samlResponseDecriptedXMLEdit" value="&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34; standalone=&#34;no&#34;?&gt;&lt;saml2p:Response xmlns:saml2p=&#34;urn:oasis:names:tc:SAML:2.0:protocol&#34; xmlns:ds=&#34;http://www.w3.org/2000/09/xmldsig#&#34; xmlns:eidas=&#34;http://eidas.europa.eu/attributes/naturalperson&#34; xmlns:eidas-legal=&#34;http://eidas.europa.eu/attributes/naturalperson&#34; xmlns:eidas-natural=&#34;http://eidas.europa.eu/attributes/naturalperson&#34; xmlns:saml2=&#34;urn:oasis:names:tc:SAML:2.0:assertion&#34; Consent=&#34;urn:oasis:names:tc:SAML:2.0:consent:obtained&#34; Destination=&#34;https://eidastest.eesti.ee/EidasNode/ColleagueResponse&#34; ID=&#34;_ffebecd6c949bb70b0c14725880ffd50&#34; InResponseTo=&#34;_8DEJfFjZY64rwn8_KOnyH5_YETqrSTenlhgVni_-U2SsKTlUqlTVgc9che9cyTX&#34; IssueInstant=&#34;2018-01-12T11:11:13.611Z&#34; Version=&#34;2.0&#34;&gt;&lt;saml2:Issuer Format=&#34;urn:oasis:names:tc:SAML:2.0:nameid-format:entity&#34;&gt;https://ec.europa.eu/eid-integration-test/EidasNode/ServiceMetadata&lt;/saml2:Issuer&gt;&lt;ds:Signature&gt;&lt;ds:SignedInfo&gt;&lt;ds:CanonicalizationMethod Algorithm=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;/&gt;&lt;ds:SignatureMethod Algorithm=&#34;http://www.w3.org/2001/04/xmldsig-more#rsa-sha512&#34;/&gt;&lt;ds:Reference URI=&#34;#_ffebecd6c949bb70b0c14725880ffd50&#34;&gt;&lt;ds:Transforms&gt;&lt;ds:Transform Algorithm=&#34;http://www.w3.org/2000/09/xmldsig#enveloped-signature&#34;/&gt;&lt;ds:Transform Algorithm=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;&gt;&lt;ec:InclusiveNamespaces xmlns:ec=&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34; PrefixList=&#34;eidas-legal eidas-natural&#34;/&gt;&lt;/ds:Transform&gt;&lt;/ds:Transforms&gt;&lt;ds:DigestMethod Algorithm=&#34;http://www.w3.org/2001/04/xmlenc#sha512&#34;/&gt;&lt;ds:DigestValue&gt;a/qdqi7NR8HHV3XndYm78mj/qIFaXPjnZW7ONp1SkE9/ubJiSte+cR2fgl5TgBGWLs1iDZ5sWEzFNqhOVmVZ9A==&lt;/ds:DigestValue&gt;&lt;/ds:Reference&gt;&lt;/ds:SignedInfo&gt;&lt;ds:SignatureValue&gt;x3DTx6PNAzh6iDmi27gH9Ys9EE/2UiPOkz7pzVt6ri6DV6Gfl63odQvgJ0FkWYIAugkJ/Gg2te6Sn8N4Hp6rLtjHvTvN5/pe47OQro1uYYR6UIAgPuEO3Z/MhhkuUUeh54WsUyAt795UbC1bB7cfHTq14kHpZDsTRLFPTHlFwh/MHD4/i/QAIXYieHjeHgQeavb0Rkcawic08N8qhO54rFJZKM6CPREx2F2+Vk7DZjrMt2RCZLf+Pi3Mw18fEVoQip4ZziHPKS4LC4ppcIg5PrTJBBLPw5N3ONowsoRMFdUj2Qn/9Hsewf/YOUC4W3XwL8AMTyzKmG9RcpEtHjspDQnPIM6ROOe2rh6tULCSp9aydi1R740rLxrrxHijPKWa3bpNTO0qjms1YhYeMVuV+Qi4MFdZImMHw6N+s0InATut2j+0XNF6T2ybwAmZRbgGI5Xs9q1emmX1Bv7zG2+cxyM8sU6dbhVKrJInEjp+6YrKg1KWYpuXShal1hHuOBVI5yMnBYuH7+WHW0pfdAIXVm3y0i5nULSXJLgQbno8qmLdJEQ9zOkJZixnfu/LFcKb2x4knf6Uppk2GIXuxwK1hGdaZWgQex/F+CC4HtgFiLtQkwkD/O/pzGEly0vbyIK4mgvKB5DklxC7+X1rbguVdTXauWm1o8ohBR7iQyAK1Qk=&lt;/ds:SignatureValue&gt;&lt;ds:KeyInfo&gt;&lt;ds:X509Data&gt;&lt;ds:X509Certificate&gt;MIIFTTCCAzUCBFjuGewwDQYJKoZIhvcNAQENBQAwazELMAkGA1UEBhMCQ0QxCzAJBgNVBAgMAkVV
+MQswCQYDVQQHDAJFVTEOMAwGA1UECgwFQ1BFUFMxDjAMBgNVBAsMBVNUT1JLMSIwIAYDVQQDDBlj
+cGVwcy1jZC1kZW1vLWNlcnRpZmljYXRlMB4XDTE3MDQxMjEyMTMzMloXDTI3MDQxMDEyMTMzMlow
+azELMAkGA1UEBhMCQ0QxCzAJBgNVBAgMAkVVMQswCQYDVQQHDAJFVTEOMAwGA1UECgwFQ1BFUFMx
+DjAMBgNVBAsMBVNUT1JLMSIwIAYDVQQDDBljcGVwcy1jZC1kZW1vLWNlcnRpZmljYXRlMIICIjAN
+BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4B03KPeYb/fyGO5/YKiEJgf5KTS2g7yasdXmen+e
+S5D8pl/0+W9OqSPCIApHjDMVCR9QGjhR1x1BBLT845LmgI1EjEeyq/gXC4nW3cCNPC8oE+XAaHZr
++nKFi2S650CmCnDtmG/MXXOpHXgu4E6nurGuVXhQGSQrPY0GpSZMSb9HGEH5UNX//DrJgYfk7hih
+rCPYYR3WfJL+PF14UjK9NlK0V0GncocQaY2cosZfxQ+MmgDMWLvTy3YDvUnfikNMd9lKQLi2kn29
+J8YY1K8krNMUiA50uX4ukuajkRvngMyq6RAf41ZvUhJP8bI9c7a07sniRNDz6LoBl8vK47jbyFUP
+IMNFXy8gaGBbZRbD0cnmJvSvBLxJkPSHl7KlBCI1limcI+i1Sqwx7yBCPQqt7pyarm2I8wFUw2cl
+Zf9WP285FU2aJMxqxyYRlqJTYwbMhL7uzDhUxziHujLLola0Nbfaek2erFPipn8oSLb6Mmo+WnCC
+jUYXSDoDey5w4XXx8/XChpbXew2wDF0W7xapXoghGvAO/CdZO4epgyr0mMe6XpyExFixvzFimU5h
+6GHcEkWReGW6U5ew4vtbPce4EKGbDO12frUb3leTH23csSj3VZLWQCg7jkgmjpzb6KeNs/JjLw5Z
+7Ysqz9uOJaiHsGK0iivdJ0tMMFCXjqAme4cCAwEAATANBgkqhkiG9w0BAQ0FAAOCAgEAxT4gcYDl
+CIVnKxaUr5Mw09+BYFYCw6b+DsJFqPDnrM+BGfzyL2wtdS9IebyISpspbty32yent8CNSup0K3Gk
+O6Wj7oNLI2njR3CbfZnE4i9OxipxRTsSpKR16HrutQBGF2La8SsJJd2teVxhUqdkzE0mSdjO/adv
+QPfI5tjxEndfa2pxr1zTeo+EqpDv7I+4L9cyxtddVRbweRi2gWNgpEQZSehRi+je7AX3z7OwriPi
+I/kXC55cwIlVtRIrLpi1OAh7UQ8Eh5w92N4QKpxrEtIPqc/4PPqmaQENtdmUluUPtP2qOp2NFtXi
+336gr5rQm9UXM6iHgIIsFCW4Gs9wx5y3At8+vptoGS20kgezS9lsn6uhC01qfOsMlvtoUcVe3GlT
+Xocyy7ScnyhnaUlMklwJ4E8ARFPkUsikmRxu2HEndUtt9CYsZSBmQLpIkJhIECfTKfo4qH5Kro3t
+z4VevNF6l8bfjQ9kNwWiZ1Yg1mF722nqZ8fJBFiOro2vUuodJEM0qwJEBQTExL8s2vngsq49pa0F
+36qFiv/9qgr7GMNzj1DpAfCPyX7tQZCN6IdaI8eNZjEE8YzgPpQ5dGlhrD/Ud1Njhejbss7BeYH4
+udWdNdH1kaK5b8scfYDVRk8b9ORmpG3VqMx96I35YogF5FjxkYETOSkgK4VM2ajjTk4=&lt;/ds:X509Certificate&gt;&lt;/ds:X509Data&gt;&lt;/ds:KeyInfo&gt;&lt;/ds:Signature&gt;&lt;saml2p:Status&gt;&lt;saml2p:StatusCode Value=&#34;urn:oasis:names:tc:SAML:2.0:status:Success&#34;/&gt;&lt;saml2p:StatusMessage&gt;urn:oasis:names:tc:SAML:2.0:status:Success&lt;/saml2p:StatusMessage&gt;&lt;/saml2p:Status&gt;&lt;saml2:Assertion ID=&#34;_4f1e65a03a7889879044c912d97be967&#34; IssueInstant=&#34;2018-01-12T11:11:13.611Z&#34; Version=&#34;2.0&#34;&gt;&lt;saml2:Issuer Format=&#34;urn:oasis:names:tc:SAML:2.0:nameid-format:entity&#34;&gt;https://ec.europa.eu/eid-integration-test/EidasNode/ServiceMetadata&lt;/saml2:Issuer&gt;&lt;saml2:Subject&gt;&lt;saml2:NameID Format=&#34;urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified&#34; NameQualifier=&#34;http://C-PEPS.gov.xx&#34;&gt;CD/EE/LegalPersonUniqueId&lt;/saml2:NameID&gt;&lt;saml2:SubjectConfirmation Method=&#34;urn:oasis:names:tc:SAML:2.0:cm:bearer&#34;&gt;&lt;saml2:SubjectConfirmationData Address=&#34;195.80.106.122&#34; InResponseTo=&#34;_8DEJfFjZY64rwn8_KOnyH5_YETqrSTenlhgVni_-U2SsKTlUqlTVgc9che9cyTX&#34; NotOnOrAfter=&#34;2018-01-12T11:16:13.611Z&#34; Recipient=&#34;https://eidastest.eesti.ee/EidasNode/ColleagueResponse&#34;/&gt;&lt;/saml2:SubjectConfirmation&gt;&lt;/saml2:Subject&gt;&lt;saml2:Conditions NotBefore=&#34;2018-01-12T11:11:13.611Z&#34; NotOnOrAfter=&#34;2018-01-12T11:16:13.611Z&#34;&gt;&lt;saml2:AudienceRestriction&gt;&lt;saml2:Audience&gt;https://eidastest.eesti.ee/EidasNode/ConnectorMetadata&lt;/saml2:Audience&gt;&lt;/saml2:AudienceRestriction&gt;&lt;saml2:OneTimeUse/&gt;&lt;/saml2:Conditions&gt;&lt;saml2:AuthnStatement AuthnInstant=&#34;2018-01-12T11:11:13.611Z&#34;&gt;&lt;saml2:SubjectLocality Address=&#34;195.80.106.122&#34;/&gt;&lt;saml2:AuthnContext&gt;&lt;saml2:AuthnContextClassRef&gt;http://eidas.europa.eu/LoA/high&lt;/saml2:AuthnContextClassRef&gt;&lt;saml2:AuthnContextDecl/&gt;&lt;/saml2:AuthnContext&gt;&lt;/saml2:AuthnStatement&gt;&lt;saml2:AttributeStatement&gt;&lt;saml2:Attribute FriendlyName=&#34;D-2012-17-EUIdentifier&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:D-2012-17-EUIdentifierType&#34;&gt;Directive 2012/17/EU Identifier&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;EORI&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/EORI&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:EORIType&#34;&gt;Economic Operator Registration and Identification (EORI)&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;LEI&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/LEI&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:LEIType&#34;&gt;Legal Entity Identifier (LEI)&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;LegalName&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/LegalName&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:LegalNameType&#34;&gt;Current Legal Name&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;LegalAddress&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:LegalPersonAddressType&#34;&gt;Legal Person address&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;LegalPersonIdentifier&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:LegalPersonIdentifierType&#34;&gt;CD/EE/LegalPersonUniqueId&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;SEED&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/SEED&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:SEEDType&#34;&gt;System for Exchange of Excise Data (SEED)&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;SIC&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/SIC&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:SICType&#34;&gt;Standard Industrial Classification (SIC)&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;TaxReference&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/TaxReference&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:TaxReferenceType&#34;&gt;Taxe&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;VATRegistration&#34; Name=&#34;http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-legal:VATRegistrationNumberType&#34;&gt;VAT Registration Number&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;BirthName&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/BirthName&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; eidas-natural:LatinScript=&#34;false&#34; xsi:type=&#34;eidas-natural:BirthNameType&#34;&gt;Ωνάσης&lt;/saml2:AttributeValue&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-natural:BirthNameType&#34;&gt;Onases&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;CurrentAddress&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/CurrentAddress&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-natural:CurrentAddressType&#34;&gt;Current Address&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;FamilyName&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-natural:CurrentFamilyNameType&#34;&gt;Garcia&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;FirstName&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-natural:CurrentGivenNameType&#34;&gt;javier&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;DateOfBirth&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/DateOfBirth&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-natural:DateOfBirthType&#34;&gt;1980-01-01&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;Gender&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/Gender&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-natural:GenderType&#34;&gt;Male&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;PersonIdentifier&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-natural:PersonIdentifierType&#34;&gt;CD/EE/12345&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;saml2:Attribute FriendlyName=&#34;PlaceOfBirth&#34; Name=&#34;http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth&#34; NameFormat=&#34;urn:oasis:names:tc:SAML:2.0:attrname-format:uri&#34;&gt;&lt;saml2:AttributeValue xmlns:xsi=&#34;http://www.w3.org/2001/XMLSchema-instance&#34; xsi:type=&#34;eidas-natural:PlaceOfBirthType&#34;&gt;Place of Birth&lt;/saml2:AttributeValue&gt;&lt;/saml2:Attribute&gt;&lt;/saml2:AttributeStatement&gt;&lt;/saml2:Assertion&gt;&lt;/saml2p:Response&gt;"
+                            />
+
+
+                            <div id="botones" class="button-group">
+                                <button type="submit" value="Submit" id="submit" class="btn btn-default btn-lg btn-block">
+                                    Submit
+                                </button>
+
+                                <div class="form-group  jsOK" id="eidasScenariodiv1" disabled="true">
+                                    <label for="eidasScenario">
+                                        SAML RESPONSE:
+                                    </label>
+                                    <span>
+                                        <button type="button" class="btn btn-opposite jsOK" data-toggle="modal" data-target="#scenariosModal" data-attribute-title="Response:"
+                                            data-attribute-desc="Allows you to apply a scenario to modify the SAML Response to be validated by the Connector.">
+                                            ?
+                                        </button>
+                                    </span>
+                                    <select name="eidasScenario" id="eidasScenario" class="form-control">
+                                        <option value="">- None -</option>
+                                        <optgroup label="SAML Response ">
+
+
+
+
+                                            <option selected="selected" value="1" title="eIDAS - The Service sends the original eIDAS SAML Response received
+ Expected Result :Success">
+                                                Attr:Scenario0-Original-Response-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="2" title="eIDAS - The Service sends an eIDAS SAML Response adding the Representative Natural MDS
+ Expected Result :Success">
+                                                Attr:Scenario1-Eidas-RepresentativeNaturalPerson-MDS-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="3" title="eIDAS - The Service sends an eIDAS SAML Response adding the Representative Legal MDS
+ Expected Result :Success">
+                                                Attr:Scenario2-Eidas-RepresentativeLegalPerson-MDS-Success
+                                            </option>
+
+
+
+
+
+
+
+                                            <option value="5" title="eIDAS - The Service sends an eIDAS SAML Response without attributes
+ Expected Result :Success">
+                                                Attr:Scenario4-Eidas-Response-With-OneTimeUSe-SubjectLocality-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="6" title="eIDAS - The Service sends an eIDAS SAML Response without attributes
+ Expected Result :Success">
+                                                Attr:Scenario5-Eidas-Response-Without-OneTimeUse-SubjectLocality-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="7" title="eIDAS - The Service sends an eIDAS SAML Response with the Assertion signed
+ Expected Result :Success">
+                                                Attr:Scenario6-Eidas-Response-Assertion-Signed-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="8" title="eIDAS - The Service sends an eIDAS SAML Response with the Assertion data encrypted using algorithm http://www.w3.org/2009/xmlenc11#aes128-gcm
+ Expected Result :Success">
+                                                Attr:Scenario7-Eidas-Response-Data-Encrypted-aes128-gcm-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="9" title="eIDAS - The Service sends an eIDAS SAML Response with the Assertion data encrypted using algorithm http://www.w3.org/2009/xmlenc11#aes192-gcm
+ Expected Result :Success">
+                                                Attr:Scenario8-Eidas-Response-Data-Encrypted-aes192-gcm-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="10" title="eIDAS - The Service sends an eIDAS SAML Response with the Assertion data encrypted using algorithm http://www.w3.org/2009/xmlenc11#aes256-gcm
+ Expected Result :Success">
+                                                Attr:Scenario9-Eidas-Response-Data-Encrypted-aes256-gcm-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="11" title="eIDAS - The Service sends an eIDAS SAML Response with the Assertion data encrypted using algorithm &#34;http://www.w3.org/2001/04/xmldsig-more#rsa-sha256&#34;
+ Expected Result :Success">
+                                                Attr:Scenario10-Eidas-Response-Signed-RSA_SHA256-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="12" title="eIDAS - The Service sends an eIDAS SAML Response signed using algorithm &#34;http://www.w3.org/2001/04/xmldsig-more#rsa-sha384&#34;
+ Expected Result :Success">
+                                                Attr:Scenario11-Eidas-Response-Signed-RSA_SHA384-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="13" title="eIDAS - The Service sends an eIDAS SAML Response signed using algorithm &#34;http://www.w3.org/2001/04/xmldsig-more#rsa-sha512&#34;
+ Expected Result :Success">
+                                                Attr:Scenario12-Eidas-Response-Signed-RSA_SHA512-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="14" title="eIDAS - The Service sends an eIDAS SAML Response with the Assertion signed using algorithm &#34;http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256&#34;
+ Expected Result :Success (Note: This scenario is still not working due to a bug)">
+                                                Attr:Scenario13-Eidas-Response-Signed-ECDSA-SHA256-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="15" title="eIDAS - The Service sends an eIDAS SAML Response with the Assertion signed using algorithm &#34;http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha384&#34;
+ Expected Result :Success (Note: This scenario is still not working due to a bug)">
+                                                Attr:Scenario14-Eidas-Response-Signed-ECDSA-SHA384-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="16" title="eIDAS - The Service sends an eIDAS SAML Response with the Assertion signed using algorithm &#34;http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512&#34;
+ Expected Result :Success (Note: This scenario is still not working due to a bug)">
+                                                Attr:Scenario15-Eidas-Response-Signed-ECDSA-SHA512-Success
+                                            </option>
+
+
+
+
+
+                                            <option value="17" title="eIDAS - The Service sends an eIDAS SAML Response with the Assertion signed using algorithm &#34;http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1&#34;
+ Expected Result :Success">
+                                                Attr:Scenario16-Eidas-Response-Signed-SHA256-RSA-MGF1-Success
+                                            </option>
+
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="form-group jsOK" id="eidasScenariodiv2" disabled="true">
+                                    <label for=eidasScenario2>
+                                        SAML ERROR:
+                                    </label>
+                                    <span>
+                                        <button type="button" class="btn btn-opposite jsOK" data-toggle="modal" data-target="#scenariosModal" data-attribute-title="Error:"
+                                            data-attribute-desc="Allows you to apply an error generating scenario to the SAML Response to be validated by the Connector.">
+                                        </button>
+                                    </span>
+                                    <select name="eidasScenario2" id="eidasScenario2" class="form-control jsOK">
+                                        <option value="">
+                                            - None -
+                                        </option>
+                                        <optgroup label="SAML Response Error">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            <option value="18" title="The Service sends an invalid SAML response with the NotBefore time in the future when compared to the current time. The NotOnOrAfter is also shifted the same period as NotBefore.
+ Expected Result :203007 - The SAML message is not valid">
+                                                Eidas:Scenario1-Response-Arrives-Before-Error
+                                            </option>
+
+
+
+
+
+                                            <option value="19" title="The Service sends an invalid SAML response with the NotOnOrAfter time in the past when compared to the current time. The NotBefore is also shifted the same period as NotOnOrAfter.
+ Expected Result :203007 - The SAML message is not valid">
+                                                Eidas:Scenario2-Response-Arrives-After-Error
+                                            </option>
+
+
+
+
+
+                                            <option value="20" title="The Service sends a valid SAML response but encrytped using an untrusted certificate.
+ Expected Result :203019 - The certificate cannot be found in the keystore">
+                                                Eidas:Scenario3-Response-Encrypted-Untrusted-Certificate-Error
+                                            </option>
+
+
+
+
+
+                                            <option value="21" title="The Service sends a valid SAML response but not signed.
+ Expected Result :202003 - Invalid SAML Response token.">
+                                                Eidas:Scenario4-Response-Without-Signature-Error
+                                            </option>
+
+
+
+
+
+                                            <option value="22" title="The Service sends a valid SAML response but with the signature value altered.
+ Expected Result :202003 - Invalid SAML Response token.">
+                                                Eidas:Scenario5-Response-Signature-Altered-Error
+                                            </option>
+
+
+
+
+
+                                            <option value="23" title="eIDAS - The Service sends an eIDAS SAML Response without attributes
+ Expected Result :232303 - Invalid SAML Response token">
+                                                Eidas:Scenario6-Eidas-Response-Without-Attributes-Error
+                                            </option>
+
+
+
+
+
+                                            <option value="24" title="eIDAS - The Service sends an eIDAS SAML Response which is an XXE attack
+ Expected Result :202003 - Invalid SAML Response token.">
+                                                Eidas:Scenario7-Eidas-Response-XXE-Error
+                                            </option>
+
+
+
+
+
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label id="selectedScenario0" class="jsOK">SELECTED SCENARIO:</label>
+                                    <textarea name="scenarioDesc" cols="60" rows="3" id="scenarioDesc" class="form-control jsOK"></textarea>
+                                    <input name="theScenario" value="1" id="countrySelector_theEidasScenario" required="true" type="hidden" class="jsOK" disabled="true">
+                                </div>
+
+
+
+                                <button formmethod="post" formaction="/eid-integration-test/EidasNode/reEncryptReSignSAMLResponse" type="submit" name="submitName"
+                                    id="encodeButton" value="encodeButton" class="btn btn-default btn-lg btn-block">
+                                    Detail
+                                </button>
+                            </div>
+
+
+                        </form>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!DOCTYPE html>
+
+    <!-- Start Modal -->
+    <div class="modal fade" id="scenariosModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3>
+                        <label id="scenariosModalTitleDisp" />
+                    </h3>
+                    <div class="wraps" id="scenariosModalDescriptionDisp"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+
+
+
+
+
+
+    <div hidden="true">Build version: 2018-01-10T16:16:49Z-wlpc0090.cc.cec.eu.int-1.4.0-SNAPSHOT-1.4.0-SNAPSHOT</div>
+
+    <!--START FOOTER-->
+    <footer class="footer">
+        <div class="container">
+            <div class="ec-social-media">
+                <span class="social-media-label">The European Commission on:</span>
+                <ul class="list-inline">
+                    <li>
+                        <span class="icon-facebook"></span>
+                        <a href="https://www.facebook.com/EuropeanCommission" target="_blank">Facebook</a>
+                    </li>
+                    <li>
+                        <span class="icon-twitter"></span>
+                        <a href="https://twitter.com/eu_commission" target="_blank">Twitter</a>
+                    </li>
+                    <li>
+                        <a href="http://ec.europa.eu/dgs/communication/services/journalist/social-media_en.htm" target="_blank">Other social media</a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="ec-link list-inline">
+                <li>
+                    <a href="http://ec.europa.eu/cookies/index_en.htm" target="_blank">Cookies</a>
+                </li>
+                <li>
+                    <a href="http://ec.europa.eu/geninfo/legal_notices_en.htm" target="_blank">Legal notice</a>
+                </li>
+                <li>
+                    <a href="http://ec.europa.eu/contact/index_en.htm">Contact</a>
+                </li>
+                <li>
+                    <a href="http://ec.europa.eu/geninfo/europa_analytics_en.htm">Europa Analytics</a>
+                </li>
+                <li class="pull-right">
+                    <a href="http://europa.eu/about-eu/institutions-bodies/index_en.htm#30?" target="_blank">EU institutions</a>
+                </li>
+                <li class="pull-right">
+                    <a href="http://europa.eu/" target="_blank">European Union</a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    <!--END FOOTER-->
+
+
+</body>
+<script type="text/javascript" src="/eid-integration-test/EidasNode/tnode/resources/js/selectScenario.js"></script>
+
+</html>
