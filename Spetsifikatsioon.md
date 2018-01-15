@@ -7,13 +7,13 @@ Märkus. Spetsifikatsioon on koostamisel.
 
 # RIA eIDAS konnektorteenus. Tehniline spetsifikatsioon
 
-Konnektorteenuse kasutuselevõtmiseks soovitame kõigepealt proovida RIAs ülepandud demorakendust. Seejärel võiks proovida demorakenduse või RIA arendatava eIDAS klientrakenduse enda taristus üles panna ja läbi teha liidestamine RIA eIDAS test-konnektorteenusega. Selle käigus saate aru, kuidas SAML-sõnumivahetus käib. Alles seejärel arendada välja oma rakendus. Eeskujuks võib võtta nii demorakenduse kui ka RIA eIDAS klientrakenduse. Lõpuks lõimida liidest teostab komponent oma e-teenusesse. Tehniliste tegevuste järjekord on vastavalt:
+Konnektorteenuse kasutuselevõtmiseks soovitame kõigepealt proovida RIAs ülepandud demorakendust. Seejärel võiks proovida demorakenduse või RIA arendatava eIDAS klientrakenduse enda taristus üles panna ja läbi teha liidestamine RIA eIDAS test-konnektorteenusega. Selle käigus saate aru, kuidas SAML-sõnumivahetus käib. Alles seejärel arendada välja oma rakendus. Eeskujuks võib võtta nii demorakenduse kui ka RIA eIDAS klientrakenduse. Lõpuks lõimida liidest teostav komponent oma e-teenusesse. Tehniliste tegevuste järjekord on vastavalt:
 
 1. Tutvu RIA-s ülespandud Demo SP rakendusega
 2. Tutvu konnektorteenuse SAML metaandmetega
 3. Proovi rakenduse ühendamist RIA test-konnektorteenusega
 4. Kohanda rakendust oma vajadustele
-5. Lõimi rakendus oma e-teenusega
+5. Lõimi rakendus oma e-teenusega.
 
 ## 1. Tutvu RIA-s ülespandud Demo SP rakendusega
 
