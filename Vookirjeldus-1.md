@@ -55,7 +55,7 @@ Otspunktid:<br>
 
 Siinkirjeldatu on demo- ja test-, mitte tootmisvoog. Validation Service etendab, et tuvastatakse isik nimega `Javier Garcia`. Demovoog lõpeb veaolukorra tekkimisega RIA eIDAS test-Node-s (selle põhjus vajab selgitamist - v-o on viga seadistuses?).
 
-Voos tehakse järgmised päringud (päringutele on antud tinglikud nimetused):
+Voos tehakse järgmised HTTP päringud (päringutele on antud tinglikud nimetused):
 1. Pöördumine Demo SP avalehe poole.
 2. Kasutaja valikute edastamine serverisse (1)
 3. Kasutaja valikute edastamine serverisse (2)
@@ -71,15 +71,25 @@ Edasi kirjeldame päringuid ja nende vastuseid detailselt.
 
 ## 1. Pöördumine Demo SP avalehe poole.
 
+Kasutaja sisestab sirvikus Demo SP avalehe URL-i.
+
 ````
 GET https://eidastest.eesti.ee/SP/populateIndexPage
 ````
 
 Vastuses saadab Demo SP serveripool sirvikusse Demo SP avalehe. Samuti seatakse seansiküpsis.
 
-Seejärel kasutaja valib riigi jm parameetrid. 
+Seejärel kasutaja valib:
+
+- e-teenuse riigi - `SP Country` -> `EE`
+- oma koduriigi - `Citizen Country` -> `CD`
+- nõutavad kasutajat kirjeldavad atribuudid - `Requested Core Attributes` -> `Mandatory`.
+
+Rida valikuid on seatud vaikimisi.
 
 ## 2. Kasutaja valikute edastamine serverisse (1)
+
+Kasutaja vajutab `Submit`.
 
 ````
 POST https://eidastest.eesti.ee/SP/IndexPage.action;jsessionid=56EC2BDBC97703A3AB5AED3BCAD83DCA
@@ -87,9 +97,71 @@ POST https://eidastest.eesti.ee/SP/IndexPage.action;jsessionid=56EC2BDBC97703A3A
 
 Kasutaja poolt valitud parameetrid saadetakse vormina, päringu kehas.
 
-Vastuses saadab Demo SP serveripool sirvikusse lehe, kus kuvatakse serveripooles moodustatud SAML autentimispäringu sõnum (draft) ja palutakse valida edastusmeetod.
+Vastuses saadab Demo SP serveripool sirvikusse lehe, kus kuvatakse serveripooles moodustatud SAML autentimispäringu sõnum ja palutakse valida edastusmeetod.
 
-Kasutaja valib nüüd `HTTP POST` või `HTTP Redirect` binding-u. Kasutaja vajutab 'Submit'.
+SAML autentimispäring:
+
+{% highlight xml %}
+<saml2p:AuthnRequest
+	xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	xmlns:eidas="http://eidas.europa.eu/saml-extensions"
+	xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified" Destination="https://eidastest.eesti.ee/EidasNode/ServiceProvider" ForceAuthn="true" ID="_WfZeh5TocZ-4gikOG._CVllEo8XUOqO06KfQn4Jy8q0233r0QZXGhsLzaIQKeVz" IsPassive="false" IssueInstant="2018-01-15T13:25:14.477Z" ProviderName="DEMO-SP-EE" Version="2.0">
+	<saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">https://eidastest.eesti.ee/SP/metadata</saml2:Issuer>
+	<ds:Signature
+		xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+		<ds:SignedInfo>
+			<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+			<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+			<ds:Reference URI="#_WfZeh5TocZ-4gikOG._CVllEo8XUOqO06KfQn4Jy8q0233r0QZXGhsLzaIQKeVz">
+				<ds:Transforms>
+					<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+					<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+				</ds:Transforms>
+				<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+				<ds:DigestValue>YGVD5NG8Dj9SVUlE/4I2VvgIB7wKcjGGgraWHGepb2OS6L76yiTZs2MvAkeQiEhequcZEjgVh490IerbDLzfgw==</ds:DigestValue>
+			</ds:Reference>
+		</ds:SignedInfo>
+		<ds:SignatureValue>RTLGTZg+Bc1dT5iuSWzC9Ac63PGr2msR4l3DsmcgSNFp2CE+Ds7pUi/4BXP22hZh6iSUfflXpspea5GELimFtgFbwQnl2wQsMleWa8Y7phd3aYfp0YQbp99h2EfAI0NGG4clw08HOZOjmMuPskxmpBkf2L78CKkNx80rtVnayiI5R0ulBAkME2oSqK9C3T4DJ9VmsUvaQ4wlTxydkVKakpvplvKo5xiU7Lgcc5INEwdcZY6aADJLnXjpuQ1KuWa0f0O4F8CKmc1ip1bPY4eSiSpc5U5pAbuuRgUCznoHcmDnR98Irc5JD6YntauJYDmZomz7Im7OdgVHPI7NNLZhCQ==</ds:SignatureValue>
+		<ds:KeyInfo>
+			<ds:X509Data>
+				<ds:X509Certificate> ... </ds:X509Certificate>
+			</ds:X509Data>
+		</ds:KeyInfo>
+	</ds:Signature>
+	<saml2p:Extensions>
+		<eidas:SPType>public</eidas:SPType>
+		<eidas:RequestedAttributes>
+			<eidas:RequestedAttribute FriendlyName="D-2012-17-EUIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="EORI" Name="http://eidas.europa.eu/attributes/legalperson/EORI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="LEI" Name="http://eidas.europa.eu/attributes/legalperson/LEI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="LegalAdditionalAttribute" Name="http://eidas.europa.eu/attributes/legalperson/LegalAdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="LegalName" Name="http://eidas.europa.eu/attributes/legalperson/LegalName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="LegalAddress" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="LegalPersonIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="SEED" Name="http://eidas.europa.eu/attributes/legalperson/SEED" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="SIC" Name="http://eidas.europa.eu/attributes/legalperson/SIC" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="TaxReference" Name="http://eidas.europa.eu/attributes/legalperson/TaxReference" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="VATRegistration" Name="http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="AdditionalAttribute" Name="http://eidas.europa.eu/attributes/naturalperson/AdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="BirthName" Name="http://eidas.europa.eu/attributes/naturalperson/BirthName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="CurrentAddress" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="FamilyName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="FirstName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="DateOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/DateOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="Gender" Name="http://eidas.europa.eu/attributes/naturalperson/Gender" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="PersonIdentifier" Name="http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="PlaceOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+		</eidas:RequestedAttributes>
+	</saml2p:Extensions>
+	<saml2p:NameIDPolicy AllowCreate="true" Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"/>
+	<saml2p:RequestedAuthnContext Comparison="minimum">
+		<saml2:AuthnContextClassRef>http://eidas.europa.eu/LoA/low</saml2:AuthnContextClassRef>
+	</saml2p:RequestedAuthnContext>
+</saml2p:AuthnRequest>
+{% endhighlight %}
+
+Kasutaja valib nüüd `HTTP POST` või `HTTP Redirect` binding-u. Kasutaja valib vajutab `HTTP Redirect` ja seejärel `Submit`.
 
 ## 3. Kasutaja valikute edastamine serverisse (2)
 
@@ -99,17 +171,52 @@ POST https://eidastest.eesti.ee/SP/changeProtocolBinding.action
 
 Päringu kehas edastatakse vormiandmed:
 
-{% highlight xml %}
+````
 samlRequestBinding	get
 samlRequestLocation	https://eidastest.eesti.ee/EidasNode/ServiceProvider
 citizenCountryCode	CD
-samlRequestXML	<saml2p:AuthnRequest+xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"+xmlns:ds="http://www.w3.org/2000/09/xmldsig#"+xmlns:eidas="http://eidas.europa.eu/saml-extensions"+xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"+Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified"+Destination="https://eidastest.eesti.ee/EidasNode/ServiceProvider"+ForceAuthn="true"+ID="_UdCvtm1NPIWt4OAnhuEsmVVn3imhJULjC1djKrDGOtfVjE.B9zn31v3W_ggGcM3"+IsPassive="false"+IssueInstant="2018-01-12T11:08:39.355Z"+ProviderName="DEM…ame="PlaceOfBirth"+Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth"+NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"+isRequired="false"/></eidas:RequestedAttributes></saml2p:Extensions><saml2p:NameIDPolicy+AllowCreate="true"+Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"/><saml2p:RequestedAuthnContext+Comparison="minimum"><saml2:AuthnContextClassRef>http://eidas.europa.eu/LoA/low</saml2:AuthnContextClassRef></saml2p:RequestedAuthnContext></saml2p:AuthnRequest>
+samlRequestXML	<vt allpool>
+````
+
+{% highlight xml %}
+<saml2p:AuthnRequest+
+	xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"+
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"+
+	xmlns:eidas="http://eidas.europa.eu/saml-extensions"+
+	xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"+Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified"+Destination="https://eidastest.eesti.ee/EidasNode/ServiceProvider"+ForceAuthn="true"+ID="_UdCvtm1NPIWt4OAnhuEsmVVn3imhJULjC1djKrDGOtfVjE.B9zn31v3W_ggGcM3"+IsPassive="false"+IssueInstant="2018-01-12T11:08:39.355Z"+ProviderName="DEM…ame="PlaceOfBirth"+Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth"+NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"+isRequired="false"/>
+</eidas:RequestedAttributes>undefined</saml2p:Extensions>undefined<saml2p:NameIDPolicy+AllowCreate="true"+Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"/>undefined<saml2p:RequestedAuthnContext+Comparison="minimum">
+<saml2:AuthnContextClassRef>http://eidas.europa.eu/LoA/low</saml2:AuthnContextClassRef>undefined</saml2p:RequestedAuthnContext>undefined</saml2p:AuthnRequest>
 {% endhighlight %}
 
 Vastuse kehas edastatakse edastamiseks valmis sõnum:
 
 {% highlight xml %}
-<saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/saml-extensions" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified" Destination="https://eidastest.eesti.ee/EidasNode/ServiceProvider" ForceAuthn="true" ID="_UdCvtm1NPIWt4OAnhuEsmVVn3imhJULjC1djKrDGOtfVjE.B9zn31v3W_ggGcM3" IsPassive="false" IssueInstant="2018-01-12T11:08:39.355Z" ProviderName="DEMO-SP-EE" Version="2.0"><saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">https://eidastest.eesti.ee/SP/metadata</saml2:Issuer><ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#"><ds:SignedInfo><ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/><ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/><ds:Reference URI="#_UdCvtm1NPIWt4OAnhuEsmVVn3imhJULjC1djKrDGOtfVjE.B9zn31v3W_ggGcM3"><ds:Transforms><ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/><ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/></ds:Transforms><ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/><ds:DigestValue>DpOI61KXd4dQG4kLKkl6U8NYV2Y9nRhLZCeCl1VGchYfSpjTRhND2K82M5QSRjtXUfuNTHiKDHaP/gsCTxoFSw==</ds:DigestValue></ds:Reference></ds:SignedInfo><ds:SignatureValue>bbNzsVyXVsiPAo2Lh2mqNaR37wA6mLdPjNAXThGZDEhqIL5Dtt0z/7YERsz/pqyh8ss86beFuGo8lld/31zdVtnR8Vjyd5Gjt2JKvKtE0y0hCVExxlgzeg5KaMCilBlLUEfs1l5XdibbHnzvzmM41uXEAIEBtf4GBirlRlV4pcSqajqDAvzlvYD5QRLMMmsN0st6GnY3WiM+tvk7iN4B9GS/L0uzXXcavaEQxrVs0s7sNQnlHSLVOa7YG0NF1h3H0Ja5BlrHLxOp4x8ajdJwHV9zNU6BriZbRQpAjPIC2hwGyUjTtWEEmVgHcHmx3Rl957MPtLJlRw8M7UMRnuEyuw==</ds:SignatureValue><ds:KeyInfo><ds:X509Data><ds:X509Certificate>MIIDaTCCAlGgAwIBAgIEH5P86jANBgkqhkiG9w0BAQsFADBlMQswCQYDVQQGEwJFRTELMAkGA1UE
+<saml2p:AuthnRequest
+	xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+	xmlns:eidas="http://eidas.europa.eu/saml-extensions"
+	xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified" Destination="https://eidastest.eesti.ee/EidasNode/ServiceProvider" ForceAuthn="true" ID="_UdCvtm1NPIWt4OAnhuEsmVVn3imhJULjC1djKrDGOtfVjE.B9zn31v3W_ggGcM3" IsPassive="false" IssueInstant="2018-01-12T11:08:39.355Z" ProviderName="DEMO-SP-EE" Version="2.0">
+	<saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity"
+		xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">https://eidastest.eesti.ee/SP/metadata
+	</saml2:Issuer>
+	<ds:Signature
+		xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+		<ds:SignedInfo>
+			<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+			<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+			<ds:Reference URI="#_UdCvtm1NPIWt4OAnhuEsmVVn3imhJULjC1djKrDGOtfVjE.B9zn31v3W_ggGcM3">
+				<ds:Transforms>
+					<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+					<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+				</ds:Transforms>
+				<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+				<ds:DigestValue>DpOI61KXd4dQG4kLKkl6U8NYV2Y9nRhLZCeCl1VGchYfSpjTRhND2K82M5QSRjtXUfuNTHiKDHaP/gsCTxoFSw==</ds:DigestValue>
+			</ds:Reference>
+		</ds:SignedInfo>
+		<ds:SignatureValue>bbNzsVyXVsiPAo2Lh2mqNaR37wA6mLdPjNAXThGZDEhqIL5Dtt0z/7YERsz/pqyh8ss86beFuGo8lld/31zdVtnR8Vjyd5Gjt2JKvKtE0y0hCVExxlgzeg5KaMCilBlLUEfs1l5XdibbHnzvzmM41uXEAIEBtf4GBirlRlV4pcSqajqDAvzlvYD5QRLMMmsN0st6GnY3WiM+tvk7iN4B9GS/L0uzXXcavaEQxrVs0s7sNQnlHSLVOa7YG0NF1h3H0Ja5BlrHLxOp4x8ajdJwHV9zNU6BriZbRQpAjPIC2hwGyUjTtWEEmVgHcHmx3Rl957MPtLJlRw8M7UMRnuEyuw==</ds:SignatureValue>
+		<ds:KeyInfo>
+			<ds:X509Data>
+				<ds:X509Certificate>MIIDaTCCAlGgAwIBAgIEH5P86jANBgkqhkiG9w0BAQsFADBlMQswCQYDVQQGEwJFRTELMAkGA1UE
 CBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwGA1UECxMFU1RPUksxHzAdBgNVBAMT
 FnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwHhcNMTcwNTE5MTI1MDA3WhcNMTkwNTA5MTI1MDA3WjBl
 MQswCQYDVQQGEwJFRTELMAkGA1UECBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwG
@@ -124,7 +231,48 @@ HTJ7aGESfSouKUccnsS89VKY4zu1Cj6IuGBOtsi7ORx8iBid3mFeX3bS9XcnK0kV3vbIEfXr2U9L
 YHtAeERNwMk111y0sU2pnwHpWae5YX7cCBjbEd72CV7BQ5cPExUEdORGrpHrEE445o2LC7Nif0Qx
 kO/2BFMlKJWsr2HyccYXWSFdyie3ar1HzkMGbebyK7cmRVTHqohNwPtVmS+bLcyjY5OiL/NVArGR
 VP6DSep3h+/G6GnmrpeQxsLwolhASNLQbylifA8v6E3toHu9ditx9qynFFn9CeDT3g1LKhwQkB6/
-GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2p:Extensions xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"><eidas:SPType xmlns:eidas="http://eidas.europa.eu/saml-extensions">public</eidas:SPType><eidas:RequestedAttributes xmlns:eidas="http://eidas.europa.eu/saml-extensions"><eidas:RequestedAttribute FriendlyName="D-2012-17-EUIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="EORI" Name="http://eidas.europa.eu/attributes/legalperson/EORI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="LEI" Name="http://eidas.europa.eu/attributes/legalperson/LEI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="LegalAdditionalAttribute" Name="http://eidas.europa.eu/attributes/legalperson/LegalAdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="LegalName" Name="http://eidas.europa.eu/attributes/legalperson/LegalName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="LegalAddress" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="LegalPersonIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="SEED" Name="http://eidas.europa.eu/attributes/legalperson/SEED" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="SIC" Name="http://eidas.europa.eu/attributes/legalperson/SIC" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="TaxReference" Name="http://eidas.europa.eu/attributes/legalperson/TaxReference" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="VATRegistration" Name="http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="AdditionalAttribute" Name="http://eidas.europa.eu/attributes/naturalperson/AdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="BirthName" Name="http://eidas.europa.eu/attributes/naturalperson/BirthName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="CurrentAddress" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="FamilyName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="FirstName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="DateOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/DateOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="Gender" Name="http://eidas.europa.eu/attributes/naturalperson/Gender" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="PersonIdentifier" Name="http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="PlaceOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/></eidas:RequestedAttributes></saml2p:Extensions><saml2p:NameIDPolicy AllowCreate="true" Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified" xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"/><saml2p:RequestedAuthnContext Comparison="minimum" xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"><saml2:AuthnContextClassRef xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">http://eidas.europa.eu/LoA/low</saml2:AuthnContextClassRef></saml2p:RequestedAuthnContext></saml2p:AuthnRequest>
+GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
+			</ds:X509Data>
+		</ds:KeyInfo>
+	</ds:Signature>
+	<saml2p:Extensions
+		xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol">
+		<eidas:SPType
+			xmlns:eidas="http://eidas.europa.eu/saml-extensions">public
+		</eidas:SPType>
+		<eidas:RequestedAttributes
+			xmlns:eidas="http://eidas.europa.eu/saml-extensions">
+			<eidas:RequestedAttribute FriendlyName="D-2012-17-EUIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="EORI" Name="http://eidas.europa.eu/attributes/legalperson/EORI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="LEI" Name="http://eidas.europa.eu/attributes/legalperson/LEI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="LegalAdditionalAttribute" Name="http://eidas.europa.eu/attributes/legalperson/LegalAdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="LegalName" Name="http://eidas.europa.eu/attributes/legalperson/LegalName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="LegalAddress" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="LegalPersonIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="SEED" Name="http://eidas.europa.eu/attributes/legalperson/SEED" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="SIC" Name="http://eidas.europa.eu/attributes/legalperson/SIC" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="TaxReference" Name="http://eidas.europa.eu/attributes/legalperson/TaxReference" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="VATRegistration" Name="http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="AdditionalAttribute" Name="http://eidas.europa.eu/attributes/naturalperson/AdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="BirthName" Name="http://eidas.europa.eu/attributes/naturalperson/BirthName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="CurrentAddress" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="FamilyName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="FirstName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="DateOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/DateOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="Gender" Name="http://eidas.europa.eu/attributes/naturalperson/Gender" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+			<eidas:RequestedAttribute FriendlyName="PersonIdentifier" Name="http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+			<eidas:RequestedAttribute FriendlyName="PlaceOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+		</eidas:RequestedAttributes>
+	</saml2p:Extensions>
+	<saml2p:NameIDPolicy AllowCreate="true" Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
+		xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"/>
+		<saml2p:RequestedAuthnContext Comparison="minimum"
+			xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol">
+			<saml2:AuthnContextClassRef
+				xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">http://eidas.europa.eu/LoA/low
+			</saml2:AuthnContextClassRef>
+		</saml2p:RequestedAuthnContext>
+	</saml2p:AuthnRequest>
 {% endhighlight %}
 
 ## 4. Pöördumine eIDAS konnektorteenuse poole
@@ -137,7 +285,7 @@ postLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&
 redirectLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&
 country=CD&
 RelayState=MyRelayState&
-SAMLRequest=PHNhbWwycDpBdXRoblJlcXVlc3QgeG1sbnM6c2FtbDJwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJvdG9jb2wiIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIiB4bWxuczplaWRhcz0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9zYW1sLWV4dGVuc2lvbnMiIHhtbG5zOnNhbWwyPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIiBDb25zZW50PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6Y29uc2VudDp1bnNwZWNpZmllZCIgRGVzdGluYXRpb249Imh0dHBzOi8vZWlkYXN0ZXN0LmVlc3RpLmVlL0VpZGFzTm9kZS9TZXJ2aWNlUHJvdmlkZXIiIEZvcmNlQXV0aG49InRydWUiIElEPSJfVWRDdnRtMU5QSVd0NE9Bbmh1RXNtVlZuM2ltaEpVTGpDMWRqS3JER090ZlZqRS5COXpuMzF2M1dfZ2dHY00zIiBJc1Bhc3NpdmU9ImZhbHNlIiBJc3N1ZUluc3RhbnQ9IjIwMTgtMDEtMTJUMTE6MDg6MzkuMzU1WiIgUHJvdmlkZXJOYW1lPSJERU1PLVNQLUVFIiBWZXJzaW9uPSIyLjAiPjxzYW1sMjpJc3N1ZXIgRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6bmFtZWlkLWZvcm1hdDplbnRpdHkiIHhtbG5zOnNhbWwyPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIj5odHRwczovL2VpZGFzdGVzdC5lZXN0aS5lZS9TUC9tZXRhZGF0YTwvc2FtbDI6SXNzdWVyPjxkczpTaWduYXR1cmUgeG1sbnM6ZHM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyMiPjxkczpTaWduZWRJbmZvPjxkczpDYW5vbmljYWxpemF0aW9uTWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8xMC94bWwtZXhjLWMxNG4jIi8+PGRzOlNpZ25hdHVyZU1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMDQveG1sZHNpZy1tb3JlI3JzYS1zaGE1MTIiLz48ZHM6UmVmZXJlbmNlIFVSST0iI19VZEN2dG0xTlBJV3Q0T0FuaHVFc21WVm4zaW1oSlVMakMxZGpLckRHT3RmVmpFLkI5em4zMXYzV19nZ0djTTMiPjxkczpUcmFuc2Zvcm1zPjxkczpUcmFuc2Zvcm0gQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjZW52ZWxvcGVkLXNpZ25hdHVyZSIvPjxkczpUcmFuc2Zvcm0gQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzEwL3htbC1leGMtYzE0biMiLz48L2RzOlRyYW5zZm9ybXM+PGRzOkRpZ2VzdE1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMDQveG1sZW5jI3NoYTUxMiIvPjxkczpEaWdlc3RWYWx1ZT5EcE9JNjFLWGQ0ZFFHNGtMS2tsNlU4TllWMlk5blJoTFpDZUNsMVZHY2hZZlNwalRSaE5EMks4Mk01UVNSanRYVWZ1TlRIaUtESGFQL2dzQ1R4b0ZTdz09PC9kczpEaWdlc3RWYWx1ZT48L2RzOlJlZmVyZW5jZT48L2RzOlNpZ25lZEluZm8+PGRzOlNpZ25hdHVyZVZhbHVlPmJiTnpzVnlYVnNpUEFvMkxoMm1xTmFSMzd3QTZtTGRQak5BWFRoR1pERWhxSUw1RHR0MHovN1lFUnN6L3BxeWg4c3M4NmJlRnVHbzhsbGQvMzF6ZFZ0blI4Vmp5ZDVHanQySkt2S3RFMHkwaENWRXh4bGd6ZWc1S2FNQ2lsQmxMVUVmczFsNVhkaWJiSG56dnptTTQxdVhFQUlFQnRmNEdCaXJsUmxWNHBjU3FhanFEQXZ6bHZZRDVRUkxNTW1zTjBzdDZHblkzV2lNK3R2azdpTjRCOUdTL0wwdXpYWGNhdmFFUXhyVnMwczdzTlFubEhTTFZPYTdZRzBORjFoM0gwSmE1QmxySEx4T3A0eDhhamRKd0hWOXpOVTZCcmlaYlJRcEFqUElDMmh3R3lValR0V0VFbVZnSGNIbXgzUmw5NTdNUHRMSmxSdzhNN1VNUm51RXl1dz09PC9kczpTaWduYXR1cmVWYWx1ZT48ZHM6S2V5SW5mbz48ZHM6WDUwOURhdGE+PGRzOlg1MDlDZXJ0aWZpY2F0ZT5NSUlEYVRDQ0FsR2dBd0lCQWdJRUg1UDg2akFOQmdrcWhraUc5dzBCQVFzRkFEQmxNUXN3Q1FZRFZRUUdFd0pGUlRFTE1Ba0dBMVVFCkNCTUNSVlV4Q3pBSkJnTlZCQWNUQWtWVk1Rc3dDUVlEVlFRS0V3SlRVREVPTUF3R0ExVUVDeE1GVTFSUFVrc3hIekFkQmdOVkJBTVQKRm5Od0xXVmxMV1JsYlc4dFkyVnlkR2xtYVdOaGRHVXdIaGNOTVRjd05URTVNVEkxTURBM1doY05NVGt3TlRBNU1USTFNREEzV2pCbApNUXN3Q1FZRFZRUUdFd0pGUlRFTE1Ba0dBMVVFQ0JNQ1JWVXhDekFKQmdOVkJBY1RBa1ZWTVFzd0NRWURWUVFLRXdKVFVERU9NQXdHCkExVUVDeE1GVTFSUFVrc3hIekFkQmdOVkJBTVRGbk53TFdWbExXUmxiVzh0WTJWeWRHbG1hV05oZEdVd2dnRWlNQTBHQ1NxR1NJYjMKRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFDcVpDN0NKaTNXVkN6c1NoM21WOUZOb1ZZZ2VpT0lSNjVFQU9hcHl5dDdYZ3FjaG4xcwpTcHBxM2hzekNiamdROG1LMWh1RGt3OGlMNXFtWGc0cmQ2VFVWNG54UHVFVmJYMzQ4UTJQN0pINlVtSGNlZFdFbFl2emJJMll3Mzg4CnYvZE93enA3anphOERhS0J0QUpsazhoWTFyaVBiZTRDZmlPcjVhVFlicHlHMENzYm5velJYcGlqNTYyU05Wa2J2V3o0RWRXLzNDNVcKaTczdkhOUnp2SW9NZ3dGMjhZekNwZjZERk1rNVFwZWpTYytGNnpzWWVLMXVNcU50SlZ4R3liR2hscTYxQkJtR014RkJtdDBMZExXdApVT256anFnQjUvWThjTlNoRWsreXhUL1FCTUo4QmJPOHZnTzJJbmhGVXlFQmxieHpxR3N2ZFA2QlpKMzdsekJmQWdNQkFBR2pJVEFmCk1CMEdBMVVkRGdRV0JCU0YrTm1FZ2pEblZTTnVjbjljRldVMjh4SEc4REFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBUC9jSlQrdGkKSFRKN2FHRVNmU291S1VjY25zUzg5VktZNHp1MUNqNkl1R0JPdHNpN09SeDhpQmlkM21GZVgzYlM5WGNuSzBrVjN2YklFZlhyMlU5TApZSHRBZUVSTndNazExMXkwc1UycG53SHBXYWU1WVg3Y0NCamJFZDcyQ1Y3QlE1Y1BFeFVFZE9SR3JwSHJFRTQ0NW8yTEM3TmlmMFF4CmtPLzJCRk1sS0pXc3IySHljY1lYV1NGZHlpZTNhcjFIemtNR2JlYnlLN2NtUlZUSHFvaE53UHRWbVMrYkxjeWpZNU9pTC9OVkFyR1IKVlA2RFNlcDNoKy9HNkdubXJwZVF4c0x3b2xoQVNOTFFieWxpZkE4djZFM3RvSHU5ZGl0eDlxeW5GRm45Q2VEVDNnMUxLaHdRa0I2LwpHQlZ0S3ZGRUFDNCtPNEFQdnRuTXZqS2hBQnBPT2c9PTwvZHM6WDUwOUNlcnRpZmljYXRlPjwvZHM6WDUwOURhdGE+PC9kczpLZXlJbmZvPjwvZHM6U2lnbmF0dXJlPjxzYW1sMnA6RXh0ZW5zaW9ucyB4bWxuczpzYW1sMnA9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpwcm90b2NvbCI+PGVpZGFzOlNQVHlwZSB4bWxuczplaWRhcz0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9zYW1sLWV4dGVuc2lvbnMiPnB1YmxpYzwvZWlkYXM6U1BUeXBlPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGVzIHhtbG5zOmVpZGFzPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L3NhbWwtZXh0ZW5zaW9ucyI+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkQtMjAxMi0xNy1FVUlkZW50aWZpZXIiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9ELTIwMTItMTctRVVJZGVudGlmaWVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iRU9SSSIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL2xlZ2FscGVyc29uL0VPUkkiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMRUkiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MRUkiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbEFkZGl0aW9uYWxBdHRyaWJ1dGUiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbEFkZGl0aW9uYWxBdHRyaWJ1dGUiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbE5hbWUiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbE5hbWUiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkxlZ2FsQWRkcmVzcyIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL2xlZ2FscGVyc29uL0xlZ2FsUGVyc29uQWRkcmVzcyIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9ImZhbHNlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkxlZ2FsUGVyc29uSWRlbnRpZmllciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL2xlZ2FscGVyc29uL0xlZ2FsUGVyc29uSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iU0VFRCIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL2xlZ2FscGVyc29uL1NFRUQiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJTSUMiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9TSUMiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJUYXhSZWZlcmVuY2UiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9UYXhSZWZlcmVuY2UiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJWQVRSZWdpc3RyYXRpb24iIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9WQVRSZWdpc3RyYXRpb25OdW1iZXIiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJBZGRpdGlvbmFsQXR0cmlidXRlIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9BZGRpdGlvbmFsQXR0cmlidXRlIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iQmlydGhOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9CaXJ0aE5hbWUiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJDdXJyZW50QWRkcmVzcyIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vQ3VycmVudEFkZHJlc3MiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJGYW1pbHlOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50RmFtaWx5TmFtZSIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iRmlyc3ROYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50R2l2ZW5OYW1lIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0idHJ1ZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJEYXRlT2ZCaXJ0aCIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vRGF0ZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkdlbmRlciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vR2VuZGVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGVyc29uSWRlbnRpZmllciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vUGVyc29uSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGxhY2VPZkJpcnRoIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9QbGFjZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjwvZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlcz48L3NhbWwycDpFeHRlbnNpb25zPjxzYW1sMnA6TmFtZUlEUG9saWN5IEFsbG93Q3JlYXRlPSJ0cnVlIiBGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjEuMTpuYW1laWQtZm9ybWF0OnVuc3BlY2lmaWVkIiB4bWxuczpzYW1sMnA9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpwcm90b2NvbCIvPjxzYW1sMnA6UmVxdWVzdGVkQXV0aG5Db250ZXh0IENvbXBhcmlzb249Im1pbmltdW0iIHhtbG5zOnNhbWwycD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOnByb3RvY29sIj48c2FtbDI6QXV0aG5Db250ZXh0Q2xhc3NSZWYgeG1sbnM6c2FtbDI9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphc3NlcnRpb24iPmh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvTG9BL2xvdzwvc2FtbDI6QXV0aG5Db250ZXh0Q2xhc3NSZWY+PC9zYW1sMnA6UmVxdWVzdGVkQXV0aG5Db250ZXh0Pjwvc2FtbDJwOkF1dGhuUmVxdWVzdD4=&
+SAMLRequest=...&
 sendmethods=GET
 ````
 
@@ -145,14 +293,14 @@ Vastuseks saadab konnektorteenus HTML, kus kasutajale kuvatakse (vilksamisi) `Re
 
 {% highlight html %}
 <form name="redirectForm" method="GET" action="https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest">
-    <input type="hidden" id="SAMLRequest" name="SAMLRequest" value="PHNhbWwycDpBdXRoblJlcXVlc3QgeG1sbnM6c2FtbDJwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJvdG9jb2wiIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIiB4bWxuczplaWRhcz0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9zYW1sLWV4dGVuc2lvbnMiIHhtbG5zOnNhbWwyPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIiBDb25zZW50PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6Y29uc2VudDp1bnNwZWNpZmllZCIgRGVzdGluYXRpb249Imh0dHBzOi8vZWMuZXVyb3BhLmV1L2VpZC1pbnRlZ3JhdGlvbi10ZXN0L0VpZGFzTm9kZS9Db2xsZWFndWVSZXF1ZXN0IiBGb3JjZUF1dGhuPSJ0cnVlIiBJRD0iXzhERUpmRmpaWTY0cnduOF9LT255SDVfWUVUcXJTVGVubGhnVm5pXy1VMlNzS1RsVXFsVFZnYzljaGU5Y3lUWCIgSXNQYXNzaXZlPSJmYWxzZSIgSXNzdWVJbnN0YW50PSIyMDE4LTAxLTEyVDExOjExOjA1Ljk2MVoiIFByb3ZpZGVyTmFtZT0iREVNTy1TUC1FRSIgVmVyc2lvbj0iMi4wIj48c2FtbDI6SXNzdWVyIEZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOm5hbWVpZC1mb3JtYXQ6ZW50aXR5Ij5odHRwczovL2VpZGFzdGVzdC5lZXN0aS5lZS9FaWRhc05vZGUvQ29ubmVjdG9yTWV0YWRhdGE8L3NhbWwyOklzc3Vlcj48ZHM6U2lnbmF0dXJlIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIj48ZHM6U2lnbmVkSW5mbz48ZHM6Q2Fub25pY2FsaXphdGlvbk1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1sLWV4Yy1jMTRuIyIvPjxkczpTaWduYXR1cmVNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhNTEyIi8+PGRzOlJlZmVyZW5jZSBVUkk9IiNfOERFSmZGalpZNjRyd244X0tPbnlINV9ZRVRxclNUZW5saGdWbmlfLVUyU3NLVGxVcWxUVmdjOWNoZTljeVRYIj48ZHM6VHJhbnNmb3Jtcz48ZHM6VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8wOS94bWxkc2lnI2VudmVsb3BlZC1zaWduYXR1cmUiLz48ZHM6VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8xMC94bWwtZXhjLWMxNG4jIi8+PC9kczpUcmFuc2Zvcm1zPjxkczpEaWdlc3RNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGVuYyNzaGE1MTIiLz48ZHM6RGlnZXN0VmFsdWU+VnJIZWNQaGZNdEFVaUQ1NmJrRTR0b3o5clNmMFZVdjBiWHZWQzZmV3h3aTJuQ21sd3ZzRzRYQlJuMEJPbkQxZEEvYzhpa005aXhrRG9qbDYwT00wWmc9PTwvZHM6RGlnZXN0VmFsdWU+PC9kczpSZWZlcmVuY2U+PC9kczpTaWduZWRJbmZvPjxkczpTaWduYXR1cmVWYWx1ZT5CVEF0ZTdkNEdjSklFL0FLUXdXYlAyZjFpT3hZVHBDMURjSThna0VueHNwcFhvNEI2YlhXUUR0OGZSOGVPUGowSVZXQ2NncVhnc3JUeUlEdTdYbnNLY0k4bFRVNFVhUWVqZ2VoazI2WFZ2a2lWU3VvNUEzK1plamV2UkhETUZVeFNaVGVtQkM0UXpneFhMdnhVZnd6N2N5L3JWa0lELzl0b2NMOHlZMDcyZFJvMnpGVXppMDRZZmJVZkdKUHl6a2NZOGY5ejFYeGowejRwbzJjeFNoWDNZZGVqQXR6S2hQRnQ1N25ONk85WklaNFhIQ3JwL2lqaEFGNThSZzFXeXNQSmRRZGlESWU5RlBYZ3grU0gyWEhOaWRZbytvZ3RlSTRTWWcwRWhOVmd6cXFqSS8zR3ByRXBCOFpIVytBYzlTL3Z2VEVvamdEZTJFRG5BeUhMdUUrUnc9PTwvZHM6U2lnbmF0dXJlVmFsdWU+PGRzOktleUluZm8+PGRzOlg1MDlEYXRhPjxkczpYNTA5Q2VydGlmaWNhdGU+TUlJRGRUQ0NBbDJnQXdJQkFnSUVhbFlqZ0RBTkJna3Foa2lHOXcwQkFRc0ZBREJyTVFzd0NRWURWUVFHRXdKRlJURUxNQWtHQTFVRQpDQk1DUlZVeEN6QUpCZ05WQkFjVEFrVlZNUTR3REFZRFZRUUtFd1ZUVUVWUVV6RU9NQXdHQTFVRUN4TUZVMVJQVWtzeElqQWdCZ05WCkJBTVRHWE53WlhCekxXVmxMV1JsYlc4dFkyVnlkR2xtYVdOaGRHVXdIaGNOTVRjd05URTVNVEkwTmpFeldoY05NVGt3TlRBNU1USTAKTmpFeldqQnJNUXN3Q1FZRFZRUUdFd0pGUlRFTE1Ba0dBMVVFQ0JNQ1JWVXhDekFKQmdOVkJBY1RBa1ZWTVE0d0RBWURWUVFLRXdWVApVRVZRVXpFT01Bd0dBMVVFQ3hNRlUxUlBVa3N4SWpBZ0JnTlZCQU1UR1hOd1pYQnpMV1ZsTFdSbGJXOHRZMlZ5ZEdsbWFXTmhkR1V3CmdnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUNSRCswSVY3bHlOdStwVzdSV1E1UXlFak0zYVNpeUZtaW8KNysxZjBJeTBmUzg1anNGR0dnSTNqblBaTDZkOHR1dUxaRUJwSHpNWmhPNUVGdzFTYUp3RHBzbUlnNmVmdWFLMG9MM0RlVmRSVzNmNQo4VjZGaHNyTDJzZjJRZXpHeEZmR3RyNjBSVTlMUm05QXd0Nnl5aEtkUGFoaVdhVU1pSk5uUDdyMUhKKzNVRU5QZkpFQXFXVVNOcG9wCndMalpibzJUM211T0FKMDI1Q1BRMklURWVxbzNUN0RUamFoeHpRM0x5TDg1OVFzV1dEejEyWlNjdC95eGpHYTF4MDFmRHR3c2dudjQKM2E1OE4ydmdEc2krYkRZWGFzZ3M2T003bVFrdFZnZTZKMnBaWkxUL3lPZnFMbmNGT1RXZXFnUXJRMytLbVZEZ2g3bTVRQWxiTmlRTgppYmdoQWdNQkFBR2pJVEFmTUIwR0ExVWREZ1FXQkJSVXBlSHhQWjZEMklFN2l1WnhROGNtOE56U2VUQU5CZ2txaGtpRzl3MEJBUXNGCkFBT0NBUUVBZGJQTnIwSmlxOFArUlVjRVQ1b0RPd0lMYmZoUll5MGh3SkdSUys0RU16QXl2RC9lOXJYZjVUa3hqbGRiNHAxTC9oSUkKVlFCY2R3WnNXMmtVdDNXZU9ZKzJwUVFsa2NIRVdZVmFRR2dNUk1VSm9yYlh3UnhXWHZSWFNzZ2Ura0xlSk1ndFlKZHRMeE1VZ0JyLwpjbDVFeE1NbFR2VTA5bHJPaTlWWWZ6Zzg0ZHJxbFhWYkZXK2k3OTU2NGNiVGM3TWNxdm1TZW1jNEQvckxVbGFUdXBNa0k5bkJXOTlNCkFESnNqZ3VnbEl5aUtVR3dpbnhlWFh1U2ZtcGVrMTdKeE1TT2ZVaHNOcDdwbUM2YzBycE52THhiTHhOTXBQRkNSK3RYWFcvRk91ZFoKMjFwSUVJVmNrbjlCVEZzWWxVVXBYQkw0a0dZUlRYcXZIbkdwVk1HSlNNVWF0Zz09PC9kczpYNTA5Q2VydGlmaWNhdGU+PC9kczpYNTA5RGF0YT48L2RzOktleUluZm8+PC9kczpTaWduYXR1cmU+PHNhbWwycDpFeHRlbnNpb25zPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGVzPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJELTIwMTItMTctRVVJZGVudGlmaWVyIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vRC0yMDEyLTE3LUVVSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9ImZhbHNlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkVPUkkiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9FT1JJIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iTEVJIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vTEVJIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iTGVnYWxOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vTGVnYWxOYW1lIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0idHJ1ZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbEFkZHJlc3MiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbFBlcnNvbkFkZHJlc3MiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbFBlcnNvbklkZW50aWZpZXIiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbFBlcnNvbklkZW50aWZpZXIiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IlNFRUQiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9TRUVEIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iU0lDIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vU0lDIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iVGF4UmVmZXJlbmNlIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vVGF4UmVmZXJlbmNlIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iVkFUUmVnaXN0cmF0aW9uIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vVkFUUmVnaXN0cmF0aW9uTnVtYmVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iQmlydGhOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9CaXJ0aE5hbWUiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJDdXJyZW50QWRkcmVzcyIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vQ3VycmVudEFkZHJlc3MiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJGYW1pbHlOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50RmFtaWx5TmFtZSIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iRmlyc3ROYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50R2l2ZW5OYW1lIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0idHJ1ZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJEYXRlT2ZCaXJ0aCIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vRGF0ZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkdlbmRlciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vR2VuZGVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGVyc29uSWRlbnRpZmllciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vUGVyc29uSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGxhY2VPZkJpcnRoIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9QbGFjZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjwvZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlcz48L3NhbWwycDpFeHRlbnNpb25zPjxzYW1sMnA6TmFtZUlEUG9saWN5IEFsbG93Q3JlYXRlPSJ0cnVlIiBGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjEuMTpuYW1laWQtZm9ybWF0OnVuc3BlY2lmaWVkIi8+PHNhbWwycDpSZXF1ZXN0ZWRBdXRobkNvbnRleHQgQ29tcGFyaXNvbj0ibWluaW11bSI+PHNhbWwyOkF1dGhuQ29udGV4dENsYXNzUmVmPmh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvTG9BL2xvdzwvc2FtbDI6QXV0aG5Db250ZXh0Q2xhc3NSZWY+PC9zYW1sMnA6UmVxdWVzdGVkQXV0aG5Db250ZXh0Pjwvc2FtbDJwOkF1dGhuUmVxdWVzdD4="/>
+    <input type="hidden" id="SAMLRequest" name="SAMLRequest" value="..."/>
     <input type="hidden" id="relayState" name="RelayState" value="MyRelayState"/>
                         
     <input type="hidden"  name="token"  value="1YbOdLyWSLz_VKQhyBwduOEaz7A$" />
 </form>
 <noscript>
     <form id="redirectFormNoJs" name="redirectFormNoJs" method="post" action="https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest">
-        <input type="hidden" id="consentValue_SAMLRequest" name="SAMLRequest" value="PHNhbWwycDpBdXRoblJlcXVlc3QgeG1sbnM6c2FtbDJwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJvdG9jb2wiIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIiB4bWxuczplaWRhcz0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9zYW1sLWV4dGVuc2lvbnMiIHhtbG5zOnNhbWwyPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIiBDb25zZW50PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6Y29uc2VudDp1bnNwZWNpZmllZCIgRGVzdGluYXRpb249Imh0dHBzOi8vZWMuZXVyb3BhLmV1L2VpZC1pbnRlZ3JhdGlvbi10ZXN0L0VpZGFzTm9kZS9Db2xsZWFndWVSZXF1ZXN0IiBGb3JjZUF1dGhuPSJ0cnVlIiBJRD0iXzhERUpmRmpaWTY0cnduOF9LT255SDVfWUVUcXJTVGVubGhnVm5pXy1VMlNzS1RsVXFsVFZnYzljaGU5Y3lUWCIgSXNQYXNzaXZlPSJmYWxzZSIgSXNzdWVJbnN0YW50PSIyMDE4LTAxLTEyVDExOjExOjA1Ljk2MVoiIFByb3ZpZGVyTmFtZT0iREVNTy1TUC1FRSIgVmVyc2lvbj0iMi4wIj48c2FtbDI6SXNzdWVyIEZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOm5hbWVpZC1mb3JtYXQ6ZW50aXR5Ij5odHRwczovL2VpZGFzdGVzdC5lZXN0aS5lZS9FaWRhc05vZGUvQ29ubmVjdG9yTWV0YWRhdGE8L3NhbWwyOklzc3Vlcj48ZHM6U2lnbmF0dXJlIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIj48ZHM6U2lnbmVkSW5mbz48ZHM6Q2Fub25pY2FsaXphdGlvbk1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1sLWV4Yy1jMTRuIyIvPjxkczpTaWduYXR1cmVNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhNTEyIi8+PGRzOlJlZmVyZW5jZSBVUkk9IiNfOERFSmZGalpZNjRyd244X0tPbnlINV9ZRVRxclNUZW5saGdWbmlfLVUyU3NLVGxVcWxUVmdjOWNoZTljeVRYIj48ZHM6VHJhbnNmb3Jtcz48ZHM6VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8wOS94bWxkc2lnI2VudmVsb3BlZC1zaWduYXR1cmUiLz48ZHM6VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8xMC94bWwtZXhjLWMxNG4jIi8+PC9kczpUcmFuc2Zvcm1zPjxkczpEaWdlc3RNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGVuYyNzaGE1MTIiLz48ZHM6RGlnZXN0VmFsdWU+VnJIZWNQaGZNdEFVaUQ1NmJrRTR0b3o5clNmMFZVdjBiWHZWQzZmV3h3aTJuQ21sd3ZzRzRYQlJuMEJPbkQxZEEvYzhpa005aXhrRG9qbDYwT00wWmc9PTwvZHM6RGlnZXN0VmFsdWU+PC9kczpSZWZlcmVuY2U+PC9kczpTaWduZWRJbmZvPjxkczpTaWduYXR1cmVWYWx1ZT5CVEF0ZTdkNEdjSklFL0FLUXdXYlAyZjFpT3hZVHBDMURjSThna0VueHNwcFhvNEI2YlhXUUR0OGZSOGVPUGowSVZXQ2NncVhnc3JUeUlEdTdYbnNLY0k4bFRVNFVhUWVqZ2VoazI2WFZ2a2lWU3VvNUEzK1plamV2UkhETUZVeFNaVGVtQkM0UXpneFhMdnhVZnd6N2N5L3JWa0lELzl0b2NMOHlZMDcyZFJvMnpGVXppMDRZZmJVZkdKUHl6a2NZOGY5ejFYeGowejRwbzJjeFNoWDNZZGVqQXR6S2hQRnQ1N25ONk85WklaNFhIQ3JwL2lqaEFGNThSZzFXeXNQSmRRZGlESWU5RlBYZ3grU0gyWEhOaWRZbytvZ3RlSTRTWWcwRWhOVmd6cXFqSS8zR3ByRXBCOFpIVytBYzlTL3Z2VEVvamdEZTJFRG5BeUhMdUUrUnc9PTwvZHM6U2lnbmF0dXJlVmFsdWU+PGRzOktleUluZm8+PGRzOlg1MDlEYXRhPjxkczpYNTA5Q2VydGlmaWNhdGU+TUlJRGRUQ0NBbDJnQXdJQkFnSUVhbFlqZ0RBTkJna3Foa2lHOXcwQkFRc0ZBREJyTVFzd0NRWURWUVFHRXdKRlJURUxNQWtHQTFVRQpDQk1DUlZVeEN6QUpCZ05WQkFjVEFrVlZNUTR3REFZRFZRUUtFd1ZUVUVWUVV6RU9NQXdHQTFVRUN4TUZVMVJQVWtzeElqQWdCZ05WCkJBTVRHWE53WlhCekxXVmxMV1JsYlc4dFkyVnlkR2xtYVdOaGRHVXdIaGNOTVRjd05URTVNVEkwTmpFeldoY05NVGt3TlRBNU1USTAKTmpFeldqQnJNUXN3Q1FZRFZRUUdFd0pGUlRFTE1Ba0dBMVVFQ0JNQ1JWVXhDekFKQmdOVkJBY1RBa1ZWTVE0d0RBWURWUVFLRXdWVApVRVZRVXpFT01Bd0dBMVVFQ3hNRlUxUlBVa3N4SWpBZ0JnTlZCQU1UR1hOd1pYQnpMV1ZsTFdSbGJXOHRZMlZ5ZEdsbWFXTmhkR1V3CmdnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUNSRCswSVY3bHlOdStwVzdSV1E1UXlFak0zYVNpeUZtaW8KNysxZjBJeTBmUzg1anNGR0dnSTNqblBaTDZkOHR1dUxaRUJwSHpNWmhPNUVGdzFTYUp3RHBzbUlnNmVmdWFLMG9MM0RlVmRSVzNmNQo4VjZGaHNyTDJzZjJRZXpHeEZmR3RyNjBSVTlMUm05QXd0Nnl5aEtkUGFoaVdhVU1pSk5uUDdyMUhKKzNVRU5QZkpFQXFXVVNOcG9wCndMalpibzJUM211T0FKMDI1Q1BRMklURWVxbzNUN0RUamFoeHpRM0x5TDg1OVFzV1dEejEyWlNjdC95eGpHYTF4MDFmRHR3c2dudjQKM2E1OE4ydmdEc2krYkRZWGFzZ3M2T003bVFrdFZnZTZKMnBaWkxUL3lPZnFMbmNGT1RXZXFnUXJRMytLbVZEZ2g3bTVRQWxiTmlRTgppYmdoQWdNQkFBR2pJVEFmTUIwR0ExVWREZ1FXQkJSVXBlSHhQWjZEMklFN2l1WnhROGNtOE56U2VUQU5CZ2txaGtpRzl3MEJBUXNGCkFBT0NBUUVBZGJQTnIwSmlxOFArUlVjRVQ1b0RPd0lMYmZoUll5MGh3SkdSUys0RU16QXl2RC9lOXJYZjVUa3hqbGRiNHAxTC9oSUkKVlFCY2R3WnNXMmtVdDNXZU9ZKzJwUVFsa2NIRVdZVmFRR2dNUk1VSm9yYlh3UnhXWHZSWFNzZ2Ura0xlSk1ndFlKZHRMeE1VZ0JyLwpjbDVFeE1NbFR2VTA5bHJPaTlWWWZ6Zzg0ZHJxbFhWYkZXK2k3OTU2NGNiVGM3TWNxdm1TZW1jNEQvckxVbGFUdXBNa0k5bkJXOTlNCkFESnNqZ3VnbEl5aUtVR3dpbnhlWFh1U2ZtcGVrMTdKeE1TT2ZVaHNOcDdwbUM2YzBycE52THhiTHhOTXBQRkNSK3RYWFcvRk91ZFoKMjFwSUVJVmNrbjlCVEZzWWxVVXBYQkw0a0dZUlRYcXZIbkdwVk1HSlNNVWF0Zz09PC9kczpYNTA5Q2VydGlmaWNhdGU+PC9kczpYNTA5RGF0YT48L2RzOktleUluZm8+PC9kczpTaWduYXR1cmU+PHNhbWwycDpFeHRlbnNpb25zPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGVzPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJELTIwMTItMTctRVVJZGVudGlmaWVyIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vRC0yMDEyLTE3LUVVSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9ImZhbHNlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkVPUkkiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9FT1JJIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iTEVJIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vTEVJIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iTGVnYWxOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vTGVnYWxOYW1lIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0idHJ1ZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbEFkZHJlc3MiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbFBlcnNvbkFkZHJlc3MiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbFBlcnNvbklkZW50aWZpZXIiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbFBlcnNvbklkZW50aWZpZXIiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IlNFRUQiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9TRUVEIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iU0lDIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vU0lDIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iVGF4UmVmZXJlbmNlIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vVGF4UmVmZXJlbmNlIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iVkFUUmVnaXN0cmF0aW9uIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vVkFUUmVnaXN0cmF0aW9uTnVtYmVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iQmlydGhOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9CaXJ0aE5hbWUiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJDdXJyZW50QWRkcmVzcyIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vQ3VycmVudEFkZHJlc3MiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJGYW1pbHlOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50RmFtaWx5TmFtZSIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iRmlyc3ROYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50R2l2ZW5OYW1lIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0idHJ1ZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJEYXRlT2ZCaXJ0aCIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vRGF0ZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkdlbmRlciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vR2VuZGVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGVyc29uSWRlbnRpZmllciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vUGVyc29uSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGxhY2VPZkJpcnRoIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9QbGFjZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjwvZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlcz48L3NhbWwycDpFeHRlbnNpb25zPjxzYW1sMnA6TmFtZUlEUG9saWN5IEFsbG93Q3JlYXRlPSJ0cnVlIiBGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjEuMTpuYW1laWQtZm9ybWF0OnVuc3BlY2lmaWVkIi8+PHNhbWwycDpSZXF1ZXN0ZWRBdXRobkNvbnRleHQgQ29tcGFyaXNvbj0ibWluaW11bSI+PHNhbWwyOkF1dGhuQ29udGV4dENsYXNzUmVmPmh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvTG9BL2xvdzwvc2FtbDI6QXV0aG5Db250ZXh0Q2xhc3NSZWY+PC9zYW1sMnA6UmVxdWVzdGVkQXV0aG5Db250ZXh0Pjwvc2FtbDJwOkF1dGhuUmVxdWVzdD4="/>
+        <input type="hidden" id="consentValue_SAMLRequest" name="SAMLRequest" value="..."/>
         <input type="hidden" id="consentValue_relayState" name="RelayState" value="MyRelayState"/>
         <p class="box-btn">
             <input type="submit" id="ConsentValue_button" class="btn btn-next" value="I accept"/>
@@ -177,7 +325,7 @@ Välisriigi eIDAS Node-ks on praegu CEF- i käitatav eIDAS test-Node (edaspidi "
 
 ````
 GET https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest?
-SAMLRequest=PHNhbWwycDpBdXRoblJlcXVlc3QgeG1sbnM6c2FtbDJwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJvdG9jb2wiIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIiB4bWxuczplaWRhcz0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9zYW1sLWV4dGVuc2lvbnMiIHhtbG5zOnNhbWwyPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIiBDb25zZW50PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6Y29uc2VudDp1bnNwZWNpZmllZCIgRGVzdGluYXRpb249Imh0dHBzOi8vZWMuZXVyb3BhLmV1L2VpZC1pbnRlZ3JhdGlvbi10ZXN0L0VpZGFzTm9kZS9Db2xsZWFndWVSZXF1ZXN0IiBGb3JjZUF1dGhuPSJ0cnVlIiBJRD0iXzhERUpmRmpaWTY0cnduOF9LT255SDVfWUVUcXJTVGVubGhnVm5pXy1VMlNzS1RsVXFsVFZnYzljaGU5Y3lUWCIgSXNQYXNzaXZlPSJmYWxzZSIgSXNzdWVJbnN0YW50PSIyMDE4LTAxLTEyVDExOjExOjA1Ljk2MVoiIFByb3ZpZGVyTmFtZT0iREVNTy1TUC1FRSIgVmVyc2lvbj0iMi4wIj48c2FtbDI6SXNzdWVyIEZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOm5hbWVpZC1mb3JtYXQ6ZW50aXR5Ij5odHRwczovL2VpZGFzdGVzdC5lZXN0aS5lZS9FaWRhc05vZGUvQ29ubmVjdG9yTWV0YWRhdGE8L3NhbWwyOklzc3Vlcj48ZHM6U2lnbmF0dXJlIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIj48ZHM6U2lnbmVkSW5mbz48ZHM6Q2Fub25pY2FsaXphdGlvbk1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDEvMTAveG1sLWV4Yy1jMTRuIyIvPjxkczpTaWduYXR1cmVNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhNTEyIi8+PGRzOlJlZmVyZW5jZSBVUkk9IiNfOERFSmZGalpZNjRyd244X0tPbnlINV9ZRVRxclNUZW5saGdWbmlfLVUyU3NLVGxVcWxUVmdjOWNoZTljeVRYIj48ZHM6VHJhbnNmb3Jtcz48ZHM6VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8wOS94bWxkc2lnI2VudmVsb3BlZC1zaWduYXR1cmUiLz48ZHM6VHJhbnNmb3JtIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS8xMC94bWwtZXhjLWMxNG4jIi8+PC9kczpUcmFuc2Zvcm1zPjxkczpEaWdlc3RNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGVuYyNzaGE1MTIiLz48ZHM6RGlnZXN0VmFsdWU+VnJIZWNQaGZNdEFVaUQ1NmJrRTR0b3o5clNmMFZVdjBiWHZWQzZmV3h3aTJuQ21sd3ZzRzRYQlJuMEJPbkQxZEEvYzhpa005aXhrRG9qbDYwT00wWmc9PTwvZHM6RGlnZXN0VmFsdWU+PC9kczpSZWZlcmVuY2U+PC9kczpTaWduZWRJbmZvPjxkczpTaWduYXR1cmVWYWx1ZT5CVEF0ZTdkNEdjSklFL0FLUXdXYlAyZjFpT3hZVHBDMURjSThna0VueHNwcFhvNEI2YlhXUUR0OGZSOGVPUGowSVZXQ2NncVhnc3JUeUlEdTdYbnNLY0k4bFRVNFVhUWVqZ2VoazI2WFZ2a2lWU3VvNUEzK1plamV2UkhETUZVeFNaVGVtQkM0UXpneFhMdnhVZnd6N2N5L3JWa0lELzl0b2NMOHlZMDcyZFJvMnpGVXppMDRZZmJVZkdKUHl6a2NZOGY5ejFYeGowejRwbzJjeFNoWDNZZGVqQXR6S2hQRnQ1N25ONk85WklaNFhIQ3JwL2lqaEFGNThSZzFXeXNQSmRRZGlESWU5RlBYZ3grU0gyWEhOaWRZbytvZ3RlSTRTWWcwRWhOVmd6cXFqSS8zR3ByRXBCOFpIVytBYzlTL3Z2VEVvamdEZTJFRG5BeUhMdUUrUnc9PTwvZHM6U2lnbmF0dXJlVmFsdWU+PGRzOktleUluZm8+PGRzOlg1MDlEYXRhPjxkczpYNTA5Q2VydGlmaWNhdGU+TUlJRGRUQ0NBbDJnQXdJQkFnSUVhbFlqZ0RBTkJna3Foa2lHOXcwQkFRc0ZBREJyTVFzd0NRWURWUVFHRXdKRlJURUxNQWtHQTFVRQpDQk1DUlZVeEN6QUpCZ05WQkFjVEFrVlZNUTR3REFZRFZRUUtFd1ZUVUVWUVV6RU9NQXdHQTFVRUN4TUZVMVJQVWtzeElqQWdCZ05WCkJBTVRHWE53WlhCekxXVmxMV1JsYlc4dFkyVnlkR2xtYVdOaGRHVXdIaGNOTVRjd05URTVNVEkwTmpFeldoY05NVGt3TlRBNU1USTAKTmpFeldqQnJNUXN3Q1FZRFZRUUdFd0pGUlRFTE1Ba0dBMVVFQ0JNQ1JWVXhDekFKQmdOVkJBY1RBa1ZWTVE0d0RBWURWUVFLRXdWVApVRVZRVXpFT01Bd0dBMVVFQ3hNRlUxUlBVa3N4SWpBZ0JnTlZCQU1UR1hOd1pYQnpMV1ZsTFdSbGJXOHRZMlZ5ZEdsbWFXTmhkR1V3CmdnRWlNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUUNSRCswSVY3bHlOdStwVzdSV1E1UXlFak0zYVNpeUZtaW8KNysxZjBJeTBmUzg1anNGR0dnSTNqblBaTDZkOHR1dUxaRUJwSHpNWmhPNUVGdzFTYUp3RHBzbUlnNmVmdWFLMG9MM0RlVmRSVzNmNQo4VjZGaHNyTDJzZjJRZXpHeEZmR3RyNjBSVTlMUm05QXd0Nnl5aEtkUGFoaVdhVU1pSk5uUDdyMUhKKzNVRU5QZkpFQXFXVVNOcG9wCndMalpibzJUM211T0FKMDI1Q1BRMklURWVxbzNUN0RUamFoeHpRM0x5TDg1OVFzV1dEejEyWlNjdC95eGpHYTF4MDFmRHR3c2dudjQKM2E1OE4ydmdEc2krYkRZWGFzZ3M2T003bVFrdFZnZTZKMnBaWkxUL3lPZnFMbmNGT1RXZXFnUXJRMytLbVZEZ2g3bTVRQWxiTmlRTgppYmdoQWdNQkFBR2pJVEFmTUIwR0ExVWREZ1FXQkJSVXBlSHhQWjZEMklFN2l1WnhROGNtOE56U2VUQU5CZ2txaGtpRzl3MEJBUXNGCkFBT0NBUUVBZGJQTnIwSmlxOFArUlVjRVQ1b0RPd0lMYmZoUll5MGh3SkdSUys0RU16QXl2RC9lOXJYZjVUa3hqbGRiNHAxTC9oSUkKVlFCY2R3WnNXMmtVdDNXZU9ZKzJwUVFsa2NIRVdZVmFRR2dNUk1VSm9yYlh3UnhXWHZSWFNzZ2Ura0xlSk1ndFlKZHRMeE1VZ0JyLwpjbDVFeE1NbFR2VTA5bHJPaTlWWWZ6Zzg0ZHJxbFhWYkZXK2k3OTU2NGNiVGM3TWNxdm1TZW1jNEQvckxVbGFUdXBNa0k5bkJXOTlNCkFESnNqZ3VnbEl5aUtVR3dpbnhlWFh1U2ZtcGVrMTdKeE1TT2ZVaHNOcDdwbUM2YzBycE52THhiTHhOTXBQRkNSK3RYWFcvRk91ZFoKMjFwSUVJVmNrbjlCVEZzWWxVVXBYQkw0a0dZUlRYcXZIbkdwVk1HSlNNVWF0Zz09PC9kczpYNTA5Q2VydGlmaWNhdGU+PC9kczpYNTA5RGF0YT48L2RzOktleUluZm8+PC9kczpTaWduYXR1cmU+PHNhbWwycDpFeHRlbnNpb25zPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGVzPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJELTIwMTItMTctRVVJZGVudGlmaWVyIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vRC0yMDEyLTE3LUVVSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9ImZhbHNlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkVPUkkiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9FT1JJIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iTEVJIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vTEVJIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iTGVnYWxOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vTGVnYWxOYW1lIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0idHJ1ZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbEFkZHJlc3MiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbFBlcnNvbkFkZHJlc3MiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJMZWdhbFBlcnNvbklkZW50aWZpZXIiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9MZWdhbFBlcnNvbklkZW50aWZpZXIiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IlNFRUQiIE5hbWU9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9sZWdhbHBlcnNvbi9TRUVEIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iU0lDIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vU0lDIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iVGF4UmVmZXJlbmNlIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vVGF4UmVmZXJlbmNlIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iVkFUUmVnaXN0cmF0aW9uIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbGVnYWxwZXJzb24vVkFUUmVnaXN0cmF0aW9uTnVtYmVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iQmlydGhOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9CaXJ0aE5hbWUiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJDdXJyZW50QWRkcmVzcyIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vQ3VycmVudEFkZHJlc3MiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJGYW1pbHlOYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50RmFtaWx5TmFtZSIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iRmlyc3ROYW1lIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9DdXJyZW50R2l2ZW5OYW1lIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0idHJ1ZSIvPjxlaWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGUgRnJpZW5kbHlOYW1lPSJEYXRlT2ZCaXJ0aCIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vRGF0ZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJ0cnVlIi8+PGVpZGFzOlJlcXVlc3RlZEF0dHJpYnV0ZSBGcmllbmRseU5hbWU9IkdlbmRlciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vR2VuZGVyIiBOYW1lRm9ybWF0PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXR0cm5hbWUtZm9ybWF0OnVyaSIgaXNSZXF1aXJlZD0iZmFsc2UiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGVyc29uSWRlbnRpZmllciIgTmFtZT0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9hdHRyaWJ1dGVzL25hdHVyYWxwZXJzb24vUGVyc29uSWRlbnRpZmllciIgTmFtZUZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6Mi4wOmF0dHJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9InRydWUiLz48ZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlIEZyaWVuZGx5TmFtZT0iUGxhY2VPZkJpcnRoIiBOYW1lPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbi9QbGFjZU9mQmlydGgiIE5hbWVGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDphdHRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjwvZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlcz48L3NhbWwycDpFeHRlbnNpb25zPjxzYW1sMnA6TmFtZUlEUG9saWN5IEFsbG93Q3JlYXRlPSJ0cnVlIiBGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjEuMTpuYW1laWQtZm9ybWF0OnVuc3BlY2lmaWVkIi8+PHNhbWwycDpSZXF1ZXN0ZWRBdXRobkNvbnRleHQgQ29tcGFyaXNvbj0ibWluaW11bSI+PHNhbWwyOkF1dGhuQ29udGV4dENsYXNzUmVmPmh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvTG9BL2xvdzwvc2FtbDI6QXV0aG5Db250ZXh0Q2xhc3NSZWY+PC9zYW1sMnA6UmVxdWVzdGVkQXV0aG5Db250ZXh0Pjwvc2FtbDJwOkF1dGhuUmVxdWVzdD4=&
+SAMLRequest=...&
 RelayState=MyRelayState&
 token=1YbOdLyWSLz_VKQhyBwduOEaz7A$
 ````
@@ -193,7 +341,7 @@ POST https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen
 Päringu kehas on vorm:
 
 ````
-SAMLRequest	PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHNhbWwycDpBdXRoblJlcXVlc3QgeG1sbnM6c2FtbDJwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJvdG9jb2wiIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIiB4bWxuczplaWRhcz0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9zYW1sLWV4dGVuc2lvbnMiIHhtbG5zOnNhbWwyPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIiBDb25zZW50PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6Y29uc2VudDp1bnNwZWNpZmllZCIgRGVzdGluYXRpb249Imh0dHBzOi8vZWMuZXVyb3BhLmV1L2VpZC1pbnRlZ3JhdGlv…HJuYW1lLWZvcm1hdDp1cmkiIGlzUmVxdWlyZWQ9ImZhbHNlIi8+PC9laWRhczpSZXF1ZXN0ZWRBdHRyaWJ1dGVzPjwvc2FtbDJwOkV4dGVuc2lvbnM+PHNhbWwycDpOYW1lSURQb2xpY3kgQWxsb3dDcmVhdGU9InRydWUiIEZvcm1hdD0idXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6MS4xOm5hbWVpZC1mb3JtYXQ6dW5zcGVjaWZpZWQiLz48c2FtbDJwOlJlcXVlc3RlZEF1dGhuQ29udGV4dCBDb21wYXJpc29uPSJtaW5pbXVtIj48c2FtbDI6QXV0aG5Db250ZXh0Q2xhc3NSZWY+aHR0cDovL2VpZGFzLmV1cm9wYS5ldS9Mb0EvbG93PC9zYW1sMjpBdXRobkNvbnRleHRDbGFzc1JlZj48L3NhbWwycDpSZXF1ZXN0ZWRBdXRobkNvbnRleHQ+PC9zYW1sMnA6QXV0aG5SZXF1ZXN0Pg==
+SAMLRequest	...
 signAssertion	false
 encryptAssertion	true
 messageFormat	eidas
@@ -271,7 +419,11 @@ Kehas on vorm:
 strAttrList	D-2012-17-EUIdentifier:false:[Directive+2012/17/EU+Identifier,]:;EORI:false:[Economic+Operator+Registration+and+Identification+(EORI),]:;LEI:false:[Legal+Entity+Identifier+(LEI),]:;LegalName:false:[Current+Legal+Name,]:;LegalPersonAddress:false:[Legal+Person+address,]:;LegalPersonIdentifier:false:[LegalPersonUniqueId,]:;SEED:false:[System+for+Exchange+of+Excise+Data+(SEED),]:;SIC:false:[Standard+Industrial+Classification+(SIC),]:;TaxReference:false:[Taxe,]:;VATRegistrationNumber:false:[VAT+Registration+Number,]:;BirthName:false:[Ωνάσης,Onases,]:;CurrentAddress:false:[Current+Address,]:;CurrentFamilyName:false:[Garcia,]:;CurrentGivenName:false:[javier,]:;DateOfBirth:false:[1980-01-01,]:;Gender:false:[Male,]:;PersonIdentifier:false:[12345,]:;PlaceOfBirth:false:[Place+of+Birth,]:;
 ````
 
-Vastuseks saadab CEF test-Node HTML-i (vt fail [CEF-testNode-4.html](CEF-testNode-4.html)), kus kasutajale teatakse, et "LOGIN SUCCEEDED", näidatakse, mis atribuudid leiti (nt `CurrentGivenName` ja `CurrentFamilyName` väärtusteks `Javier Garcia`), milline oli SAML autentimispäringusõnum ja milline on SAML autentimisvastusesõnum. Kasutajal palutakse vajutada nupule `Submit`.
+Vastuseks saadab CEF test-Node HTML-i (vt fail [CEF-testNode-4.html](CEF-testNode-4.html)), kus kasutajale teatakse, et "LOGIN SUCCEEDED", näidatakse, mis atribuudid leiti (nt `CurrentGivenName` ja `CurrentFamilyName` väärtusteks `Javier Garcia`), milline oli SAML autentimispäringusõnum ja milline on krüpteeritud SAML autentimisvastusesõnum (vt fail [SAML-Response-Encrypted.xml](files/SAML-Response-Encrypted.xml)).
+
+NB! Vastus paistab olevat tühi (`Decrypted Assertion` = `no assertion found`).
+
+Kasutajal palutakse vajutada nupule `Submit`.
 
 Nupu taga on vorm suunamisega RIA eIDAS-Node-i:
 
@@ -288,10 +440,10 @@ POST https://eidastest.eesti.ee/EidasNode/ColleagueResponse
 Päringu kehas on vormielemendid `SAMLResponse`, `nodeType`, `RelayState`. `sAMLRequestTT`, `samlResponseDecriptedXMLEdit`, `eidasScenario`, `eidasScenario2`, `scenarioDesc`, `theScenario`:
 
 ````
-SAMLResponse	PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHNhbWwycDpSZXNwb25zZSB4bWxuczpzYW1sMnA9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpwcm90b2NvbCIgeG1sbnM6ZHM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyMiIHhtbG5zOmVpZGFzPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbiIgeG1sbnM6ZWlkYXMtbGVnYWw9Imh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvYXR0cmlidXRlcy9uYXR1cmFscGVyc29uIiB4bWxuczplaWRhcy1uYXR1cmFsPSJodHRwOi8vZWlkYXMuZXVyb3BhLmV1L2F0dHJpYnV0ZXMvbmF0dXJhbHBlcnNvbiIgeG1sbnM6c2FtbDI9InVy…0tBcHlpMTBLdUFBUUM4NjJWOWNXWlVPSnBvekdpQUVvU3Z6YjZwTkZVRFJ4RkxOc0dObWNkZzFDREIrZTRHM1Y1WSs0VGpnRFA0a1BVNXlkWEhwR3VrWXBOMnRlamVJNTR2SGZtRmpFVjZPZG9JMlJ3dGM0YVZ2UzFDQnVLdDdWeFZ6OGJxWlhJQjdQalJlYUdsZnJuaDR0dkN2YnpKRTZwZklkMnk2RnBDejNDMmlYaHJkWXE3aldxN2F0TkttL3htVnFoZUc5aXdTbmVNb1o5S2ErQ2p5UHlqY0JmblY2MzE0aDhreVZUUWlJcHB3bjFENmxIc1htY1RqdjBXWmRka1ZJbEUrQmMyVlhFdTJhcitZQ1E9PC94ZW5jOkNpcGhlclZhbHVlPjwveGVuYzpDaXBoZXJEYXRhPjwveGVuYzpFbmNyeXB0ZWREYXRhPjwvc2FtbDI6RW5jcnlwdGVkQXNzZXJ0aW9uPjwvc2FtbDJwOlJlc3BvbnNlPg==
+SAMLResponse	...
 nodeType	Service
 RelayState	MyRelayState
-sAMLRequestTT	PHNhbWwycDpBdXRoblJlcXVlc3QgeG1sbnM6c2FtbDJwPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6cHJvdG9jb2wiIHhtbG5zOmRzPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIiB4bWxuczplaWRhcz0iaHR0cDovL2VpZGFzLmV1cm9wYS5ldS9zYW1sLWV4dGVuc2lvbnMiIHhtbG5zOnNhbWwyPSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6YXNzZXJ0aW9uIiBDb25zZW50PSJ1cm46b2FzaXM6bmFtZXM6dGM6U0FNTDoyLjA6Y29uc2VudDp1bnNwZWNpZmllZCIgRGVzdGluYXRpb249Imh0dHBzOi8vZWMuZXVyb3BhLmV1L2VpZC1pbnRlZ3JhdGlvbi10ZXN0L0VpZGFzTm9kZS9Db2xsZWFndWVSZXF1ZXN0IiBGb3JjZUF1dGhuPSJ0cnVlIiBJ…HRybmFtZS1mb3JtYXQ6dXJpIiBpc1JlcXVpcmVkPSJmYWxzZSIvPjwvZWlkYXM6UmVxdWVzdGVkQXR0cmlidXRlcz48L3NhbWwycDpFeHRlbnNpb25zPjxzYW1sMnA6TmFtZUlEUG9saWN5IEFsbG93Q3JlYXRlPSJ0cnVlIiBGb3JtYXQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjEuMTpuYW1laWQtZm9ybWF0OnVuc3BlY2lmaWVkIi8+PHNhbWwycDpSZXF1ZXN0ZWRBdXRobkNvbnRleHQgQ29tcGFyaXNvbj0ibWluaW11bSI+PHNhbWwyOkF1dGhuQ29udGV4dENsYXNzUmVmPmh0dHA6Ly9laWRhcy5ldXJvcGEuZXUvTG9BL2xvdzwvc2FtbDI6QXV0aG5Db250ZXh0Q2xhc3NSZWY+PC9zYW1sMnA6UmVxdWVzdGVkQXV0aG5Db250ZXh0Pjwvc2FtbDJwOkF1dGhuUmVxdWVzdD4=
+sAMLRequestTT	...
 samlResponseDecriptedXMLEdit	<?xml+version="1.0"+encoding="UTF-8"+standalone="no"?><saml2p:Response+xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"+xmlns:ds="http://www.w3.org/2000/09/xmldsig#"+xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson"+xmlns:eidas-legal="http://eidas.europa.eu/attributes/naturalperson"+xmlns:eidas-natural="http://eidas.europa.eu/attributes/naturalperson"+xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"+Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained"+Destination="https://eidastest.eesti…e"+xsi:type="eidas-natural:PersonIdentifierType">CD/EE/12345</saml2:AttributeValue></saml2:Attribute><saml2:Attribute+FriendlyName="PlaceOfBirth"+Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth"+NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"><saml2:AttributeValue+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"+xsi:type="eidas-natural:PlaceOfBirthType">Place+of+Birth</saml2:AttributeValue></saml2:Attribute></saml2:AttributeStatement></saml2:Assertion></saml2p:Response>
 eidasScenario	1
 eidasScenario2	
@@ -299,6 +451,186 @@ scenarioDesc	eIDAS+-+The+Service+sends+the+original+eIDAS+SAML+Response+received
 theScenario	1
 ````
 
-Vastuseks annab RIA eIDAS test-Node HTML-i (vt fail [RIA-testNode-1.html](RIA-testNode-1.html)), et toimus ootamatu viga ("An unexpected error has occurred").
+Nüüd on kaks võimalust.
+
+Kui kasutaja viivitas Validation teenuses, siis tekib viga. Vastuseks annab RIA eIDAS test-Node HTML-i (vt fail [RIA-testNode-1.html](RIA-testNode-1.html)), et toimus ootamatu viga (`An unexpected error has occurred`). Kuvatakse täpsem veakood ja -teade: `203007 - The SAML message is not valid`
 
 Sellega voog lõpeb.
+
+Vastasel korral saadab RIA eIDAS testNode HTML-i, kus kasutajale teatatakse, et autentimisvastus on õnnelikult kätte saadud. Kuvatakse autentimisvastus:
+
+{% highlight xml %}
+<saml2p:Response
+    xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson"
+    xmlns:eidas-legal="http://eidas.europa.eu/attributes/legalperson"
+    xmlns:eidas-natural="http://eidas.europa.eu/attributes/naturalperson"
+    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="https://eidastest.eesti.ee/SP/ReturnPage" ID="_iXNkQbFmfBZmnt3luxEAMGDibWxfNmPy8fWfuxv4aDg6Q-PDSJ5PWi77nVYrnyh" InResponseTo="_rv6umtnVG6AJFVWKz_v7smzfPmL6eW9HJgG4OYEIa8SV_JYjjxAgYzu8uCQ6HIT" IssueInstant="2018-01-15T14:05:31.067Z" Version="2.0">
+<saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">
+    https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
+</saml2:Issuer>
+<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<ds:SignedInfo>
+    <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+    <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+    <ds:Reference URI="#_iXNkQbFmfBZmnt3luxEAMGDibWxfNmPy8fWfuxv4aDg6Q-PDSJ5PWi77nVYrnyh">
+        <ds:Transforms>
+            <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+            <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+                <ec:InclusiveNamespaces
+                    xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="eidas-legal eidas-natural"/>
+                </ds:Transform>
+            </ds:Transforms>
+            <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+            <ds:DigestValue>0TF17y8otwOuQZqnGkQoz+KxftN/GeZm9YzR9CP4YF9uFbd/eTKEYoY+c2jev2q5g0ZJq7/wdUkqOqQgISk01Q==</ds:DigestValue>
+        </ds:Reference>
+    </ds:SignedInfo>
+    <ds:SignatureValue>NtVN5TMPtxCZ5liJdbaF7GHDiRiIJtM4/nSu3kzpwXwm/F4EvUrrwaweGnThFpYMXGhB8qxcvFfI7eam0/jhxQy98US+AF59Xn3NQLvBD7JQrmZjl9nK/MDlg6qMJloh+GZ+KUbOu29tLpdGeBIU8WrF9mvd5LJXc6jkdan3lZCzw4lhX6t0eoFDz0b+HVPgT2oiDWzGX1cdXg4FXSRx/WJ/nxE+5kcloq+D3il8xBfkPx+GBk2QNny0ptFxf/jAAZirPvf5EBTYhypGB5TsYdIJ9wRWvXfzpibGoKEdpG7GCGoOUGlvEBbZ28Oa+za39pZbyjYVVkMX3rnQWthxdg==</ds:SignatureValue>
+    <ds:KeyInfo>
+        <ds:X509Data>
+            <ds:X509Certificate> ... </ds:X509Certificate>
+        </ds:X509Data>
+    </ds:KeyInfo>
+</ds:Signature>
+<saml2p:Status>
+    <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>
+    <saml2p:StatusMessage>urn:oasis:names:tc:SAML:2.0:status:Success</saml2p:StatusMessage>
+</saml2p:Status>
+<saml2:Assertion ID="_zjP.FVWZy59ua1liRNXjqzK9Wca1FYjh_ix6M6gwQKQAy2d.kPaw4esi4qB6Tlc" IssueInstant="2018-01-15T14:05:31.067Z"
+Version="2.0"
+    xmlns:eidas-legal="http://eidas.europa.eu/attributes/legalperson"
+    xmlns:eidas-natural="http://eidas.europa.eu/attributes/naturalperson"
+    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+    <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata</saml2:Issuer>
+    <ds:Signature
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:SignedInfo>
+            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+            <ds:Reference URI="#_zjP.FVWZy59ua1liRNXjqzK9Wca1FYjh_ix6M6gwQKQAy2d.kPaw4esi4qB6Tlc">
+                <ds:Transforms>
+                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+                        <ec:InclusiveNamespaces
+                            xmlns:ec="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList="eidas-legal eidas-natural"/>
+                        </ds:Transform>
+                    </ds:Transforms>
+                    <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+                    <ds:DigestValue>RTMjFpjpc2QrMXwHqswrETxZ/fdGuMWHF/2Nw6p2mwwiV25PgsBIQfgpuPyBU7NNpMhSBNqV5ZzlsSC/kWJXRg==</ds:DigestValue>
+                </ds:Reference>
+            </ds:SignedInfo>
+            <ds:SignatureValue>O1sg3U5aZnJUlnDPKUtob6DwG6zziH2hSv44Z1azv1vsM+W3C+AC28W4+VK++6UvaHoHwZ7tmYzcH63KtLAd/IRmmxmEMInzMeCZLfPMkOAxlHJKOip/SN//hmh+KycKrzZJ8g6ETTze/w5clyaOiTHyyBwZ22wfdmOsBYzDZu19khUutIUwOskJbZb6QMcc1Z6p8QIWOdqe90Tty5zsODscx5B/A9QClKfHGeCLfYN2f5dhIT8qmC0bsLi0uFvwQCT/Z4A4E5dUaIxDe27DtxjpsLMHyH2Ps+05EVazmkzp36+1ubNseAKpNuGmQbgoI8SRYt5R9Wq18JgMw3fZLg==</ds:SignatureValue>
+            <ds:KeyInfo>
+                <ds:X509Data>
+                    <ds:X509Certificate> ... </ds:X509Certificate>
+                </ds:X509Data>
+            </ds:KeyInfo>
+        </ds:Signature>
+        <saml2:Subject>
+            <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified" NameQualifier="http://C-PEPS.gov.xx">CD/EE/LegalPersonUniqueId</saml2:NameID>
+            <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+                <saml2:SubjectConfirmationData Address="192.168.2.191" InResponseTo="_rv6umtnVG6AJFVWKz_v7smzfPmL6eW9HJgG4OYEIa8SV_JYjjxAgYzu8uCQ6HIT" NotOnOrAfter="2018-01-15T14:10:31.067Z" Recipient="https://eidastest.eesti.ee/SP/ReturnPage"/>
+            </saml2:SubjectConfirmation>
+        </saml2:Subject>
+        <saml2:Conditions NotBefore="2018-01-15T14:05:31.067Z" NotOnOrAfter="2018-01-15T14:10:31.067Z">
+            <saml2:AudienceRestriction>
+                <saml2:Audience>https://eidastest.eesti.ee/SP/metadata</saml2:Audience>
+            </saml2:AudienceRestriction>
+        </saml2:Conditions>
+        <saml2:AuthnStatement AuthnInstant="2018-01-15T14:05:31.067Z">
+            <saml2:AuthnContext>
+                <saml2:AuthnContextClassRef>http://eidas.europa.eu/LoA/high</saml2:AuthnContextClassRef>
+                <saml2:AuthnContextDecl/>
+            </saml2:AuthnContext>
+        </saml2:AuthnStatement>
+        <saml2:AttributeStatement>
+            <saml2:Attribute FriendlyName="D-2012-17-EUIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-legal:D-2012-17-EUIdentifierType">Directive 2012/17/EU Identifier
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="EORI" Name="http://eidas.europa.eu/attributes/legalperson/EORI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-legal:EORIType">Economic Operator Registration and Identification (EORI)
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="LEI" Name="http://eidas.europa.eu/attributes/legalperson/LEI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-legal:LEIType">Legal Entity Identifier (LEI)
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="LegalName" Name="http://eidas.europa.eu/attributes/legalperson/LegalName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-legal:LegalNameType">Current Legal Name
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="LegalAddress" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <saml2:Attribute FriendlyName="LegalPersonIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-legal:LegalPersonIdentifierType">CD/EE/LegalPersonUniqueId
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="SEED" Name="http://eidas.europa.eu/attributes/legalperson/SEED" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-legal:SEEDType">System for Exchange of Excise Data (SEED)
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="SIC" Name="http://eidas.europa.eu/attributes/legalperson/SIC" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-legal:SICType">Standard Industrial Classification (SIC)
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="TaxReference" Name="http://eidas.europa.eu/attributes/legalperson/TaxReference" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-legal:TaxReferenceType">Taxe
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="VATRegistration" Name="http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-legal:VATRegistrationNumberType">VAT Registration Number
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="BirthName" Name="http://eidas.europa.eu/attributes/naturalperson/BirthName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" eidas-natural:LatinScript="false" xsi:type="eidas-natural:BirthNameType">Ωνάσης
+                </saml2:AttributeValue>
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-natural:BirthNameType">Onases
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="CurrentAddress" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"/>
+            <saml2:Attribute FriendlyName="FamilyName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-natural:CurrentFamilyNameType">Garcia
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="FirstName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-natural:CurrentGivenNameType">javier
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="DateOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/DateOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-natural:DateOfBirthType">1980-01-01
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="Gender" Name="http://eidas.europa.eu/attributes/naturalperson/Gender" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-natural:GenderType">Male
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="PersonIdentifier" Name="http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-natural:PersonIdentifierType">CD/EE/12345
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+            <saml2:Attribute FriendlyName="PlaceOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri">
+                <saml2:AttributeValue
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="eidas-natural:PlaceOfBirthType">Place of Birth
+                </saml2:AttributeValue>
+            </saml2:Attribute>
+        </saml2:AttributeStatement>
+    </saml2:Assertion>
+</saml2p:Response>
+{% endhighlight %}
