@@ -25,30 +25,30 @@ Siin ei kirjeldata:
 ## Suhtluse osapooled
 
 - ___Demo SP___ (Demo Service Provider) - etendab e-teenust eIDASe mõistes (s.t süsteemi, mis kasutaja autentimist vajab)
-
-Host: `eidastest.eesti.ee`<br>
-Otspunktid:<br>
-`https://eidastest.eesti.ee/SP/populateIndexPage`<br>
-`https://eidastest.eesti.ee/SP/changeProtocolBinding.action`<br>
+- Host: `eidastest.eesti.ee`<br>
+    - Otspunktid:<br>
+    - `https://eidastest.eesti.ee/SP/populateIndexPage`<br>
+    - `https://eidastest.eesti.ee/SP/changeProtocolBinding.action`<br>
+    - `https://eidastest.eesti.ee/SP/ReturnPage` 
+    - `https://eidastest.eesti.ee/SP/populateReturnPage` 
 
 - ___RIA eIDAS konnektorteenus___ (testpaigaldus); kasutame ka nimetust ___RIA eIDAS test-Node___ - etendab saatva riigi eIDAS Node-i. Saatev riik - riik, mille e-teenusest kasutaja autentimisele saadetakse
-
-Host: `eidastest.eesti.ee`<br>
-Otspunktid:<br>
-`https://eidastest.eesti.ee/EidasNode/ServiceProvider`<br>
-`https://eidastest.eesti.ee/EidasNode/ColleagueResponse`
+    - Host: `eidastest.eesti.ee`<br>
+    - Otspunktid:<br>
+        - `https://eidastest.eesti.ee/EidasNode/ServiceProvider`<br>
+        - `https://eidastest.eesti.ee/EidasNode/ColleagueResponse`
 
 - ___CEF eIDAS test-Node___ - etendab vastuvõtva riigi eIDAS Node-i. Vastuvõttev riik - riik, mille autentimisteenuses kasutaja autenditakse; ühtlasi etendab ka vastuvõtva riigi autentimisteenust; neid funktsionaalsusi pakutakse nime ___CEF eIDAS Validation Service___ all.
-
-Host: `ec.europa.eu`<br>
-Otspunktid:<br>
-`https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest`<br>
-`https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen`<br>
-`https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse`<br>
-`https://ec.europa.eu/eid-integration-test/AP/ConsentValue`<br>
-`https://ec.europa.eu/eid-integration-test/EidasNode/APSelector`<br>
+    - Host: `ec.europa.eu`<br>
+    - Otspunktid:<br>
+        - `https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest`<br>
+    - `https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen`<br>
+    - `https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse`<br>
+    - `https://ec.europa.eu/eid-integration-test/AP/ConsentValue`<br>
+    - `https://ec.europa.eu/eid-integration-test/EidasNode/APSelector`<br>
 
 - kasutaja
+
 - sirvik.
 
 ## Voo sisu
