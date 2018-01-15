@@ -1,6 +1,6 @@
 ---
 title: eIDAS konnektorteenus. Ärikirjeldus
-permalink: Liidestamisjuhend
+permalink: Arikirjeldus
 ---
 
 # RIA eIDAS konnektorteenus. Ärikirjeldus

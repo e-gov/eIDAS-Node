@@ -55,18 +55,6 @@ Siin ei kirjeldata:
 
 Siinkirjeldatu on demo- ja test-, mitte tootmisvoog. Validation Service etendab, et tuvastatakse isik nimega `Javier Garcia`. Demovoog lõpeb veaolukorra tekkimisega RIA eIDAS test-Node-s (selle põhjus vajab selgitamist - v-o on viga seadistuses?).
 
-Voos tehakse järgmised HTTP päringud (päringutele on antud tinglikud nimetused):
-1. Pöördumine Demo SP avalehe poole.
-2. Kasutaja valikute edastamine serverisse (1)
-3. Kasutaja valikute edastamine serverisse (2)
-4. Pöördumine eIDAS konnektorteenuse poole
-5. Pöördumine kasutaja koduriigi eIDAS Node-i poole
-6. Pöördumine koduriigi autentimisteenusesse
-7. Autentimistulemuse edastamine koduriigi autentimisteenusest (mängult) CEF test-Node-le
-8. Nõusoleku saatmise päring
-9. Vastuvõtva riigi autentimisteenuse valiku edastamine (mängult)
-10. Autentimisvastuse saatmine RIA eIDAS-Node-le
-
 Edasi kirjeldame päringuid ja nende vastuseid detailselt.
 
 ## 1. Pöördumine Demo SP avalehe poole.
