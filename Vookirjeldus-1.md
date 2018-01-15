@@ -24,28 +24,28 @@ Siin ei kirjeldata:
 
 ## Suhtluse osapooled
 
-- ___Demo SP___ (Demo Service Provider) - etendab e-teenust eIDASe mõistes (s.t süsteemi, mis kasutaja autentimist vajab)
-- Host: `eidastest.eesti.ee`<br>
-    - Otspunktid:<br>
-    - `https://eidastest.eesti.ee/SP/populateIndexPage`<br>
-    - `https://eidastest.eesti.ee/SP/changeProtocolBinding.action`<br>
-    - `https://eidastest.eesti.ee/SP/ReturnPage` 
-    - `https://eidastest.eesti.ee/SP/populateReturnPage` 
+- Demo SP (Demo Service Provider) - etendab e-teenust eIDASe mõistes (s.t süsteemi, mis kasutaja autentimist vajab)
+    - Host: `eidastest.eesti.ee`
+    - Otspunktid:
+        - `https://eidastest.eesti.ee/SP/populateIndexPage`
+        - `https://eidastest.eesti.ee/SP/changeProtocolBinding.action`
+        - `https://eidastest.eesti.ee/SP/ReturnPage` 
+        - `https://eidastest.eesti.ee/SP/populateReturnPage` 
 
-- ___RIA eIDAS konnektorteenus___ (testpaigaldus); kasutame ka nimetust ___RIA eIDAS test-Node___ - etendab saatva riigi eIDAS Node-i. Saatev riik - riik, mille e-teenusest kasutaja autentimisele saadetakse
-    - Host: `eidastest.eesti.ee`<br>
-    - Otspunktid:<br>
-        - `https://eidastest.eesti.ee/EidasNode/ServiceProvider`<br>
+- RIA eIDAS konnektorteenus (testpaigaldus); kasutame ka nimetust RIA eIDAS test-Node - etendab saatva riigi eIDAS Node-i. Saatev riik - riik, mille e-teenusest kasutaja autentimisele saadetakse
+    - Host: `eidastest.eesti.ee`
+    - Otspunktid:
+        - `https://eidastest.eesti.ee/EidasNode/ServiceProvider`
         - `https://eidastest.eesti.ee/EidasNode/ColleagueResponse`
 
-- ___CEF eIDAS test-Node___ - etendab vastuvõtva riigi eIDAS Node-i. Vastuvõttev riik - riik, mille autentimisteenuses kasutaja autenditakse; ühtlasi etendab ka vastuvõtva riigi autentimisteenust; neid funktsionaalsusi pakutakse nime ___CEF eIDAS Validation Service___ all.
-    - Host: `ec.europa.eu`<br>
-    - Otspunktid:<br>
-        - `https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest`<br>
-    - `https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen`<br>
-    - `https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse`<br>
-    - `https://ec.europa.eu/eid-integration-test/AP/ConsentValue`<br>
-    - `https://ec.europa.eu/eid-integration-test/EidasNode/APSelector`<br>
+- CEF eIDAS test-Node - etendab vastuvõtva riigi eIDAS Node-i. Vastuvõttev riik - riik, mille autentimisteenuses kasutaja autenditakse; ühtlasi etendab ka vastuvõtva riigi autentimisteenust; neid funktsionaalsusi pakutakse nime CEF eIDAS Validation Service all.
+    - Host: `ec.europa.eu`
+    - Otspunktid:
+        - `https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest`
+        - `https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen`
+        - `https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse`
+        - `https://ec.europa.eu/eid-integration-test/AP/ConsentValue`
+        - `https://ec.europa.eu/eid-integration-test/EidasNode/APSelector`
 
 - kasutaja
 
