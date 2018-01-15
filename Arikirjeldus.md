@@ -3,6 +3,9 @@ title: eIDAS konnektorteenus. Ärikirjeldus
 permalink: Arikirjeldus
 ---
 
+Märkus. Tööversioon. 
+{:.teade}
+
 # RIA eIDAS konnektorteenus. Ärikirjeldus
 {:.no_toc}
 

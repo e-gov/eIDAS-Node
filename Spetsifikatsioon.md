@@ -2,6 +2,9 @@
 permalink: Spetsifikatsioon
 ---
 
+Märkus. Spetsifikatsioon on koostamisel. 
+{:.teade}
+
 # RIA eIDAS konnektorteenus. Tehniline spetsifikatsioon
 
 Konnektorteenuse kasutuselevõtmiseks soovitame kõigepealt proovida RIAs ülepandud demorakendust. Seejärel võiks proovida demorakenduse või RIA arendatava eIDAS klientrakenduse enda taristus üles panna ja läbi teha liidestamine RIA eIDAS test-konnektorteenusega. Selle käigus saate aru, kuidas SAML-sõnumivahetus käib. Alles seejärel arendada välja oma rakendus. Eeskujuks võib võtta nii demorakenduse kui ka RIA eIDAS klientrakenduse. Lõpuks lõimida liidest teostab komponent oma e-teenusesse. Tehniliste tegevuste järjekord on vastavalt:
