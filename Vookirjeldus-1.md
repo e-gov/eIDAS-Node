@@ -92,12 +92,12 @@ Rida valikuid on seatud vaikimisi.
 Kasutaja vajutab `Submit`.
 
 ````
-POST https://eidastest.eesti.ee/SP/IndexPage.action;jsessionid=56EC2BDBC97703A3AB5AED3BCAD83DCA
+POST https://eidastest.eesti.ee/SP/IndexPage.action;jsessionid=seansitoken
 ````
 
 Kasutaja poolt valitud parameetrid saadetakse vormina, päringu kehas.
 
-Vastuses saadab Demo SP serveripool sirvikusse lehe, kus kuvatakse serveripooles moodustatud SAML autentimispäringu sõnum ja palutakse valida edastusmeetod.
+Vastuses saadab Demo SP serveripool sirvikusse lehe, kus kuvatakse serveripooles moodustatud SAML autentimispäringusõnum ja palutakse valida edastusmeetod.
 
 SAML autentimispäring:
 
@@ -161,7 +161,9 @@ SAML autentimispäring:
 </saml2p:AuthnRequest>
 {% endhighlight %}
 
-Kasutaja valib nüüd `HTTP POST` või `HTTP Redirect` binding-u. Kasutaja valib vajutab `HTTP Redirect` ja seejärel `Submit`.
+Kasutaja saab nüüd valida `HTTP POST` või `HTTP Redirect` binding-u.
+
+Kasutaja valib  `HTTP Redirect` ja vajutab `Submit`.
 
 ## 3. Kasutaja valikute edastamine serverisse (2)
 
@@ -175,20 +177,10 @@ Päringu kehas edastatakse vormiandmed:
 samlRequestBinding	get
 samlRequestLocation	https://eidastest.eesti.ee/EidasNode/ServiceProvider
 citizenCountryCode	CD
-samlRequestXML	<vt allpool>
+samlRequestXML	...
 ````
 
-{% highlight xml %}
-<saml2p:AuthnRequest+
-	xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"+
-	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"+
-	xmlns:eidas="http://eidas.europa.eu/saml-extensions"+
-	xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"+Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified"+Destination="https://eidastest.eesti.ee/EidasNode/ServiceProvider"+ForceAuthn="true"+ID="_UdCvtm1NPIWt4OAnhuEsmVVn3imhJULjC1djKrDGOtfVjE.B9zn31v3W_ggGcM3"+IsPassive="false"+IssueInstant="2018-01-12T11:08:39.355Z"+ProviderName="DEM…ame="PlaceOfBirth"+Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth"+NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"+isRequired="false"/>
-</eidas:RequestedAttributes>undefined</saml2p:Extensions>undefined<saml2p:NameIDPolicy+AllowCreate="true"+Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"/>undefined<saml2p:RequestedAuthnContext+Comparison="minimum">
-<saml2:AuthnContextClassRef>http://eidas.europa.eu/LoA/low</saml2:AuthnContextClassRef>undefined</saml2p:RequestedAuthnContext>undefined</saml2p:AuthnRequest>
-{% endhighlight %}
-
-Vastuse kehas edastatakse edastamiseks valmis sõnum:
+Vastuse kehas edastatakse eIDAS konnektorteenusele saatmiseks valmis sõnum:
 
 {% highlight xml %}
 <saml2p:AuthnRequest
@@ -213,25 +205,10 @@ Vastuse kehas edastatakse edastamiseks valmis sõnum:
 				<ds:DigestValue>DpOI61KXd4dQG4kLKkl6U8NYV2Y9nRhLZCeCl1VGchYfSpjTRhND2K82M5QSRjtXUfuNTHiKDHaP/gsCTxoFSw==</ds:DigestValue>
 			</ds:Reference>
 		</ds:SignedInfo>
-		<ds:SignatureValue>bbNzsVyXVsiPAo2Lh2mqNaR37wA6mLdPjNAXThGZDEhqIL5Dtt0z/7YERsz/pqyh8ss86beFuGo8lld/31zdVtnR8Vjyd5Gjt2JKvKtE0y0hCVExxlgzeg5KaMCilBlLUEfs1l5XdibbHnzvzmM41uXEAIEBtf4GBirlRlV4pcSqajqDAvzlvYD5QRLMMmsN0st6GnY3WiM+tvk7iN4B9GS/L0uzXXcavaEQxrVs0s7sNQnlHSLVOa7YG0NF1h3H0Ja5BlrHLxOp4x8ajdJwHV9zNU6BriZbRQpAjPIC2hwGyUjTtWEEmVgHcHmx3Rl957MPtLJlRw8M7UMRnuEyuw==</ds:SignatureValue>
+		<ds:SignatureValue> ... </ds:SignatureValue>
 		<ds:KeyInfo>
 			<ds:X509Data>
-				<ds:X509Certificate>MIIDaTCCAlGgAwIBAgIEH5P86jANBgkqhkiG9w0BAQsFADBlMQswCQYDVQQGEwJFRTELMAkGA1UE
-CBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwGA1UECxMFU1RPUksxHzAdBgNVBAMT
-FnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwHhcNMTcwNTE5MTI1MDA3WhcNMTkwNTA5MTI1MDA3WjBl
-MQswCQYDVQQGEwJFRTELMAkGA1UECBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwG
-A1UECxMFU1RPUksxHzAdBgNVBAMTFnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwggEiMA0GCSqGSIb3
-DQEBAQUAA4IBDwAwggEKAoIBAQCqZC7CJi3WVCzsSh3mV9FNoVYgeiOIR65EAOapyyt7Xgqchn1s
-Sppq3hszCbjgQ8mK1huDkw8iL5qmXg4rd6TUV4nxPuEVbX348Q2P7JH6UmHcedWElYvzbI2Yw388
-v/dOwzp7jza8DaKBtAJlk8hY1riPbe4CfiOr5aTYbpyG0CsbnozRXpij562SNVkbvWz4EdW/3C5W
-i73vHNRzvIoMgwF28YzCpf6DFMk5QpejSc+F6zsYeK1uMqNtJVxGybGhlq61BBmGMxFBmt0LdLWt
-UOnzjqgB5/Y8cNShEk+yxT/QBMJ8BbO8vgO2InhFUyEBlbxzqGsvdP6BZJ37lzBfAgMBAAGjITAf
-MB0GA1UdDgQWBBSF+NmEgjDnVSNucn9cFWU28xHG8DANBgkqhkiG9w0BAQsFAAOCAQEAP/cJT+ti
-HTJ7aGESfSouKUccnsS89VKY4zu1Cj6IuGBOtsi7ORx8iBid3mFeX3bS9XcnK0kV3vbIEfXr2U9L
-YHtAeERNwMk111y0sU2pnwHpWae5YX7cCBjbEd72CV7BQ5cPExUEdORGrpHrEE445o2LC7Nif0Qx
-kO/2BFMlKJWsr2HyccYXWSFdyie3ar1HzkMGbebyK7cmRVTHqohNwPtVmS+bLcyjY5OiL/NVArGR
-VP6DSep3h+/G6GnmrpeQxsLwolhASNLQbylifA8v6E3toHu9ditx9qynFFn9CeDT3g1LKhwQkB6/
-GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
+				<ds:X509Certificate> ... </ds:X509Certificate>
 			</ds:X509Data>
 		</ds:KeyInfo>
 	</ds:Signature>
@@ -285,7 +262,7 @@ postLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&
 redirectLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&
 country=CD&
 RelayState=MyRelayState&
-SAMLRequest=...&
+SAMLRequest= ... &
 sendmethods=GET
 ````
 
@@ -325,12 +302,12 @@ Välisriigi eIDAS Node-ks on praegu CEF- i käitatav eIDAS test-Node (edaspidi "
 
 ````
 GET https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest?
-SAMLRequest=...&
+SAMLRequest= ... &
 RelayState=MyRelayState&
-token=1YbOdLyWSLz_VKQhyBwduOEaz7A$
+token= ... 
 ````
 
-Vastuses saadab CEF test-Node HTML-i, kus kasutajale öeldakse, et ta peab nüüd koduriigi autentimisteenusesse suunamiseks nupule vajutama. Nupu taga on vorm ümbersuunamiskorraldusega. Vormis on ka SAML autentimispäring. (Vt fail [CEF-testNode.html](CEF-testNode.html)).
+Vastuses saadab CEF test-Node HTML-i, kus kasutajale öeldakse, et ta peab nüüd koduriigi autentimisteenusesse suunamiseks nupule vajutama. Nupu taga on vorm ümbersuunamiskorraldusega. Vormis on ka SAML autentimispäring.
 
 ## 6. Pöördumine koduriigi autentimisteenusesse
 
@@ -347,11 +324,11 @@ encryptAssertion	true
 messageFormat	eidas
 ````
 
-CEF test-Node saadab vastuseks HTML-i, milles on peidetud vorm ümbersuunamiskorraldusega (vt fail [CEF-Auth.html](CEF-Auth.html)).
+CEF test-Node saadab vastuseks HTML-i, milles on peidetud vorm ümbersuunamiskorraldusega.
 
 Kasutajale ei näidata midagi. See tähendab, et kredentsiaalide esitamise dialoogi kasutaja ei peeta. Isikutuvastus loetakse tehtuks ja viivitamata hakatakse autentimisvastust ahelat pidi tagasi saatma. Autentimisvastus on vormis juba olemas.
 
-Märkus. CEF test-Node osas on sõnumivahetuses ka sisuturbepoliitikaga (CSP) seotud pöördumisi, nt
+Märkus. CEF test-Node osas sisaldub sõnumivahetuses ka sisuturbepoliitikaga (CSP) seotud pöördumisi, nt
 `https://wlpc0090.cc.cec.eu.int:1042/eid-integration-test/EidasNode/cspReportHandler`.
 
 ## 7. Autentimistulemuse edastamine koduriigi autentimisteenusest (mängult) CEF test-Node-le
@@ -362,10 +339,10 @@ POST https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse
 
 Päringu kehas on vorm autentimisvastusega (SAML Response sõnumiga):
 
-{% highlight xml %}
-SAMLResponse	<?xml+version="1.0"+encoding="UTF-8"+standalone="no"?><saml2p:Response+xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"+xmlns:ds="http://www.w3.org/2000/09/xmldsig#"+xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson"+xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"+Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained"+Destination="https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse"+ID="_fa90bce5fcd363e7c079d13aff6338d9"+InResponseTo="_4155a3370f1d8c688342d10ab71f608d"+…Y4gbIUxlMyXc4m9viVZrqV/DHV2aDDbqDPUuVeDAkRHO3dLG95pOzaw+1ajUR6ynOhG55AuOzIKjoH7MmkiQnVE01CiUR2uWxQC/4u+wb80OGdWvol9Wvr+LHNygcB3S2EFNgBfFmInUDFPp1FX1V83p8P01xPburu5pOrVfA124zNeIwKe1eRuKs5yQJtgyTq9S+9c7jURHnB2OMx1Ic84xCUv7U97SuULkDEp2HvJZ6wt3TI/yXbfUBuIBqJXyIJbhmAPwgaFiIu2b6gDgp8gfh/h4UNfCcvofutZwiVk0DdB36SD+yMyLIZrPFiZElBMpJ4WC+R1awz/YVv90L7CMCACgMCsuExNlaWy6dup40K/1Z8gT0Nsf/NhGcYQAKWyv8uzr9LLGRJVXAshLqijr</xenc:CipherValue></xenc:CipherData></xenc:EncryptedData></saml2:EncryptedAssertion></saml2p:Response>
+````
+SAMLResponse	...
 username	xavi
-{% endhighlight %}
+````
 
 Vastuseks saadab CEF test-Node HTML-i, kus kasutajal palutakse e-teenusesse tagasisuunamiseks nupule vajutada (HTML täistekst vt [CEF-testNode-2](CEF-testNode-2)):
 
@@ -405,7 +382,7 @@ strAttrList	D-2012-17-EUIdentifier:false:[Directive+2012/17/EU+Identifier,]:;EOR
 username	xavi 
 ````
 
-Vastuseks saadab CEF test-Node HTML-i (vt fail [CEF-testNode-3.html](CEF-testNode-3.html)), milles on peidetud vorm automaatse ümbersuunamiskorraldusega.
+Vastuseks saadab CEF test-Node HTML-i, milles on peidetud vorm automaatse ümbersuunamiskorraldusega.
 
 ## 9. Vastuvõtva riigi autentimisteenuse valiku edastamine (mängult)
 
@@ -419,7 +396,7 @@ Kehas on vorm:
 strAttrList	D-2012-17-EUIdentifier:false:[Directive+2012/17/EU+Identifier,]:;EORI:false:[Economic+Operator+Registration+and+Identification+(EORI),]:;LEI:false:[Legal+Entity+Identifier+(LEI),]:;LegalName:false:[Current+Legal+Name,]:;LegalPersonAddress:false:[Legal+Person+address,]:;LegalPersonIdentifier:false:[LegalPersonUniqueId,]:;SEED:false:[System+for+Exchange+of+Excise+Data+(SEED),]:;SIC:false:[Standard+Industrial+Classification+(SIC),]:;TaxReference:false:[Taxe,]:;VATRegistrationNumber:false:[VAT+Registration+Number,]:;BirthName:false:[Ωνάσης,Onases,]:;CurrentAddress:false:[Current+Address,]:;CurrentFamilyName:false:[Garcia,]:;CurrentGivenName:false:[javier,]:;DateOfBirth:false:[1980-01-01,]:;Gender:false:[Male,]:;PersonIdentifier:false:[12345,]:;PlaceOfBirth:false:[Place+of+Birth,]:;
 ````
 
-Vastuseks saadab CEF test-Node HTML-i (vt fail [CEF-testNode-4.html](CEF-testNode-4.html)), kus kasutajale teatakse, et "LOGIN SUCCEEDED", näidatakse, mis atribuudid leiti (nt `CurrentGivenName` ja `CurrentFamilyName` väärtusteks `Javier Garcia`), milline oli SAML autentimispäringusõnum ja milline on krüpteeritud SAML autentimisvastusesõnum (vt fail [SAML-Response-Encrypted.xml](files/SAML-Response-Encrypted.xml)).
+Vastuseks saadab CEF test-Node HTML-i, kus kasutajale teatakse, et "LOGIN SUCCEEDED", näidatakse, mis atribuudid leiti (nt `CurrentGivenName` ja `CurrentFamilyName` väärtusteks `Javier Garcia`), milline oli SAML autentimispäringusõnum ja milline on krüpteeritud SAML autentimisvastusesõnum (vt fail [SAML-Response-Encrypted.xml](files/SAML-Response-Encrypted.xml)).
 
 NB! Vastus paistab olevat tühi (`Decrypted Assertion` = `no assertion found`).
 
