@@ -2,7 +2,7 @@
 permalink: Vookirjeldus-1
 ---
 
-# eIDAS päringuvoog (Demo SP kasutamisel)
+# eIDAS päringuvoog - Demo SP - HTTP Redirect
 {: .no_toc}
 
 - TOC
@@ -10,7 +10,7 @@ permalink: Vookirjeldus-1
 
 ## Ülevaade
 
-Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autentimisel, Demo SP näitel, HTTP redirect binding-u kasutamisel.
+Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autentimisel, Demo SP näitel, HTTP Redirect binding-u kasutamisel.
 
 Kirjelduse eesmärk on:
 - luua arusaamine, mis sõnumid ja kuidas liiguvad
@@ -79,6 +79,8 @@ GET https://eidastest.eesti.ee/SP/populateIndexPage
 
 Vastuses saadab Demo SP serveripool sirvikusse Demo SP avalehe. Samuti seatakse seansiküpsis.
 
+## 2. Kasutaja valikute edastamine serverisse (1)
+
 Seejärel kasutaja valib:
 
 - e-teenuse riigi - `SP Country` -> `EE`
@@ -87,17 +89,15 @@ Seejärel kasutaja valib:
 
 Rida valikuid on seatud vaikimisi.
 
-## 2. Kasutaja valikute edastamine serverisse (1)
-
 Kasutaja vajutab `Submit`.
 
 ````
 POST https://eidastest.eesti.ee/SP/IndexPage.action;jsessionid=seansitoken
 ````
 
-Kasutaja poolt valitud parameetrid saadetakse vormina, päringu kehas.
+Kasutaja poolt valitud parameetrid saadetakse päringu kehas, vormina.
 
-Vastuses saadab Demo SP serveripool sirvikusse lehe, kus kuvatakse serveripooles moodustatud SAML autentimispäringusõnum ja palutakse valida edastusmeetod.
+Vastuses saadab Demo SP serveripool sirvikusse lehe, kus kuvatakse serveripooles moodustatud SAML autentimispäringusõnum (esialgsel kujul) ja palutakse valida edastusmeetod.
 
 SAML autentimispäring:
 
@@ -161,17 +161,17 @@ SAML autentimispäring:
 </saml2p:AuthnRequest>
 {% endhighlight %}
 
+## 3. Kasutaja valikute edastamine serverisse (2)
+
 Kasutaja saab nüüd valida `HTTP POST` või `HTTP Redirect` binding-u.
 
 Kasutaja valib  `HTTP Redirect` ja vajutab `Submit`.
-
-## 3. Kasutaja valikute edastamine serverisse (2)
 
 ````
 POST https://eidastest.eesti.ee/SP/changeProtocolBinding.action
 ````
 
-Päringu kehas edastatakse vormiandmed:
+Päringu kehas edastatakse vormina andmed:
 
 ````
 samlRequestBinding	get
@@ -180,7 +180,7 @@ citizenCountryCode	CD
 samlRequestXML	...
 ````
 
-Vastuse kehas edastatakse eIDAS konnektorteenusele saatmiseks valmis sõnum:
+Päringu vastuse kehas edastab server sirvikule eIDAS konnektorteenusele saatmiseks valmis sõnumi:
 
 {% highlight xml %}
 <saml2p:AuthnRequest
@@ -266,7 +266,7 @@ SAMLRequest= ... &
 sendmethods=GET
 ````
 
-Vastuseks saadab konnektorteenus HTML, kus kasutajale kuvatakse (vilksamisi) `Redirecting to the citizen country...`. HTML-is on peidetud vorm ümbersuunamiskorraldusega. (Tegelikult kaks vormi, üks Javascripti kasutamisega, teine ilma).
+Vastuseks saadab konnektorteenus sirvikusse HTML-i, kus kasutajale kuvatakse (vilksamisi) `Redirecting to the citizen country...`. HTML-is on peidetud vorm ümbersuunamiskorraldusega. Tegelikult kaks vormi, üks Javascripti kasutamisega, teine ilma:
 
 {% highlight html %}
 <form name="redirectForm" method="GET" action="https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest">
@@ -286,7 +286,7 @@ Vastuseks saadab konnektorteenus HTML, kus kasutajale kuvatakse (vilksamisi) `Re
 </noscript>
 {% endhighlight %}
 
-Vormis oleva ümbersuunamiskorralduse automaatne täitmine tehakse skriptiga:
+Vormis olev ümbersuunamiskorraldus täidetakse automaatselt, skriptiga:
 
 {% highlight javascript %}
 // Automatic Redirect of the form
@@ -307,7 +307,7 @@ RelayState=MyRelayState&
 token= ... 
 ````
 
-Vastuses saadab CEF test-Node HTML-i, kus kasutajale öeldakse, et ta peab nüüd koduriigi autentimisteenusesse suunamiseks nupule vajutama. Nupu taga on vorm ümbersuunamiskorraldusega. Vormis on ka SAML autentimispäring.
+Vastuses saadab CEF test-Node sirvikusse HTML-i, kus kasutajale öeldakse, et ta peab nüüd koduriigi autentimisteenusesse suunamiseks nupule vajutama. Nupu taga on vorm ümbersuunamiskorraldusega. Vormis on ka SAML autentimispäring.
 
 ## 6. Pöördumine koduriigi autentimisteenusesse
 
@@ -324,14 +324,16 @@ encryptAssertion	true
 messageFormat	eidas
 ````
 
-CEF test-Node saadab vastuseks HTML-i, milles on peidetud vorm ümbersuunamiskorraldusega.
+CEF test-Node, etendades koduriigi autentimisteenust, saadab vastuseks sirvikusse HTML-i, milles on peidetud vorm ümbersuunamiskorraldusega.
 
-Kasutajale ei näidata midagi. See tähendab, et kredentsiaalide esitamise dialoogi kasutaja ei peeta. Isikutuvastus loetakse tehtuks ja viivitamata hakatakse autentimisvastust ahelat pidi tagasi saatma. Autentimisvastus on vormis juba olemas.
+Kasutajale ei näidata siin midagi. Kredentsiaalide esitamise dialoogi kasutaja ei peeta. Isikutuvastus loetakse tehtuks ja viivitamata hakatakse autentimisvastust ahelat pidi tagasi saatma. Autentimisvastus on vormis juba olemas.
 
 Märkus. CEF test-Node osas sisaldub sõnumivahetuses ka sisuturbepoliitikaga (CSP) seotud pöördumisi, nt
 `https://wlpc0090.cc.cec.eu.int:1042/eid-integration-test/EidasNode/cspReportHandler`.
 
 ## 7. Autentimistulemuse edastamine koduriigi autentimisteenusest (mängult) CEF test-Node-le
+
+Tehakse päring:
 
 ````
 POST https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse
@@ -344,7 +346,7 @@ SAMLResponse	...
 username	xavi
 ````
 
-Vastuseks saadab CEF test-Node HTML-i, kus kasutajal palutakse e-teenusesse tagasisuunamiseks nupule vajutada (HTML täistekst vt [CEF-testNode-2](CEF-testNode-2)):
+Vastuseks saadab CEF test-sirvikusse Node HTML-i, kus kasutajal palutakse e-teenusesse tagasisuunamiseks nupule vajutada:
 
 {% highlight html %}
 <h1 class="title">
@@ -364,11 +366,11 @@ Vastuseks saadab CEF test-Node HTML-i, kus kasutajal palutakse e-teenusesse taga
     </noscript>
 {% endhighlight %}
 
+## 8. Nõusoleku saatmise päring
+
 Nupuvajutuse tähendus on kasutaja nõusoleku võtmine (_consent_) autentimisandmete edastamiseks e-teenusele.
 
 Nupu taga on vorm, mille sisu edastataksegi järgmises päringus.
-
-## 8. Nõusoleku saatmise päring
 
 ````
 POST https://ec.europa.eu/eid-integration-test/AP/ConsentValue
@@ -382,23 +384,25 @@ strAttrList	D-2012-17-EUIdentifier:false:[Directive+2012/17/EU+Identifier,]:;EOR
 username	xavi 
 ````
 
-Vastuseks saadab CEF test-Node HTML-i, milles on peidetud vorm automaatse ümbersuunamiskorraldusega.
+Vastuseks saadab CEF test-Node sirvikusse HTML-i, milles on peidetud vorm automaatse ümbersuunamiskorraldusega.
 
-## 9. Vastuvõtva riigi autentimisteenuse valiku edastamine (mängult)
+## 9. Eduka sisselogimise teade ja tagasisuunamine RIA eIDAS Node-i
 
 ````
 POST https://ec.europa.eu/eid-integration-test/EidasNode/APSelector
 ````
 
-Kehas on vorm:
+Päringu kehas on vorm:
 
 ````
 strAttrList	D-2012-17-EUIdentifier:false:[Directive+2012/17/EU+Identifier,]:;EORI:false:[Economic+Operator+Registration+and+Identification+(EORI),]:;LEI:false:[Legal+Entity+Identifier+(LEI),]:;LegalName:false:[Current+Legal+Name,]:;LegalPersonAddress:false:[Legal+Person+address,]:;LegalPersonIdentifier:false:[LegalPersonUniqueId,]:;SEED:false:[System+for+Exchange+of+Excise+Data+(SEED),]:;SIC:false:[Standard+Industrial+Classification+(SIC),]:;TaxReference:false:[Taxe,]:;VATRegistrationNumber:false:[VAT+Registration+Number,]:;BirthName:false:[Ωνάσης,Onases,]:;CurrentAddress:false:[Current+Address,]:;CurrentFamilyName:false:[Garcia,]:;CurrentGivenName:false:[javier,]:;DateOfBirth:false:[1980-01-01,]:;Gender:false:[Male,]:;PersonIdentifier:false:[12345,]:;PlaceOfBirth:false:[Place+of+Birth,]:;
 ````
 
-Vastuseks saadab CEF test-Node HTML-i, kus kasutajale teatakse, et "LOGIN SUCCEEDED", näidatakse, mis atribuudid leiti (nt `CurrentGivenName` ja `CurrentFamilyName` väärtusteks `Javier Garcia`), milline oli SAML autentimispäringusõnum ja milline on krüpteeritud SAML autentimisvastusesõnum (vt fail [SAML-Response-Encrypted.xml](files/SAML-Response-Encrypted.xml)).
+Vastuseks saadab CEF test-Node sirvikusse HTML-i, kus kasutajale teatakse, et "LOGIN SUCCEEDED", näidatakse, mis atribuudid leiti (nt `CurrentGivenName` ja `CurrentFamilyName` väärtusteks `Javier Garcia`), milline oli SAML autentimispäringusõnum ja milline on krüpteeritud SAML autentimisvastusesõnum (vt fail [SAML-Response-Encrypted.xml](files/SAML-Response-Encrypted.xml)).
 
 NB! Vastus paistab olevat tühi (`Decrypted Assertion` = `no assertion found`).
+
+## 10. Autentimisvastuse saatmine RIA eIDAS-Node-le
 
 Kasutajal palutakse vajutada nupule `Submit`.
 
@@ -408,13 +412,22 @@ Nupu taga on vorm suunamisega RIA eIDAS-Node-i:
 <form action="https://eidastest.eesti.ee/EidasNode/ColleagueResponse" name="countrySelector" id="countrySelector" method="post">
 {% endhighlight %}
 
-## 10. Autentimisvastuse saatmine RIA eIDAS-Node-le
+Nupulevajutusega tehakse päring:
 
 ````
 POST https://eidastest.eesti.ee/EidasNode/ColleagueResponse
 ````
 
-Päringu kehas on vormielemendid `SAMLResponse`, `nodeType`, `RelayState`. `sAMLRequestTT`, `samlResponseDecriptedXMLEdit`, `eidasScenario`, `eidasScenario2`, `scenarioDesc`, `theScenario`:
+Päringu kehas on vormielemendid:
+- `SAMLResponse`
+- `nodeType`
+- `RelayState`
+- `sAMLRequestTT`
+- `samlResponseDecriptedXMLEdit`
+- `eidasScenario`
+- `eidasScenario2`
+- `scenarioDesc`
+- `theScenario`.
 
 ````
 SAMLResponse	...
@@ -428,13 +441,26 @@ scenarioDesc	eIDAS+-+The+Service+sends+the+original+eIDAS+SAML+Response+received
 theScenario	1
 ````
 
-Nüüd on kaks võimalust.
+RIA eIDAS test-Node kontrollib (valideerib) teiselt Node-lt saadud SAML autentimisvastust. 
 
-Kui kasutaja viivitas Validation teenuses, siis tekib viga. Vastuseks annab RIA eIDAS test-Node HTML-i (vt fail [RIA-testNode-1.html](RIA-testNode-1.html)), et toimus ootamatu viga (`An unexpected error has occurred`). Kuvatakse täpsem veakood ja -teade: `203007 - The SAML message is not valid`
+Kui valideerimisel leitud viga, saadab RIA eIDAS test-Node päringu vastuses sirvikusse HTML-i, milles teatab veast (vt jaotis 11). Kui valideerimisel vigu ei leia, siis saadab HTML-i sisselogimise õnnestumise kohta (vt jaotis 12).
+
+## 11. Ebaõnnestunud autentimisest teatamine kasutajale
+
+ RIA eIDAS test-Node HTML-i (vt fail [RIA-testNode-1.html](RIA-testNode-1.html)), et toimus ootamatu viga (`An unexpected error has occurred`). Kuvatakse täpsem veakood ja -teade: `203007 - The SAML message is not valid`
 
 Sellega voog lõpeb.
 
-Vastasel korral saadab RIA eIDAS testNode HTML-i, kus kasutajale teatatakse, et autentimisvastus on õnnelikult kätte saadud. Kuvatakse autentimisvastus:
+## 12. SAML autentimisvastussõnumi esitamine kasutajale
+
+````
+POST https://eidastest.eesti.ee/SP/ReturnPage
+````
+
+Päringu vastuses saadab RIA eIDAS testNode sirvikusse HTML-i, kus kuvatakse:
+- SAML autentimisvastusesõnum (Base64 kodeeritult)
+- `RelayState väärtus`
+- SAML autentimisvastusesõnum XML-kujul.
 
 {% highlight xml %}
 <saml2p:Response
@@ -611,3 +637,17 @@ Version="2.0"
     </saml2:Assertion>
 </saml2p:Response>
 {% endhighlight %}
+
+Kasutajal on võimalus vajutusega `Submit` liikuda edasi.
+
+## 13. Eduka sisselogimise teate esitamine Demo SP-s
+
+````
+POST https://eidastest.eesti.ee/SP/populateReturnPage
+````
+
+Päringu vastuses saadab RIA eIDAS testNode sirvikusse HTML-i, kus:
+- kasutajale teatatakse, et sisselogimine on edukalt tehtud ja
+- kuvatakse autentimisvastusega saadud atribuudid.
+
+Sellega voog lõpeb.

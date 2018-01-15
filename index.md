@@ -12,11 +12,18 @@ Konnektorteenus on mõeldud asutustele, kes soovivad piiriülese autentimistaris
 
 (OpenID Connect protokolli kasutajad pääsevad eIDAS-taristusse [TARA-teenuse](https://e-gov.github.io/TARA-Doku/) kaudu.)
 
-Teenuse ärikirjeldus on [liidestamisjuhendis](Liidestamisjuhend) ja tehnilised üksikasjad [tehnilises spetsifikatsioonis](Spetsifikatsioon).
-
 Mudeliks ja näiteks liidese ehitamisel võib kasutada [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) tarkvara.
 
 eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 
+## Ärikasutajale
+
+[Ärikirjeldus](Arikirjeldus)<br>
+[Tehniline spetsifikatsioon](Spetsifikatsioon)
+[eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
+
+Töömaterjalid:
+
+[eIDAS päringuvoog - Demo SP - HTTP Redirect](Vookirjeldus-1)
 
 
