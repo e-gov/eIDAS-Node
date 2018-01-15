@@ -1,3 +1,7 @@
+---
+permalink: Voogkirjeldus-1
+---
+
 ## eIDAS päringuvoog (Demo SP kasutamisel)
 
 Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autentimisel, Demo SP näitel, HTTP redirect binding-u kasutamisel.
