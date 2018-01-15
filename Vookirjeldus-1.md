@@ -2,7 +2,13 @@
 permalink: Vookirjeldus-1
 ---
 
-## eIDAS päringuvoog (Demo SP kasutamisel)
+# eIDAS päringuvoog (Demo SP kasutamisel)
+{: .no_toc}
+
+- TOC
+{:toc}
+
+## Ülevaade
 
 Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autentimisel, Demo SP näitel, HTTP redirect binding-u kasutamisel.
 
@@ -16,7 +22,7 @@ Siin ei kirjeldata:
 - serveripoolte omavahelisi päringuid SAML metaandmete otspunktide poole
 - HTTP POST bindingu kasutamise juhtu - see väärib eraldi dokumenti.
 
-### Suhtluse osapooled
+## Suhtluse osapooled
 
 - ___Demo SP___ (Demo Service Provider) - etendab e-teenust eIDASe mõistes (s.t süsteemi, mis kasutaja autentimist vajab)
 
@@ -45,7 +51,7 @@ Otspunktid:<br>
 - kasutaja
 - sirvik.
 
-### Voo sisu
+## Voo sisu
 
 Siinkirjeldatu on demo- ja test-, mitte tootmisvoog. Validation Service etendab, et tuvastatakse isik nimega `Javier Garcia`. Demovoog lõpeb veaolukorra tekkimisega RIA eIDAS test-Node-s (selle põhjus vajab selgitamist - v-o on viga seadistuses?).
 
@@ -63,7 +69,7 @@ Voos tehakse järgmised päringud (päringutele on antud tinglikud nimetused):
 
 Edasi kirjeldame päringuid ja nende vastuseid detailselt.
 
-### 1. Pöördumine Demo SP avalehe poole.
+## 1. Pöördumine Demo SP avalehe poole.
 
 ````
 GET https://eidastest.eesti.ee/SP/populateIndexPage
@@ -73,7 +79,7 @@ Vastuses saadab Demo SP serveripool sirvikusse Demo SP avalehe. Samuti seatakse 
 
 Seejärel kasutaja valib riigi jm parameetrid. 
 
-### 2. Kasutaja valikute edastamine serverisse (1)
+## 2. Kasutaja valikute edastamine serverisse (1)
 
 ````
 POST https://eidastest.eesti.ee/SP/IndexPage.action;jsessionid=56EC2BDBC97703A3AB5AED3BCAD83DCA
@@ -85,7 +91,7 @@ Vastuses saadab Demo SP serveripool sirvikusse lehe, kus kuvatakse serveripooles
 
 Kasutaja valib nüüd `HTTP POST` või `HTTP Redirect` binding-u. Kasutaja vajutab 'Submit'.
 
-### 3. Kasutaja valikute edastamine serverisse (2)
+## 3. Kasutaja valikute edastamine serverisse (2)
 
 ````
 POST https://eidastest.eesti.ee/SP/changeProtocolBinding.action
@@ -121,7 +127,7 @@ VP6DSep3h+/G6GnmrpeQxsLwolhASNLQbylifA8v6E3toHu9ditx9qynFFn9CeDT3g1LKhwQkB6/
 GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate></ds:X509Data></ds:KeyInfo></ds:Signature><saml2p:Extensions xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"><eidas:SPType xmlns:eidas="http://eidas.europa.eu/saml-extensions">public</eidas:SPType><eidas:RequestedAttributes xmlns:eidas="http://eidas.europa.eu/saml-extensions"><eidas:RequestedAttribute FriendlyName="D-2012-17-EUIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="EORI" Name="http://eidas.europa.eu/attributes/legalperson/EORI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="LEI" Name="http://eidas.europa.eu/attributes/legalperson/LEI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="LegalAdditionalAttribute" Name="http://eidas.europa.eu/attributes/legalperson/LegalAdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="LegalName" Name="http://eidas.europa.eu/attributes/legalperson/LegalName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="LegalAddress" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="LegalPersonIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="SEED" Name="http://eidas.europa.eu/attributes/legalperson/SEED" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="SIC" Name="http://eidas.europa.eu/attributes/legalperson/SIC" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="TaxReference" Name="http://eidas.europa.eu/attributes/legalperson/TaxReference" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="VATRegistration" Name="http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="AdditionalAttribute" Name="http://eidas.europa.eu/attributes/naturalperson/AdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="BirthName" Name="http://eidas.europa.eu/attributes/naturalperson/BirthName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="CurrentAddress" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="FamilyName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="FirstName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="DateOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/DateOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="Gender" Name="http://eidas.europa.eu/attributes/naturalperson/Gender" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/><eidas:RequestedAttribute FriendlyName="PersonIdentifier" Name="http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/><eidas:RequestedAttribute FriendlyName="PlaceOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/></eidas:RequestedAttributes></saml2p:Extensions><saml2p:NameIDPolicy AllowCreate="true" Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified" xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"/><saml2p:RequestedAuthnContext Comparison="minimum" xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"><saml2:AuthnContextClassRef xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">http://eidas.europa.eu/LoA/low</saml2:AuthnContextClassRef></saml2p:RequestedAuthnContext></saml2p:AuthnRequest>
 {% endhighlight %}
 
-### 4. Pöördumine eIDAS konnektorteenuse poole
+## 4. Pöördumine eIDAS konnektorteenuse poole
 
 Eelmise päringu vastuses sai sirvik edastamiseks valmis SAML autentimispäringusõnumi. Nüüd tehakse Javascript redirect-ga pöördumine eIDAS konnektorteenuse poole.
 
@@ -165,7 +171,7 @@ function submitRedirectFormAction() {
 window.addEventListener('load', submitRedirectFormAction());
 {% endhighlight %}
 
-### 5. Pöördumine kasutaja koduriigi eIDAS Node-i poole
+## 5. Pöördumine kasutaja koduriigi eIDAS Node-i poole
 
 Välisriigi eIDAS Node-ks on praegu CEF- i käitatav eIDAS test-Node (edaspidi "CEF test-Node"), aadressiga `https://ec.europa.eu/eid-integration-test/EidasNode`.
 
@@ -178,7 +184,7 @@ token=1YbOdLyWSLz_VKQhyBwduOEaz7A$
 
 Vastuses saadab CEF test-Node HTML-i, kus kasutajale öeldakse, et ta peab nüüd koduriigi autentimisteenusesse suunamiseks nupule vajutama. Nupu taga on vorm ümbersuunamiskorraldusega. Vormis on ka SAML autentimispäring. (Vt fail [CEF-testNode.html](CEF-testNode.html)).
 
-### 6. Pöördumine koduriigi autentimisteenusesse
+## 6. Pöördumine koduriigi autentimisteenusesse
 
 ````
 POST https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen
@@ -200,7 +206,7 @@ Kasutajale ei näidata midagi. See tähendab, et kredentsiaalide esitamise dialo
 Märkus. CEF test-Node osas on sõnumivahetuses ka sisuturbepoliitikaga (CSP) seotud pöördumisi, nt
 `https://wlpc0090.cc.cec.eu.int:1042/eid-integration-test/EidasNode/cspReportHandler`.
 
-### 7. Autentimistulemuse edastamine koduriigi autentimisteenusest (mängult) CEF test-Node-le
+## 7. Autentimistulemuse edastamine koduriigi autentimisteenusest (mängult) CEF test-Node-le
 
 ````
 POST https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse
@@ -237,7 +243,7 @@ Nupuvajutuse tähendus on kasutaja nõusoleku võtmine (_consent_) autentimisand
 
 Nupu taga on vorm, mille sisu edastataksegi järgmises päringus.
 
-### 8. Nõusoleku saatmise päring
+## 8. Nõusoleku saatmise päring
 
 ````
 POST https://ec.europa.eu/eid-integration-test/AP/ConsentValue
@@ -253,7 +259,7 @@ username	xavi
 
 Vastuseks saadab CEF test-Node HTML-i (vt fail [CEF-testNode-3.html](CEF-testNode-3.html)), milles on peidetud vorm automaatse ümbersuunamiskorraldusega.
 
-### 9. Vastuvõtva riigi autentimisteenuse valiku edastamine (mängult)
+## 9. Vastuvõtva riigi autentimisteenuse valiku edastamine (mängult)
 
 ````
 POST https://ec.europa.eu/eid-integration-test/EidasNode/APSelector
@@ -273,7 +279,7 @@ Nupu taga on vorm suunamisega RIA eIDAS-Node-i:
 <form action="https://eidastest.eesti.ee/EidasNode/ColleagueResponse" name="countrySelector" id="countrySelector" method="post">
 {% endhighlight %}
 
-### 10. Autentimisvastuse saatmine RIA eIDAS-Node-le
+## 10. Autentimisvastuse saatmine RIA eIDAS-Node-le
 
 ````
 POST https://eidastest.eesti.ee/EidasNode/ColleagueResponse
