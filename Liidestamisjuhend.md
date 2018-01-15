@@ -1,9 +1,9 @@
 ---
-title: eIDAS konnektorteenus. Liidestamisjuhend
+title: eIDAS konnektorteenus. Ärikirjeldus
 permalink: Liidestamisjuhend
 ---
 
-# RIA eIDAS konnektorteenus. Liidestamisjuhend
+# RIA eIDAS konnektorteenus. Ärikirjeldus
 {:.no_toc}
 
 versioon 1.1, 03.01.2018
