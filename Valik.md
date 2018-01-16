@@ -11,13 +11,15 @@ Välismaalase autentimiseks e-teenuses on vaja e-teenust pakkuv infosüsteem lii
 - liidestada RIA eIDAS konnektorteenusega
 - liidestada autentimisteenusega TARA.
 
-|      |   ___eIDAS konnektorteenus___     |   __TARA___     |
-|------|-----------------------------------|-----------------|
-| sobib asutusele: | kellel juba on oma autentimislahendus ja soovib sellele lisada eIDAS-võimekuse | kes soovib välise teenuse abil lahendada nii piiriülese kui ka siseriikliku autentimise |
-| autentimismeetoditena pakub: | välisriikide kodanike autentimine | ID-kaart, m-ID, alates kevadest 2018 ka välisriikide kodanike autentimine |
+|      |   ___eIDAS konnektorteenus___     |   __TARA__     |
+|------|:---------------------------------:|:---------------:|
+| sobib asutusele: | kellel on juba oma autentimislahendus ja kes soovib lisada eIDAS-võimekuse | kes soovib välise teenuse abil lahendada nii piiriülese kui ka siseriikliku autentimise |
+| piiriülene autentimine | jah | jah (alates kevad 2018) |
+| siseriiklikud autentimismeetodid: | - | ID-kaart, m-ID |
 | sessioonihaldus: | ei paku | ei paku |
+| ühekordne sisselogimine (SSO) | ei paku | ei paku |
 | liidestusprotokoll põhineb: | SAML 2 | OpenID Connect |
-| adaptertarkvara: | - | jah [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) |    
+| adaptertarkvara: | - | jah, [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) |   
 
 ## Liidestamine RIA eIDAS konnektorteenusega
 
