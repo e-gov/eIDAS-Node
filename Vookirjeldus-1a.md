@@ -28,81 +28,65 @@ Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autenti
 | 12 | vajutab "Edasi" | `POST https://eidastest.eesti.ee/SP/populateReturnPage` | Demo SP server saadab lehe, kus teatab "Login succeeded" ja kuvab SAML-autentimisvastuses saadud atribuudid |
 
 
-Nr 2 vorm:
+POST päringute sisud:
 
-| vormivälja nimetus | vormivälja väärtus |
-|--------------------|--------------------|
-| eidasconnector | https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata |
-| nodeMetadataUrl | https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata |
-| citizenEidas | CD |
-| returnUrl | https://eidastest.eesti.ee/SP/ReturnPage |
-| eidasNameIdentifier | urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified |
-| eidasloa | http://eidas.europa.eu/LoA/low |
-| eidasloaCompareType | minimum |
-| eidasSPType | public |
-| allTypeEidas | true |
-| < atribuutide kirjeldused > |  |
+nr 2 vorm:
 
-Nr 3 vorm:
+eidasconnector | https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
+nodeMetadataUrl | https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
+citizenEidas | CD
+returnUrl | https://eidastest.eesti.ee/SP/ReturnPage
+eidasNameIdentifier | urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+eidasloa | http://eidas.europa.eu/LoA/low
+eidasloaCompareType | minimum
+eidasSPType | public
+allTypeEidas | true
+< atribuutide kirjeldused > |
 
-| vormivälja nimetus | vormivälja väärtus |
-|--------------------|--------------------|
-| samlRequestBinding | get |
-| samlRequestLocation |	https://eidastest.eesti.ee/EidasNode/ServiceProvider |
-| citizenCountryCode |	CD |
-| samlRequestXML | ... |
+nr 3:
 
-Nr 6 vorm:
+samlRequestBinding | get
+samlRequestLocation |	https://eidastest.eesti.ee/EidasNode/ServiceProvider
+citizenCountryCode | CD
+samlRequestXML | ...
 
-| vormivälja nimetus | vormivälja väärtus |
-|--------------------|--------------------|
-| SAMLRequest | ... |
-| signAssertion | false |
-| encryptAssertion | true |
-| messageFormat | eidas |
+nr 6:
 
-Nr 7 vorm:
+SAMLRequest | ...
+signAssertion | false
+encryptAssertion | true
+messageFormat | eidas
 
-| vormivälja nimetus | vormivälja väärtus |
-|--------------------|--------------------|
-| SAMLResponse | ... |
-| username     | xavi |
+nr 7:
 
-Nr 8 vorm:
+SAMLResponse | ...
+username     | xavi
 
-| vormivälja nimetus | vormivälja väärtus |
-|--------------------|--------------------|
-| callbackUrl | ... |
-| strAttrList | |
-| username | xavi |
+nr 8:
 
-Nr 9 vorm:
+callbackUrl | ...
+strAttrList | 
+username | xavi
 
-| vormivälja nimetus | vormivälja väärtus |
-|--------------------|--------------------|
-| strAttrList | |
+nr 9:
 
-Nr 10:
+strAttrList |
 
-| vormivälja nimetus | vormivälja väärtus |
-|--------------------|--------------------|
-| SAMLResponse | |
-| nodeType | |
-| RelayState | |
-| sAMLRequestTT | |
-| samlResponseDecriptedXMLEdit | |
+nr 10:
 
-Nr 11 vorm:
+SAMLResponse |
+nodeType |
+RelayState |
+sAMLRequestTT |
+samlResponseDecriptedXMLEdit |
 
-| vormivälja nimetus | vormivälja väärtus |
-|--------------------|--------------------|
-| SAMLResponse | |
-| RelayState | |
+nr 11:
 
-Nr 12 vorm:
+SAMLResponse |
+RelayState |
 
-| vormivälja nimetus | vormivälja väärtus |
-|--------------------|--------------------|
-| SAMLResponse | |
+nr 12:
+
+SAMLResponse |
 
 
