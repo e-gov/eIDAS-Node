@@ -2,6 +2,8 @@
 permalink: Valik
 ---
 
+Piiriülene eIDAS-autentimine
+
 # Liidestamismeetodi valik
 
 Välismaalase autentimiseks e-teenuses on vaja e-teenust pakkuv infosüsteem liidestada piiriülese autentimise e eIDAS-taristuga. Selleks on kaks võimalust:
@@ -15,7 +17,7 @@ Välismaalase autentimiseks e-teenuses on vaja e-teenust pakkuv infosüsteem lii
 | autentimismeetoditena pakub: | välisriikide kodanike autentimine | ID-kaart, m-ID, alates kevadest 2018 ka välisriikide kodanike autentimine |
 | sessioonihaldus: | ei paku | ei paku |
 | liidestusprotokoll põhineb: | SAML 2 | OpenID Connect |
-| adaptertarkvara: | - | jah |    
+| adaptertarkvara: | - | jah [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) |    
 
 ## Liidestamine RIA eIDAS konnektorteenusega
 
