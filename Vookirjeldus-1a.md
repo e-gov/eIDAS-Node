@@ -20,10 +20,10 @@ Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autenti
 | 4  | aut-ne ümbersuunamine | === SAML sõnumi saatmine RIA eIDAS konnektorteenusesse === `GET https://eidastest.eesti.ee/EidasNode/ServiceProvider?` `postLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` `redirectLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` `country=CD&` `RelayState=MyRelayState&` `SAMLRequest= ... &` `sendmethods=GET` | konnektorteenus saadab ümbersuunamiskorralduse |
 | 5  | aut-ne ümbersuunamine | === SAML sõnumi saatmine CEF test-Node-i === `GET https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest?` `SAMLRequest=...&` `RelayState=MyRelayState&` `token=...` | CEF test-Node saadab ümbersuunamiskorralduse | 
 | 6  | aut-ne ümbersuunamine | === CEF test-Node saadab IdP-sse === `POST https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen` | CEF test-Node saadab ümbersuunamiskorralduse |
-| 7  | aut-ne ümbersuunamine | === Nõusoleku küsimise lehele === `POST https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse` | CEF test-Node saadab lehe, kus teatab, et tegu on eIDAS autentimisteenusega ja palub kasutaja nõusolekut (consent) protsessiga edasiminekuks |
-| 8  | vajutab "Edasi" | `POST https://ec.europa.eu/eid-integration-test/AP/ConsentValue` | CEF test-Node saadab ümbersuunamiskorralduse |
-| 9  | aut-ne ümbersuunamine | `POST https://ec.europa.eu/eid-integration-test/EidasNode/APSelector` | CEF test-Node saadab lehe, millel teatab, et "Login succeeded" |
-| 10 | vajutab "Tagasi e-teenusesse"  | `POST https://eidastest.eesti.ee/EidasNode/ColleagueResponse` | RIA eIDAS konnektorteenus saabab ümbersuunamiskorraldus |
+| 7  | aut-ne ümbersuunamine | === IdP saadab nõusoleku küsimise lehele === `POST https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse` | CEF test-Node saadab lehe, kus teatab, et tegu on eIDAS autentimisteenusega ja palub kasutaja nõusolekut (consent) protsessiga edasiminekuks |
+| 8  | vajutab "Edasi" | === Kasutaja nõusoleku edastamine === `POST https://ec.europa.eu/eid-integration-test/AP/ConsentValue` | CEF test-Node saadab ümbersuunamiskorralduse |
+| 9  | aut-ne ümbersuunamine | === Autentimisvahendi valik ja kredentsiaalide esitamine vääb vahele; autentimine loetakse kohe tehtuks (Javier Garcia) === `POST https://ec.europa.eu/eid-integration-test/EidasNode/APSelector` | CEF test-Node saadab lehe, millel teatab, et "Login succeeded" |
+| 10 | vajutab "Tagasi e-teenusesse"  | === Kasutaja nõusolek e-teenusesse tagasi saatmiseks === `POST https://eidastest.eesti.ee/EidasNode/ColleagueResponse` | RIA eIDAS konnektorteenus saadab ümbersuunamiskorralduse |
 | 11 | aut-ne ümbersuunamine | `POST https://eidastest.eesti.ee/SP/ReturnPage` | Demo SP server saadab lehe, kus näidatakse saabunud SAML-sõnumit |
 | 12 | vajutab "Edasi" | `POST https://eidastest.eesti.ee/SP/populateReturnPage` | Demo SP server saadab lehe, kus teatab "Login succeeded" ja kuvab SAML-autentimisvastuses saadud atribuudid |
 
@@ -32,61 +32,61 @@ POST päringute sisud:
 
 nr 2 vorm:
 
-eidasconnector | https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
-nodeMetadataUrl | https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
-citizenEidas | CD
-returnUrl | https://eidastest.eesti.ee/SP/ReturnPage
-eidasNameIdentifier | urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
-eidasloa | http://eidas.europa.eu/LoA/low
-eidasloaCompareType | minimum
-eidasSPType | public
-allTypeEidas | true
-< atribuutide kirjeldused > |
+eidasconnector https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
+nodeMetadataUrl https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
+citizenEidas CD
+returnUrl https://eidastest.eesti.ee/SP/ReturnPage
+eidasNameIdentifier urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+eidasloa http://eidas.europa.eu/LoA/low
+eidasloaCompareType minimum
+eidasSPType public
+allTypeEidas true
+< atribuutide kirjeldused >
 
 nr 3:
 
-samlRequestBinding | get
-samlRequestLocation |	https://eidastest.eesti.ee/EidasNode/ServiceProvider
-citizenCountryCode | CD
-samlRequestXML | ...
+samlRequestBinding get
+samlRequestLocation https://eidastest.eesti.ee/EidasNode/ServiceProvider
+citizenCountryCode CD
+samlRequestXML ...
 
 nr 6:
 
-SAMLRequest | ...
-signAssertion | false
-encryptAssertion | true
-messageFormat | eidas
+SAMLRequest ...
+signAssertion false
+encryptAssertion true
+messageFormat eidas
 
 nr 7:
 
-SAMLResponse | ...
-username     | xavi
+SAMLResponse ...
+username xavi
 
 nr 8:
 
-callbackUrl | ...
-strAttrList | 
-username | xavi
+callbackUrl ...
+strAttrList  
+username xavi
 
 nr 9:
 
-strAttrList |
+strAttrList
 
 nr 10:
 
-SAMLResponse |
-nodeType |
-RelayState |
-sAMLRequestTT |
-samlResponseDecriptedXMLEdit |
+SAMLResponse
+nodeType
+RelayState
+sAMLRequestTT
+samlResponseDecriptedXMLEdit
 
 nr 11:
 
-SAMLResponse |
-RelayState |
+SAMLResponse
+RelayState
 
 nr 12:
 
-SAMLResponse |
+SAMLResponse
 
 
