@@ -21,7 +21,7 @@ Eestis pakub eIDAS Node võrguga liitumiseks konnektorteenust RIA.
 ISIKUTUVASTUSE PROTSESS
 ----------------
 
-Eduka ülepiirilise isikutuvastamise protsess EIDAS Node võrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [eIDAS-interop]. Sõnumivahetus osapoolte vahel toimib SAML 2.0 [SAML20] protokolli alusel.
+Eduka ülepiirilise isikutuvastamise protsess EIDAS Node võrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [eIDAS-interop]. Sõnumivahetus osapoolte vahel toimib [SAML20] protokolli alusel.
 
 Järgnevas näidisstsenaariumis (vt Joonis 1) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel (lihtsuse mõttes ei ole näidatud SAML protokolli kohaselt metadata otspunktide poole pöördumisi).
 
@@ -48,7 +48,7 @@ VAJALIKUD LIIDESTUMISTÖÖD TEENUSEPAKKUJALE
 
 ### Nõuded liituvale teenusepakkujale
 
-Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele [eIDAS Profiil] SAML protokolli kasutuse ja krüptoalgoritmide osas. EIDAS Node kasutab suhtlemiseks täiendavate kitsendustega SAML 2.0 protokolli.
+Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas (vt [eIDAS Profiil]). EIDAS Node kasutab suhtlemiseks täiendavate kitsendustega SAML 2.0 protokolli.
 
 Kokkuvõtlikult peab teenusepakkuja:
 
@@ -162,7 +162,7 @@ Tabel 1 - Päringu parameetrid
 | country |	Jah | Kodaniku riigikood, kelle isikut tuvastatakse. ISO 3166-1 alpha-2 standardi alusel. |
 
 
-Saadetavad SAML päringud peavad vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS-formaat] ja [eIDAS-attr]). Kasutatavad krüptoalgoritmid peavad vastama [eIDAS krüpto] dokumendis toodule. 
+Saadetavad SAML päringud peavad vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]). Kasutatavad krüptoalgoritmid peavad vastama [eIDAS krüpto] dokumendis toodule. 
 
 
 
@@ -372,14 +372,12 @@ Tabel 4 - Loetelu võimalikest veaolukordadest
 
 TODO vajab analüüsi - täiendada
 
-VIITED
----------------
-[eIDAS Regulatsioon] - http://eur-lex.europa.eu/legal-content/ET/TXT/HTML/?uri=CELEX:32014R0910&from=EN
-[eIDAS profiil] - https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS+Profile
-[EIF] - European Interoperability Framework - https://ec.europa.eu/isa2/eif_en
-[SAML20] - SAML 2.0 spetsifikatsioon - http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
-[SAMLmeta] OASIS: Metadata for the OASIS Security Assertion Markup Language (SAML) v2.0
-[eIDAS formaat] - eIDAS Sõnumi Formaat - https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eIDAS%20Message%20Format_v1.1-2.pdf?version=1&modificationDate=1497252919575&api=v2
-[eIDAS krüpto] - Nõuded krüptoalgortmidele - https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2
-[eIDAS-attr] - eIDAS SAML attribuutide profiil - https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eIDAS%20SAML%20Attribute%20Profile%20v1.1_2.pdf?version=1&modificationDate=1497252920100&api=v2
-[eIDAS-interop] - eIDAS koosvõime arhitektuur - https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_interoperability_architecture_v1.00.pdf?version=1&modificationDate=1497252919857&api=v2
+
+[eIDAS Regulatsioon]: http://eur-lex.europa.eu/legal-content/ET/TXT/HTML/?uri=CELEX:32014R0910&from=EN
+[eIDAS profiil]: https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS+Profile
+[EIF]: https://ec.europa.eu/isa2/eif_en
+[SAML20]: http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
+[eIDAS formaat]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eIDAS%20Message%20Format_v1.1-2.pdf?version=1&modificationDate=1497252919575&api=v2
+[eIDAS krüpto]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2
+[eIDAS-attr]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eIDAS%20SAML%20Attribute%20Profile%20v1.1_2.pdf?version=1&modificationDate=1497252920100&api=v2
+[eIDAS-interop]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_interoperability_architecture_v1.00.pdf?version=1&modificationDate=1497252919857&api=v2
