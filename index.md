@@ -32,6 +32,7 @@ Mitmesugused konnektorteenuse arendamise käigus loodud dokumendid;   nendega tu
 [eIDAS päringuvoog - Demo SP - HTTP Redirect](Vookirjeldus-1)<br>
 [eIDAS päringuvoog - Demo SP - HTTP POST](Vookirjeldus-2)<br>
 [Demo SP uurimine](DemoSP-uurimine)
+[eIDAS päringuvoog - Demo SP - HTTP Redirect - kompaktne](Vookirjeldus-1a)
 
 
 
