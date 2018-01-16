@@ -16,10 +16,6 @@ Mudeliks ja näiteks liidese ehitamisel võib kasutada [eIDAS-Client](https://gi
 
 eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 
-<img src='img/Liides-eIDAS-adapteriga.PNG' style='width: 400px;'>
-
-<img src='img/Liides-TARA-ga.PNG' style='width: 400px;'>
-
 ## Ärikasutajale
 
 [Ärikirjeldus](Arikirjeldus)<br>
