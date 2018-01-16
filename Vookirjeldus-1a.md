@@ -14,18 +14,18 @@ Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autenti
 
 | nr | kasutaja tegevus | HTTP päring | HTTP vastus |
 |----|------------------|-------------|-------------|
-| 1  | pöördub Demo SP avalehe poole | GET `https://eidastest.eesti.ee/SP/populateIndexPage` | server saadab avalehe |
-| 2  | valib parameetrid | `POST https://eidastest.eesti.ee/SP/IndexPage.action` | server saadab lehe, millel näidatakse SAML sõnumit |
-| 3  | valib saatmismeetodi `HTTP Redirect` | `POST https://eidastest.eesti.ee/SP/changeProtocolBinding.action` | server saadab ümbersuunamiskorralduse |
-| 4  | aut-ne ümbersuunamine | `GET https://eidastest.eesti.ee/EidasNode/ServiceProvider?` `postLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` `redirectLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` `country=CD&` `RelayState=MyRelayState&` `SAMLRequest= ... &` `sendmethods=GET` | server saadab ümbersuunamiskorralduse |
-| 5  | aut-ne ümbersuunamine | `GET https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest?` `SAMLRequest=...&` `RelayState=MyRelayState&` `token=...` | server saadab ümbersuunamiskorralduse | 
-| 6  | `POST https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen` |   |
-| 7  | `POST https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse` |  |
-| 8  | `POST https://ec.europa.eu/eid-integration-test/AP/ConsentValue` |  |
-| 9  | `POST https://ec.europa.eu/eid-integration-test/EidasNode/APSelector` |  |
-| 10 | `POST https://eidastest.eesti.ee/EidasNode/ColleagueResponse` |  |
-| 11 | `POST https://eidastest.eesti.ee/SP/ReturnPage` |  |
-| 12 | `POST https://eidastest.eesti.ee/SP/populateReturnPage` |  |
+| 1  | pöördub Demo SP avalehe poole | GET `https://eidastest.eesti.ee/SP/populateIndexPage` | Demo SP server saadab avalehe |
+| 2  | valib: e-teenuse riigi - `SP Country` -> `EE`; oma koduriigi - `Citizen Country` -> `CD`; nõutavad kasutajat kirjeldavad atribuudid - `Requested Core Attributes` -> `Mandatory`. Rida valikuid on seatud vaikimisi. Vajutab `Submit`. | `POST https://eidastest.eesti.ee/SP/IndexPage.action` | Demo SP server saadab lehe, millel näidatakse koostatavat SAML sõnumit |
+| 3  | valib saatmismeetodi: `HTTP Redirect` | `POST https://eidastest.eesti.ee/SP/changeProtocolBinding.action` | Demo SP server saadab ümbersuunamiskorralduse |
+| 4  | aut-ne ümbersuunamine | SAML sõnumi saatmine RIA eIDAS konnektorteenusesse: `GET https://eidastest.eesti.ee/EidasNode/ServiceProvider?` `postLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` `redirectLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` `country=CD&` `RelayState=MyRelayState&` `SAMLRequest= ... &` `sendmethods=GET` | konnektorteenus saadab ümbersuunamiskorralduse |
+| 5  | aut-ne ümbersuunamine | SAML sõnumi saatmine CEF test-Node-i: `GET https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest?` `SAMLRequest=...&` `RelayState=MyRelayState&` `token=...` | CEF test-Node saadab ümbersuunamiskorralduse | 
+| 6  | aut-ne ümbersuunamine | `POST https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen` | CEF test-Node saadab ümbersuunamiskorralduse |
+| 7  | aut-ne ümbersuunamine | `POST https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse` | CEF test-Node saadab lehe, kus teatab, et tegu on eIDAS autentimisteenusega ja palub kasutaja nõusolekut (consent) protsessiga edasiminekuks |
+| 8  | vajutab "Edasi" | `POST https://ec.europa.eu/eid-integration-test/AP/ConsentValue` | CEF test-Node saadab ümbersuunamiskorralduse |
+| 9  | aut-ne ümbersuunamine | `POST https://ec.europa.eu/eid-integration-test/EidasNode/APSelector` | CEF test-Node saadab lehe, millel teatab, et "Login succeeded" |
+| 10 | vajutab "Tagasi e-teenusesse"  | `POST https://eidastest.eesti.ee/EidasNode/ColleagueResponse` | RIA eIDAS konnektorteenus saabab ümbersuunamiskorraldus |
+| 11 | aut-ne ümbersuunamine | `POST https://eidastest.eesti.ee/SP/ReturnPage` | Demo SP server saadab lehe, kus näidatakse saabunud SAML-sõnumit |
+| 12 | vajutab "Edasi" | `POST https://eidastest.eesti.ee/SP/populateReturnPage` | Demo SP server saadab lehe, kus teatab "Login succeeded" ja kuvab SAML-autentimisvastuses saadud atribuudid |
 
 
 Nr 2 vorm:
