@@ -6,7 +6,7 @@ body {
   font-family: 'Segoe UI', Arial, serif;
   font-size: 16px; 
   color: #24292E !important;
-  line-height: 1.4 !important;
+  line-height: 1.5 !important;
   }
 
 /* Päis */
@@ -25,14 +25,14 @@ body {
 
 /*#region Pealkirjad */
 h1 {
-  font-size: 16pt !important;
-  font-weight: bold;
+  font-size: 32px !important;
+  font-family: 'Segoe UI Semibold', Arial, Helvetica, sans-serif;
   margin-top: 1em;
   margin-bottom: 1rem;
 }
 h2 {
-  font-size: 14pt !important;
-  font-weight: bold;
+  font-size: 24px !important;
+  font-family: 'Segoe UI Semibold', Arial, Helvetica, sans-serif;
   margin-bottom: 0.5rem;
   margin-bottom: 0.5rem;
 }
