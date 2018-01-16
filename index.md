@@ -4,7 +4,7 @@ permalink: /
 
 <img src='img/LOVID.png' style='width: 80px;'>
 
-Tähelepanu! Vali õige meetod piiriülese eIDAS-taristuga liidestamiseks: [Liidestamismeetodi valik](Valik)
+Tähelepanu! Vali õige meetod: [Piiriülene eIDAS-autentimine. Liidestamismeetodi valik](Valik)
 {:.kastigaTeade}
 
 # RIA eIDAS konnektorteenus
