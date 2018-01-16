@@ -17,17 +17,8 @@ Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autenti
 | 1  | pöördub Demo SP avalehe poole | GET `https://eidastest.eesti.ee/SP/populateIndexPage` | server saadab avalehe |
 | 2  | valib parameetrid | `POST https://eidastest.eesti.ee/SP/IndexPage.action` | server saadab lehe, millel näidatakse SAML sõnumit |
 | 3  | valib saatmismeetodi `HTTP Redirect` | `POST https://eidastest.eesti.ee/SP/changeProtocolBinding.action` | server saadab ümbersuunamiskorralduse |
-| 4  | aut-ne ümbersuunamine | `GET https://eidastest.eesti.ee/EidasNode/ServiceProvider?` 
-`postLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` 
-`redirectLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` 
-`country=CD&` 
-`RelayState=MyRelayState&` 
-`SAMLRequest= ... &` 
-`sendmethods=GET` | server saadab ümbersuunamiskorralduse |
-| 5  | aut-ne ümbersuunamine | `GET https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest?` 
-`SAMLRequest=...&` 
-`RelayState=MyRelayState&` 
-`token=...` | server saadab ümbersuunamiskorralduse | 
+| 4  | aut-ne ümbersuunamine | `GET https://eidastest.eesti.ee/EidasNode/ServiceProvider?` `postLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` `redirectLocationUrl=https://eidastest.eesti.ee/EidasNode/ServiceProvider&` `country=CD&` `RelayState=MyRelayState&` `SAMLRequest= ... &` `sendmethods=GET` | server saadab ümbersuunamiskorralduse |
+| 5  | aut-ne ümbersuunamine | `GET https://ec.europa.eu/eid-integration-test/EidasNode/ColleagueRequest?` `SAMLRequest=...&` `RelayState=MyRelayState&` `token=...` | server saadab ümbersuunamiskorralduse | 
 | 6  | `POST https://ec.europa.eu/eid-integration-test/IdP/AuthenticateCitizen` |   |
 | 7  | `POST https://ec.europa.eu/eid-integration-test/EidasNode/SpecificIdPResponse` |  |
 | 8  | `POST https://ec.europa.eu/eid-integration-test/AP/ConsentValue` |  |
