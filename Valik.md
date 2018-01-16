@@ -19,7 +19,7 @@ Välismaalase autentimiseks e-teenuses on vaja e-teenust pakkuv infosüsteem lii
 | sessioonihaldus: | ei paku | ei paku |
 | ühekordne sisselogimine (SSO) | ei paku | ei paku |
 | liidestusprotokoll põhineb: | SAML 2 | OpenID Connect |
-| adaptertarkvara: | - | jah, [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) |   
+| adaptertarkvara: | jah, [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) | - |   
 
 ## Liidestamine RIA eIDAS konnektorteenusega
 
