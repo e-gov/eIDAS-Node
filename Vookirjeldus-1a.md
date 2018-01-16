@@ -2,7 +2,7 @@
 permalink: Vookirjeldus-1a
 ---
 
-# eIDAS päringuvoog - Demo SP - HTTP Redirect
+# Voo ülevaade - Demo SP - HTTP Redirect
 {: .no_toc}
 
 - TOC
@@ -32,61 +32,61 @@ POST päringute sisud:
 
 nr 2 vorm:
 
-eidasconnector https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
-nodeMetadataUrl https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
-citizenEidas CD
-returnUrl https://eidastest.eesti.ee/SP/ReturnPage
-eidasNameIdentifier urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
-eidasloa http://eidas.europa.eu/LoA/low
-eidasloaCompareType minimum
-eidasSPType public
-allTypeEidas true
+`eidasconnector` `https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata`
+`nodeMetadataUrl` `https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata`
+`citizenEidas` `CD`
+`returnUrl` `https://eidastest.eesti.ee/SP/ReturnPage`
+`eidasNameIdentifier` `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified`
+`eidasloa` `http://eidas.europa.eu/LoA/low`
+`eidasloaCompareType` `minimum`
+`eidasSPType` `public`
+`allTypeEidas` `true`
 < atribuutide kirjeldused >
 
 nr 3:
 
-samlRequestBinding get
-samlRequestLocation https://eidastest.eesti.ee/EidasNode/ServiceProvider
-citizenCountryCode CD
-samlRequestXML ...
+`samlRequestBinding` `get`
+`samlRequestLocation` `https://eidastest.eesti.ee/EidasNode/ServiceProvider`
+`citizenCountryCode` `CD`
+`samlRequestXML` ...
 
 nr 6:
 
-SAMLRequest ...
-signAssertion false
-encryptAssertion true
-messageFormat eidas
+`SAMLRequest` ...
+`signAssertion` `false`
+`encryptAssertion` `true`
+`messageFormat` `eidas`
 
 nr 7:
 
-SAMLResponse ...
-username xavi
+`SAMLResponse` ...
+`username` `xavi`
 
 nr 8:
 
-callbackUrl ...
-strAttrList  
-username xavi
+`callbackUrl` ...
+`strAttrList`  
+`username` `xavi`
 
 nr 9:
 
-strAttrList
+`strAttrList`
 
 nr 10:
 
-SAMLResponse
-nodeType
-RelayState
-sAMLRequestTT
-samlResponseDecriptedXMLEdit
+`SAMLResponse`
+`nodeType`
+`RelayState`
+`sAMLRequestTT`
+`samlResponseDecriptedXMLEdit`
 
 nr 11:
 
-SAMLResponse
-RelayState
+`SAMLResponse`
+`RelayState`
 
 nr 12:
 
-SAMLResponse
+`SAMLResponse`
 
 
