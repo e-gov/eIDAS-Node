@@ -4,8 +4,7 @@ permalink: /
 
 <img src='img/LOVID.png' style='width: 80px;'>
 
-Vali õige meetod: [Piiriülene eIDAS-autentimine. Liidestamismeetodi valik](Valik)
-{:.kastigaTeade}
+<span style='color:Tomato;'>Vali õige meetod:</span> [Piiriülene eIDAS-autentimine. Liidestamismeetodi valik](Valik)
 
 # RIA eIDAS konnektorteenus
 
