@@ -1,3 +1,7 @@
+/* 
+   Standardne laadileht, kasutusel repodes: TARA-Doku, eIDAS-Connector
+*/
+
 /*#region Paigutus */
 body {
   max-width: 60em;
@@ -86,9 +90,10 @@ th, td { padding: 2px; }
 
 /*#region Kood; asciiflow joonised */
 pre, code, samp {
-  font-family: 'Anonymous Pro', monospace;
+  font-family: 'Source Code Pro', monospace;
   font-size: 16px; color: black !important;
-  background-color: lavender !important;
+  color: Black !important;
+  background-color: Beige !important;
   overflow-y: hidden; overflow-x: scroll;
   page-break-inside: avoid; hyphens: none;
   text-transform: none;
