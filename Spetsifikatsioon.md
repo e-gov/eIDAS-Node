@@ -21,7 +21,7 @@ Eestis pakub eIDAS Node võrguga liitumiseks konnektorteenust RIA.
 ISIKUTUVASTUSE PROTSESS
 ----------------
 
-Eduka ülepiirilise isikutuvastamise protsess EIDAS Node võrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [eIDAS-interop]. Sõnumivahetus osapoolte vahel toimib [SAML20] protokolli alusel.
+Eduka ülepiirilise isikutuvastamise protsess EIDAS Node võrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [eIDAS-interop]. Sõnumivahetus osapoolte vahel toimib [SAML 2.0] protokolli alusel.
 
 Järgnevas näidisstsenaariumis (vt Joonis 1) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel (lihtsuse mõttes ei ole näidatud SAML protokolli kohaselt metadata otspunktide poole pöördumisi).
 
@@ -31,8 +31,8 @@ Edukas isikutuvastus eIDAS võrgustikus näeb välja järgmisena:
 <img src='img/Autentimisvoog-eIDAS_demorakenduses.png'>
 Joonis 1.
 
-1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab eIDAS põhist isikutuvastust. Teenusepakkuja kuvab liidestatud riikide nimekirja.
-2. Kasutaja valib riigi ja saadab vormi teenusepakkujale. Teenusepakkuja moodustab isikutuvastamiseks vajaliku SAMLRequesti ja saadab kasutajale ümbersuunamisvormi riiklikku eIDAS Node'i (vormi parameetriteks SAMLRequest, country ja vajadusel ka RelayToken).
+1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab ülepiirilist isikutuvastust, kuid kasutaja isik on tuvastamata ja  puudub kehtiv sessioon. Teenusepakkuja jätab soovitud urli meelde ja suunab kasutaja lehele, kus kuvatakse eIDAS võrguga liidestatud riikide nimekirja.
+2. Kasutaja on valinud riigi ja saadab vormi teenusepakkujale. Teenusepakkuja moodustab isikutuvastamiseks vajaliku SAMLRequesti ja saadab kasutajale ümbersuunamisvormi riiklikku eIDAS Node'i (vormi parameetriteks SAMLRequest, country ja vajadusel ka RelayToken).
 3. Kasutaja suunatakse automaatselt riiklikku eIDAS Node'i, kus kontrollitakse SAMLRequest parameetris oleva SAML XML päringu sisu valiidsust ja allkirja vastu teenusepakkuja metainfos olevat avalikku võtit. Siseriiklik eIDAS Node moodustab uue SAML XML päringu, võttes aluseks teenusepakkujalt tuleva info ja allkirjastab selle oma privaatvõtmega. Siseriiklik eIDAS Node saadab kasutajale vastuseks vormi, mis on suunatud sihtriigi eIDAS Node'i vastu koos SAMLRequest parameetri (ja vajadusel RelayTokeniga)
 4. Kasutaja suunatakse automaatselt koos vormiga edasi sihtriigi eIDAS Node'i koos SAMLRequest ja RelayToken parameetritega. Ülepiiriline eIDAS Node teenus valideerib SAMLRequesti parameetris kodeeritud kujul oleva XML päringu sisu ja allkirja. Ülepiiriline eIDAS Node teenus saadab vastuseks vormi kasutaja nõusoleku küsimiseks.
 5. Kui kasutaja oli vormil esitatud andmete jagamisega nõus, saadab kasutaja kinnitamiseks päringu ülepiirilisele eIDAS Node teenusele. Ülepiiriline eIDAS Node teenus täiendab saadud SAMLRequest'i sisu ja saadab kasutajale vastuseks ülepiirilisele isikutuvastusteenusele ümbersuunamiseks mõeldud vormi.
@@ -40,15 +40,14 @@ Joonis 1.
 7. Kasutaja autendib ennast isikutuvastusteenuses (näiteks ID-kaardiga). Eduka tuvastuse korral teenusepakkuja tagastab vastusena ümbersuunamisvormi ülepiirilisse eIDAS Node teenusesse, millest pärines algne isikutuvastuse päring. Ümbersuundamisvormi SAMLResponse parameetris on teenusepakkuja poolt palutud info füüsilise isiku või juriidilise isiku kohta. SAMLResponse allkirjastatakse ja isiku andmed krüpteeritakse teenusepakkuja privaatvõtmega.
 8. Kasutaja suunatakse automaatselt tagasi ülepiirilise eIDAS node teenusese. SAMLResponse parameetri sisus olev XML sisu koos allkirjaga valideeritakse. Sisu dekrüpteeritakse. Moodustatakse uus SAMLResponse parameeter, mis allkirjastatakse ja mille sisu krüpteeritakse ülepiirilise eIDASNode privaatvõtmega. Kasutajale saadetakse siseriiklikku eIDAS Node'ile adresseeritud ümbersuundamisvorm koos SAMLResponse parameetriga.
 9. Kasutaja suunatakse automaatselt tagasi siseriiklikku eIDAS node teenusesse. SAMLResponse parameetri sisus olev XML sisu koos allkirjaga valideeritakse. Sisu dekrüpteeritakse. Moodustatakse uus SAMLResponse parameeter, mis allkirjastatakse ja mille sisu krüpteeritakse siseriikliku eIDASNode privaatvõtmega. Kasutajale saadetakse siseriiklikule teenusepakkujale adresseeritud ümbersuundamisvorm koos SAMLResponse parameetriga.
-10. Kasutaja suunatakse automaatselt tagasi siseriikliku teenusepakkuja lehele. Teenusepakkuja veendub SAMLResponse parameetri sisu vastavuses nõuetele (sh formaadi, sisu ning allkirja kontrollid).  Teenusepakkuja dekrüpteerib isikuandmed ja lubab isiku ligi kaitstud ressursile juhul kui isik omab vastavaid volitusi teenusepakkuja juures.
-
+10. Kasutaja suunatakse automaatselt tagasi siseriikliku teenusepakkuja lehele. Teenusepakkuja veendub SAMLResponse parameetri sisu vastavuses nõuetele (sh formaadi, sisu ning allkirja kontrollid).  Teenusepakkuja dekrüpteerib isikuandmed ja otsutab, kas käesolev isik on õigustatud ligi pääsema algselt küsitud ressursile. Kui jah, siis luuakse sessioon ning tagastatakse kasutajale esialgselt urlilt soovitud sisu.
 
 VAJALIKUD LIIDESTUMISTÖÖD TEENUSEPAKKUJALE
 ----------------
 
 ### Nõuded liituvale teenusepakkujale
 
-Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas (vt [eIDAS Profiil]). EIDAS Node kasutab suhtlemiseks täiendavate kitsendustega SAML 2.0 protokolli.
+Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas (vt [eIDAS Profiil]). EIDAS Node kasutab suhtlemiseks täiendavate kitsendustega [SAML 2.0] protokolli.
 
 Kokkuvõtlikult peab teenusepakkuja:
 
@@ -147,11 +146,11 @@ Näidis 1. Teenusepakkuja metadata otspunkti vastus
 
 ### Päringute saatmine ja vastuse tarbimine
 
-Siseriiklik eIDAS Connector teenus toetab SAML sõnumite saatmist nii HTTP POST kui ka HTTP Redirect liidestuse läbi. 
+Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud HTTP POST ja HTTP REDIRECT töövooge (vt. [SAML 2.0] ptk 5.12)
 
 ### Isikutuvastuse päring
 
-HTTP POST ja HTTP REDIRECT liidestusviisi poolt nõutud parameetrite loetelu on toodud Tabelis 1. 
+Nii HTTP POST kui ka HTTP REDIRECT liidestusviisi poolt nõutud parameetrite loetelu on toodud Tabelis 1. 
 
 Tabel 1 - Päringu parameetrid
 
@@ -169,7 +168,7 @@ Saadetavad SAML päringud peavad vastama eIDAS sõnumiformaadi kirjeldusele (vt 
 Tabel 2 - SAML AuthnRequest parameetrid
 
 | XML elemendi/atribuudi nimi       | Kohustuslik           | Selgitus  |
-| ------------- |:-------------:| -----:|
+| ------------- |:-------------:| :-----|
 | /saml2p:AuthnRequest/@Destination	| Jah | Siseriikliku eIDAS Node-i SSO otspunkti aadress. Bindingule vastavad otspunktide aadressid on loetletud eIDAS Node metadatas (/md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService) |
 | /saml2p:AuthnRequest/@ForceAuthn | Jah | Konstantantne väärtus: 'true' |
 | /saml2p:AuthnRequest/@ID | Jah | Unikaalne päringu ID | 
@@ -376,7 +375,7 @@ TODO vajab analüüsi - täiendada
 [eIDAS Regulatsioon]: http://eur-lex.europa.eu/legal-content/ET/TXT/HTML/?uri=CELEX:32014R0910&from=EN
 [eIDAS profiil]: https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS+Profile
 [EIF]: https://ec.europa.eu/isa2/eif_en
-[SAML20]: http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
+[SAML 2.0]: http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 [eIDAS formaat]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eIDAS%20Message%20Format_v1.1-2.pdf?version=1&modificationDate=1497252919575&api=v2
 [eIDAS krüpto]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2
 [eIDAS-attr]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eIDAS%20SAML%20Attribute%20Profile%20v1.1_2.pdf?version=1&modificationDate=1497252920100&api=v2
