@@ -11,14 +11,14 @@ Märkus. Lahtised küsimused on markeeritud sümbolitega `//`.
 # RIA eIDAS konnektorteenuse liidese spetsifikatsioon
 {: .no_toc}
 
+v 0.5
+
 - TOC
 {:toc}
 
-v 0.5
-
 Käesolev juhend on suunatud riigiasutustele (edaspidi *teenusepakkuja*), kes soovivad välisriikide kodanikke oma infosüsteemi tarvis tuvastada otse eIDAS konnektorteenusega ühendudes. Juhend kirjeldab nõuded, isikustuvastusprotsessi tehnilisi detaile ja vajalikke arendustegevusi riikliku konnektorteenuesga liidestumiseks.
 
-## Taust
+## eIDAS Node võrk
 
 RIA eIDAS konnektorteenus on Eesti riigiasutustele mõeldud vahendusteenus eIDAS Node võrku.
 
