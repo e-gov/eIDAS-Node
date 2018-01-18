@@ -61,7 +61,7 @@ Kokkuvõtlikult peab teenusepakkuja:
 
 ### Metadata otspunkt
 
-SAML metadata on XML dokument, mis sisaldab teenusepakkuja jaoks kogu ühendumiseks vajaliku info. Sealhulgas kirjeldab lubatud krüptoprimitiivid (sertifikaadid päringu allkirjastamiseks, vastuse dekrüpteerimiseks jne), autentimise algatamise URL-id ja teenusepakkuja kontaktid. Metainfo on allkirjastatud.
+SAML metadata on XML dokument, mis sisaldab teenusepakkuja jaoks kogu ühendumiseks vajaliku info (vt Näidis 1). Sealhulgas kirjeldab lubatud krüptoprimitiivid (sertifikaadid päringu allkirjastamiseks, vastuse dekrüpteerimiseks jne), autentimise algatamise URL-id ja teenusepakkuja kontaktid. Metainfo on allkirjastatud.
 
 Usalduse loomiseks eIDAS võrgustiku ja teenusepakkuja vahel teenusepakkuja PEAB tegema kättesaadavaks oma metaandmed üle HTTPS protokolli. Metaandmed peavad olema kättesaadavad riiklikule eIDAS Node sõlmpunktile. Teenusepakkuja metaandmed sisaldavad avalikke võtmeid, teenusekirjeldusi ja URLe, mida vajavad teised identiteedipakkujad, kellega tahetakse usalduskanalit luua.
 
@@ -147,13 +147,15 @@ Näidis 1. Teenusepakkuja metadata otspunkti vastus
 </md:EntityDescriptor>
 ```
 
-### Päringute saatmine ja vastuse tarbimine
+### Sõnumivahetusmeetod
 
-Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud HTTP POST ja HTTP Redirect töövooge (vt. [SAML 2.0] ptk 5.12) // Kas on ratsionaalne põhjus, miks peaksime toetama mõlemat? Kui POST on kindlam, siis toetada seda? //
+Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud `HTTP POST` põhinevat sõnumivahetusmeetodit (vt. `HTTP POST binding` [SAML 2.0] standardikirjelduses - ptk 5.12).
 
 ### Isikutuvastuse päring
 
-Nii HTTP POST kui ka HTTP REDIRECT liidestusviisi poolt nõutud parameetrite loetelu on toodud Tabelis 1. 
+Nõutud parameetrite loetelu HTTP POST päringus on toodud Tabelis 1.
+
+`SAMLRequest`  parameetris saadetav SAML XML päringu sisu (vt Näidis 2) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]). Kasutatavad krüptoalgoritmid peavad vastama [eIDAS krüpto] dokumendis toodule.
 
 Tabel 1 - Päringu parameetrid
 
@@ -162,8 +164,6 @@ Tabel 1 - Päringu parameetrid
 | `SAMLRequest` |	Jah | SAML protokolli spetsiifiline parameeter, mis sisaldab Base64 kodeeritud kujul SAML XML päringut (`AuthnRequest` koos detailidega). `AuthnRequest` päringus olevate kohustuslike elementide loetelu on toodud tabelis 2.  SAML `AuthnRequest` peab olema allkirjastatud teenusepakkuja privaatvõtmega ja moodustatud vastavalt eIDAS nõuetele.|
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille eIDAS Node vastuses töötlemata tagasi peegeldab. |
 | `country` |	Jah | Kodaniku riigikood, kelle isikut tuvastatakse. ISO 3166-1 alpha-2 standardi alusel. |
-
-Saadetavad SAML päringud peavad vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]). Kasutatavad krüptoalgoritmid peavad vastama [eIDAS krüpto] dokumendis toodule. 
 
 Tabel 2 - SAML `AuthnRequest` parameetrid
 
@@ -180,8 +180,8 @@ Tabel 2 - SAML `AuthnRequest` parameetrid
 | /saml2p:AuthnRequest/ds:Signature/* | Jah | Teenusepakkuja privaatvõtmega antud allkiri ja sellega seotud detailid. Toetatud krüptoalgoritmid on loetletud eIDAS Node metadatas (/md:EntityDescriptor/md:Extensions/alg:SigningMethod/*) |
 | /saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType | Jah | Konstantne väärtus: 'public' (avaliku sektori asutus) |
 | /saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/* | Jah | Variandid. Vajab analüüsi |
-| /saml2p:AuthnRequest/saml2p:NameIDPolicy | Jah | Variandid. Vajab analüüsi |
-| /saml2p:AuthnRequest/saml2p:RequestedAuthnContext | Jah |	Variandid. Vajab analüüsi |
+| /saml2p:AuthnRequest/saml2p:NameIDPolicy | Jah | // Variandid. Vajab analüüsi // |
+| /saml2p:AuthnRequest/saml2p:RequestedAuthnContext | Jah |	// Variandid. Vajab analüüsi // |
 
 Näidis 2 - SAMLRequest parameetris esitatav isikutuvastuse päring (dekodeeritud kujul)
 
@@ -242,18 +242,16 @@ Näidis 2 - SAMLRequest parameetris esitatav isikutuvastuse päring (dekodeeritu
 
 ### Isikutuvastuse vastus
 
-Õnnestunud või ebaõnnestunud isikutuvastuse tulemus saadetakse teenusepakkuja vastus URL'le tagasi (toodud teenusepakkuja metadata's) SAMLResponse parameetris. Kõigi parameetrite loetelu on toodud Tabelis 3.
+Õnnestunud või ebaõnnestunud isikutuvastuse tulemus saadetakse teenusepakkuja vastus URL'le tagasi (toodud teenusepakkuja metadata's) `SAMLResponse` parameetris (vt Näidis 3 ja 4). Kõigi parameetrite loetelu on toodud Tabelis 3.
 
 Tabel 3 - Isikutuvastuse vastuse parameetrid
 
-// Markeerime koodi ja fikseeritud nimed ning väärtused, nagu hea tava on - _backtick_ sümbolitega (``). // 
-
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 | ------------- |:-------------:| -----:|
-| SAMLResponse | Jah | Parameeter, mis sisaldab Bas64 kodeeritud SAML Response päringut. SAML Response on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
-| RelayState | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis. |
+| `SAMLResponse` | Jah | Parameeter, mis sisaldab Bas64 kodeeritud SAML vormingus isikutuvastuse vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
+| `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
 
-Näidis 3. Dekodeeritud SAMLResponse parameetri sisu eduka isikutuvastuse korral.
+Näidis 3. Dekodeeritud `SAMLResponse` parameetri sisu eduka isikutuvastuse korral.
 ```xml
 <saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/SP/ReturnPage" ID="_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu" InResponseTo="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IssueInstant="2018-01-05T13:42:44.472Z" Version="2.0">
     <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">http://localhost:8080/EidasNode/ConnectorResponderMetadata</saml2:Issuer>
@@ -307,7 +305,7 @@ Näidis 3. Dekodeeritud SAMLResponse parameetri sisu eduka isikutuvastuse korral
 </saml2p:Response>
 ```
 
-Näidis 4 - Dekodeeritud SAMLResponse parameetri sisu isikutuvastuse ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
+Näidis 4 - Dekodeeritud `SAMLResponse` parameetri sisu isikutuvastuse ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
 
 ```xml
 <saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/EidasNode/ColleagueResponse" ID="_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI" InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY" IssueInstant="2018-01-05T13:42:11.944Z" Version="2.0">
@@ -363,16 +361,17 @@ Näidis 4 - Dekodeeritud SAMLResponse parameetri sisu isikutuvastuse ebaõnnestu
 
 ### Veaolukordade käsitlemine
 
-Tabel 4 - Loetelu võimalikest veaolukordadest
+Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahenduse dokumentatsioonis (vt [eIDAS-veakoodid]).
 
-| Parameetri nimi        | Kohustuslik           | Selgitus  |
+
+Tabel 4 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatavatest vigadest
+
+| Veakood | Lühikirjeldus            | Selgitus  |
 | ------------- |:-------------:| -----:|
-| 202007 | Isiku nõusolek puudub | Isik keeldus isikutuvastuse jaoks vajalikke andmeid avaldamast. Teenusepakkuja poolseid |
+| 202007 | Isiku nõusolek puudub | Isik keeldus isikutuvastuse jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
 
+// TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
 
-// TODO vajab analüüsi - täiendada //
-
-// Veakoodid on dokumendis eIDAS-Node Error Codes - vt lisasin viite allpool. //
 
 [eIDAS Regulatsioon]: http://eur-lex.europa.eu/legal-content/ET/TXT/HTML/?uri=CELEX:32014R0910&from=EN
 [eIDAS profiil]: https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS+Profile
