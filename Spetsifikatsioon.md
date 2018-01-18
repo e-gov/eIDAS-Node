@@ -38,9 +38,9 @@ Edukas isikutuvastus eIDAS võrgustikus näeb välja järgmisena:
 Joonis 1.
 
 1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab piiriülest isikutuvastust. Kasutaja isik on tuvastamata, puudub kehtiv sessioon. Teenusepakkuja jätab soovitud URL-i meelde ja suunab kasutaja lehele, kus kuvatakse eIDAS võrguga liidestatud riikide nimekiri.
-2. Kasutaja on valinud riigi ja saadab vormi teenusepakkujale. Teenusepakkuja moodustab isikutuvastamiseks vajaliku SAMLRequest-i ja saadab kasutajale vormi ümbersuunamisega riiklikusse eIDAS Node'i (vormi parameetriteks `SAMLRequest`, `country` ja vajadusel ka `RelayToken`). // Millal ja milline vajadus? //
-3. Kasutaja suunatakse automaatselt riiklikku eIDAS Node'i, kus kontrollitakse `SAMLRequest` parameetris oleva SAML XML päringu sisu valiidsust ja allkirja vastu teenusepakkuja metainfos olevat avalikku võtit. Siseriiklik eIDAS Node moodustab uue SAML XML päringu, võttes aluseks teenusepakkujalt tuleva info ja allkirjastab selle oma privaatvõtmega. Siseriiklik eIDAS Node saadab kasutajale vastuseks vormi, mis on suunatud sihtriigi eIDAS Node'i vastu koos `SAMLRequest` parameetriga ja vajadusel `RelayToken`-ga.
-4. Kasutaja suunatakse automaatselt koos vormiga edasi sihtriigi eIDAS Node'i koos `SAMLRequest` ja `RelayToken` parameetritega. piiriülene eIDAS Node teenus valideerib `SAMLRequest`-i parameetris kodeeritud kujul oleva XML päringu sisu ja allkirja. Piiriülene eIDAS Node teenus saadab vastuseks vormi kasutaja nõusoleku küsimiseks.
+2. Kasutaja on valinud riigi ja saadab vormi teenusepakkujale. Teenusepakkuja moodustab isikutuvastamiseks vajaliku SAMLRequest-i ja saadab kasutajale vormi ümbersuunamisega riiklikusse eIDAS Node'i (vormi parameetriteks `SAMLRequest`, `country` ja vajadusel ka `RelayState`). // Millal ja milline vajadus? //
+3. Kasutaja suunatakse automaatselt riiklikku eIDAS Node'i, kus kontrollitakse `SAMLRequest` parameetris oleva SAML XML päringu sisu valiidsust ja allkirja vastu teenusepakkuja metainfos olevat avalikku võtit. Siseriiklik eIDAS Node moodustab uue SAML XML päringu, võttes aluseks teenusepakkujalt tuleva info ja allkirjastab selle oma privaatvõtmega. Siseriiklik eIDAS Node saadab kasutajale vastuseks vormi, mis on suunatud sihtriigi eIDAS Node'i vastu koos `SAMLRequest` parameetriga ja vajadusel `RelayState`-ga.
+4. Kasutaja suunatakse automaatselt koos vormiga edasi sihtriigi eIDAS Node'i koos `SAMLRequest` ja `RelayState` parameetritega. piiriülene eIDAS Node teenus valideerib `SAMLRequest`-i parameetris kodeeritud kujul oleva XML päringu sisu ja allkirja. Piiriülene eIDAS Node teenus saadab vastuseks vormi kasutaja nõusoleku küsimiseks.
 5. Kui kasutaja oli vormil esitatud andmete jagamisega nõus, saadab kasutaja kinnitamiseks päringu piiriülesele eIDAS Node teenusele. Piiriülene eIDAS Node teenus täiendab saadud `SAMLRequest`-i sisu ja saadab kasutajale vastuseks piiriülesele isikutuvastusteenusele ümbersuunamiseks mõeldud vormi.
 6. Kasutaja suunatakse automaatselt edasi piiriülese isikutuvastusteenusepakkuja lehele koos `SAMLRequest` ja `RelayState` parameetritega. Teenusepakkuja saadab kasutajale vastuseks autentimismeetmete valiku (ID-kaart, paroolikaart, parool, Mobiil-ID vastavalt sellele, mida antud riigi teenusepakkuja toetab).
 7. Kasutaja autendib ennast isikutuvastusteenuses (näiteks ID-kaardiga). Eduka tuvastuse korral teenusepakkuja tagastab vastusena ümbersuunamisvormi piiriülesse eIDAS Node teenusesse, millest pärines algne isikutuvastuse päring. Ümbersuundamisvormi `SAMLResponse` parameetris on teenusepakkuja poolt palutud info isiku kohta. `SAMLResponse` allkirjastatakse ja isiku andmed krüpteeritakse teenusepakkuja privaatvõtmega.
@@ -160,7 +160,7 @@ Tabel 1 - Päringu parameetrid
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 | ------------- |:-------------:| -----:|
 | `SAMLRequest` |	Jah | SAML protokolli spetsiifiline parameeter, mis sisaldab Base64 kodeeritud kujul SAML XML päringut (`AuthnRequest` koos detailidega). `AuthnRequest` päringus olevate kohustuslike elementide loetelu on toodud tabelis 2.  SAML `AuthnRequest` peab olema allkirjastatud teenusepakkuja privaatvõtmega ja moodustatud vastavalt eIDAS nõuetele.|
-| `RelayToken` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille eIDAS Node vastuses töötlemata tagasi peegeldab. |
+| `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille eIDAS Node vastuses töötlemata tagasi peegeldab. |
 | `country` |	Jah | Kodaniku riigikood, kelle isikut tuvastatakse. ISO 3166-1 alpha-2 standardi alusel. |
 
 Saadetavad SAML päringud peavad vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]). Kasutatavad krüptoalgoritmid peavad vastama [eIDAS krüpto] dokumendis toodule. 
@@ -251,7 +251,7 @@ Tabel 3 - Isikutuvastuse vastuse parameetrid
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 | ------------- |:-------------:| -----:|
 | SAMLResponse | Jah | Parameeter, mis sisaldab Bas64 kodeeritud SAML Response päringut. SAML Response on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
-| RelayToken | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis. |
+| RelayState | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis. |
 
 Näidis 3. Dekodeeritud SAMLResponse parameetri sisu eduka isikutuvastuse korral.
 ```xml
