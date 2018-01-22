@@ -415,6 +415,8 @@ Liidestuv rakendus PEAB kasutama nimekirja, kuvades kasutajale ainult nende riik
 
 eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Toodanguteenus ei toeta ühtki riiki.
 
+([TARAEI-23](https://jira.ria.ee/browse/TARAEI-23)  &#128273;) 
+
 ## Viited
 
 [eIDAS Regulatsioon]: http://eur-lex.europa.eu/legal-content/ET/TXT/HTML/?uri=CELEX:32014R0910&from=EN
@@ -435,9 +437,12 @@ eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Toodanguteen
 
 [eIDAS-veakoodid]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992189/eIDAS-Node%20Error%20Codes.pdf?version=1&modificationDate=1507296786056&api=v2
 
+[ISO 3166-1 alpha-2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+
 ## Muutelugu
 
 | versioon, kuupäev | muudatus |
 |-------------------|---------------|
+| 0.2, 22.01.2018   | Lisatud toetatud riikide nimekiri |
 | 0.1, 16.01.2018   | Esimene versioon. |
 
