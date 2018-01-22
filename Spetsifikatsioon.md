@@ -1,26 +1,19 @@
 ---
-
 permalink: Spetsifikatsioon
-
 ---
 
 
 Märkus. Spetsifikatsioon on koostamisel. 
-
 {:.teade}
 
 Märkus. Lahtised küsimused on markeeritud sümbolitega `//`. 
-
 {:.teade}
 
 # RIA eIDAS konnektorteenuse liidese spetsifikatsioon
-
 {: .no_toc}
-
 v 0.5
 
 - TOC
-
 {:toc}
 
 Käesolev juhend on suunatud riigiasutustele (edaspidi *teenusepakkuja*), kes soovivad välisriikide kodanikke oma infosüsteemi tarvis tuvastada otse eIDAS konnektorteenusega ühendudes. Juhend kirjeldab nõuded, isikustuvastusprotsessi tehnilisi detaile ja vajalikke arendustegevusi riikliku konnektorteenuesga liidestumiseks.
@@ -396,14 +389,23 @@ Tabel 4 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatav
 | 202007 | Isiku nõusolek puudub | Isik keeldus isikutuvastuse jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
 
 // TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
+
 [eIDAS Regulatsioon]: http://eur-lex.europa.eu/legal-content/ET/TXT/HTML/?uri=CELEX:32014R0910&from=EN
+
 [eIDAS profiil]: https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS+Profile
+
 [EIF]: https://ec.europa.eu/isa2/eif_en
+
 [SAML 2.0]: http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
+
 [eIDAS formaat]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eIDAS%20Message%20Format_v1.1-2.pdf?version=1&modificationDate=1497252919575&api=v2
+
 [eIDAS krüpto]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2
+
 [eIDAS-attr]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eIDAS%20SAML%20Attribute%20Profile%20v1.1_2.pdf?version=1&modificationDate=1497252920100&api=v2
+
 [eIDAS-interop]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_interoperability_architecture_v1.00.pdf?version=1&modificationDate=1497252919857&api=v2
+
 [eIDAS-veakoodid]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992189/eIDAS-Node%20Error%20Codes.pdf?version=1&modificationDate=1507296786056&api=v2
 
 ## Muutelugu
