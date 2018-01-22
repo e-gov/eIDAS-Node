@@ -396,9 +396,14 @@ Nimekiri riikidest, kelle autentimisteenuseid RIA eIDAS konnektorteenus vahendab
 
 `https://www.ria.ee/eidasinfo`
 
-Nimekiri on esitatud JSON-failina, milles on üks JSON-objekt. Objektis sisaldub objekt `CountriesSupported`, milles omakorda on objektid `Test` ja `Production`. Viimaste väärtusteks on massiivid riikide nimekirjadega. Riik esitatakse [ISO 3166-1 alpha-2] standardi kohaselt, kahekohalise koodiga. Ülemise taseme objektis võib olla ka muid välju. Näide.
+Nimekiri on esitatud JSON-failina, milles on üks JSON-objekt. Objektis sisaldub objekt `CountriesSupported`, milles omakorda on objektid `Test` ja `Production`. Viimaste väärtusteks on massiivid riikide nimekirjadega. Riik esitatakse [ISO 3166-1 alpha-2] standardi kohaselt, kahekohalise koodiga. Ülemise taseme objektis võib olla ka muid välju.
 
-Liidestuv rakendus PEAB kasutama nimekirja, kuvades kasutajale ainult nende riikide "lipukesed", kelle autentimisi tegelikult suudetakse vahendama. Nimekirja uuendamine eeldatavalt saab olema harv. Liidestuv rakendus PEAKS nimekirja alla tõmbama ja seda puhverdama. Puhvri uuendamise intervall PEAKS olema liidestuva rakenduse seadistuses seatav. Toetatud riikide nimekirja URL PEAB olema liidestuvas rakenduses konf-is seatav.
+- Toetatud riikide nimekirja URL PEAB olema liidestuvas rakenduses konf-is seatav.
+- Liidestuv rakendus PEAB kasutama nimekirja, kuvades kasutajale ainult nende riikide "lipukesed", kelle autentimisi tegelikult suudetakse vahendada.
+- Nimekirja uuendamine eeldatavalt saab olema harv. Liidestuv rakendus PEAKS nimekirja alla tõmbama ja seda puhverdama.
+- Puhvri uuendamise intervall PEAKS olema liidestuva rakenduse seadistuses seatav.
+
+ Näide.
 
 ```
 {
@@ -413,11 +418,10 @@ Liidestuv rakendus PEAB kasutama nimekirja, kuvades kasutajale ainult nende riik
 }
 ```
 
-eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Toodanguteenus ei toeta ühtki riiki.
+Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Toodanguteenus ei toeta ühtki riiki.
 
 ([TARAEI-23](https://jira.ria.ee/browse/TARAEI-23)  &#128273;) 
 
-## Viited
 
 [eIDAS Regulatsioon]: http://eur-lex.europa.eu/legal-content/ET/TXT/HTML/?uri=CELEX:32014R0910&from=EN
 
