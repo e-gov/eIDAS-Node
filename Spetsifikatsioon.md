@@ -378,7 +378,7 @@ Näidis 4 - Dekodeeritud `SAMLResponse` parameetri sisu isikutuvastuse ebaõnnes
 </saml2p:Response>
 ```
 
-### Veaolukordade käsitlemine
+## Veaolukordade käsitlemine
 
 Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahenduse dokumentatsioonis (vt [eIDAS-veakoodid]).
 
@@ -389,6 +389,33 @@ Tabel 4 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatav
 | 202007 | Isiku nõusolek puudub | Isik keeldus isikutuvastuse jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
 
 // TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
+
+## Toetatud riikide nimekiri
+
+Nimekiri riikidest, kelle autentimisteenuseid RIA eIDAS konnektorteenus vahendab, on masinloetavas vormingus avaldatud aadressil  
+
+`https://www.ria.ee/eidasinfo`
+
+Nimekiri on esitatud JSON-failina, milles on üks JSON-objekt. Objektis sisaldub objekt `CountriesSupported`, milles omakorda on objektid `Test` ja `Production`. Viimaste väärtusteks on massiivid riikide nimekirjadega. Riik esitatakse [ISO 3166-1 alpha-2] standardi kohaselt, kahekohalise koodiga. Ülemise taseme objektis võib olla ka muid välju. Näide.
+
+Liidestuv rakendus PEAB kasutama nimekirja, kuvades kasutajale ainult nende riikide "lipukesed", kelle autentimisi tegelikult suudetakse vahendama. Nimekirja uuendamine eeldatavalt saab olema harv. Liidestuv rakendus PEAKS nimekirja alla tõmbama ja seda puhverdama. Puhvri uuendamise intervall PEAKS olema liidestuva rakenduse seadistuses seatav. Toetatud riikide nimekirja URL PEAB olema liidestuvas rakenduses konf-is seatav.
+
+```
+{
+   "CountriesSupported":{
+      "Test":[
+         "SE",
+         "NO"
+      ],
+      "Production":[
+      ]
+   }
+}
+```
+
+eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Toodanguteenus ei toeta ühtki riiki.
+
+## Viited
 
 [eIDAS Regulatsioon]: http://eur-lex.europa.eu/legal-content/ET/TXT/HTML/?uri=CELEX:32014R0910&from=EN
 
