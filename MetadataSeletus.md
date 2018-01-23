@@ -8,9 +8,13 @@ Käesolev dokument seletab RIA eIDAS konnektorteenuse SAML metaandmete otspunkti
 
 Konnektorteenus kuulub eIDAS Node tarkvara koosseisus. eIDAS Node metaandmeotspunktid on järgmised:
 
-eIDAS vahendusteenus (_proxy server_) | [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ServiceMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
-eIDAS konnektorteenus | [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
-eIDAS konnektorteenus, vastaja | [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
+| eIDAS vahendusteenus (_proxy server_) | [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ServiceMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "Will be used as Issuer in the requests that eIDAS-Node Proxy Service sends" |
+|
+| eIDAS konnektorteenus | [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "The URL at which the metadata of eIDAS-Node Connector will be made available. Will be used as 
+Issuer in the requests that eIDAS-Node Connector sends." |
+| eIDAS konnektorteenus, vastaja | [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "The URL at which the metadata of the eIDAS-Node Connector (presenting itself as an IdP) will be made available. Will be used as Issuer in the responses that eIDAS-Node Connector sends to SP." |
+
+vt [eIDAS-Node Installation and Configuration Guide](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release?preview=/46992189/52603174/eIDAS-Node%20Installation%20and%20Configuration%20Guide.pdf)
 
 [XML kujul](files/SAML-Metadata.xml) - [otse otspunktist](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata)
 
