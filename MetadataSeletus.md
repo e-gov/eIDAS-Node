@@ -9,7 +9,7 @@ Käesolev dokument seletab (konspektiivselt) RIA eIDAS konnektorteenuse SAML met
 metaandmeotspunktide URL-id:
 
 test | toodang
-[https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span> | [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
+[https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span> | [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
 
 [XML kujul](files/SAML-Metadata.xml) - [otse otspunktist](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata)
 
@@ -21,6 +21,8 @@ test | toodang
 | räsimeetodid | `alg:DigestMethod` | 3 meetodit |
 | allkirjastamismeetodid | `alg:SigningMethod` | 8 meetodit |
 | rolli kirjeldus | `SPSSODescriptor` | rolli kirjeldus - Service Provider, SSO (?) |
+
+
 | määrab, et autentimispäring p.o allkirjastatud | `@AuthnRequestsSigned: true` ||
 | määrab, et tõend (_assertion_) on allkirjastatud | `@WantAssertionsSigned: true` ||
 | toetatav protokoll | `@protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol` | |
