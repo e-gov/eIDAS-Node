@@ -4,12 +4,13 @@ permalink: MetadataSeletus
 
 # SAML metadata seletus
 
-Käesolev dokument seletab (konspektiivselt) RIA eIDAS konnektorteenuse SAML metaandmete otspunkti kaudu pakutavate andmete koosseisu ja tähendust.
+Käesolev dokument seletab RIA eIDAS konnektorteenuse SAML metaandmete otspunkti kaudu pakutavate andmete koosseisu ja tähendust.
 
-metaandmeotspunktide URL-id:
+Konnektorteenus kuulub eIDAS Node tarkvara koosseisus. eIDAS Node metaandmeotspunktid on järgmised:
 
-test | toodang
-[https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span> | [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
+eIDAS vahendusteenus (_proxy server_) | [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ServiceMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
+eIDAS konnektorteenus | [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
+eIDAS konnektorteenus, vastaja | [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
 
 [XML kujul](files/SAML-Metadata.xml) - [otse otspunktist](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata)
 
