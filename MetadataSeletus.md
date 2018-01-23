@@ -4,26 +4,35 @@ permalink: MetadataSeletus
 
 # SAML metadata seletus
 
-[XML kujul](files/SAML-Metadata.xml) | [otse otspunktist](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata)
+Käesolev dokument seletab (konspektiivselt) RIA eIDAS konnektorteenuse SAML metaandmete otspunkti kaudu pakutavate andmete koosseisu ja tähendust.
+
+metaandmeotspunktide URL-id:
+
+test | toodang
+[https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span> | [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span>
+
+[XML kujul](files/SAML-Metadata.xml) - [otse otspunktist](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata)
 
 | kirjeldatav objekt | `entityID` | määrab kirjeldatava süsteemi (`https://eidastest.eesti.ee/EidasNode/ConnectorMetadata`) |
-| "Technical trust in metadata" | `validUntil` | (kehtiv kuni) abil juhitakse kui sageli metaandmete kasutaja peab värskendusi kontrollimas. Kas tasuks kasutada ka `cacheDuration`? |
+| (kehtiv kuni) | `validUntil` |  atribuudi abil juhitakse kui sageli metaandmete kasutaja peab käima värskendusi kontrollimas. Kas tasuks kasutada ka atribuuti `cacheDuration`? |
 | metaandmete allkiri | `ds:Signature` |  |
-| rolli kirjeldus | `SPSSODescriptor` | rolli kirjeldus - Service Provider, SSO (?) |
-| autentimispäring p.o allkirjastatud | `@AuthnRequestsSigned: true` ||
-| tõend (_assertion_) p.o allkirjastatud | `@WantAssertionsSigned: true` ||
-| toetatav protokoll | `@protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol` | |
+| eIDAS tüüp | `eidas:SPType` | `public` Mida tähendab? |
 | algoritmide toetus | (`md:Extensions` sees) | kasutades W3C standarditud XML turvaalgoritmide nimesid |
 | räsimeetodid | `alg:DigestMethod` | 3 meetodit |
 | allkirjastamismeetodid | `alg:SigningMethod` | 8 meetodit |
-| ülesleidmise toetus (discovery support) | | ei kasuta |
-| eIDAS tüüp | `eidas:SPType` | `public` Mida tähendab? |
-
-Allkirjastamis- ja krüpteerimisvõtmed
-
-Otspunktid ja nameID-d
-
+| rolli kirjeldus | `SPSSODescriptor` | rolli kirjeldus - Service Provider, SSO (?) |
+| määrab, et autentimispäring p.o allkirjastatud | `@AuthnRequestsSigned: true` ||
+| määrab, et tõend (_assertion_) on allkirjastatud | `@WantAssertionsSigned: true` ||
+| toetatav protokoll | `@protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol` | |
+| autentimisvastuse allkirjastamise võti (sertifikaat)  | `KeyDescriptor -> signing -> KeyInfo` | |
+| autentimisvastuse krüpteerimise võti (sertifikaat)  | `KeyDescriptor -> encryption -> KeyInfo` | |
+| krüpteerimisalgoritmid | `md:EncryptionMethod` | 3 tk - miks nii palju? |
+| ??? | `md:NameIDFormat` | |
+| ??? | `md:AssertionConsumerService` | |
 | kontaktteave | `md:Organization`, `md:ContactPerson` | tuleks panna RIA reaalsed andmed |
+``
+
+Struktuur (teisendatud XML -> JSON -> YAML-laadne vorming)
 
 ```yaml
 md:EntityDescriptor: 
@@ -136,5 +145,3 @@ Kirjandus
 [SAML V2.0 Metadata Guide](https://www.oasis-open.org/committees/download.php/51890/SAML%20MD%20simplified%20overview.pdf)
 
 [XML Security Algorithm Cross-Reference](https://www.w3.org/TR/xmlsec-algorithms/)
-
-Märkus. Dokumendi koostamisel on kasutatud VS Code laienduste `XML Tools` ja `XML to JSON` abi.
