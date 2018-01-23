@@ -85,7 +85,6 @@ Täpsemad nõuded on toodud [eIDAS-interop] ptk 6.
 Näidis 1. Teenusepakkuja metadata otspunkti vastus
 
 ```xml
-
 <?xml version="1.0" encoding="UTF-8"?>
 <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata" validUntil="2018-01-13T11:28:40.275Z">
     <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
