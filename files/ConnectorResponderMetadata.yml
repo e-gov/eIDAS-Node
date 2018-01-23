@@ -1,152 +1,3 @@
----
-permalink: MetadataSeletus
----
-
-# eIDAS Node SAML metadata seletus
-
-Käesolev dokument seletab RIA eIDAS Node SAML metaandmeotspunktide kaudu pakutavate andmete koosseisu ja tähendust.
-
-eIDAS Node metaandmeotspunktid on järgmised:
-
-| eIDAS vahendusteenus (_Proxy Service_) | [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ServiceMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "Will be used as Issuer in the requests that eIDAS-Node Proxy Service sends" |
-| eIDAS konnektorteenus, autentimispäringu saatjana | [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "The URL at which the metadata of eIDAS-Node Connector will be made available. Will be used as Issuer in the requests that eIDAS-Node Connector sends." |
-| eIDAS konnektorteenus, autentimisvastuse saatjana | [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "The URL at which the metadata of the eIDAS-Node Connector (presenting itself as an IdP) will be made available. Will be used as Issuer in the responses that eIDAS-Node Connector sends to SP." |
-
-Ülalolevad tsitaadid on juhendist [eIDAS-Node Installation and Configuration Guide](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release?preview=/46992189/52603174/eIDAS-Node%20Installation%20and%20Configuration%20Guide.pdf).
-
-## eIDAS konnektorteenus, autentimispäringu saatjana
-
-| kirjeldatav objekt | `entityID` | määrab kirjeldatava süsteemi (`https://eidastest.eesti.ee/EidasNode/ConnectorMetadata`) |
-| (kehtiv kuni) | `validUntil` |  atribuudi abil juhitakse kui sageli metaandmete kasutaja peab käima värskendusi kontrollimas. Kas tasuks kasutada ka atribuuti `cacheDuration`? |
-| metaandmete allkiri | `ds:Signature` |  |
-| eIDAS tüüp | `eidas:SPType` | `public` Mida tähendab? |
-| algoritmide toetus | (`md:Extensions` sees) | kasutades W3C standarditud XML turvaalgoritmide nimesid |
-| räsimeetodid | `alg:DigestMethod` | 3 meetodit |
-| allkirjastamismeetodid | `alg:SigningMethod` | 8 meetodit |
-| rolli kirjeldus | `SPSSODescriptor` | rolli kirjeldus - Service Provider, SSO (?) |
-
-
-| määrab, et autentimispäring p.o allkirjastatud | `@AuthnRequestsSigned: true` | |
-| määrab, et tõend (_assertion_) on allkirjastatud | `@WantAssertionsSigned: true` | |
-| toetatav protokoll | `@protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol` | |
-
-| autentimisvastuse allkirjastamise võti (sertifikaat)  | `KeyDescriptor -> signing -> KeyInfo` | |
-| autentimisvastuse krüpteerimise võti (sertifikaat)  | `KeyDescriptor -> encryption -> KeyInfo` | |
-| krüpteerimisalgoritmid | `md:EncryptionMethod` | 3 tk - miks nii palju? |
-
-| ??? | `md:NameIDFormat` | |
-| ??? | `md:AssertionConsumerService` | |
-| kontaktteave | `md:Organization`, `md:ContactPerson` | tuleks panna RIA reaalsed andmed |
-
-Struktuur (teisendatud XML -> JSON -> YAML-laadne vorming)
-
-```yaml
-md:EntityDescriptor: 
-  @entityID: https://eidastest.eesti.ee/EidasNode/ConnectorMetadata
-  @validUntil: 2018-01-24T11:32:44.858Z
-
-  ds:Signature: 
-    ds:SignedInfo: 
-      ds:CanonicalizationMethod: 
-        @Algorithm: http://www.w3.org/2001/10/xml-exc-c14n#
-      ds:SignatureMethod: 
-        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha512
-      ds:Reference: 
-        @URI: 
-        ds:Transforms: 
-          ds:Transform: 
-              @Algorithm: http://www.w3.org/2000/09/xmldsig#enveloped-signature
-              @Algorithm: http://www.w3.org/2001/10/xml-exc-c14n#
-        ds:DigestMethod: 
-          @Algorithm: http://www.w3.org/2001/04/xmlenc#sha512
-        ds:DigestValue: <räsiväärtus>
-
-    ds:SignatureValue: <allkirjaväärtus>
-
-    ds:KeyInfo: 
-      ds:X509Data: 
-        ds:X509Certificate: <sertifikaat>
-
-  md:Extensions: 
-    eidas:SPType: public
-
-    alg:DigestMethod: 
-        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#sha384
-        @Algorithm: http://www.w3.org/2001/04/xmlenc#sha512
-        @Algorithm: http://www.w3.org/2001/04/xmlenc#sha256
-    
-    alg:SigningMethod: 
-        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha512
-        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256
-        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-ripemd160
-        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha384
-        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
-        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha384
-        @Algorithm: http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1
-        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512
-
-  md:SPSSODescriptor: 
-    @AuthnRequestsSigned: true
-    @WantAssertionsSigned: true
-    @protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol
-
-    md:KeyDescriptor: 
-        @use: signing
-        ds:KeyInfo: 
-          ds:X509Data: 
-            ds:X509Certificate: <sertifikaat>
-        @use: encryption
-        ds:KeyInfo: 
-          ds:X509Data: 
-            ds:X509Certificate: <sertifikaat>
-        md:EncryptionMethod: 
-            @Algorithm: http://www.w3.org/2009/xmlenc11#aes192-gcm
-            @Algorithm: http://www.w3.org/2009/xmlenc11#aes256-gcm
-            @Algorithm: http://www.w3.org/2009/xmlenc11#aes128-gcm
-
-    md:NameIDFormat: 
-      urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
-      urn:oasis:names:tc:SAML:2.0:nameid-format:transient
-      urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
-
-    md:AssertionConsumerService: 
-        @Binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
-        @Location: https://eidastest.eesti.ee/EidasNode/ColleagueResponse
-        @index: 0
-        @isDefault: true
-        @Binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
-        @Location: https://eidastest.eesti.ee/EidasNode/ColleagueResponse
-        @index: 1
-
-  md:Organization: 
-    md:OrganizationName: 
-      #text: Sample Country Connector
-      @xml:lang: en
-    md:OrganizationDisplayName: 
-      #text: Connector
-      @xml:lang: en
-    md:OrganizationURL: 
-      #text: https://connector.sample/info
-      @xml:lang: en
-
-  md:ContactPerson: 
-      @contactType: support
-      md:Company: eIDAS Connector Operator
-      md:GivenName: John
-      md:SurName: Doe
-      md:EmailAddress: contact.support@eidas-connector.eu
-      md:TelephoneNumber: +40 123456
-      @contactType: technical
-      md:Company: eIDAS Connector Operator
-      md:GivenName: John
-      md:SurName: Doe
-      md:EmailAddress: contact.technical@eidas-connector.eu
-      md:TelephoneNumber: +41 123456   
-```
-
-## eIDAS konnektorteenus, autentimisvastuse saatjana
-
-```yaml
 md:EntityDescriptor:
   @xmlns:md: urn:oasis:names:tc:SAML:2.0:metadata
   @entityID: https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata
@@ -167,12 +18,11 @@ md:EntityDescriptor:
         ds:DigestMethod:
           @Algorithm: http://www.w3.org/2001/04/xmlenc#sha512
         ds:DigestValue: KJLRThekuo3xJsX/u9HsxOCN1v6FxNnUqKl5RIp6cX8q34dEIhfbgaRbxSA6plvQoo3dZVjQoHIdXziEaiTyHQ==
-    ds:SignatureValue: <allkirjaväärtus>
+    ds:SignatureValue: p06IEeLxzmotXJxcQD49tgyWdgpBnQmggQuuYzdAQ0oECQAL9fDc05hMY0HZeGi29UR7lz4Pk7LjSXhv4mP6td/hXg4hbjHdWU3jqvCVs1HcclBubYddfAns0U4MlDIyP27INIva8OREh6itYaMb8z2v/JFY9JZtUAtQvxD5TavL3e7WSmv+0k5W/luNddVYOqKbH3sBvb616Kop/CqDOwdzO4LcxKLiKVrJHhmc+8YZoDsdaPfwvXFz3YV2GTkzpoKxQlohJEg4p//OhcKXqXQHUz/1V/c4cLj+TfQ70oI/pezW0mlH7mGdkrkRz75rBZIdgb32yQpLCvEeY3BqVvlg5hhcmr8PMv61HJvwZVHd6Ofnr2f0PwZ/qZqFwS7li+8avVqVBGg60+eR+qc/v0Zj0WZPfMKwln3FKqxQAxAcI12AJY6M0EF9FR9bUaaEqbCTxOirUtzg14dW1Z+Lmye6JLzDBg+Et3HzVAsUg3JdZzveeOAKSkglGjiYdCKE4z1YK3F6u0fzqZyjOBCCtLiIgP7/erwAiga1A5riCEuQNqvf7Jq6fjgovxanAut9SOB3ZnA2vnw9+iJRAV9TAQcVe0Gv3My0VqRUAlJwxdhEfsvfXlu/Rz4J1IUJ2yJwuxzhgZ5whFFcAm1qrXOQoIsfyhnlz5aBWmOWLgzBoY8=
     ds:KeyInfo:
       ds:X509Data:
-        ds:X509Certificate: <sertifikaat>                
+        ds:X509Certificate: \r\n                    MIIFVTCCAz2gAwIBAgIEGNTPHDANBgkqhkiG9w0BAQ0FADBbMQswCQYDVQQGEwJFRTELMAkGA1UE\r\n                    CBMCRVUxEDAOBgNVBAcTB1RhbGxpbm4xDDAKBgNVBAoTA01LTTEMMAoGA1UECxMDUklBMREwDwYD\r\n                    VQQDEwhtZXRhZGF0YTAeFw0xNzA1MzExMTQ4MzlaFw0yMjA1MzAxMTQ4MzlaMFsxCzAJBgNVBAYT\r\n                    AkVFMQswCQYDVQQIEwJFVTEQMA4GA1UEBxMHVGFsbGlubjEMMAoGA1UEChMDTUtNMQwwCgYDVQQL\r\n                    EwNSSUExETAPBgNVBAMTCG1ldGFkYXRhMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA\r\n                    rX2WocksJPHWtE3WqK+F+O1sioy6ysCTQAsZ0esIMSrb7096o1WGr2e+EE2aV9eayHOxiXc1j0JG\r\n                    X1/ycAO/szCuLCgsjpayUHXC4a72vXCezYSkxuld59CEgST+C5q5zr/gHUrJg+b2dHtrvA5rBh4U\r\n                    9bcYHZftUbU+uGIYjzFwAs2D1+smDUwiJQcQ+KBwUmMvhdeQ6CLhJwZB13C+wX5wdDu3CgOlBCwD\r\n                    3fYI3HcAIxvRPPdPLutc75rLmk6H4+h4DVsjg0qlY4Ck4m6XMccnoEZhj0mtWJEBcoPw+kT6HiKU\r\n                    amuYPnPfEf5NKARpqFZXukZbnPk3tStny1349rTI2bq4adaPr0KNETBNLNoeuFM61833ZhI3u7q0\r\n                    w5y9sw0R+RTf/C+OfydZ7iWNKrH59vtBcKkt4b/7Qd6bn5pL35lLvzz3bZAnv0+/Sd7y3/OGsWsD\r\n                    eksVKjehO4ieONFt9VH2Za2af+cJcq4DNy5P/69bqWz8a1o3a4qANZ5YyKGu90+LQ3NunhFh9Eml\r\n                    kL9ka+NLsN2gDxQZcDB/GpeXdkl6ojPpcEuoSQ/REu9Eb4KbC6gPqeOmot/AnAu5rwzYidE4Bfor\r\n                    +ZasVRt+BbqYf7TAzQ4hZ5pDh0Vn4yFLYSXaXf2LZLmG0I1thsheNfiyKfNAgvAr5mZbNr2HjeEC\r\n                    AwEAAaMhMB8wHQYDVR0OBBYEFB6te2Gbr29UPL8Ksb0tmgq6Q5nwMA0GCSqGSIb3DQEBDQUAA4IC\r\n                    AQBrvo1ynYDQa2CxxhcZbkehgk5fwCyA9ksFtpXgo3cgLHJgoFmkrYnHgsV908Rga5WfZTOFqzrr\r\n                    7zVTpHyGWUFt2BL35QNU8k1CTiCxC5NhgcrxBeCIczBeTg2pv+kLvD0lLyGvHFZXx8qLCpNgIYJa\r\n                    un3nkY6PuQWJCS9j5GKcT7o5UKuemecKHIiWSKCa7OHnTkCzvPLzNlpt5kFIs3Vi+Tc5DfPAP/eb\r\n                    o5dZ8rq2UL3ra+iKFIT/iXl7JteRmPRDcBc0HvhtH8u27wm+y/CyruuGWZ13EPGvNVCxwzJv7CVe\r\n                    W+HqAMAGsVvAV8zknbjl8K11Ry0kH2GOBtPXzO639x1xpQ39T/9kTdkmwiD6ZM/60lZx8chP/nV/\r\n                    rrwyv/r+z4/oMehbCOFdUYHO1Agp6FmAP6Ck1+x/I95ANJOUt1dJc9xizcZ2012LEXO7cpt3DHie\r\n                    1bHlV4d8o/53VWlofdeDS/VyWSbdkL2lLWd8JKlTAAUwfg+SW1CjmQZ5Jr3ew+yhMMvOzMzi/+ZE\r\n                    A8c5MwMb8jP1wP9+vqIRg6U8RRBbY96sq9zxPMaGeM6Eli1zEuNYqOv0rIBXts6I2FQYOZSLLxgR\r\n                    P2lHqMx9u4JMHGaj0sTDbHxz5BWw6MDMc08WtyqX5B2xOt0VZbAyR7fXrFvLmutpY0/nCKBfRXxx\r\n                    Zw==\r\n                
   md:Extensions:
-
     alg:DigestMethod:
         @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
         @Algorithm: http://www.w3.org/2001/04/xmldsig-more#sha384
@@ -180,7 +30,6 @@ md:EntityDescriptor:
         @Algorithm: http://www.w3.org/2001/04/xmlenc#sha512
         @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
         @Algorithm: http://www.w3.org/2001/04/xmlenc#sha256
-  
     alg:SigningMethod:
         @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
         @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha512
@@ -198,38 +47,33 @@ md:EntityDescriptor:
         @Algorithm: http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1
         @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
         @Algorithm: http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512
-
   md:IDPSSODescriptor:
     @WantAuthnRequestsSigned: true
     @protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol
-    
     md:KeyDescriptor:
         @use: signing
         ds:KeyInfo:
           @xmlns:ds: http://www.w3.org/2000/09/xmldsig#
           ds:X509Data:
-            ds:X509Certificate: <sertifikaat>                    
+            ds:X509Certificate: \r\n                        MIIDdTCCAl2gAwIBAgIEalYjgDANBgkqhkiG9w0BAQsFADBrMQswCQYDVQQGEwJFRTELMAkGA1UE\r\n                        CBMCRVUxCzAJBgNVBAcTAkVVMQ4wDAYDVQQKEwVTUEVQUzEOMAwGA1UECxMFU1RPUksxIjAgBgNV\r\n                        BAMTGXNwZXBzLWVlLWRlbW8tY2VydGlmaWNhdGUwHhcNMTcwNTE5MTI0NjEzWhcNMTkwNTA5MTI0\r\n                        NjEzWjBrMQswCQYDVQQGEwJFRTELMAkGA1UECBMCRVUxCzAJBgNVBAcTAkVVMQ4wDAYDVQQKEwVT\r\n                        UEVQUzEOMAwGA1UECxMFU1RPUksxIjAgBgNVBAMTGXNwZXBzLWVlLWRlbW8tY2VydGlmaWNhdGUw\r\n                        ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCRD+0IV7lyNu+pW7RWQ5QyEjM3aSiyFmio\r\n                        7+1f0Iy0fS85jsFGGgI3jnPZL6d8tuuLZEBpHzMZhO5EFw1SaJwDpsmIg6efuaK0oL3DeVdRW3f5\r\n                        8V6FhsrL2sf2QezGxFfGtr60RU9LRm9Awt6yyhKdPahiWaUMiJNnP7r1HJ+3UENPfJEAqWUSNpop\r\n                        wLjZbo2T3muOAJ025CPQ2ITEeqo3T7DTjahxzQ3LyL859QsWWDz12ZSct/yxjGa1x01fDtwsgnv4\r\n                        3a58N2vgDsi+bDYXasgs6OM7mQktVge6J2pZZLT/yOfqLncFOTWeqgQrQ3+KmVDgh7m5QAlbNiQN\r\n                        ibghAgMBAAGjITAfMB0GA1UdDgQWBBRUpeHxPZ6D2IE7iuZxQ8cm8NzSeTANBgkqhkiG9w0BAQsF\r\n                        AAOCAQEAdbPNr0Jiq8P+RUcET5oDOwILbfhRYy0hwJGRS+4EMzAyvD/e9rXf5Tkxjldb4p1L/hII\r\n                        VQBcdwZsW2kUt3WeOY+2pQQlkcHEWYVaQGgMRMUJorbXwRxWXvRXSsge+kLeJMgtYJdtLxMUgBr/\r\n                        cl5ExMMlTvU09lrOi9VYfzg84drqlXVbFW+i79564cbTc7McqvmSemc4D/rLUlaTupMkI9nBW99M\r\n                        ADJsjguglIyiKUGwinxeXXuSfmpek17JxMSOfUhsNp7pmC6c0rpNvLxbLxNMpPFCR+tXXW/FOudZ\r\n                        21pIEIVckn9BTFsYlUUpXBL4kGYRTXqvHnGpVMGJSMUatg==\r\n                    
         @use: encryption
         ds:KeyInfo:
           @xmlns:ds: http://www.w3.org/2000/09/xmldsig#
           ds:X509Data:
-            ds:X509Certificate: <sertifikaat>                    
+            ds:X509Certificate: \r\n                        MIIDdTCCAl2gAwIBAgIEalYjgDANBgkqhkiG9w0BAQsFADBrMQswCQYDVQQGEwJFRTELMAkGA1UE\r\n                        CBMCRVUxCzAJBgNVBAcTAkVVMQ4wDAYDVQQKEwVTUEVQUzEOMAwGA1UECxMFU1RPUksxIjAgBgNV\r\n                        BAMTGXNwZXBzLWVlLWRlbW8tY2VydGlmaWNhdGUwHhcNMTcwNTE5MTI0NjEzWhcNMTkwNTA5MTI0\r\n                        NjEzWjBrMQswCQYDVQQGEwJFRTELMAkGA1UECBMCRVUxCzAJBgNVBAcTAkVVMQ4wDAYDVQQKEwVT\r\n                        UEVQUzEOMAwGA1UECxMFU1RPUksxIjAgBgNVBAMTGXNwZXBzLWVlLWRlbW8tY2VydGlmaWNhdGUw\r\n                        ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCRD+0IV7lyNu+pW7RWQ5QyEjM3aSiyFmio\r\n                        7+1f0Iy0fS85jsFGGgI3jnPZL6d8tuuLZEBpHzMZhO5EFw1SaJwDpsmIg6efuaK0oL3DeVdRW3f5\r\n                        8V6FhsrL2sf2QezGxFfGtr60RU9LRm9Awt6yyhKdPahiWaUMiJNnP7r1HJ+3UENPfJEAqWUSNpop\r\n                        wLjZbo2T3muOAJ025CPQ2ITEeqo3T7DTjahxzQ3LyL859QsWWDz12ZSct/yxjGa1x01fDtwsgnv4\r\n                        3a58N2vgDsi+bDYXasgs6OM7mQktVge6J2pZZLT/yOfqLncFOTWeqgQrQ3+KmVDgh7m5QAlbNiQN\r\n                        ibghAgMBAAGjITAfMB0GA1UdDgQWBBRUpeHxPZ6D2IE7iuZxQ8cm8NzSeTANBgkqhkiG9w0BAQsF\r\n                        AAOCAQEAdbPNr0Jiq8P+RUcET5oDOwILbfhRYy0hwJGRS+4EMzAyvD/e9rXf5Tkxjldb4p1L/hII\r\n                        VQBcdwZsW2kUt3WeOY+2pQQlkcHEWYVaQGgMRMUJorbXwRxWXvRXSsge+kLeJMgtYJdtLxMUgBr/\r\n                        cl5ExMMlTvU09lrOi9VYfzg84drqlXVbFW+i79564cbTc7McqvmSemc4D/rLUlaTupMkI9nBW99M\r\n                        ADJsjguglIyiKUGwinxeXXuSfmpek17JxMSOfUhsNp7pmC6c0rpNvLxbLxNMpPFCR+tXXW/FOudZ\r\n                        21pIEIVckn9BTFsYlUUpXBL4kGYRTXqvHnGpVMGJSMUatg==\r\n                    
         md:EncryptionMethod:
             @Algorithm: http://www.w3.org/2009/xmlenc11#aes192-gcm
             @Algorithm: http://www.w3.org/2009/xmlenc11#aes256-gcm
             @Algorithm: http://www.w3.org/2009/xmlenc11#aes128-gcm
-
     md:NameIDFormat:
       urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
       urn:oasis:names:tc:SAML:2.0:nameid-format:transient
       urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
-
     md:SingleSignOnService:
         @Binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
         @Location: https://eidastest.eesti.ee/EidasNode/ServiceProvider
         @Binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
         @Location: https://eidastest.eesti.ee/EidasNode/ServiceProvider
-        
     saml2:Attribute:
         @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
         @FriendlyName: D-2012-17-EUIdentifier
@@ -395,7 +239,6 @@ md:EntityDescriptor:
         @FriendlyName: RepresentativePlaceOfBirth
         @Name: http://eidas.europa.eu/attributes/naturalperson/representative/PlaceOfBirth
         @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
-  
   md:Organization:
     md:OrganizationName:
       #text: Sample Country Connector
@@ -406,7 +249,6 @@ md:EntityDescriptor:
     md:OrganizationURL:
       #text: https://connector.sample/info
       @xml:lang: en
-  
   md:ContactPerson:
       @contactType: support
       md:Company: eIDAS Connector Operator
@@ -420,10 +262,3 @@ md:EntityDescriptor:
       md:SurName: Doe
       md:EmailAddress: contact.technical@eidas-connector.eu
       md:TelephoneNumber: +41 123456
-```
-
-## Kirjandus
-
-[SAML V2.0 Metadata Guide](https://www.oasis-open.org/committees/download.php/51890/SAML%20MD%20simplified%20overview.pdf)
-
-[XML Security Algorithm Cross-Reference](https://www.w3.org/TR/xmlsec-algorithms/)

@@ -31,6 +31,8 @@ eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 
 ## eIDAS-Client-i arendajale
 
+[eIDAS Node SAML metadata seletus](MetadataSeletus)
+
 [Dokumentatsiooni täiendamise juhend](Dokujuhend)
 
 🗑  Arhiiv
