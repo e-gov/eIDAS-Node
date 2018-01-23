@@ -23,16 +23,18 @@ test | toodang
 | rolli kirjeldus | `SPSSODescriptor` | rolli kirjeldus - Service Provider, SSO (?) |
 
 
-| määrab, et autentimispäring p.o allkirjastatud | `@AuthnRequestsSigned: true` ||
-| määrab, et tõend (_assertion_) on allkirjastatud | `@WantAssertionsSigned: true` ||
+| määrab, et autentimispäring p.o allkirjastatud | `@AuthnRequestsSigned: true` | |
+| määrab, et tõend (_assertion_) on allkirjastatud | `@WantAssertionsSigned: true` | |
 | toetatav protokoll | `@protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol` | |
+
 | autentimisvastuse allkirjastamise võti (sertifikaat)  | `KeyDescriptor -> signing -> KeyInfo` | |
 | autentimisvastuse krüpteerimise võti (sertifikaat)  | `KeyDescriptor -> encryption -> KeyInfo` | |
 | krüpteerimisalgoritmid | `md:EncryptionMethod` | 3 tk - miks nii palju? |
+
 | ??? | `md:NameIDFormat` | |
 | ??? | `md:AssertionConsumerService` | |
 | kontaktteave | `md:Organization`, `md:ContactPerson` | tuleks panna RIA reaalsed andmed |
-``
+
 
 Struktuur (teisendatud XML -> JSON -> YAML-laadne vorming)
 
