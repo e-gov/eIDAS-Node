@@ -7,6 +7,9 @@ permalink: MetadataSeletus
 
 Käesolev dokument seletab RIA eIDAS Node SAML metaandmeotspunktide kaudu pakutavate andmete koosseisu ja tähendust.
 
+## Sisukord
+{: .no_toc}
+
 - TOC
 {:toc}
 
@@ -18,6 +21,8 @@ eIDAS Node metaandmeotspunktid on järgmised:
 
 Ülalolevad tsitaadid on juhendist [eIDAS-Node Installation and Configuration Guide](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release?preview=/46992189/52603174/eIDAS-Node%20Installation%20and%20Configuration%20Guide.pdf).
 
+Esitame alljärgnevalt kõigi otspunktide metaandmete struktuurid (teisendatud XML -> JSON -> YAML-laadne vorming), koos mõningaste kommentaaridega.
+
 ## eIDAS konnektorteenus, autentimispäringu saatjana
 
 | kirjeldatav objekt | `entityID` | määrab kirjeldatava süsteemi (`https://eidastest.eesti.ee/EidasNode/ConnectorMetadata`) |
@@ -28,21 +33,15 @@ eIDAS Node metaandmeotspunktid on järgmised:
 | räsimeetodid | `alg:DigestMethod` | 3 meetodit |
 | allkirjastamismeetodid | `alg:SigningMethod` | 8 meetodit |
 | rolli kirjeldus | `SPSSODescriptor` | rolli kirjeldus - Service Provider, SSO (?) |
-
-
 | määrab, et autentimispäring p.o allkirjastatud | `@AuthnRequestsSigned: true` | |
 | määrab, et tõend (_assertion_) on allkirjastatud | `@WantAssertionsSigned: true` | |
 | toetatav protokoll | `@protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol` | |
-
 | autentimisvastuse allkirjastamise võti (sertifikaat)  | `KeyDescriptor -> signing -> KeyInfo` | |
 | autentimisvastuse krüpteerimise võti (sertifikaat)  | `KeyDescriptor -> encryption -> KeyInfo` | |
 | krüpteerimisalgoritmid | `md:EncryptionMethod` | 3 tk - miks nii palju? |
-
 | ??? | `md:NameIDFormat` | |
 | ??? | `md:AssertionConsumerService` | |
 | kontaktteave | `md:Organization`, `md:ContactPerson` | tuleks panna RIA reaalsed andmed |
-
-Struktuur (teisendatud XML -> JSON -> YAML-laadne vorming)
 
 ```yaml
 md:EntityDescriptor: 
