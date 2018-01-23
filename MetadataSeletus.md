@@ -3,8 +3,12 @@ permalink: MetadataSeletus
 ---
 
 # eIDAS Node SAML metadata seletus
+{: .no_toc}
 
 Käesolev dokument seletab RIA eIDAS Node SAML metaandmeotspunktide kaudu pakutavate andmete koosseisu ja tähendust.
+
+- TOC
+{:toc}
 
 eIDAS Node metaandmeotspunktid on järgmised:
 
@@ -420,6 +424,298 @@ md:EntityDescriptor:
       md:SurName: Doe
       md:EmailAddress: contact.technical@eidas-connector.eu
       md:TelephoneNumber: +41 123456
+```
+
+## eIDAS vahendusteenus (Proxy Service)
+
+```yaml
+md:EntityDescriptor:
+@xmlns:md: urn:oasis:names:tc:SAML:2.0:metadata
+@xmlns:xs: http://www.w3.org/2001/XMLSchema
+@entityID: https://eidastest.eesti.ee/EidasNode/ServiceMetadata
+@validUntil: 2018-01-24T15:50:49.087Z
+
+ds:Signature:
+    @xmlns:ds: http://www.w3.org/2000/09/xmldsig#
+    ds:SignedInfo:
+    ds:CanonicalizationMethod:
+        @Algorithm: http://www.w3.org/2001/10/xml-exc-c14n#
+    ds:SignatureMethod:
+        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha512
+    ds:Reference:
+        @URI:
+        ds:Transforms:
+        ds:Transform:
+            @Algorithm: http://www.w3.org/2000/09/xmldsig#enveloped-signature
+            @Algorithm: http://www.w3.org/2001/10/xml-exc-c14n#
+            ec:InclusiveNamespaces:
+                @xmlns:ec: http://www.w3.org/2001/10/xml-exc-c14n#
+                @PrefixList: xs
+        ds:DigestMethod:
+        @Algorithm: http://www.w3.org/2001/04/xmlenc#sha512
+        ds:DigestValue: <räsiväärtus>
+    ds:SignatureValue: <allkirjaväärtus>
+    ds:KeyInfo:
+    ds:X509Data:
+        ds:X509Certificate: <sertifikaat>                
+
+md:Extensions:
+    mdattr:EntityAttributes:
+    @xmlns:mdattr: urn:oasis:names:tc:SAML:metadata:attribute
+    saml2:Attribute:
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @Name: urn:oasis:names:tc:SAML:attribute:assurance-certification
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        saml2:AttributeValue:
+        #text: http://eidas.europa.eu/LoA/substantial
+        @xmlns:xsi: http://www.w3.org/2001/XMLSchema-instance
+        @xsi:type: xs:string
+    alg:DigestMethod:
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#sha384
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmlenc#sha512
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmlenc#sha256
+    alg:SigningMethod:
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha512
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-ripemd160
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha384
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha384
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1
+        @xmlns:alg: urn:oasis:names:tc:SAML:metadata:algsupport
+        @Algorithm: http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512
+
+md:IDPSSODescriptor:
+    @WantAuthnRequestsSigned: true
+    @protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol
+    md:KeyDescriptor:
+        @use: signing
+        ds:KeyInfo:
+        @xmlns:ds: http://www.w3.org/2000/09/xmldsig#
+        ds:X509Data:
+            ds:X509Certificate: <sertifikaat>                    
+        @use: encryption
+        ds:KeyInfo:
+        @xmlns:ds: http://www.w3.org/2000/09/xmldsig#
+        ds:X509Data:
+            ds:X509Certificate: <sertifikaat>                    
+        md:EncryptionMethod:
+            @Algorithm: http://www.w3.org/2009/xmlenc11#aes192-gcm
+            @Algorithm: http://www.w3.org/2009/xmlenc11#aes256-gcm
+            @Algorithm: http://www.w3.org/2009/xmlenc11#aes128-gcm
+    
+    md:NameIDFormat:
+    urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+    urn:oasis:names:tc:SAML:2.0:nameid-format:transient
+    urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+    
+    md:SingleSignOnService:
+        @Binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+        @Location: https://eidastest.eesti.ee/EidasNode/ColleagueRequest
+        @Binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+        @Location: https://eidastest.eesti.ee/EidasNode/ColleagueRequest
+    
+    saml2:Attribute:
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: D-2012-17-EUIdentifier
+        @Name: http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: EORI
+        @Name: http://eidas.europa.eu/attributes/legalperson/EORI
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: LEI
+        @Name: http://eidas.europa.eu/attributes/legalperson/LEI
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: LegalAddress
+        @Name: http://eidas.europa.eu/attributes/legalperson/LegalAddress
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: LegalName
+        @Name: http://eidas.europa.eu/attributes/legalperson/LegalName
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: LegalAddress
+        @Name: http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: LegalPersonIdentifier
+        @Name: http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: SEED
+        @Name: http://eidas.europa.eu/attributes/legalperson/SEED
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: SIC
+        @Name: http://eidas.europa.eu/attributes/legalperson/SIC
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: TaxReference
+        @Name: http://eidas.europa.eu/attributes/legalperson/TaxReference
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: VATRegistration
+        @Name: http://eidas.europa.eu/attributes/legalperson/VATRegistration
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: VATRegistration
+        @Name: http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeD-2012-17-EUIdentifier
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/D-2012-17-EUIdentifier
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeEORI
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/EORI
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeLEI
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/LEI
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeLegalAddress
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/LegalAddress
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeLegalName
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/LegalName
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeLegalAddress
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/LegalPersonAddress
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeLegalPersonIdentifier
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/LegalPersonIdentifier
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeSEED
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/SEED
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeSIC
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/SIC
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeTaxReference
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/TaxReference
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeVATRegistration
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/VATRegistration
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeVATRegistration
+        @Name: http://eidas.europa.eu/attributes/legalperson/representative/VATRegistrationNumber
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: BirthName
+        @Name: http://eidas.europa.eu/attributes/naturalperson/BirthName
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: CurrentAddress
+        @Name: http://eidas.europa.eu/attributes/naturalperson/CurrentAddress
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: FamilyName
+        @Name: http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: FirstName
+        @Name: http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: DateOfBirth
+        @Name: http://eidas.europa.eu/attributes/naturalperson/DateOfBirth
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: EidasAdditionalAttribute
+        @Name: http://eidas.europa.eu/attributes/naturalperson/EidasAdditionalAttribute
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: Gender
+        @Name: http://eidas.europa.eu/attributes/naturalperson/Gender
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: PersonIdentifier
+        @Name: http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: PlaceOfBirth
+        @Name: http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeBirthName
+        @Name: http://eidas.europa.eu/attributes/naturalperson/representative/BirthName
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeCurrentAddress
+        @Name: http://eidas.europa.eu/attributes/naturalperson/representative/CurrentAddress
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeFamilyName
+        @Name: http://eidas.europa.eu/attributes/naturalperson/representative/CurrentFamilyName
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeFirstName
+        @Name: http://eidas.europa.eu/attributes/naturalperson/representative/CurrentGivenName
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeDateOfBirth
+        @Name: http://eidas.europa.eu/attributes/naturalperson/representative/DateOfBirth
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativeGender
+        @Name: http://eidas.europa.eu/attributes/naturalperson/representative/Gender
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativePersonIdentifier
+        @Name: http://eidas.europa.eu/attributes/naturalperson/representative/PersonIdentifier
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+        @xmlns:saml2: urn:oasis:names:tc:SAML:2.0:assertion
+        @FriendlyName: RepresentativePlaceOfBirth
+        @Name: http://eidas.europa.eu/attributes/naturalperson/representative/PlaceOfBirth
+        @NameFormat: urn:oasis:names:tc:SAML:2.0:attrname-format:uri
+
+md:Organization:
+    md:OrganizationName:
+    #text: Sample Country Proxy Service
+    @xml:lang: en
+    md:OrganizationDisplayName:
+    #text: Service
+    @xml:lang: en
+    md:OrganizationURL:
+    #text: https://service.sample/info
+    @xml:lang: en
+
+md:ContactPerson:
+    @contactType: support
+    md:Company: eIDAS ProxyService Operator
+    md:GivenName: John
+    md:SurName: Doe
+    md:EmailAddress: contact.support@eidas-proxyservice.eu
+    md:TelephoneNumber: +42 123456
+    @contactType: technical
+    md:Company: eIDAS ProxyService Operator
+    md:GivenName: John
+    md:SurName: Doe
+    md:EmailAddress: contact.technical@eidas-proxyservice.eu
+    md:TelephoneNumber: +43 123456
+}
 ```
 
 ## Kirjandus
