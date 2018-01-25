@@ -142,7 +142,7 @@ md:ContactPerson:
     md:TelephoneNumber: +555 123456
 ```
 
-## eIDAS konnektorteenus, autentimispäringu saatjana
+## eIDAS konnektorteenus, suhtluses teise eIDAS Node-ga
 
 ```yaml
 md:EntityDescriptor: 
@@ -248,7 +248,7 @@ md:EntityDescriptor:
       md:TelephoneNumber: +41 123456   
 ```
 
-## eIDAS konnektorteenus, autentimisvastuse saatjana
+## eIDAS konnektorteenus, suhtluses siseriikliku liidestatud süsteemiga
 
 ```yaml
 md:EntityDescriptor:
@@ -526,7 +526,7 @@ md:EntityDescriptor:
       md:TelephoneNumber: +41 123456
 ```
 
-## eIDAS vahendusteenus (Proxy Service)
+## eIDAS vahendusteenus (Proxy Service), suhtluses teise eIDAS Node-ga
 
 ```yaml
 md:EntityDescriptor:
@@ -815,5 +815,4 @@ md:ContactPerson:
     md:SurName: Doe
     md:EmailAddress: contact.technical@eidas-proxyservice.eu
     md:TelephoneNumber: +43 123456
-}
 ```
