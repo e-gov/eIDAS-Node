@@ -18,43 +18,21 @@ Käesolev dokument seletab RIA eIDAS Node SAML metaandmeotspunktide kaudu pakuta
 
 [Metadata for the OASIS Security Assertion Markup Language (SAML) V2.0](http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf) | SAML metaandmete standard
 [SAML V2.0 Metadata Guide](https://www.oasis-open.org/committees/download.php/51890/SAML%20MD%20simplified%20overview.pdf) | SAML metaandmete ülevaade
-[Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) |
-[XML Signature](https://en.wikipedia.org/wiki/XML_Signature) (Wikipedia) | 
-[XML Security Algorithm Cross-Reference](https://www.w3.org/TR/xmlsec-algorithms/) | 
+[Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) | ei kirjelda otseselt SAML metateavet, vaid SAML sõnumivorminguid
+[XML Signature](https://en.wikipedia.org/wiki/XML_Signature) (Wikipedia) | ülevaade XML allkirjast
+[XML Security Algorithm Cross-Reference](https://www.w3.org/TR/xmlsec-algorithms/) | standarditud algoritminimed
 
 ## Metaandmeotspunktid
 
-eIDAS Node metaandmeotspunktid on järgmised:
+eIDAS Node metaandmeotspunktid on järgmised (<span style='color:red;'>&#10006;</span> - ei ole veel kasutuses):
 
-| eIDAS vahendusteenus (_Proxy Service_) | [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ServiceMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "Will be used as Issuer in the requests that eIDAS-Node Proxy Service sends" |
-| eIDAS konnektorteenus, autentimispäringu saatjana | [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "The URL at which the metadata of eIDAS-Node Connector will be made available. Will be used as Issuer in the requests that eIDAS-Node Connector sends." |
-| eIDAS konnektorteenus, autentimisvastuse saatjana | [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "The URL at which the metadata of the eIDAS-Node Connector (presenting itself as an IdP) will be made available. Will be used as Issuer in the responses that eIDAS-Node Connector sends to SP." |
+| eIDAS vahendusteenus (_Proxy Service_) - suhtluses teise eIDAS Node-ga | [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ServiceMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "Will be used as Issuer in the requests that eIDAS-Node Proxy Service sends" |
+| eIDAS konnektorteenus - suhtluses teise eIDAS Node-ga | [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "The URL at which the metadata of eIDAS-Node Connector will be made available. Will be used as Issuer in the requests that eIDAS-Node Connector sends." |
+| eIDAS konnektorteenus - suhtluses siseriikliku liidestatud süsteemiga | [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:green;'>&#10003;</span><br> [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) <span style='color:red;'>&#10006;</span> | "The URL at which the metadata of the eIDAS-Node Connector (presenting itself as an IdP) will be made available. Will be used as Issuer in the responses that eIDAS-Node Connector sends to SP." |
 
 Ülalolevad tsitaadid on juhendist [eIDAS-Node Installation and Configuration Guide](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release?preview=/46992189/52603174/eIDAS-Node%20Installation%20and%20Configuration%20Guide.pdf).
 
-Esitame alljärgnevalt kõigi otspunktide metaandmete struktuurid (teisendatud XML -> JSON -> YAML-laadne vorming), koos mõningaste kommentaaridega.
-
-## Metadata tähendused
-
-| kirjeldatav olem (_SAML entity_) | `EntityDescriptor` | süsteemi, millega suhtlust kirjeldatakse |
-| kirjeldatava olemi ID | `entityID` | nt `https://eidastest.eesti.ee/EidasNode/ConnectorMetadata` |
-| (kehtiv kuni) | `validUntil` |  atribuudi abil juhitakse kui sageli metaandmete kasutaja peab käima värskendusi kontrollimas. Kas tasuks kasutada ka atribuuti `cacheDuration`? |
-| metaandmete allkiri | `ds:Signature` |  |
-| eIDAS tüüp | `eidas:SPType` | `public` Mida tähendab? |
-| algoritmide toetus | (`md:Extensions` sees) | kasutades W3C standarditud XML turvaalgoritmide nimesid |
-| räsimeetodid | `alg:DigestMethod` | 3 meetodit |
-| allkirjastamismeetodid | `alg:SigningMethod` | 8 meetodit |
-| rolli kirjeldus | `SPSSODescriptor` | rolli kirjeldus - Service Provider, SSO (?) |
-| määrab, et autentimispäring p.o allkirjastatud | `@AuthnRequestsSigned: true` | |
-| määrab, et tõend (_assertion_) on allkirjastatud | `@WantAssertionsSigned: true` | |
-| toetatav protokoll | `@protocolSupportEnumeration: urn:oasis:names:tc:SAML:2.0:protocol` | |
-| teave krüptovõtmete kohta, mida olem kasutab allkirjastamiseks või dekrüpteerimiseks| `KeyDescriptor` | |
-| autentimisvastuse allkirjastamise võti (sertifikaat)  | `KeyDescriptor -> signing -> KeyInfo` | |
-| autentimisvastuse krüpteerimise võti (sertifikaat)  | `KeyDescriptor -> encryption -> KeyInfo` | |
-| krüpteerimisalgoritmid | `md:EncryptionMethod` | 3 tk - miks nii palju? |
-| ??? | `md:NameIDFormat` | |
-| ??? | `md:AssertionConsumerService` | |
-| kontaktteave | `md:Organization`, `md:ContactPerson` | tuleks panna RIA reaalsed andmed |
+Esitame alljärgnevalt kõigi otspunktide metaandmete struktuurid (teisendatud XML -> JSON -> YAML-laadne vorming).
 
 ## Demo SP metadata
 
