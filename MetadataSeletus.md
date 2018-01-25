@@ -17,8 +17,9 @@ Käesolev dokument seletab RIA eIDAS Node SAML metaandmeotspunktide kaudu pakuta
 ## Kirjandus
 
 [Metadata for the OASIS Security Assertion Markup Language (SAML) V2.0](http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf) | SAML metaandmete standard
-[SAML V2.0 Metadata Guide](https://www.oasis-open.org/committees/download.php/51890/SAML%20MD%20simplified%20overview.pdf) | SAML metandmete ülevaade
+[SAML V2.0 Metadata Guide](https://www.oasis-open.org/committees/download.php/51890/SAML%20MD%20simplified%20overview.pdf) | SAML metaandmete ülevaade
 [Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) |
+[XML Signature](https://en.wikipedia.org/wiki/XML_Signature) (Wikipedia) | 
 [XML Security Algorithm Cross-Reference](https://www.w3.org/TR/xmlsec-algorithms/) | 
 
 ## Metaandmeotspunktid
@@ -291,7 +292,7 @@ md:EntityDescriptor:
               @Algorithm: http://www.w3.org/2001/10/xml-exc-c14n#
         ds:DigestMethod:
           @Algorithm: http://www.w3.org/2001/04/xmlenc#sha512
-        ds:DigestValue: KJLRThekuo3xJsX/u9HsxOCN1v6FxNnUqKl5RIp6cX8q34dEIhfbgaRbxSA6plvQoo3dZVjQoHIdXziEaiTyHQ==
+        ds:DigestValue: <räsiväärtus>
     ds:SignatureValue: <allkirjaväärtus>
     ds:KeyInfo:
       ds:X509Data:
