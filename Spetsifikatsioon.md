@@ -184,7 +184,7 @@ Tabel 2 - SAML `AuthnRequest` parameetrid
 | ------------- |:-------------:| :-----|
 | /saml2p:AuthnRequest/@Destination	| Jah | Siseriikliku eIDAS Node-i SSO otspunkti aadress. Bindingule vastavad otspunktide aadressid on loetletud eIDAS Node metadatas (/md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService) |
 | /saml2p:AuthnRequest/@ForceAuthn | Jah | Konstantantne väärtus: 'true' |
-| /saml2p:AuthnRequest/@ID | Jah | Unikaalne päringu ID |
+| /saml2p:AuthnRequest/@ID | Jah | Unikaalne päringu XML ID. Peab vastama NCName kitsendustele (https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName) |
 | /saml2p:AuthnRequest/@IsPassive | Jah | Konstantne väärtus: 'false' |
 | /saml2p:AuthnRequest/@IssueInstant | Jah | Päringu koostamise aeg. |
 | /saml2p:AuthnRequest/@ProviderName | Jah | Teenusepakkuja nimetus. Lepitakse kokku RIA-ga. |
