@@ -12,16 +12,16 @@ versioon 0.1, 27.01.2018
 
 ## Mida on vaja?
 
-Usaldusmehhanismi (_trust establishment mechanism_) RIA eIDAS konnektorteenuse ja liidestuva süsteemi (SAML terminoloogias - teenusepakkuja) vahel, mis mahub piirangutesse:
+Usaldusmehhanismi (_trust establishment mechanism_) RIA eIDAS konnektorteenuse ja liidestuva süsteemi (SAML terminoloogias - teenusepakkuja) vahel, mis arvestab piirangutega:
 
 - konnektorteenuse tarkvara ei saa praktiliselt muuta, ainult seadistada
 - sobib kõigile teenusepakkujatele (teadaolevalt RIK, EMTA, KEMIT, TEHIK)
     - nii halduse lihtsuse seisukohalt
-    - kui ka seetõttu, et konnektorteenuses ei saa metaandmete laadimist erinevate teenusepakkujate jaoks lahendada erinevalt (kõigile p.o üks kahest: kas otspunkti või lokaalsest failist laadimine)
+    - kui ka seetõttu, et konnektorteenuses ei saa metaandmete laadimist erinevate teenusepakkujate jaoks lahendada erinevalt (s.t kõigile peab kehtima üks kahest: teenusepakkuja metateave kas võetakse HTTPS otspunktist või laetakse lokaalsest failist)
 - NB! ei piirdu üldiste määratlustega “vastavale eIDASele”, “vastavalt RIA krüptoalgo-de uuringule”, “vastavalt SAML-le” jne
 - arvestab võimaliku tulevikuvajadusega krüptoalgoritme vahetada
-- on programmeerija poolt u 1 nädalaga teostatav (teenusepakkuja liideses)
-    - NB! Seetõttu turva vm soovide "max-i" peale keeramine pole lahendus
+- on programmeerija poolt u 1 nädalaga teostatav (töö teenusepakkuja liideses)
+    - NB! seetõttu turva vm soovide "max-i" peale keeramine pole lahendus
 
 Vaja on ka juhiseid teenusepakkujale SAML metateabe koostamiseks ja konnektorteenuse metateabest arusaamiseks. 
 
@@ -30,7 +30,7 @@ Siin räägime SAML sõnumivahetusest. TLS turvamine on eraldi kiht.
 Selleks:
 
 - tuleb anda täpsed juhised, mida teenusepakkuja oma SAML metateabes peab kirja panema 
-- anda täiendavad juhised, kuidas teenusepakkuja konnektorteenuse SAML metateavet peab tõlgendama.
+- anda täiendavad juhised, kuidas teenusepakkuja konnektorteenuse SAML metateavet peab tõlgendama
 - leppida kokku, milliseid krüptoalgoritme kasutatakse
     - sh nõuded võtmepikkustele
 - leppida kokku nõuded sertidele
@@ -56,7 +56,7 @@ Selleks:
     - usaldusankruks SK ID Solutions AS juursert
 - metateabe uuendamine
     - `md:EntityDescriptor` atribuudi validUntil abil
-    - minimaalne validUntil väärtus - ? 
+    - minimaalne `validUntil` väärtus - ? 
 - serdid
     - usaldusankruks SK ID Solutions AS juursert
 - allkirjastamisalgoritm
