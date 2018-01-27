@@ -1,8 +1,8 @@
 ---
-permalink: Usaldusprofiil
+permalink: Profiil
 ---
 
-# Usaldusprofiil
+# eIDAS siseriiklik profiil
 {:.no_toc}
 
 versioon 0.1, 27.01.2018
@@ -18,9 +18,12 @@ Usaldusmehhanismi (_trust establishment mechanism_) RIA eIDAS konnektorteenuse j
 - sobib kõigile teenusepakkujatele (teadaolevalt RIK, EMTA, KEMIT, TEHIK)
     - nii halduse lihtsuse seisukohalt
     - kui ka seetõttu, et konnektorteenuses ei saa metaandmete laadimist erinevate teenusepakkujate jaoks lahendada erinevalt (kõigile p.o üks kahest: kas otspunkti või lokaalsest failist laadimine)
-- ei piirdu üldiste määratlustega “vastavale eIDASele”, “vastavalt RIA krüptoalgo-de uuringule”, “vastavalt SAML-le” jne
+- NB! ei piirdu üldiste määratlustega “vastavale eIDASele”, “vastavalt RIA krüptoalgo-de uuringule”, “vastavalt SAML-le” jne
 - arvestab võimaliku tulevikuvajadusega krüptoalgoritme vahetada
 - on programmeerija poolt u 1 nädalaga teostatav (teenusepakkuja liideses)
+    - NB! Seetõttu turva vm soovide "max-i" peale keeramine pole lahendus
+
+Vaja on ka juhiseid teenusepakkujale SAML metateabe koostamiseks ja konnektorteenuse metateabest arusaamiseks. 
 
 Siin räägime SAML sõnumivahetusest. TLS turvamine on eraldi kiht.
 
@@ -61,10 +64,6 @@ Selleks:
 - krüpteerimisalgoritm
     - ettepanek on, et  lepime kokku 1 peamise ja 1 alternatiivse
 
-## Teenusepakkuja metateabe nõutav struktuur
-
-
-
 ## Otspunktid
 
 Joonisel 1 on kujutatud liidestuva süsteemi seisukohalt olulised metateabe ja SAML-sõnumite vastuvõtu otspunktid:
@@ -78,7 +77,7 @@ Joonisel 1 on kujutatud liidestuva süsteemi seisukohalt olulised metateabe ja S
 
 Kõigi otspunktide URL-id on seadistatavad.
 
-<img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:300px;'>
+<img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:500px;'>
 
 Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
 
@@ -150,7 +149,7 @@ Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metatea
     - `unspecified` - “tähenduseta” element, vt http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf, jaotis 8.3.1
 
 - `md:SingleSignOnService`
-atribuutidega `Binding` ja `Location` määratakse, et konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider` ja saatmisviisiks on kas `HTTP-POST` või `HTTP-Redirect`
+atribuutidega `Binding` ja `Location` määratakse, et konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider` ja saatmisviisiks on <strike>kas</strike> <strike>`HTTP-POST` või `HTTP-Redirect`<strikeout>
 
 - `saml2:Attribute`
 atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuudid, mida konnektorteenuse kaudu saab küsida (40+)
