@@ -55,7 +55,7 @@ Selleks:
     - allkirja tuleb metateabe võtmisel valideerida
     - usaldusankruks SK ID Solutions AS juursert
 - metateabe uuendamine
-    - `md:EntityDescriptor` atribuudi validUntil abil
+    - `md:EntityDescriptor` atribuudi `validUntil` abil
     - minimaalne `validUntil` väärtus - ? 
 - serdid
     - usaldusankruks SK ID Solutions AS juursert
