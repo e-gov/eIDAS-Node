@@ -3,6 +3,12 @@ permalink: Usaldusprofiil
 ---
 
 # Usaldusprofiil
+{:.no_toc}
+
+versioon 0.1, 27.01.2018
+
+* TOC
+{:toc}
 
 ## Mida on vaja?
 
@@ -35,9 +41,9 @@ Selleks:
 ## Ettepanekud
 
 - metateabe transport
-    - konnektorteenuse metateabe publitseeritakse HTTPS otspunktis:
-        - https://eidastest.eesti.ee/EidasNode/ConnectorMetadata (testkeskkond)
-        - https://eidas.eesti.ee/EidasNode/ConnectorMetadata (toodangukeskkond)
+    - konnektorteenuse metateave publitseeritakse HTTPS otspunktis:
+        - [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) (testkeskkond)
+        - [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) (toodangukeskkond)
     - teenusepakkuja publitseerib metateabe samuti HTTPS otspunktis
         - teatab otspunkti RIA-le
     - soovi korral annab osapool (tulemüüriga) juurdepääsu metateabele ainult partnerile
@@ -46,7 +52,7 @@ Selleks:
     - allkirja tuleb metateabe võtmisel valideerida
     - usaldusankruks SK ID Solutions AS juursert
 - metateabe uuendamine
-    - md:EntityDescriptor atribuudi validUntil abil
+    - `md:EntityDescriptor` atribuudi validUntil abil
     - minimaalne validUntil väärtus - ? 
 - serdid
     - usaldusankruks SK ID Solutions AS juursert
@@ -72,7 +78,7 @@ Joonisel 1 on kujutatud liidestuva süsteemi seisukohalt olulised metateabe ja S
 
 Kõigi otspunktide URL-id on seadistatavad.
 
-![](img/Otspunktid.PNG)
+<img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:300px;'>
 
 Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
 
@@ -105,7 +111,7 @@ Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metatea
 
 - `md:EntityDescriptor` - kirjeldatud on SAML olem (entity)
     - `entityID` - nimega `https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata`
-    - `validUntil` - kirjeldus kehtib 24 h.
+    - `validUntil` - kirjeldus kehtib 24 h
 
 - `ds:Signature` - kirjeldus on allkirjastatud XML allkirjaga
     - `ds:CanonicalizationMethod` - kanoniseerimisalgoritm - `xml-exc-c14n`
@@ -154,6 +160,60 @@ atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuu
 - `md:ContactPerson` - teave teenuse kontaktisiku kohta.
 
 vt ka [Metadata seletus](https://e-gov.github.io/eIDAS-Connector/MetadataSeletus#eidas-konnektorteenus-suhtluses-siseriikliku-liidestatud-s%C3%BCsteemiga), jaotis "Konnektorteenus suhtluses siseriikliku liidestatud süsteemiga".
+
+## Teenusepakkuja metateave
+
+Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tegema järgmise SAML metateabe.
+
+Märkus. Aluseks on võetud eIDAS konnektorteenuse tarkvaraga kaasas oleva liidestuva süsteemi näiterakenduse Demo SP metaandmeseadistus, [https://eidastest.eesti.ee/SP/metadata](https://eidastest.eesti.ee/SP/metadata). Vt ka [Metadata seletus](https://e-gov.github.io/eIDAS-Connector/MetadataSeletus#demo-sp-metadata), jaotis "Demo SP metadata". 
+
+`md:EntityDescriptor` - kirjeldatud on SAML olem (entity)
+`entityID` - nimega `https://eidastest.eesti.ee/SP/metadata` 
+`validUntil` - kirjeldus kehtib 24 h.
+
+`ds:Signature` - kirjeldus on allkirjastatud XML allkirjaga
+`ds:CanonicalizationMethod` - kanoniseerimisalgoritm on `xml-exc-c14n`
+`ds:SignatureMethod` - allkirjaalgoritm on `rsa-sha521`
+`ds:Transform` - _enveloped signature_, algoritm `xml-exc-c14n`
+`ds:DigestMethod` - räsialgoritm `xmlenc#sha512`
+`ds:Digestvalue` - räsiväärtus
+`ds:SignatureValue` - allkirjaväärtus
+`ds:KeyInfo` - X509 sertifikaat
+
+`md: Extensions` - metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
+`eidas:SPType`: `public` - liidestuja on avalikust sektorist
+
+`alg:Digestmethod` - teenusepakkuja toetab räsialgoritme
+`http://www.w3.org/2001/04/xmldsig-more#sha384`
+`http://www.w3.org/2001/04/xmlenc#sha512` 
+`http://www.w3.org/2001/04/xmlenc#sha256` 
+
+`alg:SigningMethod` - toetatavad allkirjaalgoritmid (8 tk)
+
+`md: SPSSODescriptor` - “SSO võimekusega teenusepakkuja” - kirjeldatava olemi “roll”
+`AuthnRequestsSigned` - autentimispäringusõnum allkirjastatakse
+`WantAuthnRequestsSigned` - nõuab, et autentimispäringusõnum p.o allkirjastatud
+`protocolSupportEnumeration` - ütleb, et toetab SAML 2.0-i
+
+`md:KeyDescriptor` - avaldab teenusepakkuja sertifikaadid ja kirjeldab toetatavad krüpteerimisalgoritmid
+`signing` > `KeyInfo` - allkirjastamissertifikaat
+`encryption` > `KeyInfo` - krüpteerimissertifikaat
+
+`md:EncryptionMethod` - toetatavad algoritmid
+`http://www.w3.org/2009/xmlenc11#aes192-gcm`
+`http://www.w3.org/2009/xmlenc11#aes256-gcm` 
+`http://www.w3.org/2009/xmlenc11#aes128-gcm` 
+
+`md:NameIDFormat` - siin saab täpsemalt määratleda andmevorminguid ja töötlusreegleid 
+`persistent` - jääb arusaamatuks, kuid vt http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf, jaotis 8.3.7
+`transient` - jääb arusaamatuks, kuid vt http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf, jaotis 8.3.8
+`unspecified` - “tähenduseta” element, vt http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf, jaotis 8.3.1
+
+`md:AssertionConsumerService`
+atribuutidega `Binding` ja `Location` määratakse, et liidestuv süsteem võtab autentimisvastuse vastu URL-il `/ReturnPage` ja autentimisvastus tuleb saata `HTTP-POST`-ga.
+
+`md:Organization` - teave teenusepakkuja organisatsiooni kohta
+`md:ContactPerson` - teave teenusepakkuja kontaktisiku kohta.
 
 ## Märkused
 
