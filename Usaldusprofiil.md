@@ -49,7 +49,7 @@ Selleks:
 - metateabe transpordi viis
 - metateabe uuendamisse puutuv
 
-Profiili koostamisel on arvestatud eIDAS krüptonõuetega ([eIDAS krüpto]) ja RIA krüptoalgoritmide uuringu 2017 soovitustega ([RIA krüpto 2017]).
+Profiili koostamisel on arvestatud eIDAS krüptonõuetega ja RIA krüptoalgoritmide uuringu 2017 soovitustega (vt [Viited](Viited)).
 
 ## Nõuded
 
@@ -252,16 +252,6 @@ Märkus. Aluseks on võetud eIDAS konnektorteenuse tarkvaraga kaasas oleva liide
 - `md:Organization` - teave teenusepakkuja organisatsiooni kohta
 
 - `md:ContactPerson` - teave teenusepakkuja kontaktisiku kohta.
-
-## Viited
-
-[RIA krüpto 2017]: Riigi Infosüsteemide Amet, Cybernetica AS (2017) Krüptograafiliste algoritmide elutsükkel. Uuring. [https://www.ria.ee/ee/kruptouuringud.html](https://www.ria.ee/ee/kruptouuringud.html).
-
-[eIDAS krüpto]: [eIDAS Crypto Requirements for the eIDAS Interoperability Framework v1.0](https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2)
-
-Riigi Infosüsteemide Amet, Cybernetica AS (2017) Krüptograafiliste algoritmide elutsükkel. Uuring. <a href='https://www.ria.ee/ee/kruptouuringud.html'>https://www.ria.ee/ee/kruptouuringud.html</a>.
-
-eIDAS Crypto Requirements for the eIDAS Interoperability Framework v1.0< href='https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2'>link</a>
 
 ## Märkused
 

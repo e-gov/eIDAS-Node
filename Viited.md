@@ -35,3 +35,5 @@ sh:
 ### Muu
 
 OASIS (2008) [Security Assertion Markup Language (SAML) V2.0 Technical Overview](http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html)
+
+Riigi Infosüsteemide Amet, Cybernetica AS (2017) Krüptograafiliste algoritmide elutsükkel. Uuring. <a href='https://www.ria.ee/ee/kruptouuringud.html'>https://www.ria.ee/ee/kruptouuringud.html</a>.
