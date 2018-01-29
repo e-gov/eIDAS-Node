@@ -21,7 +21,7 @@ Vt ka: [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil)
 
 ## 2 Kontekst
 
-RIA eIDAS konnektorteenus on Eesti riigiasutustele mõeldud vahendusteenus eIDAS-autentimisvõrku. eIDAS-autentimisvõrk on Euroopa Liidu liikmesriikide elektroonilist Autentimist pakkuv ühisteenus. Võrk koosneb turvalise kanali abil ühendatud riiklikest sõlmpunktidest (ingl _eIDAS Node_). Sõlmpunktid vahetavad omavahel iskutuvastuspäringuid ja kinnitusi vastava riigi kodaniku identiteedi kohta. Iga Euroopa Liidu liikmesriik opereerib vähemalt ühte riiklikku sõlmpunkti ja pakub kohalikele teenusepakkujatele välisriigi kodenike tuvastamiseks konnektorteenust.
+RIA eIDAS konnektorteenus on Eesti riigiasutustele mõeldud vahendusteenus eIDAS-autentimisvõrku. eIDAS-autentimisvõrk on Euroopa Liidu liikmesriikide elektroonilist autentimist pakkuv ühisteenus. Võrk koosneb turvalise kanali abil ühendatud riiklikest sõlmpunktidest (ingl _eIDAS Node_). Sõlmpunktid vahetavad omavahel iskutuvastuspäringuid ja kinnitusi vastava riigi kodaniku identiteedi kohta. Iga Euroopa Liidu liikmesriik opereerib vähemalt ühte riiklikku sõlmpunkti ja pakub kohalikele teenusepakkujatele välisriigi kodenike tuvastamiseks konnektorteenust.
 
 Eestis pakub eIDAS Node võrguga liitumiseks konnektorteenust RIA.
 
@@ -40,17 +40,17 @@ Sõnumiedastus teostatakse veebisirvija ümbersuunamise (_redirect_) abil.
 
 ## 3 Autentimisprotsess
 
-Piiriülene Autentimisprotsess eIDAS-autentimisvõrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [Viited](Viited). Sõnumivahetus osapoolte vahel toimib SAML 2.0 protokolli alusel.
+Piiriülene autentimisprotsess eIDAS-autentimisvõrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [Viited](Viited). Sõnumivahetus osapoolte vahel toimib SAML 2.0 protokolli alusel.
 
 Järgnevas näidisstsenaariumis (vt Joonis 2) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel. lihtsuse mõttes ei ole näidatud SAML protokolli kohaseid metadata otspunktide poole pöördumisi.
 
-Edukas Autentimis eIDAS-autentimisvõrgus näeb välja järgmisena:
+Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
 <img src='img/Autentimisvoog-eIDAS_demorakenduses.png'>
 
 Joonis 2.
 
-1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab piiriülest Autentimist.
+1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab piiriülest autentimist.
     - Kasutaja isik on tuvastamata, puudub kehtiv sessioon.
     - Teenusepakkuja jätab soovitud URL-i meelde ja suunab kasutaja lehele, kus kuvatakse eIDAS võrguga liidestatud riikide nimekiri.
 
@@ -72,13 +72,13 @@ Joonis 2.
 5. Kui kasutaja oli vormil esitatud andmete jagamisega nõus,
     - saadab kasutaja kinnitamiseks päringu piiriülesele eIDAS Node teenusele.
     - piiriülene eIDAS Node teenus täiendab saadud `SAMLRequest`-i sisu
-    - ja saadab kasutajale vastuseks piiriülesele Autentimisteenusele ümbersuunamiseks mõeldud vormi.
+    - ja saadab kasutajale vastuseks piiriülesele autentimisteenusele ümbersuunamiseks mõeldud vormi.
 
-6. Kasutaja suunatakse automaatselt edasi piiriülese Autentimisteenusepakkuja lehele koos `SAMLRequest` ja `RelayState` parameetritega.
+6. Kasutaja suunatakse automaatselt edasi piiriülese autentimisteenusepakkuja lehele koos `SAMLRequest` ja `RelayState` parameetritega.
     - teenusepakkuja saadab kasutajale vastuseks autentimismeetmete valiku (ID-kaart, paroolikaart, parool, Mobiil-ID vastavalt sellele, mida antud riigi teenusepakkuja toetab).
 
-7. Kasutaja autendib ennast Autentimisteenuses (näiteks ID-kaardiga).
-    - eduka tuvastuse korral teenusepakkuja tagastab vastusena ümbersuunamisvormi piiriülesse eIDAS Node teenusesse, millest pärines algne Autentimise päring.
+7. Kasutaja autendib ennast autentimisteenuses (näiteks ID-kaardiga).
+    - eduka tuvastuse korral teenusepakkuja tagastab vastusena ümbersuunamisvormi piiriülesse eIDAS Node teenusesse, millest pärines algne autentimispäring.
     - ümbersuundamisvormi `SAMLResponse` parameetris on teenusepakkuja poolt palutud info isiku kohta.
     - `SAMLResponse` allkirjastatakse ja isiku andmed krüpteeritakse teenusepakkuja privaatvõtmega.
 
@@ -221,7 +221,7 @@ Näidis 1 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kuj
 
 Õnnestunud või ebaõnnestunud autentimise tulemus saadetakse teenusepakkuja vastus URL'le tagasi (toodud teenusepakkuja metadata's) `SAMLResponse` parameetris. Kõigi parameetrite loetelu on toodud Tabelis 3.
 
-Tabel 3 - Autentimise vastuse parameetrid
+Tabel 3 - Autentimisvastuse parameetrid
 
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 | ------------- |:-------------:| -----:|
@@ -287,7 +287,7 @@ Näidis 2. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
 </saml2p:Response>
 ```
 
-Näidis 3 - Dekodeeritud `SAMLResponse` parameetri sisu Autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
+Näidis 3 - Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
 
 ```xml
 <saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/EidasNode/ColleagueResponse" ID="_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI" InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY" IssueInstant="2018-01-05T13:42:11.944Z" Version="2.0">
@@ -349,7 +349,7 @@ Tabel 4 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatav
 
 | Veakood | Lühikirjeldus            | Selgitus  |
 | ------------- |:-------------:| -----:|
-| 202007 | Isiku nõusolek puudub | Isik keeldus Autentimise jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
+| 202007 | Isiku nõusolek puudub | Isik keeldus autentimise jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
 
 // TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
 
