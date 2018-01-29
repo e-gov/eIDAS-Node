@@ -74,7 +74,7 @@ Joonis 2.
 
 ### Nõuded liituvale teenusepakkujale
 
-Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas (vt [eIDAS Profiil]). eIDAS Node kasutab suhtlemiseks täiendavate kitsendustega [SAML 2.0] protokolli.
+Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas (vt [eIDASprofiil](#eIDASprofiil)). eIDAS Node kasutab suhtlemiseks täiendavate kitsendustega [SAML 2.0] protokolli.
 
 Kokkuvõtlikult peab teenusepakkuja:
 
@@ -428,7 +428,7 @@ Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Tood
 
 ([TARAEI-23](https://jira.ria.ee/browse/TARAEI-23)  &#128273;) 
 
-[eID eIDAS profiil]: https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile European Commission. ***eID eIDAS profile***. https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile). Technical specifications.
+<a id='eIDASprofiil'>eIDASprofiil</a> European Commission. ***eID eIDAS profile***. Technical specifications. [https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile)
 
 [eIDAS SAML Attribute Profile] ***eIDAS SAML Attribute Profile***. [https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile?preview=/23003348/35218928/eIDAS%20SAML%20Attribute%20Profile%20v1.1_2.pdf](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile?preview=/23003348/35218928/eIDAS%20SAML%20Attribute%20Profile%20v1.1_2.pdf).
 
