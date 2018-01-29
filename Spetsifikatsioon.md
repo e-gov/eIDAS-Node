@@ -76,11 +76,11 @@ Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud `HTTP PO
 
 ### Metadata otspunkt
 
-SAML metadata on XML dokument, mis sisaldab teenusepakkuja jaoks kogu ühendumiseks vajaliku info (vt Näidis 1). Sealhulgas kirjeldab lubatud krüptoprimitiivid (sertifikaadid päringu allkirjastamiseks, vastuse dekrüpteerimiseks jne), autentimise algatamise URL-id ja teenusepakkuja kontaktid. Metainfo on allkirjastatud.
+Teenusepakkuja SAML metadata on XML dokument, mis sisaldab konnektorteenuse jaoks kogu ühendumiseks vajaliku info (vt Näidis 1). Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid. Metainfo on allkirjastatud.
 
-Usalduse loomiseks eIDAS võrgustiku ja teenusepakkuja vahel teenusepakkuja PEAB tegema kättesaadavaks oma metaandmed üle HTTPS protokolli. Metaandmed peavad olema kättesaadavad riiklikule eIDAS Node sõlmpunktile. Teenusepakkuja metaandmed sisaldavad avalikke võtmeid, teenusekirjeldusi ja URLe, mida vajavad teised identiteedipakkujad, kellega tahetakse usalduskanalit luua.
+Teenusepakkuja peab konnektoreenusele kättesaadavaks tegema oma metaandmed üle HTTPS protokolli.
 
-Täpsemad nõuded on toodud [eIDAS-interop] ptk 6.
+Täpsemad nõuded metadata otspunktile on toodud sertifikaatide ja usaldusahela kohta on toodud dokumendis [eIDAS siseriiklik usaldusprofiil].
 
 Näidis 1. Teenusepakkuja metadata otspunkti vastus
 
@@ -107,12 +107,7 @@ Näidis 1. Teenusepakkuja metadata otspunkti vastus
         </ds:KeyInfo>
     </ds:Signature>
     <md:Extensions>
-        <alg:DigestMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2001/04/xmldsig-more#sha384"/>
-        ......
-        <alg:DigestMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-        <alg:SigningMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
-        ........
-        <alg:SigningMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512"/>
+        <eidas:SPType xmlns:eidas="http://eidas.europa.eu/saml-extensions">public</eidas:SPType>
     </md:Extensions>
     <md:IDPSSODescriptor WantAuthnRequestsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
         <md:KeyDescriptor use="signing">
@@ -441,6 +436,8 @@ Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Tood
 [eIDAS-veakoodid]: https://ec.europa.eu/cefdigital/wiki/download/attachments/46992189/eIDAS-Node%20Error%20Codes.pdf?version=1&modificationDate=1507296786056&api=v2
 
 [ISO 3166-1 alpha-2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+
+[eIDAS siseriiklik usaldusprofiil]: https://e-gov.github.io/eIDAS-Connector/Profiil
 
 ## Muutelugu
 
