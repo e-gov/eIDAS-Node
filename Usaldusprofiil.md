@@ -5,12 +5,16 @@ permalink: Profiil
 # eIDAS siseriiklikud usaldus- ja krüptonõuded
 {:.no_toc}
 
-versioon 0.1, 27.01.2018
+versioon 0.2, 29.01.2018
 
 * TOC
 {:toc}
 
-Käesoleva dokumendiga kehtestatakse usaldus- ja krüptonõuded RIA eIDAS konnektorteenusega liidestatavatele infosüsteemidele (eIDAS terminoloogias - teenusepakkujatele). sh täpsustatakse ja selgitatakse vahetatavate metaandmete tähendust.
+Käesoleva dokumendiga kehtestatakse usaldus- ja krüptonõuded RIA eIDAS konnektorteenusega liidestatavatele infosüsteemidele (eIDAS terminoloogias - teenusepakkujatele). Samuti täpsustatakse ja selgitatakse vahetatavate metaandmete tähendust.
+
+Praegune versioon ei ole lõplik. Dokumenti täiendatakse liidestuste testimise tulemuste alusel.
+
+Edaspidi nõuded, sh võtmepikkused ja algoritmide valik vaadatakse läbi vastavalt uutele teadmistele krüptoalgoritmide turvalisuse kohta. 
 
 Vt ka: [eIDAS konnektorteenuse liidese spetsifikatsioon](Spetsifikatsioon)
 
@@ -19,7 +23,7 @@ Vt ka: [eIDAS konnektorteenuse liidese spetsifikatsioon](Spetsifikatsioon)
 Usaldusmehhanismi (_trust establishment mechanism_) RIA eIDAS konnektorteenuse ja liidestuva süsteemi (SAML terminoloogias - teenusepakkuja) vahel, mis arvestab piirangutega:
 
 - konnektorteenuse tarkvara ei saa praktiliselt muuta, ainult seadistada
-- sobib kõigile teenusepakkujatele (teadaolevalt RIK, EMTA, KEMIT, TEHIK)
+- sobib kõigile konnektorteenusest huvitunud teenusepakkujatele (teadaolevalt RIK, EMTA, KEMIT, TEHIK)
     - nii halduse lihtsuse seisukohalt
     - kui ka seetõttu, et konnektorteenuses ei saa metaandmete laadimist erinevate teenusepakkujate jaoks lahendada erinevalt (s.t kõigile peab kehtima üks kahest: teenusepakkuja metateave kas võetakse HTTPS otspunktist või laetakse lokaalsest failist)
 - NB! ei piirdu üldiste määratlustega “vastavale eIDASele”, “vastavalt RIA krüptoalgo-de uuringule”, “vastavalt SAML-le” jne

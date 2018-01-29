@@ -3,13 +3,10 @@ title: eIDAS konnektorteenus. Ärikirjeldus
 permalink: Arikirjeldus
 ---
 
-Märkus. Tööversioon. 
-{:.teade}
-
 # RIA eIDAS konnektorteenus. Ärikirjeldus
 {:.no_toc}
 
-versioon 1.1, 03.01.2018
+versioon 1.2, 29.01.2018
 
 * TOC
 {:toc}
@@ -31,6 +28,8 @@ _eIDAS konnektorteenus_ - RIA poolt käitatav taristuteenus, mis võimaldab Eest
 _autentimisrakendus_ - asutuse poolt käitatav tarkvarakomponent, mis korraldab asutuse e-teenuse kasutaja (kes võib olla nii Eesti kui ka EL teise liikmesriigi eID kasutaja) autentimist (isikusamasuse tuvastamist), suheldes selleks eIDAS konnektorteenusega.
 
 _asutus_ - eIDAS konnektorteenust kasutava autentimisrakenduse omanikasutus.
+
+_teenusepakkuja_ - sama, mis _asutus_ - kasutajale teenust pakkuv asutus (_Service Provider_ eIDAS terminoloogias)
 
 ## 3 Tehniline ülevaade
 

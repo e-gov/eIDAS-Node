@@ -3,9 +3,6 @@ permalink: Spetsifikatsioon
 ---
 
 
-Märkus. Spetsifikatsioon on koostamisel. 
-{:.teade}
-
 Märkus. Lahtised küsimused on markeeritud sümbolitega `//`. 
 {:.teade}
 
@@ -26,17 +23,32 @@ eIDAS Node võrk on Euroopa Liidu liikmesriikide vahelise koosvõimeraamistiku (
 
 Eestis pakub eIDAS Node võrguga liitumiseks konnektorteenust RIA.
 
+## 3.1 Teenuse kasutusvoog
+
+<img src='img/SUURPILT.PNG' style='width:600px'>
+
+Joonis 1. eIDAS taristu
+
+eIDAS konnektorteenus on ühendajaks asutuse autentimisrakenduse ja EL eIDAS-taristu vahel.
+
+Autentimisrakenduse ja eIDAS konnektorteenuse vaheline suhtlus on osa eIDAS autentimisvoost (vt lisa 1), hõlmates sellest kahte sõnumiedastust:
+
+- autentimispäringut esitava SAML tõendi (_token_) saatmine autentimisrakendusest eIDAS konnektorteenusele (vt joonisel lisas 1 sõnumiedastus nr 4);
+- autentimisvastust esitava SAML tõendi saatmine eIDAS konnektorteenuselt autentimisrakendusele (vt joonisel lisas 1 sõnumiedastus nr 9).
+
+Sõnumiedastus teostatakse veebisirvija ümbersuunamise (_redirect_) abil.
+
 ## Isikutuvastuse protsess
 
 Eduka piiriülese isikutuvastamise protsess eIDAS Node võrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [eIDAS-interop]. Sõnumivahetus osapoolte vahel toimib [SAML 2.0] protokolli alusel.
 
-Järgnevas näidisstsenaariumis (vt Joonis 1) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel. lihtsuse mõttes ei ole näidatud SAML protokolli kohaseid metadata otspunktide poole pöördumisi.
+Järgnevas näidisstsenaariumis (vt Joonis 2) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel. lihtsuse mõttes ei ole näidatud SAML protokolli kohaseid metadata otspunktide poole pöördumisi.
 
 Edukas isikutuvastus eIDAS võrgustikus näeb välja järgmisena:
 
 <img src='img/Autentimisvoog-eIDAS_demorakenduses.png'>
 
-Joonis 1.
+Joonis 2.
 
 1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab piiriülest isikutuvastust. Kasutaja isik on tuvastamata, puudub kehtiv sessioon. Teenusepakkuja jätab soovitud URL-i meelde ja suunab kasutaja lehele, kus kuvatakse eIDAS võrguga liidestatud riikide nimekiri.
 
@@ -416,6 +428,11 @@ Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Tood
 
 ([TARAEI-23](https://jira.ria.ee/browse/TARAEI-23)  &#128273;) 
 
+[eID eIDAS profiil]: https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile European Commission. ***eID eIDAS profile***. https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile). Technical specifications.
+
+[eIDAS SAML Attribute Profile] ***eIDAS SAML Attribute Profile***. [https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile?preview=/23003348/35218928/eIDAS%20SAML%20Attribute%20Profile%20v1.1_2.pdf](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eID+eIDAS+profile?preview=/23003348/35218928/eIDAS%20SAML%20Attribute%20Profile%20v1.1_2.pdf).
+
+[eIDAS SAML Message Format] ***eIDAS SAML Message Format***. [https://joinup.ec.europa.eu/sites/default/files/eidas_message_format_v1.0.pdf](https://joinup.ec.europa.eu/sites/default/files/eidas_message_format_v1.0.pdf).
 
 [eIDAS Regulatsioon]: http://eur-lex.europa.eu/legal-content/ET/TXT/HTML/?uri=CELEX:32014R0910&from=EN
 
