@@ -255,9 +255,9 @@ Märkus. Aluseks on võetud eIDAS konnektorteenuse tarkvaraga kaasas oleva liide
 
 [eIDAS krüpto]: [eIDAS Crypto Requirements for the eIDAS Interoperability Framework v1.0](https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2)
 
-Riigi Infosüsteemide Amet, Cybernetica AS (2017) Krüptograafiliste algoritmide elutsükkel. Uuring. [https://www.ria.ee/ee/kruptouuringud.html](https://www.ria.ee/ee/kruptouuringud.html).
+Riigi Infosüsteemide Amet, Cybernetica AS (2017) Krüptograafiliste algoritmide elutsükkel. Uuring. <a href='https://www.ria.ee/ee/kruptouuringud.html'>https://www.ria.ee/ee/kruptouuringud.html</a>.
 
-eIDAS Crypto Requirements for the eIDAS Interoperability Framework v1.0(https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2)
+eIDAS Crypto Requirements for the eIDAS Interoperability Framework v1.0< href='https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2'>link</a>
 
 ## Märkused
 
