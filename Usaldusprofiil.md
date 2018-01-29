@@ -2,13 +2,17 @@
 permalink: Profiil
 ---
 
-# eIDAS siseriiklik profiil
+# eIDAS siseriiklikud usaldus- ja krüptonõuded
 {:.no_toc}
 
 versioon 0.1, 27.01.2018
 
 * TOC
 {:toc}
+
+Käesoleva dokumendiga kehtestatakse usaldus- ja krüptonõuded RIA eIDAS konnektorteenusega liidestatavatele infosüsteemidele (eIDAS terminoloogias - teenusepakkujatele). sh täpsustatakse ja selgitatakse vahetatavate metaandmete tähendust.
+
+Vt ka: [eIDAS konnektorteenuse liidese spetsifikatsioon](Spetsifikatsioon)
 
 ## Mida on vaja?
 
@@ -41,8 +45,11 @@ Selleks:
 - metateabe transpordi viis
 - metateabe uuendamisse puutuv
 
+Profiili koostamisel on arvestatud eIDAS krüptonõuetega ([eIDAS krüpto]) ja RIA krüptoalgoritmide uuringu 2017 soovitustega ([RIA krüpto 2017]).
+
 ## Nõuded
 
+- teenusepakkuja peab koostama oma metaandmed (vt jaotis [Teenusepakkuja metateave](https://e-gov.github.io/eIDAS-Connector/Profiil#teenusepakkuja-metateave))
 - metateabe transport
     - konnektorteenuse metateave publitseeritakse HTTPS otspunktis:
         - [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) (testkeskkond)
@@ -52,13 +59,16 @@ Selleks:
     - soovi korral annab osapool (tulemüüriga) juurdepääsu metateabele ainult partnerile
 - metateabe allkirjastamine
     - on kohustuslik
-    - allkirja tuleb metateabe võtmisel valideerida
+    - allkirja tuleb metateabe võtmisel valideerida, kogu usaldusahela ulatuses
     - usaldusankruks SK ID Solutions AS juursert
 - metateabe uuendamine
-    - `md:EntityDescriptor` atribuudi `validUntil` abil
-    - minimaalne `validUntil` väärtus - ? 
+    - osapool võib metateavet puhverdada, kuni `md:EntityDescriptor` atribuudis `validUntil` määratud ajamomendini
+    - metadatas tuleb määrata `validUntil` väärtus. Soovitatav väärtus on 24 h. 
 - serdid
+    - SK ID Solutions AS väljaantud sert
     - usaldusankruks SK ID Solutions AS juursert
+- räsialgoritm
+    -     
 - allkirjastamisalgoritm
     - ettepanek on, et  lepime kokku 1 peamise ja 1 alternatiivse
 - krüpteerimisalgoritm
@@ -75,7 +85,7 @@ Joonisel 1 on kujutatud liidestuva süsteemi seisukohalt olulised metateabe ja S
     - metateabe otspunkt `/Metadata`
     - SAML autentimisvastussõnumite vastuvõtupunkt `/ReturnPage`.
 
-Kõigi otspunktide URL-id on seadistatavad.
+Kõigi otspunktide URL-id on seadistatavad. Konkreetsed URL-is määravad osapooled metateabes.
 
 <img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:500px;'>
 
@@ -215,12 +225,19 @@ Märkus. Aluseks on võetud eIDAS konnektorteenuse tarkvaraga kaasas oleva liide
 
 - `md:ContactPerson` - teave teenusepakkuja kontaktisiku kohta.
 
+## Viited
+
+[RIA krüpto 2017]: Riigi Infosüsteemide Amet, Cybernetica AS (2017) Krüptograafiliste algoritmide elutsükkel. Uuring. [https://www.ria.ee/ee/kruptouuringud.html](https://www.ria.ee/ee/kruptouuringud.html).
+
+[eIDAS krüpto]: [eIDAS Crypto Requirements for the eIDAS Interoperability Framework v1.0](https://ec.europa.eu/cefdigital/wiki/download/attachments/46992719/eidas_-_crypto_requirements_for_the_eidas_interoperability_framework_v1.0.pdf?version=1&modificationDate=1497252920224&api=v2)
+
+
 ## Märkused
 
 1 Usaldusse puutuv SAML tasemel tuleks võimalikult ära määrata SAML metateabega, vt [SAML V2.0 Metadata Interoperability Profile v1.0](http://docs.oasis-open.org/security/saml/Post2.0/sstc-metadata-iop-cs-01.html) (2009). Samas tuleb olla realistlik: dünaamilist algoritmide kokkuleppimist e kätlust poolte vahel SAML standardid ei konkretiseeri. Me ei jõuaks ka teostada. Vrdl [SAML v2.0 Metadata Profile for Algorithm Support Version 1.0](http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-metadata-algsupport.html).
 
 2 Vrdl Soome avaliku sektori keskse autentimisteenuse Suomi.fi-tunnistus juhised teenusepakkujate SAML metateabele: [https://esuomi.fi/palveluntarjoajille/tunnistus/tekninen-aineisto/asiointipalvelun-metadatatiedot/](https://esuomi.fi/palveluntarjoajille/tunnistus/tekninen-aineisto/asiointipalvelun-metadatatiedot/).
 
-3 Alternatiiv: teenusepakkuja metateabe loetakse konnektorteenusesse sisse lokaalsest failist. See eeldab metateabe out of band (muu kanali kaudu) toimetamist RIA-sse.
+3 Alternatiiv: teenusepakkuja metateabe loetakse konnektorteenusesse sisse lokaalsest failist. See eeldab metateabe _out of band_ (muu kanali kaudu) toimetamist RIA-sse. Eelistame transporti üle HTTPS-i.
 
 
