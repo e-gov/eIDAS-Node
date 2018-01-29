@@ -130,7 +130,7 @@ Täpsemad nõuded metadata otspunktile on dokumendis [eIDAS siseriiklikud usaldu
 
 Nõutud parameetrite loetelu HTTP POST päringus on toodud Tabelis 1.
 
-`SAMLRequest`  parameetris saadetav SAML XML päringu sisu (vt Näidis 2) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]).
+`SAMLRequest`  parameetris saadetav SAML XML päringu sisu (vt Näidis 1) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]).
 
 Tabel 1 - Päringu parameetrid
 
@@ -158,7 +158,7 @@ Tabel 2 - SAML `AuthnRequest` parameetrid
 | /saml2p:AuthnRequest/saml2p:NameIDPolicy | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat) |
 | /saml2p:AuthnRequest/saml2p:RequestedAuthnContext | Jah |	// Variandid. Vajab analüüsi // |
 
-Näidis 2 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kujul)
+Näidis 1 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kujul)
 
 ```xml
 <saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/saml-extensions" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified" Destination="http://localhost:8080/EidasNode/ServiceProvider" ForceAuthn="true" ID="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IsPassive="false" IssueInstant="2018-01-05T13:42:08.036Z" ProviderName="DEMO-SP-CA" Version="2.0">
@@ -217,7 +217,7 @@ Näidis 2 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kuj
 
 ### Autentimisvastus
 
-Õnnestunud või ebaõnnestunud autentimise tulemus saadetakse teenusepakkuja vastus URL'le tagasi (toodud teenusepakkuja metadata's) `SAMLResponse` parameetris (vt Näidis 3 ja 4). Kõigi parameetrite loetelu on toodud Tabelis 3.
+Õnnestunud või ebaõnnestunud autentimise tulemus saadetakse teenusepakkuja vastus URL'le tagasi (toodud teenusepakkuja metadata's) `SAMLResponse` parameetris. Kõigi parameetrite loetelu on toodud Tabelis 3.
 
 Tabel 3 - Autentimise vastuse parameetrid
 
@@ -227,7 +227,7 @@ Tabel 3 - Autentimise vastuse parameetrid
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
 
 
-Näidis 3. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
+Näidis 2. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
 
 ```xml
 <saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/SP/ReturnPage" ID="_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu" InResponseTo="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IssueInstant="2018-01-05T13:42:44.472Z" Version="2.0">
@@ -285,7 +285,7 @@ Näidis 3. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
 </saml2p:Response>
 ```
 
-Näidis 4 - Dekodeeritud `SAMLResponse` parameetri sisu Autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
+Näidis 3 - Dekodeeritud `SAMLResponse` parameetri sisu Autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
 
 ```xml
 <saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/EidasNode/ColleagueResponse" ID="_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI" InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY" IssueInstant="2018-01-05T13:42:11.944Z" Version="2.0">
