@@ -30,7 +30,8 @@ sh:
 - eIDAS-Node Demo Tools Installation and Configuration Guide
 - eIDAS-Node and SAML
 - eIDAS-Node Error and Event Logging
-- eIDAS-Node Error Codes
+- [eIDAS-Node Error Codes](https://ec.europa.eu/cefdigital/wiki/download/attachments/46992189/eIDAS-Node%20Error%20Codes.pdf?version=1&modificationDate=1507296786056&api=v2)
 
 ### Muu
 
+OASIS (2008) [Security Assertion Markup Language (SAML) V2.0 Technical Overview](http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html)
