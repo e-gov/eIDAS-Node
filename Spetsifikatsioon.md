@@ -8,7 +8,7 @@ Märkus. Lahtised küsimused on markeeritud sümbolitega `//`.
 
 # RIA eIDAS konnektorteenuse liidese spetsifikatsioon
 {: .no_toc}
-v 0.5
+v 0.3
 
 - TOC
 {:toc}
@@ -103,26 +103,24 @@ Joonis 2.
     - kui jah, siis luuakse sessioon
     - ning tagastatakse kasutajale esialgselt URL-lt soovitud sisu.
 
-## Vajalikud liidestamistööd teenusepakkujale
+### 4 Nõuded liituvale teenusepakkujale
 
-### Nõuded liituvale teenusepakkujale
-
-Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas (vt [eIDASprofiil](#eIDASprofiil)). eIDAS Node kasutab suhtlemiseks täiendavate kitsendustega [SAML 2.0] protokolli.
+Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas. eIDAS Node kasutab suhtlemiseks täiendavate kitsendustega SAML 2.0 protokolli. Vt [Viited](Viited).
 
 Kokkuvõtlikult peab teenusepakkuja:
 
-- pakkuma SAML metadata otspunkti teenust
+- pakkuma SAML metateabe otspunkti teenust
 - omama SAML päringute ja vastuste töötlemise võimekust.
 
 Vt lähemalt [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
 
-### Sõnumivahetusmeetod
+### 5 Sõnumivahetusmeetod
 
 Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud `HTTP POST` põhinevat sõnumivahetusmeetodit (vt. `HTTP POST binding` [SAML 2.0] standardikirjelduses - ptk 5.12).
 
-### Metadata otspunkt
+### 6 Metateave otspunkt
 
-Teenusepakkuja SAML metadata on XML dokument, mis sisaldab konnektorteenuse jaoks kogu ühendumiseks vajaliku info (vt Näidis 1). Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid. Metainfo on allkirjastatud.
+Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks kogu ühendumiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid. Metateave on allkirjastatud.
 
 Teenusepakkuja peab konnektoreenusele kättesaadavaks tegema oma metaandmed üle HTTPS protokolli.
 
@@ -178,10 +176,10 @@ Näidis 2 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kuj
                 <ds:DigestValue>Ux9px3sqV4ClQvz8SYaMCzAs4EHUc4jUVrmuDJwbF4iNzd5y2g/LJr9b4lZmU5JtVr5gXWW8ICYZZPo5dXx3PA==</ds:DigestValue>
             </ds:Reference>
         </ds:SignedInfo>
- <ds:SignatureValue>Vygk7AAi54eP6hDtpLK5h2ThcIPjYMuD2DGXITxKoSmQGuGu530VDe/VpwSmIOHHPgkDNLqYxtFufZ355I60281Zx/tHrjG2mMF6Njrm/a175zLl5TqOEhHcEj2PuWdlRFA7NI2eUttFNSKYry1K165dHZMZMsKmpl38IObSzifcExaZwaOoevmRmks53Y3A4bzYhBEKh5FtEjsEiLLDPhqX9z9eLp6iqGpbISv42FVq+2o0OGT+4w2ibWym4RON1HtsZS9BODH1EhIhDyKJzhrPBrOCn0qNGucXYy+5JcKeqwUMf2qClCBVO/Iwo3gnX+gPrBrYHH6Vc98JVJE2OZlRwly9gThOdbTZj/9JAeH82/CaJg4rK0aanr/tT39Rs0ASrmkjDeD2eVaTMvgV7hNKJv1qgJY/MJXOlv3No9CHD4PasPwJi57IS5VhllWVI8bek0aVnyOb8WvXFtEEKdlmzfoUa81ydolN6MnnjhSEIRoo7FCgwY9rNrBqhHuGBnzJkQIAovd7Ktc8T/zbhRVsaJBlNRX/5JEqhtR0CmHlB+rcMH0X1lrMTzZ+dELahCVvekdCeQ2qItN+rlwbQJGgKhFbQCaywLhjgyIysNlyKHwpX9PZCQOfKvOFTE65RxKQkj8fXkxoDwIf04kaRQViY8WnGowXzZwAwxBvhhA=</ds:SignatureValue>
+ <ds:SignatureValue>Vyg... </ds:SignatureValue>
         <ds:KeyInfo>
             <ds:X509Data>
-                <ds:X509Certificate>MIIFQTCCAykCBFTI+zMwDQYJKoZIhvcNAQENBQAwZTELMAkGA1UEBhMCQ0ExCzAJBgNVBAgMAkVV MQswCQYDVQQHDAJFVTELMAkGA1UECgwCU1AxDjAMBgNVBAsMBVNUT1JLMR8wHQYDVQQDDBZzcC1j YS1kZW1vLWNlcnRpZmljYXRlMB4XDTE1MDEyODE1MDczMVoXDTE2MDEyODE1MDczMVowZTELMAkG A1UEBhMCQ0ExCzAJBgNVBAgMAkVVMQswCQYDVQQHDAJFVTELMAkGA1UECgwCU1AxDjAMBgNVBAsM BVNUT1JLMR8wHQYDVQQDDBZzcC1jYS1kZW1vLWNlcnRpZmljYXRlMIICIjANBgkqhkiG9w0BAQEF AAOCAg8AMIICCgKCAgEAlBqiPPAgV/fMWR5xyXapUGiQ9bmbHhl9wUsthn4/NaQjuoY4q32iRWvy 6MWQbtxrfJ4NBlih4n4ZaCD0PiFxK9AZU2iWTqqFJd4Nol+0TB8YOP81a8XOLiu1E0gwjEe71Orc ppw6ZnALT63pDZbGmSfjGzdS0TurUkHNqLKcmanPJjaPQMajHwFlCteiswMrSunw4+wTcHgIl028 uoUx72sh/O69huPHbf1295HOq+pfU9edsk5r/Vxi3bjv6sPutB3jZjMYHfdioyJe6F0exggN+LqL K1WiT2k/RAkoSSQmC1DQqi3vbxVL4WocGJYRilPjhaEfhiEKv37FZ6WV43U5kd8V3tt/YcFmuEMK fXKKPQwZTZn1GXkSWHnhTDO9zBA8nIIljoq3Ue5DuUhT64GEGqGDvoJoAYtykecj+rxfvN2dYjKh bIoNpjDrkdlDq4xwf/wXRhTIWyDRCzLgU4vxgXJtBKrk4O5gI1prUjPtx6+rq7csb2DShDn+HFpd 5rmGK4iPn9+ss6X3yzls1NBQaL4O1MI8TSDTgZ+LuWzSqlASOwFEmoQWGZcHo5/ZxXBrYuQ7sw2x btmfvHbmvxpO/9U9KoKNyjrSp0jcFfRKf3iNvRU+iYL0AzgP5dLBQPWVxjAFOGjwNkju1VAtj/3H Mu1aBwbyKmghlQwW5DsCAwEAATANBgkqhkiG9w0BAQ0FAAOCAgEARe50F20MJPAqcyNiN3+XQizn yeZJ1MlJnSrHqq1yiBPFvD5fIKLAC07kPrSC9fnNQnt6J79mCA9IRJwVDYOs4SDRrwTikVmk1eVd 1m8fxvsJ8Yfzh7wqbC6Maf7bWeLqFDeq8EgycOrubROvRIuENbQQmWJfoe8iHx27XcxJPehPninY gGfPbOKHUd/08nzI3gnJnUMGvG9hNORqloM20wajTW3fC6xeiRqg/21S51tMW8ETInejNIE6NY+B 9r8E4DpRLigxc0XjzAdC4L80/Al+ImVOwGdpevomWJ1FWarINVtSEw2cDzvnQ+moHPM0Yk9wran0 6yx6uQlxo/7MZ+mG7wulRQ5vGWducw+ktM7tUodlebTI01iG09+9tadEQp/ryilNkbw+wT+xPVuF fCRfhqLxnjvuN6FeJF76/7y7D5RmBG5wBHo8qWnyHVzHPSGvTxZPrLupGB9vzxTbPt6pbDNv3VVA ky0/zpqw1vs0P3rmEb5KsFo9dwCAQELVCiqDle9xkGc0Jr6eCS6W2qMQ4QF4eUHVD8q5tNr0dhZA 3nsjLnyuvcWFiTdZnMOsozXfRiN3AKIIkxML3t7pp6VbKg50LgZGv3GvbbR+HJsRCACxHm88PSxu rfNo9ZTIPz25yJANDcHzWhQXWxJC3gcYvyW8HOvSLVlAzUFuCcE=</ds:X509Certificate>
+                <ds:X509Certificate>MII... </ds:X509Certificate>
             </ds:X509Data>
         </ds:KeyInfo>
     </ds:Signature>
@@ -250,10 +248,10 @@ Näidis 3. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
                 <ds:DigestValue>t9kt+8h5m3r0reIBKgy5KmfRmmQoXxQNpgSMMdn/PD2nb87VVFGqHP1qKEUMmXAjnwLmZzEfydRoG/IeUXbGkg==</ds:DigestValue>
             </ds:Reference>
         </ds:SignedInfo>
-        <ds:SignatureValue>TnUoQu+qzCQCw7Ka9QeVYG+iFPmpG2k8JBuAJb3ndzzHnJAiKXEajRWG6YNx6ryPRQWboxMeo2OSM6lzS+5tYQuSV/Tmfty+Xl08WkhNlEUxJSNE90jit6gUU/ChmpZ0lI4y+hYwsU93Phg/EE6buVltn7MhoNB9LSIDlOFPDt9iZKRNjPIXlQLNQtxL62RDN8+qUVeSSBpcmiTpqXaR6ki5noOL5xokuV4/h3MSd1QkzwxmwP7EYX6nJlcN80UEhO0Thp1xlIbuEBdhRT1FnF1ZkQN5rnmzmJTK9BnXbk45g4MWK76IoclZmZS07qYiZRZ4uZecxFrnhR/4x3g+H53mdMBYlMSRYPHH803U1Eu/b08yMAvz7A/NprO7Zky3304HOSNdv0jJpddxFkYtiEqvHS6jCxQQ+vfVdWpw5CMe+JHAzJr5Z3HoJDVjyRC2HakypmAXS/zLYRulC8aPj4zCp6r/2TWrISArzTCdlUnh/Y5Ygv1kpdAAfyD3xoU+vePtxZTu2OMiDicaWhc4phU5f+ScyNbbIUFJVpVs9M3Qj+eiphY23hAcc7Lk5fIO4+aKarCy8tttVDrWJh4MvR7MbUK8UQUTxiK3V/ihOsV/hKN+flCKs1Qr8CUD6HSM3XUbKIJRmWMQVyV1EYlqK2BhOsEje6dcpEeYZAmVA+0=</ds:SignatureValue>
+        <ds:SignatureValue>TnU... </ds:SignatureValue>
         <ds:KeyInfo>
             <ds:X509Data>
-                <ds:X509Certificate>MIIFTTCCAzUCBFTI/IgwDQYJKoZIhvcNAQENBQAwazELMAkGA1UEBhMCQ0ExCzAJBgNVBAgMAkVV MQswCQYDVQQHDAJFVTEOMAwGA1UECgwFU1BFUFMxDjAMBgNVBAsMBVNUT1JLMSIwIAYDVQQDDBlz cGVwcy1jYS1kZW1vLWNlcnRpZmljYXRlMB4XDTE1MDEyODE1MTMxMloXDTE2MDEyODE1MTMxMlow azELMAkGA1UEBhMCQ0ExCzAJBgNVBAgMAkVVMQswCQYDVQQHDAJFVTEOMAwGA1UECgwFU1BFUFMx DjAMBgNVBAsMBVNUT1JLMSIwIAYDVQQDDBlzcGVwcy1jYS1kZW1vLWNlcnRpZmljYXRlMIICIjAN BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAhFXC/GDKjHA0aXwU+xIv+2GyfSjQ2L1ZS1asC5AY OLa1PC2TWiljbOj1vRXGlNXG4ue91nQkpMBNg3nMmZtdhP2vfEtT+9V2INQR+1aQ8plPGWNIOX1O 5NZ/F2M/daAZ2K3Y+WSKLin7FCdBL6Bw0IGFmQUeblIrumMoeRpQhXBfrDHyFW/ozNeB6M9x2bTD mk/hjJO8l/auxsPjYzU2+rENS+kEKr10HRy8MTqtfcqVft5blCAUOeDctvsf/5s37JK2MBGjgX6X mchLQylOpUZrBo7cNTfc77RjobdgN5rWUyZ8WeEYHtfyUo+nF7DHP2euiuhueFW7Gind+MrcAudI JI5r27x4jhneyul1a5OWbGUP84lOoIpzCkvE0w7HbpItDxbnuX09KBmm8lKUingB5CaqG5D+APCW T3emo1HIkLX3Jq8OLXNu7c9jPB1xGk4b6ZC2fhCLwvv37bAahWZ81WkqzWLaZpyAKZ+vRCa7WMtt HfhVEJmEU/wCgfvv2l1mvCz61H6AQWzEd8ZLwiZnljgDEtxq8sRNZHQVPvBnC9TKyzy6D1/+sZ7R 8p4AxFHX5UxG+qEtEiz5qXFswXU8gBsKpDO9cG6n7C8Bg8uhsx1TfWJeoe1mtJpKTAvJbqE/O2ak QMHu0C2D+fou3jzWjoDfrMJi+9CVqsyICRcCAwEAATANBgkqhkiG9w0BAQ0FAAOCAgEAbywum+pY trXnRmtI2zrun7Jum7UpxSlVjW1MUvt0vZHNgunAkDivF1eOXsXQR1boXdjsuvRw3ERMhdpibn7I mvFAmMrYMez5PNEusqQ+pzIz2OPa7JIjemx6emZToUKhJ5iqjDlL+J5O7ov6+FrjjlRjfPsMWJdC zu3Nk0TBX1pM2PWDs2NoITCOjMI8jv+Ur9gqH8mopYf1SF94RjNKqiSQxAeXr0BM6aWbZzeTXP5z Mwlbm0icqAF26YMZgEypCR3UhJmlhgFVd/fPuao6laWS5tsKoYhGXz7llheY1gPNVp28pE6PkD3S egbZu2RM9iry0G+v46O+gwYDIuXCyA9BRagiSek4NN9NoHFrLEtbN5PlxcV7UavIxVc+ql/DTq/9 2d/ENzay/MV1kF2ZHJz+TeOEOWXe0mErN2IDuDrJ1oXXAJZMsV3cn/EUn2NZ1d8mhQB1DpPIzWck 8PKzzo8+EEWMxYrL3vjrH9SPE0QW2TnMovSvcomg9Zqyd79NCpJkKCt2FKsBziKBcIcjoFj98+9B kXexiIiotyQKHKJSScDy6ruhidU5C7jinwrWDhTiEhkpycKviqUm40P3ZCEbFhy0IasjV+pN8edd gf4TBex/kF5TeuRD0fBZaQijozdeVlx4lej1SiiUZg+bONGvmrJrkLLlrrjft/7NdP4=</ds:X509Certificate>
+                <ds:X509Certificate>MII... </ds:X509Certificate>
             </ds:X509Data>
         </ds:KeyInfo>
     </ds:Signature>
@@ -302,7 +300,7 @@ Näidis 4 - Dekodeeritud `SAMLResponse` parameetri sisu Autentimise ebaõnnestum
                     <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
                 </ds:Transforms>
                 <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-                <ds:DigestValue>RWmPm/iwS7R0wLsKEMT23etASwrZOIGlIDNAPK/6AbbXDo14308kMGknkluHuFRWnz3BQBeJMCpmFgZkfKcp3w==</ds:DigestValue>
+                <ds:DigestValue>RWmP... </ds:DigestValue>
             </ds:Reference>
         </ds:SignedInfo>
         <ds:SignatureValue>Vsv... </ds:SignatureValue>
@@ -389,6 +387,7 @@ Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Tood
 
 | versioon, kuupäev | muudatus |
 |-------------------|---------------|
+| 0.3, 29.01.2018   | Korrastus |
 | 0.2, 22.01.2018   | Lisatud toetatud riikide nimekiri |
 | 0.1, 16.01.2018   | Esimene versioon. |
 
