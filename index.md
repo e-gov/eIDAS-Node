@@ -39,9 +39,11 @@ eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 
 [Dokumentatsiooni täiendamise juhend](Dokujuhend)
 
+---- 
+
 🗑  Arhiiv
 
-Mitmesugused konnektorteenuse arendamise käigus loodud dokumendid;   nendega tutvumine ei ole liidestujale otseselt vajalik.
+Aktuaalsuse kaotanud teave.
 
 [eIDAS päringuvoog - Demo SP - HTTP Redirect](Vookirjeldus-1)<br>
 [eIDAS päringuvoog - Demo SP - HTTP POST](Vookirjeldus-2)<br>
