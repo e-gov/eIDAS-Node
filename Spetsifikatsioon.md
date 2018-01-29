@@ -103,7 +103,7 @@ Joonis 2.
     - kui jah, siis luuakse sessioon
     - ning tagastatakse kasutajale esialgselt URL-lt soovitud sisu.
 
-### 4 Nõuded liituvale teenusepakkujale
+## 4 Nõuded liituvale teenusepakkujale
 
 Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas. eIDAS Node kasutab suhtlemiseks täiendavate kitsendustega SAML 2.0 protokolli. Vt [Viited](Viited).
 
@@ -114,11 +114,11 @@ Kokkuvõtlikult peab teenusepakkuja:
 
 Vt lähemalt [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
 
-### 5 Sõnumivahetusmeetod
+## 5 Sõnumivahetusmeetod
 
 Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud `HTTP POST` põhinevat sõnumivahetusmeetodit (vt. `HTTP POST binding` [SAML 2.0] standardikirjelduses - ptk 5.12).
 
-### 6 Metateave otspunkt
+## 6 Metateabe otspunkt
 
 Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks kogu ühendumiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid. Metateave on allkirjastatud.
 
@@ -126,7 +126,7 @@ Teenusepakkuja peab konnektoreenusele kättesaadavaks tegema oma metaandmed üle
 
 Täpsemad nõuded metadata otspunktile on dokumendis [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
 
-### Autentimispäring
+## 7 Autentimispäring
 
 Nõutud parameetrite loetelu HTTP POST päringus on toodud Tabelis 1.
 
@@ -215,7 +215,7 @@ Näidis 1 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kuj
 </saml2p:AuthnRequest>
 ```
 
-### Autentimisvastus
+## 8 Autentimisvastus
 
 Õnnestunud või ebaõnnestunud autentimise tulemus saadetakse teenusepakkuja vastus URL'le tagasi (toodud teenusepakkuja metadata's) `SAMLResponse` parameetris. Kõigi parameetrite loetelu on toodud Tabelis 3.
 
@@ -339,7 +339,7 @@ Näidis 3 - Dekodeeritud `SAMLResponse` parameetri sisu Autentimise ebaõnnestum
 </saml2p:Response>
 ```
 
-## Veaolukordade käsitlemine
+## 9 Veaolukordade käsitlemine
 
 Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahenduse dokumentatsioonis (vt [eIDAS-veakoodid]).
 
@@ -351,7 +351,7 @@ Tabel 4 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatav
 
 // TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
 
-## Toetatud riikide nimekiri
+## 10 Toetatud riikide nimekiri
 
 Nimekiri riikidest, kelle autentimisteenuseid RIA eIDAS konnektorteenus vahendab, on masinloetavas vormingus avaldatud aadressil  
 
