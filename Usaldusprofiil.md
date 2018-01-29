@@ -68,11 +68,13 @@ Profiili koostamisel on arvestatud eIDAS krüptonõuetega ([eIDAS krüpto]) ja R
     - sertide ristkasutus:
         - metateabe ja SAML-sõnumi võib allkirjastada sama serdiga
     - väljaandja:
-        - SK ID Solutions AS väljaantud sert
+        - soovitame SK ID Solutions AS väljaantud serte; muu väljaandja serdi kasutamine kooskõlastada RIA-ga
+            - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima. 
     - usaldusankur:
         - SK ID Solutions AS juursert
     - serdi parameetrid:
         - asutusele antud, KLASS3 sert
+            - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima. Dokument võib selles osas täpsustuda.
 5. räsialgoritm
     - toetama peab algoritme:
         - `http://www.w3.org/2001/04/xmlenc#sha512` (peamine)
@@ -81,9 +83,12 @@ Profiili koostamisel on arvestatud eIDAS krüptonõuetega ([eIDAS krüpto]) ja R
     - vahetatavad SAML-sõnumid allkirjastatakse
     - toetama peab algoritme:
         - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` (peamine)
+        - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` (alternatiiv)
             - võtmepikkus: 384 bitti
-        - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` (alternatiiv) Märkus. eIDAS krüptonõuetes esineb nimetuse RSASSA-PSS all   
+        - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` (alternatiiv)
+        - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` (alternatiiv)
             - võtmepikkus: 4096 bitti
+            - Märkus. eIDAS krüptonõuetes esineb RSA-MGF1 nimetuse RSASSA-PSS all   
 7. krüpteerimine
     - teenusepakkuja poolt konnektorteenusele saadetavat SAML-sõnumit ei krüpteerita
     - konnektorteenus krüpteerib teenusepakkujale saadetava SAML-sõnumi
@@ -154,7 +159,9 @@ Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metatea
 
 - `alg:SigningMethod` - toetatavad allkirjaalgoritmid
     - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512`
-    - `http://www.w3.org/2001/04/xmlenc#sha256`
+    - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256`
+    - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1`
+    - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1`
 
 - `md: IDPSSODescriptor` - “SSO võimekusega IdP” - kirjeldatava olemi “roll”
     - `WantAuthnRequestsSigned` - nõuab, et autentimispäringu sõnum p.o allkirjastatud
@@ -213,7 +220,9 @@ Märkus. Aluseks on võetud eIDAS konnektorteenuse tarkvaraga kaasas oleva liide
 
 - `alg:SigningMethod` - toetatavad allkirjaalgoritmid
     - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512`
-    - `http://www.w3.org/2001/04/xmlenc#sha256`
+    - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256`
+    - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1`
+    - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1`
 
 - `md: SPSSODescriptor` - “SSO võimekusega teenusepakkuja” - kirjeldatava olemi “roll”
     - `AuthnRequestsSigned` - autentimispäringusõnum allkirjastatakse
