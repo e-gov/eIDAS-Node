@@ -25,7 +25,7 @@ RIA eIDAS konnektorteenus on Eesti riigiasutustele mõeldud vahendusteenus eIDAS
 
 Eestis pakub eIDAS Node võrguga liitumiseks konnektorteenust RIA.
 
-<img src='img/SUURPILT.PNG' style='width:600px'>
+<img src='img/SUURPILT.PNG' style='width:700px'>
 
 Joonis 1. eIDAS taristu
 
@@ -225,7 +225,7 @@ Tabel 3 - Autentimisvastuse parameetrid
 
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 |-------------|:-------------:|-----|
-| `SAMLResponse` | Jah | Parameeter, mis sisaldab Bas64 kodeeritud SAML vormingus autentimise vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
+| `SAMLResponse` | Jah | Parameeter, mis sisaldab Base64 kodeeritud SAML vormingus autentimise vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
 
 
