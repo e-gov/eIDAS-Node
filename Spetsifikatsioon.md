@@ -17,7 +17,7 @@ v 0.3
 
 Käesolev juhend on suunatud riigiasutustele (edaspidi *teenusepakkuja*), kes soovivad välisriikide kodanikke oma infosüsteemi tarvis tuvastada otse eIDAS konnektorteenusega ühendudes. Juhend kirjeldab nõuded, isikustuvastusprotsessi tehnilisi detaile ja vajalikke arendustegevusi riikliku konnektorteenuesga liidestumiseks.
 
-## 2 Suur pilt
+## 2 Kontekst
 
 RIA eIDAS konnektorteenus on Eesti riigiasutustele mõeldud vahendusteenus eIDAS-autentimisvõrku. eIDAS-autentimisvõrk on Euroopa Liidu liikmesriikide elektroonilist Autentimist pakkuv ühisteenus. Võrk koosneb turvalise kanali abil ühendatud riiklikest sõlmpunktidest (ingl _eIDAS Node_). Sõlmpunktid vahetavad omavahel iskutuvastuspäringuid ja kinnitusi vastava riigi kodaniku identiteedi kohta. Iga Euroopa Liidu liikmesriik opereerib vähemalt ühte riiklikku sõlmpunkti ja pakub kohalikele teenusepakkujatele välisriigi kodenike tuvastamiseks konnektorteenust.
 
@@ -144,19 +144,19 @@ Tabel 2 - SAML `AuthnRequest` parameetrid
 
 | XML elemendi/atribuudi nimi       | Kohustuslik           | Selgitus  |
 | ------------- |:-------------:| :-----|
-| /saml2p:AuthnRequest/@Destination	| Jah | Siseriikliku eIDAS Node-i SSO otspunkti aadress. Bindingule vastavad otspunktide aadressid on loetletud eIDAS Node metadatas (/md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService) |
-| /saml2p:AuthnRequest/@ForceAuthn | Jah | Konstantantne väärtus: 'true' |
-| /saml2p:AuthnRequest/@ID | Jah | Unikaalne päringu XML ID. Peab vastama NCName kitsendustele (https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName) |
-| /saml2p:AuthnRequest/@IsPassive | Jah | Konstantne väärtus: 'false' |
-| /saml2p:AuthnRequest/@IssueInstant | Jah | Päringu koostamise aeg. |
-| /saml2p:AuthnRequest/@ProviderName | Jah | Teenusepakkuja nimetus. Lepitakse kokku RIA-ga. |
-| /saml2p:AuthnRequest/@Version | Jah | Konstantne väärtus: '2.0' |
-| /saml2p:AuthnRequest/saml2:Issuer | Jah | Teenusepakkuja metadatale viitav URL. |
-| /saml2p:AuthnRequest/ds:Signature/* | Jah | Teenusepakkuja privaatvõtmega antud allkiri ja sellega seotud detailid. Toetatud krüptoalgoritmid on loetletud eIDAS Node metadatas (/md:EntityDescriptor/md:Extensions/alg:SigningMethod/*) |
-| /saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType | Jah | Konstantne väärtus: 'public' (avaliku sektori asutus) |
-| /saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/* | Jah | Kirjeldab ära, milliseid isikuandmete atribuutide soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt /md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired = 'true'` |
-| /saml2p:AuthnRequest/saml2p:NameIDPolicy | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat) |
-| /saml2p:AuthnRequest/saml2p:RequestedAuthnContext | Jah |	// Variandid. Vajab analüüsi // |
+| `/saml2p:AuthnRequest/@Destination`	| Jah | Siseriikliku eIDAS Node-i SSO otspunkti aadress. Bindingule vastavad otspunktide aadressid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService`) |
+| `/saml2p:AuthnRequest/@ForceAuthn` | Jah | Konstantne väärtus: `true` |
+| `/saml2p:AuthnRequest/@ID` | Jah | Unikaalne päringu XML ID. Peab vastama NCName kitsendustele (`https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName`) |
+| `/saml2p:AuthnRequest/@IsPassive` | Jah | Konstantne väärtus: `false` |
+| `/saml2p:AuthnRequest/@IssueInstant` | Jah | Päringu koostamise aeg. |
+| `/saml2p:AuthnRequest/@ProviderName` | Jah | Teenusepakkuja nimetus. Lepitakse kokku RIA-ga. |
+| `/saml2p:AuthnRequest/@Version` | Jah | Konstantne väärtus: `2.0` |
+| `/saml2p:AuthnRequest/saml2:Issuer` | Jah | Teenusepakkuja metadatale viitav URL. |
+| `/saml2p:AuthnRequest/ds:Signature/*` | Jah | Teenusepakkuja privaatvõtmega antud allkiri ja sellega seotud detailid. Toetatud krüptoalgoritmid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:Extensions/alg:SigningMethod/*`) |
+| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType` | Jah | Konstantne väärtus: `public` (avaliku sektori asutus) |
+| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuutide soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true` |
+| `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (`/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat`) |
+| `/saml2p:AuthnRequest/saml2p:RequestedAuthnContext` | Jah |	// Variandid. Vajab analüüsi // |
 
 Näidis 1 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kujul)
 
