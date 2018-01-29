@@ -65,14 +65,29 @@ Profiili koostamisel on arvestatud eIDAS krüptonõuetega ([eIDAS krüpto]) ja R
     - osapool võib metateavet puhverdada, kuni `md:EntityDescriptor` atribuudis `validUntil` määratud ajamomendini
     - metadatas tuleb määrata `validUntil` väärtus. Soovitatav väärtus on 24 h. 
 - serdid
-    - SK ID Solutions AS väljaantud sert
-    - usaldusankruks SK ID Solutions AS juursert
+    - sertide ristkasutus:
+        - metateabe ja SAML-sõnumi võib allkirjastada sama serdiga; krüpteerimine eraldi serdiga 
+    - väljaandja:
+        - SK ID Solutions AS väljaantud sert
+    - usaldusankur:
+        - SK ID Solutions AS juursert
+    - serdi parameetrid:
+        - asutusele antud, klassi 3 sert
 - räsialgoritm
-    -     
-- allkirjastamisalgoritm
-    - ettepanek on, et  lepime kokku 1 peamise ja 1 alternatiivse
-- krüpteerimisalgoritm
-    - ettepanek on, et  lepime kokku 1 peamise ja 1 alternatiivse
+    - toetama peab algoritme:
+        - `http://www.w3.org/2001/04/xmlenc#sha512` (peamine)
+        - `http://www.w3.org/2001/04/xmlenc#sha256` (alternatiiv)   
+- allkirjastamine
+    - vahetatavad SAML-sõnumid allkirjastatakse
+    - toetama peab algoritme:
+        - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` (peamine)
+        - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` (alternatiiv) Märkus. eIDAS krüptonõuetes esineb nimetuse RSASSA-PSS all   
+- krüpteerimine
+    - teenusepakkuja poolt konnektorteenusele saadetavat SAML-sõnumit ei krüpteerita
+    - konnektorteenus krüpteerib teenusepakkujale saadetava SAML-sõnumi
+    - toetama peab algoritme:
+        - `http://www.w3.org/2009/xmlenc11#aes256-gcm` (peamine)
+        - `http://www.w3.org/2009/xmlenc11#aes128-gcm` (alternatiiv)   
 
 ## Otspunktid
 
