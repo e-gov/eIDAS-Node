@@ -387,7 +387,7 @@ Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Tood
 
 ## Muutelugu
 
-| versioon, kuupäev | muudatus |
+| Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
 | 0.3, 29.01.2018   | Korrastus |
 | 0.2, 22.01.2018   | Lisatud toetatud riikide nimekiri |
