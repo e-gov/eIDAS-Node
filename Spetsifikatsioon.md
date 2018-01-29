@@ -137,7 +137,7 @@ Nõutud parameetrite loetelu HTTP POST päringus on toodud Tabelis 1.
 Tabel 1 - Päringu parameetrid
 
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
-| ------------- |:-------------:| -----:|
+|:-------------:|:-------------:|:-----:|
 | `SAMLRequest` |	Jah | SAML protokolli spetsiifiline parameeter, mis sisaldab Base64 kodeeritud kujul SAML XML päringut (`AuthnRequest` koos detailidega). `AuthnRequest` päringus olevate kohustuslike elementide ja kitsenduste loetelu on toodud tabelis 2.  SAML `AuthnRequest` peab olema allkirjastatud teenusepakkuja privaatvõtmega ja moodustatud vastavalt eIDAS nõuetele.|
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille eIDAS Node vastuses töötlemata tagasi peegeldab. |
 | `country` |	Jah | Kodaniku riigikood, kelle isikut tuvastatakse. ISO 3166-1 alpha-2 standardi alusel. |
@@ -145,7 +145,7 @@ Tabel 1 - Päringu parameetrid
 Tabel 2 - SAML `AuthnRequest` parameetrid
 
 | XML elemendi/atribuudi nimi       | Kohustuslik           | Selgitus  |
-| ------------- |:-------------:| :-----|
+|:-------------:|:-------------:|:----:|
 | `/saml2p:AuthnRequest/@Destination`	| Jah | Siseriikliku eIDAS Node-i SSO otspunkti aadress. Bindingule vastavad otspunktide aadressid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService`) |
 | `/saml2p:AuthnRequest/@ForceAuthn` | Jah | Konstantne väärtus: `true` |
 | `/saml2p:AuthnRequest/@ID` | Jah | Unikaalne päringu XML ID. Peab vastama NCName kitsendustele (`https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName`) |
@@ -224,7 +224,7 @@ Näidis 1 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kuj
 Tabel 3 - Autentimisvastuse parameetrid
 
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
-| ------------- |:-------------:| -----:|
+|:-------------:|:-------------:|:-----:|
 | `SAMLResponse` | Jah | Parameeter, mis sisaldab Bas64 kodeeritud SAML vormingus autentimise vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
 
@@ -348,7 +348,7 @@ Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahen
 Tabel 4 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatavatest vigadest
 
 | Veakood | Lühikirjeldus            | Selgitus  |
-| ------------- |:-------------:| -----:|
+|:-------------:|:-------------:|:-----:|
 | 202007 | Isiku nõusolek puudub | Isik keeldus autentimise jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
 
 // TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
@@ -388,7 +388,7 @@ Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Tood
 ## Muutelugu
 
 | versioon, kuupäev | muudatus |
-|-------------------|---------------|
+|:-----------------:|:--------------:|
 | 0.3, 29.01.2018   | Korrastus |
 | 0.2, 22.01.2018   | Lisatud toetatud riikide nimekiri |
 | 0.1, 16.01.2018   | Esimene versioon. |
