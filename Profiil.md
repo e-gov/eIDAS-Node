@@ -148,7 +148,7 @@ Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metatea
 
 - `ds:Signature` - kirjeldus on allkirjastatud XML allkirjaga
     - `ds:CanonicalizationMethod` - kanoniseerimisalgoritm - `xml-exc-c14n`
-    - `ds:SignatureMethod` - allkirjaalgoritm on `rsa-sha521`
+    - `ds:SignatureMethod` - allkirjaalgoritm on `rsa-sha512`
     - `ds:Transform` - _enveloped signature_, algoritm `xml-exc-c14n`
     - `ds:DigestMethod` - räsialgoritm `xmlenc#sha512`
     - `ds:Digestvalue` - räsiväärtus
@@ -185,7 +185,7 @@ Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metatea
     - `unspecified` - “tähenduseta” element, vt http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf, jaotis 8.3.1
 
 - `md:SingleSignOnService`
-atribuutidega `Binding` ja `Location` määratakse, et konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider` ja saatmisviisiks on <strike>kas</strike> `HTTP-POST` <strike>või `HTTP-Redirect`</strike>
+atribuutidega `Binding` ja `Location` määratakse, et konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider`.  Saatmisviisiks on HTTP `POST` (HTTP Redirect ei ole toetatud).
 
 - `saml2:Attribute`
 atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuudid, mida konnektorteenuse kaudu saab küsida (40+)
@@ -208,7 +208,7 @@ Märkus. Aluseks on võetud eIDAS konnektorteenuse tarkvaraga kaasas oleva liide
 
 - `ds:Signature` - kirjeldus on allkirjastatud XML allkirjaga
     - `ds:CanonicalizationMethod` - kanoniseerimisalgoritm on `xml-exc-c14n`
-    - `ds:SignatureMethod` - allkirjaalgoritm on `rsa-sha521`
+    - `ds:SignatureMethod` - allkirjaalgoritm on `rsa-sha512`
     - `ds:Transform` - _enveloped signature_, algoritm `xml-exc-c14n`
     - `ds:DigestMethod` - räsialgoritm `xmlenc#sha512`
     - `ds:Digestvalue` - räsiväärtus
@@ -259,6 +259,6 @@ Märkus. Aluseks on võetud eIDAS konnektorteenuse tarkvaraga kaasas oleva liide
 
 2 Vrdl Soome avaliku sektori keskse autentimisteenuse Suomi.fi-tunnistus juhised teenusepakkujate SAML metateabele: [https://esuomi.fi/palveluntarjoajille/tunnistus/tekninen-aineisto/asiointipalvelun-metadatatiedot/](https://esuomi.fi/palveluntarjoajille/tunnistus/tekninen-aineisto/asiointipalvelun-metadatatiedot/).
 
-3 Alternatiiv: teenusepakkuja metateabe loetakse konnektorteenusesse sisse lokaalsest failist. See eeldab metateabe _out of band_ (muu kanali kaudu) toimetamist RIA-sse. Eelistame transporti üle HTTPS-i.
+3 Alternatiiv võiks olla, et teenusepakkuja metateabe loetakse konnektorteenusesse sisse lokaalsest failist. See eeldaks metateabe _out of band_ (muu kanali kaudu) toimetamist RIA-sse. Eelistame transporti üle HTTPS-i.
 
 
