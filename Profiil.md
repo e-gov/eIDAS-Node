@@ -111,7 +111,7 @@ Joonisel 1 on kujutatud liidestuva süsteemi seisukohalt olulised metateabe ja S
     - metateabe otspunkt `/Metadata`
     - SAML autentimisvastussõnumite vastuvõtupunkt `/ReturnPage`.
 
-Kõigi otspunktide URL-id on seadistatavad. Konkreetsed URL-is määravad osapooled metateabes.
+Kõigi otspunktide URL-id on seadistatavad. Konkreetsed URL-id määravad osapooled metateabes.
 
 <img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:500px;'>
 
@@ -132,7 +132,7 @@ Autentimispäringu töötlemisel:
 Autentimisvastuse töötlemisel:
 7. Sihtriigi vahendusteenusest tulev päring võetakse vastu, kontrollitakse ärireeglite vastu ja moodustatakse uus vastus, mis on allkirjastatud konnektorteenuse enda privaatvõtmega. NB! Allkirja algoritm otsustatakse konnektorteenuse seadetes oleva algoritmi alusel.
 8. Konnektorteenus, enne SAML autentimisvastussõnumi saatmist, teeb päringu Teenusepakkuja metaandmete otspunkti `/Metadata`.
-9. Konnektorteenus saadab SAML autentimisvastussõnumi Teenusepakkujai otspunkti `/ReturnPage`.
+9. Konnektorteenus saadab SAML autentimisvastussõnumi Teenusepakkuja otspunkti `/ReturnPage`.
 10. Teenusepakkuja teeb päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (sarnaselt autentimispäringu töötlemise p 6).
 
 ## eIDAS konnektorteenuse metateave
