@@ -219,7 +219,7 @@ Näidis 1 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kuj
 
 ## 8 Autentimisvastus
 
-Teave autentimise tulemuse kohta saadetakse teenusepakkujale tagasi autentimisvastuses. Eduka autentimise tulemuse kohta autentimise fakti kirjeldus ja autenditud isiku kohta kindlakstehtud andmed. Ebaeduka autentimise kohta veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL on määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
+Autentimise tulemuse kohta saadetakse teenusepakkujale autentimisvastus. Eduka autentimise korral on autentimisvastuses andmed autentimistoimingu ja autenditud isiku kohta. Ebaeduka autentimise korral saadetakse veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL peab olema määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
 
 Autentimisvastuses tagastatakse järgmised andmed (tabel 3).
 
