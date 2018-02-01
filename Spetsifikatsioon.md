@@ -219,7 +219,9 @@ Näidis 1 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kuj
 
 ## 8 Autentimisvastus
 
-Õnnestunud või ebaõnnestunud autentimise tulemus saadetakse teenusepakkuja vastus URL'le tagasi (toodud teenusepakkuja metadata's) `SAMLResponse` parameetris. Kõigi parameetrite loetelu on toodud Tabelis 3.
+Teave autentimise tulemuse kohta saadetakse teenusepakkujale tagasi autentimisvastuses. Eduka autentimise tulemuse kohta autentimise fakti kirjeldus ja autenditud isiku kohta kindlakstehtud andmed. Ebaeduka autentimise kohta veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL on määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
+
+Autentimisvastuses tagastatakse järgmised andmed (tabel 3).
 
 Tabel 3 - Autentimisvastuse parameetrid
 
