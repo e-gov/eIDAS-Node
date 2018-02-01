@@ -15,13 +15,13 @@ v 0.3
 
 ## 1 Ülevaade
 
-Käesolev juhend on suunatud riigiasutustele (edaspidi *teenusepakkuja*), kes soovivad välisriikide kodanikke oma infosüsteemi tarvis tuvastada otse eIDAS konnektorteenusega ühendudes. Juhend kirjeldab nõuded, isikustuvastusprotsessi tehnilisi detaile ja vajalikke arendustegevusi riikliku konnektorteenuesga liidestumiseks.
+Käesolev juhend on suunatud riigiasutustele (edaspidi *teenusepakkuja*), kes soovivad välisriikide kodanikke oma infosüsteemi tarvis tuvastada otse eIDAS konnektorteenusega ühendudes. Juhend kirjeldab nõuded, isikustuvastusprotsessi tehnilisi detaile ja vajalikke arendustegevusi riikliku konnektorteenusega liidestumiseks.
 
 Vt ka: [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil)
 
 ## 2 Kontekst
 
-RIA eIDAS konnektorteenus on Eesti riigiasutustele mõeldud vahendusteenus eIDAS-autentimisvõrku. eIDAS-autentimisvõrk on Euroopa Liidu liikmesriikide elektroonilist autentimist pakkuv ühisteenus. Võrk koosneb turvalise kanali abil ühendatud riiklikest sõlmpunktidest (ingl _eIDAS Node_). Sõlmpunktid vahetavad omavahel iskutuvastuspäringuid ja kinnitusi vastava riigi kodaniku identiteedi kohta. Iga Euroopa Liidu liikmesriik opereerib vähemalt ühte riiklikku sõlmpunkti ja pakub kohalikele teenusepakkujatele välisriigi kodenike tuvastamiseks konnektorteenust.
+RIA eIDAS konnektorteenus on Eesti riigiasutustele mõeldud vahendusteenus eIDAS-autentimisvõrku. eIDAS-autentimisvõrk on Euroopa Liidu liikmesriikide elektroonilist autentimist pakkuv ühisteenus. Võrk koosneb turvalise kanali abil ühendatud riiklikest sõlmpunktidest (ingl _eIDAS Node_). Sõlmpunktid vahetavad omavahel isikutuvastuspäringuid ja kinnitusi vastava riigi kodaniku identiteedi kohta. Iga Euroopa Liidu liikmesriik opereerib vähemalt ühte riiklikku sõlmpunkti ja pakub kohalikele teenusepakkujatele välisriigi kodanike tuvastamiseks konnektorteenust.
 
 Eestis pakub eIDAS Node võrguga liitumiseks konnektorteenust RIA.
 
@@ -42,7 +42,7 @@ Sõnumiedastus teostatakse veebisirvija ümbersuunamise (_redirect_) abil.
 
 Piiriülene autentimisprotsess eIDAS-autentimisvõrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [Viited](Viited). Sõnumivahetus osapoolte vahel toimib SAML 2.0 protokolli alusel.
 
-Järgnevas näidisstsenaariumis (vt Joonis 2) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel. lihtsuse mõttes ei ole näidatud SAML protokolli kohaseid metadata otspunktide poole pöördumisi.
+Järgnevas näidisstsenaariumis (vt Joonis 2) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel. Lihtsuse mõttes ei ole näidatud SAML protokolli kohaseid metadata otspunktide poole pöördumisi.
 
 Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
@@ -57,7 +57,7 @@ Joonis 2.
 2. Kasutaja on valinud riigi ja saadab vormi teenusepakkujale.
     - Teenusepakkuja moodustab isikutuvastamiseks vajaliku `SAMLRequest` parameetri sisu
     - ja saadab kasutajale vormi ümbersuunamisega riiklikusse eIDAS Node'i (vormi parameetriteks `SAMLRequest`, `country` ja vajadusel ka `RelayState`).
-        - NB! `RelayState` on mittekohustulik parameeter, mille teenusepakkuja võib kaasa panna oma päringu oleku hilisemaks tuvastuseks sammul 10 (algse päringu saab tuvastada ka vastuses oleva `SAMLResponse` parameetris sisalduvas XML atribuudis `InResponseTo`, kuid see info on kodeeritud kujul)
+        - NB! `RelayState` on mittekohustuslik parameeter, mille teenusepakkuja võib kaasa panna oma päringu oleku hilisemaks tuvastuseks sammul 10 (algse päringu saab tuvastada ka vastuses oleva `SAMLResponse` parameetris sisalduvas XML atribuudis `InResponseTo`, kuid see info on kodeeritud kujul)
 
 3. Kasutaja suunatakse automaatselt riiklikku eIDAS Node'i,
     - kus kontrollitakse `SAMLRequest` parameetris oleva SAML XML päringu sisu valiidsust ja allkirja vastu teenusepakkuja metainfos olevat avalikku võtit.
@@ -82,7 +82,7 @@ Joonis 2.
     - ümbersuundamisvormi `SAMLResponse` parameetris on teenusepakkuja poolt palutud info isiku kohta.
     - `SAMLResponse` allkirjastatakse ja isiku andmed krüpteeritakse teenusepakkuja privaatvõtmega.
 
-8. Kasutaja suunatakse automaatselt tagasi piiriülese eIDAS Node teenusese.
+8. Kasutaja suunatakse automaatselt tagasi piiriülese eIDAS Node teenusesse.
     - `SAMLResponse` parameetri sisus olev XML sisu koos allkirjaga valideeritakse.
     - sisu dekrüpteeritakse.
     - moodustatakse uus `SAMLResponse` parameeter,
@@ -124,7 +124,7 @@ Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud `HTTP PO
 
 Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks kogu ühendumiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid. Metateave on allkirjastatud.
 
-Teenusepakkuja peab konnektoreenusele kättesaadavaks tegema oma metaandmed üle HTTPS protokolli.
+Teenusepakkuja peab konnektorteenusele kättesaadavaks tegema oma metaandmed üle HTTPS protokolli.
 
 Täpsemad nõuded metadata otspunktile on dokumendis [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
 
@@ -156,7 +156,7 @@ Tabel 2 - SAML `AuthnRequest` parameetrid
 | `/saml2p:AuthnRequest/saml2:Issuer` | Jah | Teenusepakkuja metadatale viitav URL. |
 | `/saml2p:AuthnRequest/ds:Signature/*` | Jah | Teenusepakkuja privaatvõtmega antud allkiri ja sellega seotud detailid. Toetatud krüptoalgoritmid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:Extensions/alg:SigningMethod/*`) |
 | `/saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType` | Jah | Konstantne väärtus: `public` (avaliku sektori asutus) |
-| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuutide soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true` |
+| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuute soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true` |
 | `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (`/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat`) |
 | `/saml2p:AuthnRequest/saml2p:RequestedAuthnContext` | Jah |	// Variandid. Vajab analüüsi // |
 
