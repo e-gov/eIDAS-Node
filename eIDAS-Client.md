@@ -54,7 +54,7 @@ Clustering | Yes | Sessionless eIDAS Client can be installed in any number of in
 
 ### Next steps?
 
-- Find a eIDAS Connector service provider. Each EU country has one or more
+- Find a eIDAS Connector service provider. Every EU country has one (or more)
 - download eIDAS Client software [https://github.com/e-gov/eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
 - connect eIDAS Client to eIDAS Connector (simple config)
 - connect eIDAS Client to your e-service (implement HTTPS/JSON Redirect and Callback)
