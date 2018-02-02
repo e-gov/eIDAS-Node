@@ -36,6 +36,7 @@ HTTPS Redirect (using automatic POST) to pre-configured callback-URL, with param
 
 ### Features
 
+------|:-----:|-----------
 Session management | Not needed | eIDAS Client is session- and stateless. There is no need to keep state, because eIDAS Client serves only one e-service and returning Users are always forwarded to the same callback-URL of the e-service. 
 Security | Yes | eIDAS Client and e-service share the trusted domain of the organisation. 
 Clustering | Yes | Sessionless eIDAS Client can be installed in any number of instances.
