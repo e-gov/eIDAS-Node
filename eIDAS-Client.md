@@ -50,14 +50,14 @@ Clustering | Yes | Sessionless eIDAS Client can be installed in any number of in
 - no need to implement SAML interface
 - extremely simple HTTP/JSON flow 
 - sensible defaults for Level of Assurance and eIDAS attribute requests
-- preconfigured SAML interface to eIDAS Connector.
+- preconfigured SAML interface to eIDAS Connector
 
 ### Next steps?
 
-- Find a eIDAS Connector service provider. Each EU country has one or more Connector service providers.
-- download and install eIDAS Client software [https://github.com/e-gov/eIDAS-Client](https://github.com/e-gov/eIDAS-Client).
-- connect eIDAS Client to eIDAS Connector (simple config).
-- connect eIDAS Client to your e-service (implement HTTPS/JSON Redirect and Callback).
+- Find a eIDAS Connector service provider. Each EU country has one or more Connector service providers
+- download and install eIDAS Client software [https://github.com/e-gov/eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
+- connect eIDAS Client to eIDAS Connector (simple config)
+- connect eIDAS Client to your e-service (implement HTTPS/JSON Redirect and Callback)
 
 <img src='img/CLIENT.png' style='width:700px'>
 
