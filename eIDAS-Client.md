@@ -9,6 +9,10 @@ permalink: eIDAS-Client
 - greatly reduce integration costs
 - minimal or no programming needed
 
+To whom?
+
+All organisations, public or private, who wish to connect 
+
 eIDAS Client sits between eIDAS infrastructure and you e-service (see figure)
 - talking SAML towards eIDAS Connector 
 - and extremely simple HTTPS/JSON towards your e-service
@@ -47,6 +51,13 @@ Clustering | Yes | Sessionless eIDAS Client can be installed in any number of in
 - extremely simple HTTP/JSON flow 
 - sensible defaults for Level of Assurance and eIDAS attribute requests
 - preconfigured SAML interface to eIDAS Connector.
+
+### Next steps?
+
+- Find a eIDAS Connector service provider. Each EU country has one or more Connector service providers.
+- download and install eIDAS Client software [https://github.com/e-gov/eIDAS-Client](https://github.com/e-gov/eIDAS-Client).
+- connect eIDAS Client to eIDAS Connector (simple config).
+- connect eIDAS Client to your e-service (implement HTTPS/JSON Redirect and Callback).
 
 <img src='img/CLIENT.png' style='width:700px'>
 
