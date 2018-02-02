@@ -25,7 +25,7 @@ HTTPS Redirect, with parameters:
   - names of attributes of the User that your e-service requests
   - by default, eIDAS minimum set (PersonIdentifier, FirstName, FamilyName, DateOfBirth) is assumed
 - `nonce` - random value, to protect against replay attacks
-  - helps retain session in your e-service, if needed
+  - if needed, can help retain session in your e-service
 
 2  eIDAS Client sends authenticated User back to your e-service
 
