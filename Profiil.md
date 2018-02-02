@@ -5,7 +5,7 @@ permalink: Profiil
 # eIDAS siseriiklikud usaldus- ja krüptonõuded
 {:.no_toc}
 
-versioon 0.2, 29.01.2018
+versioon 0.3, 02.02.2018
 
 * TOC
 {:toc}
@@ -53,39 +53,43 @@ Profiili koostamisel on arvestatud eIDAS krüptonõuetega ja RIA krüptoalgoritm
 
 ## Nõuded
 
-1. teenusepakkuja peab koostama oma metaandmed (vt jaotis [Teenusepakkuja metateave](https://e-gov.github.io/eIDAS-Connector/Profiil#teenusepakkuja-metateave))
-- metateabe transport
-    - konnektorteenuse metateave publitseeritakse HTTPS otspunktis:
+1. teenusepakkuja peab koostama oma süsteemi kohta metateabe, vastavalt eIDAS-e nõuetele (vt jaotis [Teenusepakkuja metateave](https://e-gov.github.io/eIDAS-Connector/Profiil#teenusepakkuja-metateave))
+2. metateabe transport teisele osapoolele
+    1. konnektorteenuse metateave publitseeritakse HTTPS otspunktis:
         - [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) (testkeskkond)
         - [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) (toodangukeskkond)
-    - teenusepakkuja publitseerib metateabe samuti HTTPS otspunktis (vt märkus 3)
+    2. teenusepakkuja publitseerib metateabe samuti HTTPS otspunktis (vt märkus 3)
         - teatab otspunkti RIA-le
-    - soovi korral annab osapool (tulemüüriga) juurdepääsu metateabele ainult partnerile
-2. metateabe allkirjastamine
-    - on kohustuslik
-    - allkirja tuleb metateabe võtmisel valideerida, kogu usaldusahela ulatuses
-    - usaldusankruks SK ID Solutions AS juursert
-3. metateabe uuendamine
-    - osapool võib metateavet puhverdada, kuni `md:EntityDescriptor` atribuudis `validUntil` määratud ajamomendini
-    - metadatas tuleb määrata `validUntil` väärtus. Soovitatav väärtus on 24 h. 
-4. serdid
-    - sertide ristkasutus:
-        - metateabe ja SAML-sõnumi võib allkirjastada sama serdiga
-    - väljaandja:
+    3. soovi korral annab osapool (tulemüüriga) juurdepääsu metateabele ainult partnerile
+    4. täiendavate metateabe transpordi kaitsemeetmete (IPSec, VPN) toetus põhjendatud turvavajaduse korral, läbirääkimisega RIA-ga
+    5. manuaalne vm _out of band_ metateabe edastus - ei ole toetatud
+3. metateabe allkirjastamine
+    1. on kohustuslik
+    2. allkirja tuleb metateabe võtmisel valideerida, kogu usaldusahela ulatuses
+    3. usaldusankruks SK ID Solutions AS juursert
+4. metateabe uuendamine
+    1. osapool võib metateavet puhverdada, kuni `md:EntityDescriptor` atribuudis `validUntil` määratud ajamomendini
+    2. metadatas tuleb määrata `validUntil` väärtus. Soovitatav väärtus on 24 h. 
+5. serdid
+    1. sertide ristkasutus:
+        - on lubatud allkirjastamise puhul - metateabe ja SAML-sõnumi võib allkirjastada sama serdiga. Märkus: oma sõnumite krüpteerimist teenusepakkuja ei vajagi.
+    2. väljaandja:
         - soovitame SK ID Solutions AS väljaantud serte; muu väljaandja serdi kasutamine kooskõlastada RIA-ga
             - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima. 
-    - usaldusankur:
+    3. usaldusankur:
         - SK ID Solutions AS juursert
-    - serdi parameetrid:
+    4. serdi parameetrid:
         - asutusele antud, KLASS3 sert
             - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima. Dokument võib selles osas täpsustuda.
-5. räsialgoritm
+    5. self-signed sertide kasutus
+        - on lubatud testkeskkonnas
+6. räsialgoritm
     - toetama peab algoritme:
         - `http://www.w3.org/2001/04/xmlenc#sha512` (peamine)
         - `http://www.w3.org/2001/04/xmlenc#sha256` (alternatiiv)   
-6. allkirjastamine
-    - vahetatavad SAML-sõnumid allkirjastatakse
-    - toetama peab algoritme:
+7. allkirjastamine
+    1. vahetatavad SAML-sõnumid allkirjastatakse
+    2. toetama peab algoritme:
         - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` (peamine)
         - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` (alternatiiv)
             - võtmepikkus: 384 bitti
@@ -93,10 +97,10 @@ Profiili koostamisel on arvestatud eIDAS krüptonõuetega ja RIA krüptoalgoritm
         - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` (alternatiiv)
             - võtmepikkus: 4096 bitti
             - Märkus. eIDAS krüptonõuetes esineb RSA-MGF1 nimetuse RSASSA-PSS all   
-7. krüpteerimine
-    - teenusepakkuja poolt konnektorteenusele saadetavat SAML-sõnumit ei krüpteerita
-    - konnektorteenus krüpteerib teenusepakkujale saadetava SAML-sõnumi
-    - toetama peab algoritme:
+8. krüpteerimine
+    1. teenusepakkuja poolt konnektorteenusele saadetavat SAML-sõnumit ei krüpteerita
+    2. konnektorteenus krüpteerib teenusepakkujale saadetava SAML-sõnumi
+    3. toetama peab algoritme:
         - `http://www.w3.org/2009/xmlenc11#aes256-gcm` (peamine)
         - `http://www.w3.org/2009/xmlenc11#aes128-gcm` (alternatiiv)   
 
@@ -261,4 +265,9 @@ Märkus. Aluseks on võetud eIDAS konnektorteenuse tarkvaraga kaasas oleva liide
 
 3 Alternatiiv võiks olla, et teenusepakkuja metateabe loetakse konnektorteenusesse sisse lokaalsest failist. See eeldaks metateabe _out of band_ (muu kanali kaudu) toimetamist RIA-sse. Eelistame transporti üle HTTPS-i.
 
+## Muutelugu
 
+| Versioon, kuupäev | Muudatus |
+|-----------------|--------------|
+| 0.3, 02.02.2018   | Täpsustatud metateabe transporti (lisatud nõuded 2.4, 2.5). Täpsustatud self-signed sertide kasutust (nõue 5). |
+| 0.2, 29.01.2018   | Esimene kommenteerimiseks saadetud versioon |
