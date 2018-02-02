@@ -52,7 +52,7 @@ Clustering | Yes | Sessionless eIDAS Client can be installed in any number of in
 - sensible defaults for Level of Assurance and eIDAS attribute requests
 - preconfigured SAML interface to eIDAS Connector
 
-### Next steps?
+### Next steps
 
 - Find a eIDAS Connector service provider. Every EU country has one (or more)
 - download eIDAS Client software [https://github.com/e-gov/eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
