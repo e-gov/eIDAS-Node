@@ -9,15 +9,15 @@ permalink: eIDAS-Client
 - greatly reduce integration costs
 - minimal or no programming needed
 
-To whom?
+### To whom?
 
-All organisations, public or private, who wish to connect 
+All organisations, public or private, who wish to log on user from another EU country.
+
+### How does it work?
 
 eIDAS Client sits between eIDAS infrastructure and you e-service (see figure)
 - talking SAML towards eIDAS Connector 
 - and extremely simple HTTPS/JSON towards your e-service
-
-### How does it work?
 
 1  Your e-service sends the User to eIDAS Adapter
 
