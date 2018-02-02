@@ -42,7 +42,7 @@ Clustering | Sessionless eIDAS Client can be installed in any number of instance
 
 How eIDAS Client reduces integration costs?
 - no need to implement SAML interface
-- extremely simple JSON 
+- extremely simple HTTP/JSON flow 
 - sensible defaults for Level of Assurance and eIDAS attribute requests
 
 <img src='img/CLIENT.png' style='width:700px'>
