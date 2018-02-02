@@ -11,7 +11,7 @@ permalink: eIDAS-Client
 
 ### To whom?
 
-All organisations, public or private, who wish to securely log on customers from other EU countries.
+All organisations, public or private, who wish to securely log on customers from EU countries.
 
 ### How does it work?
 
