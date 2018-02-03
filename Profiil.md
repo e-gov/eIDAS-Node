@@ -183,10 +183,11 @@ Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metatea
     - `http://www.w3.org/2009/xmlenc11#aes256-gcm` 
     - `http://www.w3.org/2009/xmlenc11#aes128-gcm` 
 
-- `md:NameIDFormat` - siin saab täpsemalt määratleda andmetevorminguid ja töötlusreegleid 
-    - `persistent` - jääb arusaamatuks, kuid vt http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf, jaotis 8.3.7
-    - `transient` - jääb arusaamatuks, kuid vt http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf, jaotis 8.3.8
-    - `unspecified` - “tähenduseta” element, vt http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf, jaotis 8.3.1
+- `md:NameIDFormat` - Määrata tuleb: 
+    - `persistent`
+    - `transient`
+    - `unspecified`
+    - Isiku nime "persistentsust" iseloomustavad, äärmiselt segased SAML-i suvandid. Teema kohta võib soovi korral lugeda [https://wiki.shibboleth.net/confluence/display/CONCEPT/NameIdentifiers](https://wiki.shibboleth.net/confluence/display/CONCEPT/NameIdentifiers) ja [http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf), jaotised 8.3.7, 8.3.8 ja 8.3.1.
 
 - `md:SingleSignOnService`
 atribuutidega `Binding` ja `Location` määratakse, et konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider`.  Saatmisviisiks on HTTP `POST` (HTTP Redirect ei ole toetatud).
