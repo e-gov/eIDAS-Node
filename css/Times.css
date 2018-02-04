@@ -141,3 +141,17 @@ a[href]:hover {
 }
 
 /*#endregion */
+
+/*#region Eksperimentaalne */
+.psa-note {
+  position: relative;
+  margin-bottom: 15px;
+  background-color: #faf9ce;
+  border: 1px solid #e1df8f;
+  border-radius: 6px;
+  padding: 20px 40px 20px 20px;
+  overflow: hidden;
+}
+
+/*#endregion */
+
