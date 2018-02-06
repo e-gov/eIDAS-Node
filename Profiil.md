@@ -208,15 +208,16 @@ Vt [teenusepakkuja metateabe näidet](TeenusepakkujaMetateave).
 Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tegema järgmise SAML metateabe.
 
 `md:EntityDescriptor` | kirjeldatava SAML-olemi (_entity_) ümbris-element 
-    - `entityID` | kirjeldatava SAML-olemi identifikaator. Väärtuseks anda metateabe otspunkti URL, nt `https://eidas.asutus.ee/metadata` 
-    - `validUntil` | kirjeldus kehtib 24 h.
+`entityID` | kirjeldatava SAML-olemi identifikaator. Väärtuseks anda metateabe otspunkti URL, nt `https://eidas.asutus.ee/metadata` 
+`validUntil` | kirjeldus kehtib 24 h.
 `ds:Signature` | kirjeldus on allkirjastatud XML allkirjaga
-    - `ds:CanonicalizationMethod` | kanoniseerimisalgoritm on `xml-exc-c14n`
-    - `ds:SignatureMethod` | allkirjaalgoritm on `rsa-sha512`
-    - `ds:Transform` | _enveloped signature_, algoritm `xml-exc-c14n`
-    - `ds:DigestMethod` | räsialgoritm `xmlenc#sha512`
-    - `ds:Digestvalue` | räsiväärtus
-    - `ds:SignatureValue` | allkirjaväärtus
+`ds:CanonicalizationMethod` | kanoniseerimisalgoritm on `xml-exc-c14n`
+`ds:SignatureMethod` | allkirjaalgoritm on `rsa-sha512`
+`ds:Transform` | _enveloped signature_, algoritm `xml-exc-c14n`
+`ds:DigestMethod` | räsialgoritm `xmlenc#sha512`
+`ds:Digestvalue` | räsiväärtus
+`ds:SignatureValue` | allkirjaväärtus
+
     - `ds:KeyInfo` | X.509 sertifikaat
 `md: Extensions` | metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
     - `eidas:SPType`: `public` | liidestuja on avalikust sektorist
