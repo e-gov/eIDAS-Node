@@ -210,6 +210,7 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 `md:EntityDescriptor` | kirjeldatava SAML-olemi (_entity_) ümbris-element 
 `entityID` | kirjeldatava SAML-olemi identifikaator. Väärtuseks anda metateabe otspunkti URL, nt `https://eidas.asutus.ee/metadata` 
 `validUntil` | kirjeldus kehtib 24 h.
+
 `ds:Signature` | kirjeldus on allkirjastatud XML allkirjaga
 `ds:CanonicalizationMethod` | kanoniseerimisalgoritm on `xml-exc-c14n`
 `ds:SignatureMethod` | allkirjaalgoritm on `rsa-sha512`
@@ -218,9 +219,9 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 `ds:Digestvalue` | räsiväärtus
 `ds:SignatureValue` | allkirjaväärtus
 `ds:KeyInfo` | X.509 sertifikaat
+
 `md: Extensions` | metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
 `eidas:SPType`: `public` | liidestuja on avalikust sektorist
-
 `alg:Digestmethod` | teenusepakkuja toetab räsialgoritme
 `http://www.w3.org/2001/04/xmlenc#sha512` |
 `http://www.w3.org/2001/04/xmlenc#sha256` |
@@ -238,13 +239,13 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 `use` |  panna väärtus `signing` - allkirjastamine 
 `KeyInfo` | X.509 allkirjastamissertifikaat
 `md:NameIDFormat` | autenditava isiku identifikaatori või nime "püsivust" iseloomustavad väärtused. Elemendil ei ole eIDAS kontekstis suurt tähendust, kuid Node tarkvara nõuab väärtust, seetõttu pange:
-
 `unspecified` | “tähenduseta”, vt ka märkus 5
-`md:AssertionConsumerService`
+`md:AssertionConsumerService` |
 `Binding` | määratakse, et liidestuv süsteem võtab autentimisvastuse vastu URL-il (nt `https://eidas.asutus.ee/ReturnPage`) 
 `Location` | ja autentimisvastus tuleb saata `HTTP-POST`-ga.
 `index` | `0`
 `isDefault` | `true`
+
 `md:Organization` | teave teenusepakkuja organisatsiooni kohta. Täitke näite eeskujul.
 `md:ContactPerson` | teave teenusepakkuja kontaktisiku kohta. Täitke näite eeskujul. Siia võiks panna kasutajatoe kontaktandmed.
 
@@ -264,6 +265,6 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
-| 0.4, 06.02.2018 | Täpsustatud `md:NameIDFormat` väärtusi. Eemaldatud krüpteerimisalgoritmide kirjeldamise nõue (teenenusepakkuja ei krüpteeri oma sõnumeid). Lisatud teenusepakkuja metadata näide. |
+| 0.4, 06.02.2018 | Täpsustatud `md:NameIDFormat` väärtusi. Eemaldatud krüpteerimisalgoritmide kirjeldamise nõue (teenusepakkuja ei krüpteeri oma sõnumeid). Lisatud teenusepakkuja metadata näide. |
 | 0.3, 02.02.2018   | Täpsustatud metateabe transporti (lisatud nõuded 2.4, 2.5). Täpsustatud self-signed sertide kasutust (nõue 5). |
 | 0.2, 29.01.2018   | Esimene kommenteerimiseks saadetud versioon |
