@@ -217,32 +217,31 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 `ds:DigestMethod` | räsialgoritm `xmlenc#sha512`
 `ds:Digestvalue` | räsiväärtus
 `ds:SignatureValue` | allkirjaväärtus
-
-    - `ds:KeyInfo` | X.509 sertifikaat
+`ds:KeyInfo` | X.509 sertifikaat
 `md: Extensions` | metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
-    - `eidas:SPType`: `public` | liidestuja on avalikust sektorist
+`eidas:SPType`: `public` | liidestuja on avalikust sektorist
 `alg:Digestmethod` | teenusepakkuja toetab räsialgoritme
-    - `http://www.w3.org/2001/04/xmlenc#sha512` |
-    - `http://www.w3.org/2001/04/xmlenc#sha256` |
+`http://www.w3.org/2001/04/xmlenc#sha512` |
+`http://www.w3.org/2001/04/xmlenc#sha256` |
 `alg:SigningMethod` | määratleb algoritmid, mida teenusepakkuja SAML-autentimispäringu allkirjastamiseks kasutab. Seada järgmised 4 algoritmi:
-    - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` |
-    - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` |
-    - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` |
-    - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` |
+`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` |
+`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` |
+`http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` |
+`http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` |
 `md: SPSSODescriptor` | “SSO võimekusega teenusepakkuja” - kirjeldatava olemi “roll”
-    - `AuthnRequestsSigned` | panna väärtus `true` - ütleb, et autentimispäringusõnum allkirjastatakse
-    - `WantAssertionsSigned` | panna väärtus `true` - ütleb, et autentimispäringusõnum p.o allkirjastatud
-    - `protocolSupportEnumeration` | panna väärtus `urn:oasis:names:tc:SAML:2.0:protocol` - ütleb, et toetab SAML 2.0-i
+`AuthnRequestsSigned` | panna väärtus `true` - ütleb, et autentimispäringusõnum allkirjastatakse
+`WantAssertionsSigned` | panna väärtus `true` - ütleb, et autentimispäringusõnum p.o allkirjastatud
+`protocolSupportEnumeration` | panna väärtus `urn:oasis:names:tc:SAML:2.0:protocol` - ütleb, et toetab SAML 2.0-i
 `md:KeyDescriptor` | allkirjastamissertifikaat
-    - `use` |  panna väärtus `signing` - allkirjastamine 
-    - `KeyInfo` | X.509 allkirjastamissertifikaat
+`use` |  panna väärtus `signing` - allkirjastamine 
+`KeyInfo` | X.509 allkirjastamissertifikaat
 `md:NameIDFormat` | autenditava isiku identifikaatori või nime "püsivust" iseloomustavad väärtused. Elemendil ei ole eIDAS kontekstis suurt tähendust, kuid Node tarkvara nõuab väärtust, seetõttu pange:
-    - `unspecified` | “tähenduseta”, vt ka märkus 5
+`unspecified` | “tähenduseta”, vt ka märkus 5
 `md:AssertionConsumerService`
-    - `Binding` | määratakse, et liidestuv süsteem võtab autentimisvastuse vastu URL-il (nt `https://eidas.asutus.ee/ReturnPage`) 
-    - `Location` | ja autentimisvastus tuleb saata `HTTP-POST`-ga.
-    - `index` | `0`
-    -  `isDefault` | `true`
+`Binding` | määratakse, et liidestuv süsteem võtab autentimisvastuse vastu URL-il (nt `https://eidas.asutus.ee/ReturnPage`) 
+`Location` | ja autentimisvastus tuleb saata `HTTP-POST`-ga.
+`index` | `0`
+`isDefault` | `true`
 `md:Organization` | teave teenusepakkuja organisatsiooni kohta. Täitke näite eeskujul.
 `md:ContactPerson` | teave teenusepakkuja kontaktisiku kohta. Täitke näite eeskujul. Siia võiks panna kasutajatoe kontaktandmed.
 
@@ -262,6 +261,6 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
-| 0.4, 06.02.2018 | Täpsustatud `md:NameIDFormat` väärtusi. Lisatud teenusepakkuja metadata näide. |
+| 0.4, 06.02.2018 | Täpsustatud `md:NameIDFormat` väärtusi. Eemaldatud krüpteerimisalgoritmide kirjeldamise nõue (teenenusepakkuja ei krüpteeri oma sõnumeid). Lisatud teenusepakkuja metadata näide. |
 | 0.3, 02.02.2018   | Täpsustatud metateabe transporti (lisatud nõuded 2.4, 2.5). Täpsustatud self-signed sertide kasutust (nõue 5). |
 | 0.2, 29.01.2018   | Esimene kommenteerimiseks saadetud versioon |
