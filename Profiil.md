@@ -220,6 +220,7 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 `ds:KeyInfo` | X.509 sertifikaat
 `md: Extensions` | metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
 `eidas:SPType`: `public` | liidestuja on avalikust sektorist
+
 `alg:Digestmethod` | teenusepakkuja toetab räsialgoritme
 `http://www.w3.org/2001/04/xmlenc#sha512` |
 `http://www.w3.org/2001/04/xmlenc#sha256` |
@@ -228,6 +229,7 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` |
 `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` |
 `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` |
+
 `md: SPSSODescriptor` | “SSO võimekusega teenusepakkuja” - kirjeldatava olemi “roll”
 `AuthnRequestsSigned` | panna väärtus `true` - ütleb, et autentimispäringusõnum allkirjastatakse
 `WantAssertionsSigned` | panna väärtus `true` - ütleb, et autentimispäringusõnum p.o allkirjastatud
@@ -236,6 +238,7 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 `use` |  panna väärtus `signing` - allkirjastamine 
 `KeyInfo` | X.509 allkirjastamissertifikaat
 `md:NameIDFormat` | autenditava isiku identifikaatori või nime "püsivust" iseloomustavad väärtused. Elemendil ei ole eIDAS kontekstis suurt tähendust, kuid Node tarkvara nõuab väärtust, seetõttu pange:
+
 `unspecified` | “tähenduseta”, vt ka märkus 5
 `md:AssertionConsumerService`
 `Binding` | määratakse, et liidestuv süsteem võtab autentimisvastuse vastu URL-il (nt `https://eidas.asutus.ee/ReturnPage`) 
