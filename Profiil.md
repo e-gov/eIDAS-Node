@@ -5,7 +5,7 @@ permalink: Profiil
 # eIDAS siseriiklikud usaldus- ja krüptonõuded
 {:.no_toc}
 
-versioon 0.3, 02.02.2018
+versioon 0.4, 06.02.2018
 
 * TOC
 {:toc}
@@ -67,6 +67,7 @@ Profiili koostamisel on arvestatud eIDAS krüptonõuetega ja RIA krüptoalgoritm
     1. on kohustuslik
     2. allkirja tuleb metateabe võtmisel valideerida, kogu usaldusahela ulatuses
     3. usaldusankruks SK ID Solutions AS juursert
+    4. toetama peab samu algoritme, mis p 7.
 4. metateabe uuendamine
     1. osapool võib metateavet puhverdada, kuni `md:EntityDescriptor` atribuudis `validUntil` määratud ajamomendini
     2. metadatas tuleb määrata `validUntil` väärtus. Soovitatav väärtus on 24 h. 
@@ -203,45 +204,45 @@ Vt ka [Metadata seletus](https://e-gov.github.io/eIDAS-Connector/MetadataSeletus
 
 ## Teenusepakkuja metateave
 
-Vt [teenusepakkuja metateabe näidet](TeenusepakkujaMetateave).
+Vt ka [teenusepakkuja metateabe näidet](TeenusepakkujaMetateave).
 
 Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tegema järgmise SAML metateabe.
 
-`md:EntityDescriptor` | kirjeldatava SAML-olemi (_entity_) ümbris-element 
+`md:EntityDescriptor` | SAML-olemi (_entity_), praegusel juhul teenusepakkuja - kirjelduse ümbris-element 
 `entityID` | kirjeldatava SAML-olemi identifikaator. Väärtuseks anda metateabe otspunkti URL, nt `https://eidas.asutus.ee/metadata` 
-`validUntil` | kirjeldus kehtib 24 h.
+`validUntil` | kirjelduse kehtivusperioodi lõppaeg. Soovitame perioodiks seada 24 h.
 
-`ds:Signature` | kirjeldus on allkirjastatud XML allkirjaga
-`ds:CanonicalizationMethod` | kanoniseerimisalgoritm on `xml-exc-c14n`
-`ds:SignatureMethod` | allkirjaalgoritm on `rsa-sha512`
+`ds:Signature` | kirjeldus peab olema allkirjastatud. Siin antakse XML allkirja parameetrid. 
+`ds:CanonicalizationMethod` | kanoniseerimisalgoritmiks on `xml-exc-c14n`
+`ds:SignatureMethod` | allkirjaalgoritm on `rsa-sha512` (võite kasutada ka mõnda teist lubatud algoritmidest, vt ülal)
 `ds:Transform` | _enveloped signature_, algoritm `xml-exc-c14n`
-`ds:DigestMethod` | räsialgoritm `xmlenc#sha512`
+`ds:DigestMethod` | räsialgoritm `xmlenc#sha512` (võite kasutada ka mõnda teist lubatud algoritmidest, vt ülal)
 `ds:Digestvalue` | räsiväärtus
 `ds:SignatureValue` | allkirjaväärtus
 `ds:KeyInfo` | X.509 sertifikaat
 
 `md: Extensions` | metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
-`eidas:SPType`: `public` | liidestuja on avalikust sektorist
-`alg:Digestmethod` | teenusepakkuja toetab räsialgoritme
-`http://www.w3.org/2001/04/xmlenc#sha512` |
-`http://www.w3.org/2001/04/xmlenc#sha256` |
+`eidas:SPType`  | `public` - liidestuja on avalikust sektorist
+`alg:Digestmethod` | teenusepakkuja kasutab räsialgoritme. Pange järgmised:
+| `http://www.w3.org/2001/04/xmlenc#sha512`
+| `http://www.w3.org/2001/04/xmlenc#sha256`
 `alg:SigningMethod` | määratleb algoritmid, mida teenusepakkuja SAML-autentimispäringu allkirjastamiseks kasutab. Seada järgmised 4 algoritmi:
-`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` |
-`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` |
-`http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` |
-`http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` |
+| `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512`
+| `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256`
+| `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1`
+| `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1`
 
-`md: SPSSODescriptor` | “SSO võimekusega teenusepakkuja” - kirjeldatava olemi “roll”
-`AuthnRequestsSigned` | panna väärtus `true` - ütleb, et autentimispäringusõnum allkirjastatakse
-`WantAssertionsSigned` | panna väärtus `true` - ütleb, et autentimispäringusõnum p.o allkirjastatud
-`protocolSupportEnumeration` | panna väärtus `urn:oasis:names:tc:SAML:2.0:protocol` - ütleb, et toetab SAML 2.0-i
+`md: SPSSODescriptor` | “SSO võimekusega teenusepakkuja” - kirjeldatava olemi “roll”, praegusel juhul teenusepakkuja
+`AuthnRequestsSigned` | pange väärtus `true` - ütleb, et autentimispäring allkirjastatakse
+`WantAssertionsSigned` | pange väärtus `true` - ütleb, et autentimisvastus p.o allkirjastatud
+`protocolSupportEnumeration` | pange väärtus `urn:oasis:names:tc:SAML:2.0:protocol` - ütleb, et toetab SAML 2.0-i
 `md:KeyDescriptor` | allkirjastamissertifikaat
-`use` |  panna väärtus `signing` - allkirjastamine 
-`KeyInfo` | X.509 allkirjastamissertifikaat
+`use` |  pange väärtus `signing` - allkirjastamine 
+`KeyInfo` | siia pange X.509 allkirjastamissertifikaat
 `md:NameIDFormat` | autenditava isiku identifikaatori või nime "püsivust" iseloomustavad väärtused. Elemendil ei ole eIDAS kontekstis suurt tähendust, kuid Node tarkvara nõuab väärtust, seetõttu pange:
-`unspecified` | “tähenduseta”, vt ka märkus 5
+| `unspecified` - “tähenduseta”, vt ka märkus 5
 `md:AssertionConsumerService` |
-`Binding` | määratakse, et liidestuv süsteem võtab autentimisvastuse vastu URL-il (nt `https://eidas.asutus.ee/ReturnPage`) 
+`Binding` | määratakse ULR, millel liidestuv süsteem võtab autentimisvastuse vastu, nt `https://eidas.asutus.ee/ReturnPage` 
 `Location` | ja autentimisvastus tuleb saata `HTTP-POST`-ga.
 `index` | `0`
 `isDefault` | `true`
@@ -265,6 +266,6 @@ Teenusepakkuja peab koostama ja konnektorteenusele HTTPS-ga kättesaadavaks tege
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
-| 0.4, 06.02.2018 | Täpsustatud `md:NameIDFormat` väärtusi. Eemaldatud krüpteerimisalgoritmide kirjeldamise nõue (teenusepakkuja ei krüpteeri oma sõnumeid). Lisatud teenusepakkuja metadata näide. |
+| 0.4, 06.02.2018 | Täpsustatud `md:NameIDFormat` väärtusi. Eemaldatud krüpteerimisalgoritmide kirjeldamise nõue (teenusepakkuja ei krüpteeri oma sõnumeid). Lisatud täpsustus, et metateabe allkirjastamisel tuleb toetada samu algoritme, mis SAML-sõnumite allkirjastamisel. Lisatud teenusepakkuja metadata näide. |
 | 0.3, 02.02.2018   | Täpsustatud metateabe transporti (lisatud nõuded 2.4, 2.5). Täpsustatud self-signed sertide kasutust (nõue 5). |
 | 0.2, 29.01.2018   | Esimene kommenteerimiseks saadetud versioon |
