@@ -1,10 +1,14 @@
 ---
-permalink: Koodiuuring
+permalink: Usaldusehaldus
 ---
 
-## Koodiuuring
+# Usaldusehaldus
 
-eIDAS Node koodi uurimise märkmed
+img src='img/VOTMED-01.PNG' style='width:700px'>
+
+
+
+## eIDAS Node koodi uurimise märkmed
 
 ***Teenusepakkuja SAML-autentimispäringu allkirja valideerimine konnektorteenuses***
 
@@ -17,6 +21,7 @@ eIDAS Node koodi uurimise märkmed
 `unmarshallRequestAndValidate` | klassis `ProtocolEngine`. "The protocol engine is responsible for implementing the protocol between the eIDAS Connector and the eIDAS ProxyService."
 `unmarshallRequest` |
 `validateSignature`, parameetritega `signedObject` ja `trustedCertificates(Collection<X509Certificate>)` | klassis `AbstractProtocolSigner`
+
 `validateSignatureWithCredentials` |
 `verifyCryptographicSignature` |
 `getTrustedCertificate` |
