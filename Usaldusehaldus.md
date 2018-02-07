@@ -4,6 +4,26 @@ permalink: Usaldusehaldus
 
 # Usaldusehaldus
 
+## Vajadus
+
+Süsteemis on vaja lahendada võtmehalduse (_key management_) ja "usaldusehaldus" (_trust management_) korraldus. Lahendus peab olema:
+- piisavalt turvaline
+- dokumenteeritud
+- osapooltele kommunikeeritud
+- tarkvaras teostatav
+    - Märkus. Oluline piirang on meie tahtmine eIDAS Node-i tarkvara ümbertegemist vältida. 
+
+Metoodika. Teatud (üpris üldisi) juhiseid saab väljaannetest:
+- NIST 800-130 (2013) [A Framework for Designing Cryptographic Key Management Systems](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-130.pdf)
+- NIST 800-57 Key Management Guidelines (2016)
+    - [Part 1 Recommendation for Key Management](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf)
+    - [Part 2 Best Practices for Key Management Organization](https://csrc.nist.gov/publications/detail/sp/800-57-part-2/final)
+- vt ka [A Profile for U.S. Federal Cryptographic Key Management Systems](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-152.pdf)
+
+## Lähteskeem
+
+Tugineb koodi uurimisel
+
 <img src='img/VOTMED-01.PNG' style='width:700px'>
 
 ## eIDAS Node koodi uurimise märkmed
