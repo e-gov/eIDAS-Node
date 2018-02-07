@@ -41,7 +41,7 @@ eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 
 NIST 800-130 (2013) [A Framework for Designing Cryptographic Key Management Systems](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-130.pdf)
 
-[Usaldusehaldus](Usaldusehaldus)
+[Usaldustoimingud](Usaldustoimingud)
 
 ---- 
 
