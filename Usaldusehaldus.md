@@ -22,7 +22,7 @@ Spetsifikatsioon on kaasdokumendiks [eIDAS siseriiklikele usaldus- ja krüptonõ
 
 ## Vajadus
 
-Süsteemis on vaja lahendada võtmehalduse (_Key Management_) ja "usaldusehaldus" (_Trust Management_) korraldus. Lahendus peab olema:
+Süsteemis on vaja lahendada võtmehalduse (_Key Management_) ja "usaldusehalduse" (_Trust Management_) korraldus. Lahendus peab olema:
 - piisavalt turvaline
 - dokumenteeritud
 - osapooltele kommunikeeritud
@@ -35,7 +35,7 @@ Süsteemis on vaja lahendada võtmehalduse (_Key Management_) ja "usaldusehaldus
 - _asutus_ - asutus, kelle süsteem konnektorteenust tarbib; kitsamalt - asutuse süsteemihaldur
 - _RIA_ - siin: RIA süsteemihaldur vm töötaja, kes on volitatud paigaldustoiminguid tegema
 - _konnektorteenus_ - RIA taristus paigaldatud tarkvarasüsteem, kuulub eIDAS Node koosseisu
-- _teenusepakkuja süsteem (_Service Provider_, SP) - asutuse süsteem, mis tarbib konnektorteenust ja osutab e-teenust kasutajale
+- _teenusepakkuja süsteem_ (_Service Provider_, SP) - asutuse süsteem, mis tarbib konnektorteenust ja osutab e-teenust kasutajale
 - _usaldushoidla_ - RIA konnektorteenuse juures peetav usaldatavate sertide. Tehniliselt teostatud Java Keystore, failisüsteemi vms abil
 - _sõnum_ - teenusepakkuja süsteemi poolt konnektorteenusele saadetav SAML sõnum; sisaldab autentimispäringut 
 - _allkirja valideerimine_ - sisaldab kolme sammu:
