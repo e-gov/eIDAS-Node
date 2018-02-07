@@ -61,7 +61,7 @@ Piirangutest ja vajadustest lähtuv lahendus koosneb järgmistest toimingutest. 
     - Konnektorteenuse seadistus peab toetama toiminguid 8, 12-17.
 - reguleeritud sisemiste kordadega (protseduuridega) nii RIA kui ka asutuse poolel.
 
-Kõik toimingud tehakse [eIDAS siseriiklikele usaldus- ja krüptonõuetes](Profiil) määratud krüptoalgoritme ja võtmepikkusi kasutades.
+Kõik toimingud tehakse [eIDAS siseriiklikes usaldus- ja krüptonõuetes](Profiil) määratud krüptoalgoritme ja võtmepikkusi kasutades.
 
 Ülevaade toimingutest on esitatud joonisel 1.
 
