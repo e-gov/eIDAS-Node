@@ -61,6 +61,12 @@ Piirangutest ja vajadustest lähtuv lahendus koosneb järgmistest toimingutest. 
     - Konnektorteenuse seadistus peab toetama toiminguid 8, 12-17.
 - reguleeritud sisemiste kordadega (protseduuridega) nii RIA kui ka asutuse poolel.
 
+Ülevaade toimingutest on esitatud joonisel 1.
+
+<img src='img/VOTMED-01.PNG' style='width:700px'>
+
+Joonis 1
+
 ### 5.1 Ettevalmistavad toimingud (usalduse loomine)
 
 nr | Osapool | Tegevus | Selgitus
@@ -95,12 +101,6 @@ Tehakse toimingud 3-6. Seejuures uue serdi lisamisel teenusepakkuja süsteemi se
 ### 5.4 Metateabe allkirjastamise võtme väljavahetamine
 
 Tehakse toimingud 1-2, 5-8. Uus võti hakkab toimima kohe.
-
-Ülevaade toimingutest on esitatud joonisel 1.
-
-<img src='img/VOTMED-01.PNG' style='width:700px'>
-
-Joonis 1
 
 ## Kirjandus
 
