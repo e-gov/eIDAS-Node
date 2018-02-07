@@ -2,6 +2,7 @@
 permalink: Spetsifikatsioon
 ---
 
+<img src='img/ee_cef_0.png'>
 
 Märkus. Lahtised küsimused on markeeritud sümbolitega `//`. 
 {:.teade}
