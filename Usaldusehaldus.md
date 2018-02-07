@@ -9,18 +9,18 @@ Märkus. Töödokument, mida ei ole kinnitatud.
 
 # eIDAS konnektorteenus. Usaldustoimingud
 {: .no_toc}
-v 0.1
+v 0.1, 08.02.2018
 
 - TOC
 {:toc}
 
-## Ülevaade
+## 1 Ülevaade
 
 Käesolev spetsifikatsioon määratleb usaldus- ja võtmehalduse tehnilise lahenduse eIDAS konnektorteenuse siseriiklikes liidestes.
 
 Spetsifikatsioon on kaasdokumendiks [eIDAS siseriiklikele usaldus- ja krüptonõuetele](Profiil). Spetsifikatsiooni stabiliseerudes dokumendid liidetakse.
 
-## Vajadus
+## 2 Vajadus
 
 Süsteemis on vaja lahendada võtmehalduse (_Key Management_) ja "usaldusehalduse" (_Trust Management_) korraldus. Lahendus peab olema:
 - piisavalt turvaline
@@ -28,7 +28,7 @@ Süsteemis on vaja lahendada võtmehalduse (_Key Management_) ja "usaldusehaldus
 - osapooltele kommunikeeritud
 - tarkvaras teostatav.
 
-## Mõisted ja tähistused
+## 3 Mõisted ja tähistused
 
 - _usaldushaldus_, _Trust Management_ - sõnumivahetuse autentsuse saavutamisele suunatud toimingud, nii konnektorteenuse osutaja (RIA) kui ka teenusekasutaja (asutuse) poolel. Seotud, kuid mitte võrdne võtmehaldusega
 - _võtmehaldus_, _Key Management_ - krüptograafiliste võtmetega seotud toimingud: loomine, edastamine, kasutamine jm - võtme kogu elukaare ulatuses
@@ -43,7 +43,7 @@ Süsteemis on vaja lahendada võtmehalduse (_Key Management_) ja "usaldusehaldus
     - _krüptograafiline valideerimine_. Kasutades allkirja juures olevat serti, kontrollitakse, et allkiri on tõepoolest moodustatud serdis sisalduvale avalikule võtmele vastava privaatvõtmega. Sellega saadakse kindlus, et allkirjastatud sõnumit ei ole muudetud. Krüptograafilisest valideerimisest ei piisa, vt _usaldatavuse kontrollimine_.
     - _usaldatavuse kontrollimine_. Kontrollitakse, et allkirjastamisel kasutatud võti on usaldatav.
 
-## Piirangud
+## 4 Piirangud
 
 Olulised piirangud:
 1. eIDAS Node-i tarkvara ümbertegemist või täiendamist tahame võimalikult vältida.
@@ -53,7 +53,7 @@ Olulised piirangud:
 3. eIDAS Node-is võtme- ja usaldushaldusega tegelevaid komponente saab sõlmede omavaheliseks ja siseriiklikuks suhtluseks *erinevalt seadistada ainult piiratud ulatuses*.
     - Eraldi võtmehalduslahenduse tegemine siseriiklikuks ja Node-to-Node suhtluseks tähendaks Node-i tarkvara olulist muutmist.
 
-## Toimingud
+## 5 Toimingud
 
 Piirangutest ja vajadustest lähtuv lahendus koosneb järgmistest toimingutest. Toimingud peavad olema:
 - teostatud tarkvaras
@@ -61,12 +61,12 @@ Piirangutest ja vajadustest lähtuv lahendus koosneb järgmistest toimingutest. 
     - Konnektorteenuse seadistus peab toetama toiminguid 8, 12-17.
 - reguleeritud sisemiste kordadega (protseduuridega) nii RIA kui ka asutuse poolel.
 
-Ettevalmistavad toimingud (usalduse loomine)
+### 5.1 Ettevalmistavad toimingud (usalduse loomine)
 
 nr | Osapool | Tegevus | Selgitus
 1  | Asutus  | Moodustab metateabe allkirjastamise võtmepaari |
-2  | Asutus  | Moodustab metateabe allkirjastamise serdi |
-3  | Asutus  | Moodustab sõnumi allkirjastamise võtmepaari |
+2  | Asutus  | Moodustab metateabe allkirjastamise serdi | `CN` väärtuseks märgib Asutuse nime (kuid konnektorteenus ei kasuta seda teavet). Võib olla _self-signed_.
+3  | Asutus  | Moodustab sõnumi allkirjastamise võtmepaari | `CN` väärtuseks märgib Asutuse nime (kuid konnektorteenus ei kasuta seda teavet). Võib olla _self-signed_.
 4  | Asutus  | Moodustab sõnumi allkirjastamise serdi |
 5  | Asutus  | Lisab moodustatud serdid oma süsteemi seadistusse |
 6  | Teenusepakkuja süsteem | Genereerib seadistuse põhjal metateabe | SAML-vomingus XML-fail on teenusepakkuja metateabe otspunktist kättesaadav 
@@ -74,19 +74,27 @@ nr | Osapool | Tegevus | Selgitus
 8  | RIA   | Lisab metateabe allkirjastamise serdi usaldushoidlasse
    |       | LÕPP. Tegevusi korratakse sertide aegumisel | _Key Roll-over_-i e dünaamilise võtmeuuenduse teostamine nõuab arendust ainult teenusepakkuja süsteemis. 
 
-Sõnumivahetuse usaldustoimingud
+### 5.2 Sõnumivahetuse usaldustoimingud
 
 nr | Osapool | Tegevus | Selgitus
 9  | Teenusepakkuja süsteem | Koostab sõnumi | Lisab sõnumisse (`Issuer` elementi) metateabe otspunkti URL-i
 10  | Teenusepakkuja süsteem | Allkirjastab sõnumi. Sõnumile lisab sõnumi allkirjastamise serdi  | Kasutab sõnumi allkirjastamise privaatvõtit
 11 | Teenusepakkuja süsteem | Edastab allkirjastatud sõnumi konnektorteenusele |
-12 | Konnektorteenus | Teeb metateabe krüptograafilise valideerimise | Saab kindluse, et allkirjastatud metateavet ei ole muudetud
+12 | Konnektorteenus | Teeb sõnumi krüptograafilise valideerimise | Saab kindluse, et allkirjastatud sõnumit ei ole muudetud
 13 | Konnektorteenus | Võtab sõnumist teenusepakkuja metateabe URL-i ja laeb alla  metateabe | Kasutades puhverdamist. Puhverdamist tüüritakse konnektorteenuse seadistusparameetriga `nonDistributedMetadata.retention` ja teenusepakkuja metateabe parameetriga `validUntil`
 14 | Konnektorteenus | Teeb metateabe krüptograafilise valideerimise | Saab kindluse, et allkirjastatud metateavet ei ole muudetud
 15 | Konnektorteenus | Kontrollib metateabe allkirjastamisel kasutatud võtme usaldatavust | Võrdleb metateabe allkirjastamise serti usaldushoidla sertidega. Allkirjastamise sert peab sisalduma usaldushoidlas
 16 | Konnektorteenus | Võtab metateabest sõnumi allkirjastamise serdi | Võib puhverdada
 17 | Konnektorteenus | Kontrollib sõnumi allkirjastamisel kasutatud võtme usaldatavust | Võrdleb metateabe allkirjastamise serti usaldushoidla sertidega. Allkirjastamise sert peab sisalduma usaldushoidlas
   | | LÕPP. Sõnumi usaldatavus on kontrollitud |
+
+### 5.3 Sõnumi allkirjastamise võtme väljavahetamine
+
+Tehakse toimingud 3-6. Seejuures uue serdi lisamisel teenusepakkuja süsteemi seadistusse vana sert eemaldatakse. Uus võti hakkab toimima hetkest, kui konnektorteenuses metateabe uuendamise puhver aegub (ja konnektorteenus pöördub uuesti teenusepakkuja metateabe otspunkti poole). Seetõttu on soovitatav võtme väljavahetamise ajaks seada teenusepakkuja süsteemis `validUntil` periood lühikeseks. 
+
+### 5.4 Metateabe allkirjastamise võtme väljavahetamine
+
+Tehakse toimingud 1-2, 5-8. Uus võti hakkab toimima kohe.
 
 Ülevaade toimingutest on esitatud joonisel 1.
 
