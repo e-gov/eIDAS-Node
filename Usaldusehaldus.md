@@ -71,13 +71,13 @@ Joonis 1
 
 nr | Osapool | Tegevus | Selgitus
 1  | Asutus  | Moodustab metateabe allkirjastamise võtmepaari |
-2  | Asutus  | Moodustab metateabe allkirjastamise serdi | `CN` väärtuseks märgib Asutuse nime (kuid konnektorteenus ei kasuta seda teavet). Võib olla _self-signed_.
+2  | Asutus  | Moodustab metateabe allkirjastamise serdi | `CN` väärtuseks märgib Asutuse nime (kuid konnektorteenuse tarkvara ei kasuta seda teavet). Võib olla _self-signed_.
 3  | Asutus  | Moodustab sõnumi allkirjastamise võtmepaari | `CN` väärtuseks märgib Asutuse nime (kuid konnektorteenus ei kasuta seda teavet). Võib olla _self-signed_.
 4  | Asutus  | Moodustab sõnumi allkirjastamise serdi |
 5  | Asutus  | Lisab moodustatud serdid oma süsteemi seadistusse |
 6  | Teenusepakkuja süsteem | Genereerib seadistuse põhjal metateabe | SAML-vomingus XML-fail on teenusepakkuja metateabe otspunktist kättesaadav 
 7  | Asutus | Edastab metateabe allkirjastamise serdi RIA-le | Edastatakse turvalise _out of band_ kanali kaudu. Edastuse korraldus lepitakse kokku otsesuhtluses RIA ja Asutuse vahel
-8  | RIA   | Lisab metateabe allkirjastamise serdi usaldushoidlasse
+8  | RIA   | Lisab metateabe allkirjastamise serdi usaldushoidlasse | Enne kontrollib, kas `CN` väärtuseks on Asutuse nimi. See on vajalik sertide eristamiseks võtmete väljavahetamisel
    |       | LÕPP. Tegevusi korratakse sertide aegumisel | _Key Roll-over_-i e dünaamilise võtmeuuenduse teostamine nõuab arendust ainult teenusepakkuja süsteemis. 
 
 ### 5.2 Sõnumivahetuse usaldustoimingud
@@ -96,11 +96,21 @@ nr | Osapool | Tegevus | Selgitus
 
 ### 5.3 Sõnumi allkirjastamise võtme väljavahetamine
 
-Tehakse toimingud 3-6. Seejuures uue serdi lisamisel teenusepakkuja süsteemi seadistusse vana sert eemaldatakse. Uus võti hakkab toimima hetkest, kui konnektorteenuses metateabe uuendamise puhver aegub (ja konnektorteenus pöördub uuesti teenusepakkuja metateabe otspunkti poole). Seetõttu on soovitatav võtme väljavahetamise ajaks seada teenusepakkuja süsteemis `validUntil` periood lühikeseks. 
+Tehakse toimingud 3-6. Seejuures uue serdi lisamisel teenusepakkuja süsteemi seadistusse (toiming 5) vana sert eemaldatakse.
+
+Uus võti hakkab toimima hetkest, kui konnektorteenuses metateabe uuendamise puhver aegub (ja konnektorteenus pöördub uuesti teenusepakkuja metateabe otspunkti poole). Seetõttu on soovitatav võtme väljavahetamise ajaks seada teenusepakkuja süsteemis `validUntil` periood lühikeseks. 
 
 ### 5.4 Metateabe allkirjastamise võtme väljavahetamine
 
 Tehakse toimingud 1-2, 5-8. Uus võti hakkab toimima kohe.
+
+### 5.5 Teenusepakkuja blokeerimine
+
+(usalduse kaotusel teenusepakkuja võtme korrumpeerumise vm põhjusel)
+
+nr | Osapool | Tegevus | Selgitus
+18 | RIA | Eemaldab teenusepakkuja serdi usaldushoidlast |
+   | | LÕPP. Konnektorteenus ei võta enam teenusepakkuja süsteemist sõnumeid vastu | Jõustub hetkest, kus konnektorteenuse metateabepuhver aegub
 
 ## Kirjandus
 
