@@ -72,8 +72,8 @@ Joonis 1
 nr | Osapool | Tegevus | Selgitus
 1  | Asutus  | Moodustab metateabe allkirjastamise võtmepaari |
 2  | Asutus  | Moodustab metateabe allkirjastamise serdi | `CN` väärtuseks märgib Asutuse nime (kuid konnektorteenuse tarkvara ei kasuta seda teavet). Võib olla _self-signed_.
-3  | Asutus  | Moodustab sõnumi allkirjastamise võtmepaari | `CN` väärtuseks märgib Asutuse nime (kuid konnektorteenus ei kasuta seda teavet). Võib olla _self-signed_.
-4  | Asutus  | Moodustab sõnumi allkirjastamise serdi |
+3  | Asutus  | Moodustab sõnumi allkirjastamise võtmepaari |
+4  | Asutus  | Moodustab sõnumi allkirjastamise serdi | `CN` väärtuseks märgib Asutuse nime (kuid konnektorteenus ei kasuta seda teavet). Võib olla _self-signed_.
 5  | Asutus  | Lisab moodustatud serdid oma süsteemi seadistusse |
 6  | Teenusepakkuja süsteem | Genereerib seadistuse põhjal metateabe | SAML-vomingus XML-fail on teenusepakkuja metateabe otspunktist kättesaadav 
 7  | Asutus | Edastab metateabe allkirjastamise serdi RIA-le | Edastatakse turvalise _out of band_ kanali kaudu. Edastuse korraldus lepitakse kokku otsesuhtluses RIA ja Asutuse vahel
