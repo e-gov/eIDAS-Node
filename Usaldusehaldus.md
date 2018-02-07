@@ -2,7 +2,7 @@
 permalink: Usaldustoimingud
 ---
 
-<img src='img/ee_cef_0.png'>
+<img src='img/ee_cef_0.png' style='width:400px'>
 
 Märkus. Töödokument, mida ei ole kinnitatud.
 {:.teade}
@@ -18,38 +18,41 @@ v 0.1
 
 Käesolev spetsifikatsioon määratleb usaldus- ja võtmehalduse tehnilise lahenduse eIDAS konnektorteenuse siseriiklikes liidestes.
 
-Spetsifikatsioon on kaasdokumendiks [eIDAS siseriiklikud usaldus- ja krüptonõuetele](Profiil). Spetsifikatsiooni stabiliseerudes kavandame kaks dokumenti ühendada.
+Spetsifikatsioon on kaasdokumendiks [eIDAS siseriiklikele usaldus- ja krüptonõuetele](Profiil). Spetsifikatsiooni stabiliseerudes dokumendid liidetakse.
 
 ## Vajadus
 
-Süsteemis on vaja lahendada võtmehalduse (_key management_) ja "usaldusehaldus" (_trust management_) korraldus. Lahendus peab olema:
+Süsteemis on vaja lahendada võtmehalduse (_Key Management_) ja "usaldusehaldus" (_Trust Management_) korraldus. Lahendus peab olema:
 - piisavalt turvaline
 - dokumenteeritud
 - osapooltele kommunikeeritud
-- tarkvaras teostatav
+- tarkvaras teostatav.
 
 ## Mõisted ja tähistused
 
-_usaldushaldus_, _Trust Management_ - sõnumivahetuse autentsuse saavutamisele suunatud toimingud, nii konnektorteenuse osutaja (RIA) kui ka teenusekasutaja (asutuse) poolel. Seotud, kuid mitte võrdne võtmehaldusega<br>
-_võtmehaldus_, _Key Management_ - krüptograafiliste võtmetega seotud toimingud: loomine, edastamine, kasutamine - võtme kogu elukaare ulatuses<br>
-_Asutus_ - asutus, kelle süsteem konnektorteenust tarbib; kitsamalt - asutuse süsteemihaldur<br>
-_RIA_ - RIA süsteemihaldur vm töötaja, kes on volitatud paigaldustoiminguid tegema<br>
-_Konnektorteenus_ - RIA taristus paigaldatud tarkvarasüsteem, kuulub eIDAS Node koosseisu<br>
-_Teenusepakkuja süsteem (Service Provider, SP) - asutuse süsteem, mis tarbib konnektorteenust ja osutab e-teenust kasutajale<br>
-_Usaldushoidla_ - RIA konnektorteenuse juures peetav usaldatavate sertide hoidla (_Trusted Certs Store_). Tehniliselt teostatud Java Keystore vm abil<br>
-_sõnum_ - teenusepakkuja süsteemi poolt konnektorteenusele saadetav SAML sõnum; sisaldab autentimispäringut<br> 
+- _usaldushaldus_, _Trust Management_ - sõnumivahetuse autentsuse saavutamisele suunatud toimingud, nii konnektorteenuse osutaja (RIA) kui ka teenusekasutaja (asutuse) poolel. Seotud, kuid mitte võrdne võtmehaldusega
+- _võtmehaldus_, _Key Management_ - krüptograafiliste võtmetega seotud toimingud: loomine, edastamine, kasutamine jm - võtme kogu elukaare ulatuses
+- _asutus_ - asutus, kelle süsteem konnektorteenust tarbib; kitsamalt - asutuse süsteemihaldur
+- _RIA_ - siin: RIA süsteemihaldur vm töötaja, kes on volitatud paigaldustoiminguid tegema
+- _Konnektorteenus_ - RIA taristus paigaldatud tarkvarasüsteem, kuulub eIDAS Node koosseisu
+- _teenusepakkuja süsteem (Service Provider, SP) - asutuse süsteem, mis tarbib konnektorteenust ja osutab e-teenust kasutajale
+- _usaldushoidla_ - RIA konnektorteenuse juures peetav usaldatavate sertide hoidla (_Trusted Certs Store_). Tehniliselt teostatud Java Keystore vms abil
+- _sõnum_ - teenusepakkuja süsteemi poolt konnektorteenusele saadetav SAML sõnum; sisaldab autentimispäringut 
 
 _allkirja valideerimine_ - sisaldab kolme sammu:<br>
-    - allkirja vormingu valideerimine. Kontrollimine, et allkiri vastab XML ja SAML-allkirja vormingule.<br>
-    - _krüptograafiline valideerimine_. Kasutades allkirja juures olevat serti, kontrollitakse, et allkiri on tõepoolest moodustatud serdis sisalduvale avalikule võtmele vastava privaatvõtmega. Sellega saadakse kindlus, et allkirjastatud sõnumit ei ole muudetud.<br>
+    - allkirja vormingu valideerimine. Kontroll, et allkiri vastab XML ja SAML-allkirja vormingule.<br>
+    - _krüptograafiline valideerimine_. Kasutades allkirja juures olevat serti, kontrollitakse, et allkiri on tõepoolest moodustatud serdis sisalduvale avalikule võtmele vastava privaatvõtmega. Sellega saadakse kindlus, et allkirjastatud sõnumit ei ole muudetud. Krüptograafilisest valideerimisest ei piisa, vt _usaldatavuse kontrollimine_.
     - _usaldatavuse kontrollimine_. Kontrollitakse, et allkirjastamisel kasutatud võti on usaldatav.<br>
 
 ## Piirangud
 
 Olulised piirangud:
-1. Oluline piirang on meie tahtmine eIDAS Node-i tarkvara ümbertegemist võimalikult vältida.
+1. eIDAS Node-i tarkvara ümbertegemist või täiendamist tahame võimalikult vältida.
+    - Märkus. Põhimõtteliselt on see võimalik, mingist hetkest võimalik, et ka vältimatu. Kuid _fork_-i tegemine tõstab hüppeliselt tarkvara hoolduskulusid.
 2. *eIDAS Node-i tarkvaras praegu ei ole teostatud usaldusahela kontrolli*.
-3. Arvestama peab ka, et eIDAS Node-is võtme- ja usaldushaldusega tegelevaid komponente saab *sõlmede omavaheliseks ja siseriiklikuks suhtluseks erinevalt seadistada ainult piiratud ulatuses*.
+    - Kontrollitakse, kas sert sisaldub usaldushoidlas ja see on kõik.
+3. eIDAS Node-is võtme- ja usaldushaldusega tegelevaid komponente saab *sõlmede omavaheliseks ja siseriiklikuks suhtluseks erinevalt seadistada ainult piiratud ulatuses*.
+    - Eraldi võtmehalduslahenduse tegemine siseriiklikuks ja Node-to-Node suhtluseks võib tähendada Node-i tarkvara olulist muutmist.
 
 ## Toimingud
 
