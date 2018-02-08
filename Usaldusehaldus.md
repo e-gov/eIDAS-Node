@@ -143,7 +143,8 @@ kus
   Ks - sõnumi allkirja privaatvõti
   {H(S, URL, Ka)}Ks - allkiri
 
-teeb allkirja valideerimisega (dekrüpteerib allkirja Ka-ga ja võrdleb H(S, URL, Ka)-ga) kindlaks, et URL-i on saatnud Ks valdaja
+teeb allkirja valideerimisega (dekrüpteerib allkirja Ka-ga ja
+võrdleb H(S, URL, Ka)-ga) kindlaks, et URL-i on saatnud Ks valdaja
 
 URL-lt saab metateabe - C, Ma, {H(C, Ma)}Ms
 
