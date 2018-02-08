@@ -20,16 +20,16 @@ Siinkohal üks huvitav moment. Tehnilises plaanis on kõi keerelnud küsimuse ü
 
 a) eIDAS-kliendi paigutamine TARA sisse
 
-<img src='img/POC1.PNG' style='width:700px'>
+<p style='text-align:center;'><img src='img/POC1.PNG' style='width:700px'></p>
 
 või 
 
 b) eIDAS-klient eraldi mikroteenusena?
 
-<img src='img/POC2.PNG' style='width:700px'>
+<p style='text-align:center;'><img src='img/POC2.PNG' style='width:700px'></p>
 
 Nortali mehed tegid küsimuse selgitamiseks kaks POC-i e katserakendust (Proof of Concept). Võib küsida, kas oli mõtet programmeerida kaht erinevat varianti? Oli küll, sest katserakendustest üks ei läinud üldse käima - teekide kokkusobimatus, probleemid rakenduse voo kohandamisel jm. Kui vaatate allolevalt plokkskeemilt, siis arhitektuurilist otsust ei olnudki enam vaja teha. Faktide loogikast koorus otsus ise välja. 
 
-<img src='img/Plokkskeem.PNG' style='width:700px'>
+<p style='text-align:center;'><img src='img/Plokkskeem.PNG' style='width:450px'></p>
 
-Teemaga haakub ettevalmistatav A/B testimise metoodika arenduse ja aprobatsiooni hange.  Eesti.ee baasil tahame riigi IT arenduspraktikasse juurutada idufirmades populaarse faktipõhise tehnika.
+Teemaga haakub ettevalmistatav A/B testimise metoodika arenduse hange. Eesti.ee baasil tahame riigi IT arenduspraktikasse sisse tuua idufirmades populaarse tehnika, mille idee on, et otsustavad faktid, mitte disainerid-arhitektid.
