@@ -65,6 +65,8 @@ Kõik toimingud tehakse [eIDAS siseriiklikes usaldus- ja krüptonõuetes](Profii
 
 Ülevaade toimingutest on esitatud joonisel 1.
 
+Usaldusankur seatakse toiminguga 8.
+
 <img src='img/VOTMED-01.PNG' style='width:700px'>
 
 Joonis 1
