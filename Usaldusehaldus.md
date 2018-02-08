@@ -124,3 +124,49 @@ Metoodika. Teatud (üpris üldisi) juhiseid saab väljaannetest:
     - [Part 1 Recommendation for Key Management](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r4.pdf)
     - [Part 2 Best Practices for Key Management Organization](https://csrc.nist.gov/publications/detail/sp/800-57-part-2/final)
 - vt ka [A Profile for U.S. Federal Cryptographic Key Management Systems](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-152.pdf)
+
+## Lisa. Tõestus
+
+Sõnumit loeme usaldusväärseks, kui toimingutest saab loogiliselt järeldada, et sõnumi saatja valdab mõnda usaldushoidlasse paigaldatud avalikku võtit.
+
+````
+Konnektorteenus,
+
+saades sõnumi
+
+   S, URL, Ka, {H(S, URL, Ka)}Ks
+
+kus
+  S - autentimissõnum
+  URL - metateabe otspunkti aadress
+  Ka - sõnumi allkirja avalik võti
+  Ks - sõnumi allkirja privaatvõti
+  {H(S, URL, Ka)}Ks - allkiri
+
+teeb allkirja valideerimisega (dekrüpteerib allkirja Ka-ga ja võrdleb H(S, URL, Ka)-ga) kindlaks, et URL-i on saatnud Ks valdaja
+
+URL-lt saab metateabe - C, Ma, {H(C, Ma)}Ms
+
+kus
+  C - sõnumi allkirjastamise sert
+  Ma - metateabe allkirja avalik võti
+  Ms - metateabe allkirja salajane võti
+  {H(C, Ma)}Ms - allkiri
+
+teeb allkirja valideerimisega kindlaks, et C, Ma on saatnud Ms valdaja
+
+teeb kindlaks, et Ma sisaldub usaldushoidlas (mõnes serdis)
+
+järelikult Ms valdaja on usaldatav
+
+järelikult on ka Ms valdaja saadetud C usaldatav
+
+järelikult on ka C-s sisalduv avalik võti usaldatav
+
+kontrollib, kas C-s sisalduv avalik võti = Ka
+
+kui on, siis Ks-i valdaja on usaldatav
+
+ja tema saadetud sõnum S on usaldatav.
+````
+
