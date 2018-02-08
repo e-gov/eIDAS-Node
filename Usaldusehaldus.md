@@ -86,14 +86,14 @@ nr | Osapool | Tegevus | Selgitus
 
 nr | Osapool | Tegevus | Selgitus
 9  | Teenusepakkuja süsteem | Koostab sõnumi | Lisab sõnumisse (`Issuer` elementi) metateabe otspunkti URL-i
-10  | Teenusepakkuja süsteem | Allkirjastab sõnumi. Sõnumile lisab sõnumi allkirjastamise serdi  | Kasutab sõnumi allkirjastamise privaatvõtit
+10  | Teenusepakkuja süsteem | Allkirjastab sõnumi. Allkirjale lisab allkirjastamise võtmepaari avaliku võtme  | Sõnumi allkirjastamisel kasutab privaatvõtit
 11 | Teenusepakkuja süsteem | Edastab allkirjastatud sõnumi konnektorteenusele |
-12 | Konnektorteenus | Teeb sõnumi krüptograafilise valideerimise | Saab kindluse, et allkirjastatud sõnumit ei ole muudetud
+12 | Konnektorteenus | Teeb sõnumi krüptograafilise valideerimise | Dekrüpteerib räsi, võrdleb seda selgeteksti põhjal arvutatuga. Saab kindluse, et allkirjastatud sõnumit ei ole muudetud
 13 | Konnektorteenus | Võtab sõnumist teenusepakkuja metateabe URL-i ja laeb alla  metateabe | Kasutades puhverdamist. Puhverdamist tüüritakse konnektorteenuse seadistusparameetriga `nonDistributedMetadata.retention` ja teenusepakkuja metateabe parameetriga `validUntil`
 14 | Konnektorteenus | Teeb metateabe krüptograafilise valideerimise | Saab kindluse, et allkirjastatud metateavet ei ole muudetud
-15 | Konnektorteenus | Kontrollib metateabe allkirjastamisel kasutatud võtme usaldatavust | Võrdleb metateabe allkirjastamise serti usaldushoidla sertidega. Allkirjastamise sert peab sisalduma usaldushoidlas
+15 | Konnektorteenus | Kontrollib metateabe allkirjastamisel kasutatud võtme usaldatavust | Võrdleb metateabe allkirjaga kaasasolevat avalikku võtit  usaldushoidla sertides olevate võtmetega. Allkirjastamise avalik võti peab sisalduma usaldushoidla mõnes serdis
 16 | Konnektorteenus | Võtab metateabest sõnumi allkirjastamise serdi | Võib puhverdada
-17 | Konnektorteenus | Kontrollib sõnumi allkirjastamisel kasutatud võtme usaldatavust | Võrdleb metateabe allkirjastamise serti usaldushoidla sertidega. Allkirjastamise sert peab sisalduma usaldushoidlas
+17 | Konnektorteenus | Kontrollib sõnumi allkirjastamisel kasutatud võtme usaldatavust | Võrdleb sõnumi allkirjaga kaasasolevat avalikku võtit eelmisel sammul saadud serdis sisalduva võtmega. Võtmed peavad ühtima
   | | LÕPP. Sõnumi usaldatavus on kontrollitud |
 
 ### 5.3 Sõnumi allkirjastamise võtme väljavahetamine
