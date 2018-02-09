@@ -139,7 +139,7 @@ Konnektorteenusega liidestumise seisukohalt olulised nõutud väljad koos kirjel
 |:-------------|:-------------:|-----|
 | /md:EntityDescriptor/@Issuer | Jah | Peab viitama teenusepakkuja metadata otspunktile (HTTPS URL)|
 | /md:EntityDescriptor/@ValidUntil | Jah | Metateabe kehtivusaeg. Aegumisel küsib konnektorteenus metateave uuesti (Issuer atribuudis viidatud otspunkti käest). |
-| /md:EntityDescriptor/ds:Signature | Jah | Metateabe digitaalallkiri. XML struktuur vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
+| /md:EntityDescriptor/ds:Signature | Jah | Metateabe digitaalallkiri koos allkirjastamissertifikaadiga. XML struktuur vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 | /md:EntityDescriptor/md:Extensions/eidas:SPType | Jah | Asutuse tüüp. Nõutud väärtus `public`. |
 | /md:EntityDescriptor/md:SPSSODescriptor/@AuthnRequestsSigned | Jah | SAML päringud on allkirjastatud. Nõutud väärtus `true` |
 | /md:EntityDescriptor/md:SPSSODescriptor/@WantAssertionsSigned | Jah | SAML vastuse sisu on allkirjastatud. Nõutud väärtus `true` |
@@ -154,12 +154,8 @@ Lisaks on soovituslik asutusel kirjeldada metateabes ka oma organisatsiooni koht
 
 | Parameeter (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
 |:-------------|:-------------:|-----|
-| /md:EntityDescriptor/md:Organization | Ei | XML struktuur, mis kirjaldab ära info liidestuva organisatsiooni kohta |
-| /md:EntityDescriptor/md:Organization/md:OrganizationName | Jah | Asutuse nimi. |
-| /md:EntityDescriptor/md:Organization/md:OrganizationDisplayName | Jah | Asutuse nimi. Inimloetav. |
-| /md:EntityDescriptor/md:Organization/md:OrganizationURL | Jah | Asutuse veebilehe URL |
-| /md:EntityDescriptor/md:ContactPerson | Ei | XML struktuur, mis kirjeldab organisatsiooni kontaktisikute info. |
-| /md:EntityDescriptor/md:ContactPerson/@contactType | Jah | Väärtused vastavalt skeemile ("support", "technical" jne) |
+| /md:EntityDescriptor/md:Organization | Ei | XML struktuur, mis kirjaldab ära info liidestuva organisatsiooni kohta. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
+| /md:EntityDescriptor/md:ContactPerson | Ei | XML struktuur, mis kirjeldab organisatsiooni kontaktisikute info. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 
 
 Näidis 1. - Näidisvastus metateabe otspunktilt.
