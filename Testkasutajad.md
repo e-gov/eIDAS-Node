@@ -13,7 +13,7 @@ Käesolev juhend kirjeldab test eIDAS konnektorteenuses autentimise võimalusi t
 ## 1 Partnerriikide autentimislahendused
 Kõige toodangulähedasem viis testida täis autentimisvoogu. Kasutatakse teiste EU riikide autentimisteenuste testkeskondi.
 
-<img src='img/Partner.PNG' width='600'>
+<img src='img/Partner.png' width='600'>
 
 | Riigi kood päringus | Kasutaja | Parool | Eeldatav tulem |
 |---------------------|----------|--------|----------------|
@@ -22,7 +22,7 @@ Kõige toodangulähedasem viis testida täis autentimisvoogu. Kasutatakse teiste
 ## 2 EU poolt pakutav validaatorteenus
 CEF Digitali poolt pakutav autentimisteenus ning validaator. Teostab mõningaid kontrolle saabunud päringutele.
 
-<img src='img/Validaator.PNG' width='600'>
+<img src='img/Validaator.png' width='600'>
 
 | Riigi kood päringus | Kasutaja | Parool | Eeldatav tulem |
 |---------------------|----------|--------|----------------|
@@ -31,7 +31,7 @@ CEF Digitali poolt pakutav autentimisteenus ning validaator. Teostab mõningaid 
 ## 3 Eesti sisesed autentimisvahendid (ID-kaart ja Mobiil-ID)
 Võimalik on kasutada ka Eesti autentimisteenust. Antud lähenemine ei võimalda testida korrektselt täis autentimisvoogu, kuid võimaldab kontrollida liidestust Eesti eIDAS nodega. Autentimisteenuses on kasutusel test ID-kaart ning test Mobiil-ID teenus.
 
-<img src='img/Eesti.PNG' width='300'>
+<img src='img/Eesti.png' width='300'>
 
 | Riigi kood päringus | ID-kaar | Mobiil-ID|
 |---------------------|---------|----------|

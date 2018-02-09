@@ -62,7 +62,7 @@ Testida tuleb vähemalt järgnevaid aspekte:
 | 2 | Autentimispäring peab olema korrektselt koostatud ning sisaldama kohustuslikke elemente| [Nõuded autentimispäringule](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#7-autentimisp%C3%A4ring) |
 | 3 | Autentimise voog peab olema tervenesti läbitav | [Kasutusvoog](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#3-autentimisprotsess), [Juhend testkasutajatega autentimiseks](Testkasutajad) |
 
-Testimise hõlbustamiseks on loodud [testijuhtude kogum]()<- Vaja luua, mida tuleb (või on soovituslik?) järgida.
+Testimise hõlbustamiseks on loodud [testijuhtude kogum](Testjuhud), mida tuleb (või on soovituslik?) järgida.
 
 ## 5 Liituda eIDAS konnektor toodanguteenusega
 Eduka testimise järel asutus esitab taotluse toodanguteenuse avamiseks klientrakendusele. Taotluses näidata:
