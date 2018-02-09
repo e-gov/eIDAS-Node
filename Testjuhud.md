@@ -1,5 +1,5 @@
 ---
-permalink: Testijuhud
+permalink: Testjuhud
 ---
 
 # Testijuhtude loetelu eIDAS konnektorteenusega liidestumiseks (DRAFT)
