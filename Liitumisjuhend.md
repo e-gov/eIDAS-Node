@@ -55,6 +55,7 @@ Testeenuse otspunktid on järgnevad:
 - Asutus esitab testiraporti [RIA vormil]()<-Link näidisele mis on vaja luua (dokument vaja panna ka viidete alla)
 
 Testida tuleb vähemalt järgnevaid aspekte:
+
 | ID | Eesmärk | Viide |
 |----|--------|--------|
 | 1 | Metateave peab olema korrektselt publitseeritud ning sisaldama kohustuslikke elemente | [Nõuded metateabe otspunktile](https://e-gov.github.io/eIDAS-Connector/Profiil#teenusepakkuja-metateave) |
