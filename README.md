@@ -1,4 +1,4 @@
-<img src='img/ee_cef_0.png'></img>
+<img src='img/ee_cef_0.png' style='width:400px'>
 
 # RIA eIDAS konnektorteenus
 
