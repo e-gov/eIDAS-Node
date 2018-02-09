@@ -46,10 +46,7 @@ Töödokumentatsioon, mille ajakohasus ega muutumatus ei ole tagatud.
 
 [FAQ](FAQ)
 
-
 Arhiiv:
-
-Aktuaalsuse kaotanud teave.
 
 [eIDAS päringuvoog - Demo SP - HTTP Redirect](Vookirjeldus-1)<br>
 [eIDAS päringuvoog - Demo SP - HTTP POST](Vookirjeldus-2)<br>
