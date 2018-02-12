@@ -2,11 +2,11 @@
 permalink: Ahel
 ---
 
-# eIDAS autentimine. Ahela turvaanalüüs
+# eIDAS autentimisevoo end-to-end turvaanalüüs
 
 eIDAS autentimine tehakse ahelas, milles Eesti poolel on neli sõlme (joonis 1) ja välismaal veel kaks (välisriigi eIDAS vahendusteenus -> välisriigi autentimisteenus, joonisel esitatud koos, eIDAS taristu pilvena).
 
-Kombineerime mitut protokolli, oleme sunnitud ehitama vahesõlmi ja looma liideseid standardsetele protokollidele tuginedes, kuid siis neid kohandades ja täiendades. Seetõttu peame lõpuks hindama kogu skeemi turvalisust tervikuna. Siinkohal väike lähtekaardistus. 
+Kombineerime mitut protokolli, oleme sunnitud ehitama vahesõlmi ja looma liideseid standardsetele protokollidele tuginedes, kuid siis neid kohandades ja täiendades. Seetõttu peame lõpuks hindama kogu skeemi turvalisust tervikuna, kogu ahela ulatuses. (eIDAS tehnilises spetsifikatsioonis on siseriiklikud lülid "skoobist väljas". Turvalisuse seisukohalt muidugi ei saa olla skoobiväliseid asju.) Siinkohal väike lähtekaardistus. 
 
 <img src='img/POC3.PNG' style='width:700px'>
 

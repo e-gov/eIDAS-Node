@@ -49,7 +49,7 @@ Töödokumentatsioon, mille ajakohasus ega muutumatus ei ole tagatud.
 
 [FAQ](FAQ)
 
-[Ahela turvalisus](Ahel)
+[eIDAS autentimisevoo end-to-end turvaanalüüs](Ahel)
 
 Arhiiv:
 
