@@ -49,6 +49,8 @@ Töödokumentatsioon, mille ajakohasus ega muutumatus ei ole tagatud.
 
 [FAQ](FAQ)
 
+[Ahela turvalisus](Ahel)
+
 Arhiiv:
 
 [eIDAS päringuvoog - Demo SP - HTTP Redirect](Vookirjeldus-1)<br>
