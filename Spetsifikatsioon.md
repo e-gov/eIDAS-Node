@@ -123,14 +123,13 @@ Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud `HTTP PO
 
 ## 6 Metateabe otspunkt
 
-Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks kogu ühendumiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid.
+Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks ühendumiseks ning usalduse loomiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid.
 
 Teenusepakkuja peab konnektorteenusele kättesaadavaks tegema oma metaandmed üle HTTPS protokolli.
 
 Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata xml skeemile](https://docs.oasis-open.org/security/saml/v2.0/saml-schema-metadata-2.0.xsd).
 
 Metateave peab olema allkirjastatud, kasutades krüptoalgoritme, mis on toodud dokumendis [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
-
 
 Konnektorteenusega liidestumise seisukohalt olulised nõutud väljad koos kirjeldusega on toodud Tabelis 1 (vt ka näidisvastust - Näidis 1)
 
@@ -143,8 +142,9 @@ Konnektorteenusega liidestumise seisukohalt olulised nõutud väljad koos kirjel
 | /md:EntityDescriptor/md:Extensions/eidas:SPType | Jah | Asutuse tüüp. Nõutud väärtus `public`. |
 | /md:EntityDescriptor/md:SPSSODescriptor/@AuthnRequestsSigned | Jah | SAML päringud on allkirjastatud. Nõutud väärtus `true` |
 | /md:EntityDescriptor/md:SPSSODescriptor/@WantAssertionsSigned | Jah | SAML vastuse sisu on allkirjastatud. Nõutud väärtus `true` |
-| /md:EntityDescriptor/md:SPSSODescriptor/@protocolSupportEnumeration | Jah | SAML protokolli tugi. Nõutud on minimaalselt `urn:oasis:names:tc:SAML:2.0:protocol` (võib lisasks toetada ka SAML 1.0 ja 1.1) |
-| /md:EntityDescriptor/md:SPSSODescriptor/md:KeyDescriptor | Jah | Allkirjastamiseks kasutatud võtme kirjeldus. Minimaalselt peab olema kirjeldatud allkirjastamise võti (atribuut @use="signing") |
+| /md:EntityDescriptor/md:SPSSODescriptor/@protocolSupportEnumeration | Jah | SAML protokolli tugi. Nõutud on minimaalselt `urn:oasis:names:tc:SAML:2.0:protocol` (võib lisaks toetada ka SAML 1.0 ja 1.1) |
+| /md:EntityDescriptor/md:IDPSSODescriptor/md:KeyDescriptor[@use="signing"] | Jah | Teenusepakkuja poolt päringu allkirjastamiseks kasutatud võtme kirjeldus. Võtmeinfo peab sisaldama X509 sertifikaati. |
+| /md:EntityDescriptor/md:IDPSSODescriptor/md:KeyDescriptor[@use="encryption"] | Jah | Kirjeldab võtme, mida konnektorteenus kasutab vastuses oleva info krüpteerimiseks. Võtmeinfo peab sisaldama X509 sertifikaati. |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:NameIDFormat | Jah | Nõutud väärtused: `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`, `urn:oasis:names:tc:SAML:2.0:nameid-format:transient` ja `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Binding | Jah | SAML suhtlusmeetod. Nõutud väärtus `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST` |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location | Jah | Viide vastuse tarbimise otspunktile. HTTP otspunkti url teenusepakkuja süsteemi. |
@@ -206,6 +206,28 @@ Näidis 1. - Näidisvastus metateabe otspunktilt.
 				</ds:X509Data>
 			</ds:KeyInfo>
 		</md:KeyDescriptor>
+        <md:KeyDescriptor use="encryption">
+			<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<ds:X509Data>
+					<ds:X509Certificate>MIIDaTCCAlGgAwIBAgIEH5P86jANBgkqhkiG9w0BAQsFADBlMQswCQYDVQQGEwJFRTELMAkGA1UE
+CBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwGA1UECxMFU1RPUksxHzAdBgNVBAMT
+FnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwHhcNMTcwNTE5MTI1MDA3WhcNMTkwNTA5MTI1MDA3WjBl
+MQswCQYDVQQGEwJFRTELMAkGA1UECBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwG
+A1UECxMFU1RPUksxHzAdBgNVBAMTFnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwggEiMA0GCSqGSIb3
+DQEBAQUAA4IBDwAwggEKAoIBAQCqZC7CJi3WVCzsSh3mV9FNoVYgeiOIR65EAOapyyt7Xgqchn1s
+Sppq3hszCbjgQ8mK1huDkw8iL5qmXg4rd6TUV4nxPuEVbX348Q2P7JH6UmHcedWElYvzbI2Yw388
+v/dOwzp7jza8DaKBtAJlk8hY1riPbe4CfiOr5aTYbpyG0CsbnozRXpij562SNVkbvWz4EdW/3C5W
+i73vHNRzvIoMgwF28YzCpf6DFMk5QpejSc+F6zsYeK1uMqNtJVxGybGhlq61BBmGMxFBmt0LdLWt
+UOnzjqgB5/Y8cNShEk+yxT/QBMJ8BbO8vgO2InhFUyEBlbxzqGsvdP6BZJ37lzBfAgMBAAGjITAf
+MB0GA1UdDgQWBBSF+NmEgjDnVSNucn9cFWU28xHG8DANBgkqhkiG9w0BAQsFAAOCAQEAP/cJT+ti
+HTJ7aGESfSouKUccnsS89VKY4zu1Cj6IuGBOtsi7ORx8iBid3mFeX3bS9XcnK0kV3vbIEfXr2U9L
+YHtAeERNwMk111y0sU2pnwHpWae5YX7cCBjbEd72CV7BQ5cPExUEdORGrpHrEE445o2LC7Nif0Qx
+kO/2BFMlKJWsr2HyccYXWSFdyie3ar1HzkMGbebyK7cmRVTHqohNwPtVmS+bLcyjY5OiL/NVArGR
+VP6DSep3h+/G6GnmrpeQxsLwolhASNLQbylifA8v6E3toHu9ditx9qynFFn9CeDT3g1LKhwQkB6/
+GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
+				</ds:X509Data>
+			</ds:KeyInfo>
+		</md:KeyDescriptor>
 		<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
 		<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://eidastest.eesti.ee/SP/ReturnPage" index="0" isDefault="true"/>
 	</md:SPSSODescriptor>
@@ -233,7 +255,7 @@ Nõutud parameetrite loetelu HTTP POST päringus on toodud Tabelis 2.
 `SAMLRequest` parameetris saadetav SAML XML päringu sisu (vt Näidis 2) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]).
 
 
-Tabel 2 - Päringu parameetrid
+Tabel 2 - Autentimispäringu parameetrid
 
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 |:-------------|:-------------:|-----|
@@ -337,6 +359,8 @@ Tabel 4 - Autentimisvastuse parameetrid
 |-------------|:-------------:|-----|
 | `SAMLResponse` | Jah | Parameeter, mis sisaldab Base64 kodeeritud SAML vormingus autentimise vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
+
+### RelayState parameetri kontrollimine
 
 
 Näidis 3. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
