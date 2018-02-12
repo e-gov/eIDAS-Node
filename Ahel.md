@@ -2,7 +2,7 @@
 permalink: Ahel
 ---
 
-# eIDAS autentimisevoo turvaanalüüs
+# eIDAS-autentimise end-to-end turvaanalüüs
 
 ## Ahel
 
