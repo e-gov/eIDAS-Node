@@ -16,7 +16,7 @@ v 0.4
 
 ## 1 Ülevaade
 
-Käesolev juhend on suunatud riigiasutustele (edaspidi *teenusepakkuja*), kes soovivad välisriikide kodanikke oma infosüsteemi tarvis tuvastada otse eIDAS konnektorteenusega ühendudes. Juhend kirjeldab nõuded, isikustuvastusprotsessi tehnilisi detaile ja vajalikke arendustegevusi riikliku konnektorteenusega liidestumiseks.
+Käesolev juhend on suunatud riigiasutustele (edaspidi *teenusepakkuja*), kes soovivad välisriikide kodanikke oma infosüsteemi tarvis tuvastada otse eIDAS konnektorteenusega ühendudes. Juhend kirjeldab nõuded, isikustuvastusprotsessi tehnilisi detaile ja vajalikke arendustegevusi konnektorteenusega liidestumiseks.
 
 Vt ka: [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil)
 
@@ -81,22 +81,22 @@ Joonis 2.
 7. Kasutaja autendib ennast autentimisteenuses (näiteks ID-kaardiga).
     - eduka tuvastuse korral teenusepakkuja tagastab vastusena ümbersuunamisvormi piiriülesse eIDAS Node teenusesse, millest pärines algne autentimispäring.
     - ümbersuundamisvormi `SAMLResponse` parameetris on teenusepakkuja poolt palutud info isiku kohta.
-    - `SAMLResponse` allkirjastatakse ja isiku andmed krüpteeritakse teenusepakkuja privaatvõtmega.
+    - `SAMLResponse` allkirjastatakse ja isiku andmed krüpteeritakse piiriülese eIDAS Node avaliku võtmega.
 
 8. Kasutaja suunatakse automaatselt tagasi piiriülese eIDAS Node teenusesse.
     - `SAMLResponse` parameetri sisus olev XML sisu koos allkirjaga valideeritakse.
     - sisu dekrüpteeritakse.
     - moodustatakse uus `SAMLResponse` parameeter,
     - mis allkirjastatakse
-    - ja mille sisu krüpteeritakse piiriülese eIDAS Node privaatvõtmega.
-    - kasutajale saadetakse siseriiklikusse eIDAS Node'ile adresseeritud ümbersuundamisvorm koos `SAMLResponse` parameetriga.
+    - ja mille sisu krüpteeritakse (siseriikliku eIDAS Node avaliku võtmega).
+    - kasutajale saadetakse siseriiklikusse eIDAS Node'ile adresseeritud ümbersuunamisvorm koos `SAMLResponse` parameetriga.
 
 9. Kasutaja suunatakse automaatselt tagasi siseriiklikku eIDAS Node teenusesse.
     - `SAMLResponse` parameetri sisus olev XML sisu koos allkirjaga valideeritakse.
     - sisu dekrüpteeritakse.
     - moodustatakse uus `SAMLResponse` parameeter,
     - mis allkirjastatakse
-    - ja mille sisu krüpteeritakse siseriikliku eIDASNode privaatvõtmega.
+    - ja mille sisu krüpteeritakse teenusepakkuja avaliku võtmega.
     - kasutajale saadetakse siseriiklikule teenusepakkujale adresseeritud ümbersuundamisvorm koos `SAMLResponse` parameetriga.
 
 10. Kasutaja suunatakse automaatselt tagasi siseriikliku teenusepakkuja lehele.

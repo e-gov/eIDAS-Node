@@ -27,9 +27,10 @@ eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 ## Liidestuse arendajale
 
 [eIDAS konnektorteenuse liidese spetsifikatsioon](Spetsifikatsioon)<br>
-[eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
 
 [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil)
+
+[eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
 
 [Viited](Viited)
 
