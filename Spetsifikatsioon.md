@@ -110,10 +110,12 @@ Vt joonisel 2 kasutusvoog 3b.
 
 Joonis 2. eIDAS taristu
 
-eIDAS autentimisvoogus osalevad viis osapoolt:
+eIDAS autentimisvoogus osalevad viis osapoolt (vt tabel 1).
+
+Tabel 1
 
  nr | osapool | eIDAS terminoloogias
- 1 | kasutaja | User
+ 1 | kasutaja | _User_
  2 | e-teenus (teenusepakkuja infosüsteem) | _Service Provider_ (SP)
  3 | RIA eIDAS konnektorteenus (RIA eIDAS Node-i koosseisus) | _Connector Service_
  4 | välisriigi eIDAS vahendusteenus (eIDAS Node-i koosseisus) | _Proxy Service_ | 
@@ -205,6 +207,8 @@ Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metatea
 - testteenus: [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata) 
 - toodangteenus: [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata) 
 
+Tabel 2
+
 `md:EntityDescriptor` |  kirjeldatud on SAML olem (entity)
 `entityID` | nimega `https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata`
 `validUntil` | kirjeldus kehtib 24 h
@@ -255,9 +259,9 @@ Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata x
 
 Metateave peab olema allkirjastatud, kasutades nõutud krüptoalgoritme, vt jaotis [Nõuded liituvale teenusepakkujale](#4-n%C3%B5uded-liituvale-teenusepakkujale).
 
-Konnektorteenusega liidestumise seisukohalt olulised väljad koos kirjeldusega on toodud Tabelis 1.2 ja 1.3 (vt ka näidisvastust - Näidis 1). Kasutatud XML nimeruumide prefiksitele vastava kirjelduse leiab LISA 1 (kui ei ole esitatud täpsustavaid selgitusi elemendi kohta selgituses).
+Konnektorteenusega liidestumise seisukohalt olulised väljad koos kirjeldusega on toodud tabelis 3 (vt ka näidisvastust lisas 2). XML nimeruumide kirjeldused on lisas 1.
 
-Tabel 1.1 - Metateabe kirjeldus
+Tabel 3
 
 | XML elemendi või atribuudi nimi (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
 |:-------------|:-------------:|-----|
@@ -273,21 +277,14 @@ Tabel 1.1 - Metateabe kirjeldus
 | /md:EntityDescriptor/md:SPSSODescriptor/md:NameIDFormat | Jah | Nõutud väärtused: `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`, `urn:oasis:names:tc:SAML:2.0:nameid-format:transient` ja `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Binding | Jah | Deklareerib SAML suhtlusmeetodi. Nõutud väärtus `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST` |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location | Jah | Viitab vastuse tarbimise otspunktile. HTTPS otspunkti URL teenusepakkuja süsteemis. |
-
-Lisaks on soovituslik asutusel kirjeldada metateabes ka oma organisatsiooni kohta käiv info ning kontaktandmed.
-
-Tabel 1.2 - Organisatsiooni info
-
-| XML elemendi või atribuudi nimi (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
-|:-------------|:-------------:|-----|
-| /md:EntityDescriptor/md:Organization | Ei | XML struktuur, mis kirjaldab ära info liidestuva organisatsiooni kohta. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
+| /md:EntityDescriptor/md:Organization | Ei | XML struktuur, mis kirjeldab info liidestuva organisatsiooni kohta. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 | /md:EntityDescriptor/md:ContactPerson | Ei | XML struktuur, mis kirjeldab organisatsiooni kontaktisikute info. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 
 ## 6 Autentimispäring
 
-Autentimispäring esitatakse kodeeritud vormiparameetrina HTTP POST päringus. Võimalike vormiparameetrite loetelu HTTP POST päringus on toodud Tabelis 2.
+Autentimispäring esitatakse kodeeritud vormiparameetrina HTTP POST päringus. Võimalike vormiparameetrite loetelu HTTP POST päringus on toodud tabelis 4.
 
-Tabel 2 - Autentimispäringu parameetrid
+Tabel 4. Autentimispäringu parameetrid
 
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 |:-------------|:-------------:|-----|
@@ -295,9 +292,9 @@ Tabel 2 - Autentimispäringu parameetrid
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille eIDAS Node vastuses töötlemata tagasi peegeldab. |
 | `country` |	Jah | Kodaniku riigikood, kelle isikut tuvastatakse. ISO 3166-1 alpha-2 standardi alusel. |
 
-`SAMLRequest` parameetris saadetav SAML XML päringu sisu (vt Näidis 2) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]). Päringus olevate kohustuslike elementide ja kitsenduste loetelu on toodud tabelis 3 ( kasutatud XML nimeruumide kirjelduse leiab LISA 1).
+`SAMLRequest` parameetris saadetav SAML XML päringu sisu (vt näide lisas 3) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [Viited](Viited), eIDAS Technical specification). Päringus olevate kohustuslike elementide ja kitsenduste loetelu on toodud tabelis 5.  Kasutatud XML nimeruumide kirjelduse leiab lisas 1.
 
-Tabel 3 - SAML `AuthnRequest` parameetrid.
+Tabel 5. SAML `AuthnRequest` parameetrid.
 
 | XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kohustuslik           | Selgitus  |
 |:-------------|:-------------:|:----|
@@ -317,20 +314,20 @@ Tabel 3 - SAML `AuthnRequest` parameetrid.
 
 ## 7 Autentimisvastus
 
-Autentimise tulemuse kohta saadetakse teenusepakkujale autentimisvastus (vt Näidised 3.1 ja 3.2). Eduka autentimise korral on autentimisvastuses andmed autentimistoimingu ja autenditud isiku kohta. Ebaeduka autentimise korral saadetakse veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL peab olema määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
+Autentimise tulemuse kohta saadetakse teenusepakkujale autentimisvastus (vt näited lisades 4 ja 5). Eduka autentimise korral on autentimisvastuses andmed autentimistoimingu ja autenditud isiku kohta. Ebaeduka autentimise korral saadetakse veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL peab olema määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
 
 Vastus on allkirjastatud konnektorteenuse poolt. Saadetavad isikuandmed (Assertion elemendi sisu) esitatakse krüpteeritud kujul.
 
-Autentimisvastuses tagastatakse järgmised andmed (tabel 4).
+Autentimisvastuses tagastatakse järgmised andmed (tabelid 6 ja 7).
 
-Tabel 4 - Autentimisvastuse parameetrid
+Tabel 6 - Autentimisvastuse parameetrid
 
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 |-------------|:-------------:|-----|
 | `SAMLResponse` | Jah | Parameeter, mis sisaldab Base64 kodeeritud SAML vormingus autentimise vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
 
-Tabel 5 - SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmetega).
+Tabel 7. SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmetega)
 
 | XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kohustuslik           | Selgitus  |
 |:-------------|:-------------:|:----|
@@ -352,7 +349,7 @@ Tabel 5 - SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmeteg
 
 Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahenduse dokumentatsioonis (vt [eIDAS-veakoodid]).
 
-Tabel 5 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatavatest vigadest
+Tabel 8. Veakoodid
 
 | Veakood | Lühikirjeldus            | Selgitus  |
 |:-------------:|-------------|-----|
@@ -393,7 +390,9 @@ Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Tood
 
 ## Lisa 1. XML nimeruumid
 
-Näidistes kasutatud ja xml struktuurides viidatud XML nimeruumid on toodud alljärgnevas tabelis:
+Näidistes kasutatud ja xml struktuurides viidatud XML nimeruumid on toodud alljärgnevas tabelis.
+
+Tabel 9.
 
 | Prefiks | Nimeruum | Selgitus |
 |:--------|:-------------|:-------------|
