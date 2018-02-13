@@ -9,7 +9,7 @@ Märkus. Lahtised küsimused on markeeritud sümbolitega `//`.
 
 # RIA eIDAS konnektorteenuse liidese spetsifikatsioon
 {: .no_toc}
-v 0.4
+v 0.5
 
 - TOC
 {:toc}
@@ -119,6 +119,7 @@ Vt lähemalt [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
 
 ## 5 Sõnumivahetusmeetod
 
+
 Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud `HTTP POST` põhinevat sõnumivahetusmeetodit (vt. `HTTP POST binding` [SAML 2.0] standardikirjelduses - ptk 5.12).
 
 ## 6 Metateabe otspunkt
@@ -131,15 +132,18 @@ Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata x
 
 Metateave peab olema allkirjastatud, kasutades krüptoalgoritme, mis on toodud dokumendis [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
 
-Konnektorteenusega liidestumise seisukohalt olulised nõutud väljad koos kirjeldusega on toodud Tabelis 1 (vt ka näidisvastust - Näidis 1)
 
+Konnektorteenusega liidestumise seisukohalt olulised väljad koos kirjeldusega on toodud Tabelis 1.2 ja 1.3 (vt ka näidisvastust - Näidis 1). Kasutatud XML nimeruumide prefiksitele vastava kirjelduse leiab LISA 1 (kui ei ole esitatud täpsustavaid selgitusi elemendi kohta selgituses).
+
+
+Tabel 1.1 - Metateabe kirjeldus
 
 | XML elemendi või atribuudi nimi (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
 |:-------------|:-------------:|-----|
 | /md:EntityDescriptor/@Issuer | Jah | Nõutud väärtuseks teenusepakkuja metateabe otspunkti URL (HTTPS).|
 | /md:EntityDescriptor/@ValidUntil | Jah | Määrab metateabe kehtivusaja. Aegumisel küsib konnektorteenus metateave uuesti. |
 | /md:EntityDescriptor/ds:Signature | Jah | Kogu metateavet hõlmav digitaalallkiri, koos allkirjastamissertifikaadiga. Vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
-| /md:EntityDescriptor/md:Extensions/eidas:SPType | Jah | Asutuse tüüp. Nõutud väärtus `public`. |
+| /md:EntityDescriptor/md:Extensions/eidas:SPType | Jah | Asutuse tüüp. Nõutud väärtus `public`. Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
 | /md:EntityDescriptor/md:SPSSODescriptor/@AuthnRequestsSigned | Jah | Deklareerib, et teenusepakkuja poolt saadetavad SAML päringud peavad olema allkirjastatud. Nõutud väärtus `true` |
 | /md:EntityDescriptor/md:SPSSODescriptor/@WantAssertionsSigned | Jah | Deklareerib, et konnektorteenuselt tuleva vastuse sisu peab olema allkirjastatud. Nõutud väärtus `true` |
 | /md:EntityDescriptor/md:SPSSODescriptor/@protocolSupportEnumeration | Jah | Deklareerib SAML protokolli versiooni toe. Nõutud on minimaalselt `urn:oasis:names:tc:SAML:2.0:protocol` (võib lisaks toetada ka SAML 1.0 ja 1.1) |
@@ -149,8 +153,9 @@ Konnektorteenusega liidestumise seisukohalt olulised nõutud väljad koos kirjel
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Binding | Jah | Deklareerib SAML suhtlusmeetodi. Nõutud väärtus `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST` |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location | Jah | Viitab vastuse tarbimise otspunktile. HTTPS otspunkti URL teenusepakkuja süsteemis. |
 
-
 Lisaks on soovituslik asutusel kirjeldada metateabes ka oma organisatsiooni kohta käiv info ning kontaktandmed.
+
+Tabel 1.2 - Organisatsiooni info
 
 | XML elemendi või atribuudi nimi (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
 |:-------------|:-------------:|-----|
@@ -158,7 +163,132 @@ Lisaks on soovituslik asutusel kirjeldada metateabes ka oma organisatsiooni koht
 | /md:EntityDescriptor/md:ContactPerson | Ei | XML struktuur, mis kirjeldab organisatsiooni kontaktisikute info. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 
 
-Näidis 1. - Näidisvastus metateabe otspunktilt.
+## 7 Autentimispäring
+
+
+Autentimispäring esitatakse kodeeritud vormiparameetrina HTTP POST päringus. Võimalike vormiparameetrite loetelu HTTP POST päringus on toodud Tabelis 2.
+
+Tabel 2 - Autentimispäringu parameetrid
+
+| Parameetri nimi        | Kohustuslik           | Selgitus  |
+|:-------------|:-------------:|-----|
+| `SAMLRequest` |	Jah | SAML protokolli spetsiifiline parameeter, mis sisaldab Base64 kodeeritud kujul SAML XML päringut (`AuthnRequest` koos detailidega). |
+| `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille eIDAS Node vastuses töötlemata tagasi peegeldab. |
+| `country` |	Jah | Kodaniku riigikood, kelle isikut tuvastatakse. ISO 3166-1 alpha-2 standardi alusel. |
+
+`SAMLRequest` parameetris saadetav SAML XML päringu sisu (vt Näidis 2) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]). Päringus olevate kohustuslike elementide ja kitsenduste loetelu on toodud tabelis 3 ( kasutatud XML nimeruumide kirjelduse leiab LISA 1).
+
+Tabel 3 - SAML `AuthnRequest` parameetrid.
+
+| XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kohustuslik           | Selgitus  |
+|:-------------|:-------------:|:----|
+| `/saml2p:AuthnRequest/@Destination`	| Jah | Siseriikliku eIDAS Node-i SSO otspunkti aadress. Bindingule vastavad otspunktide aadressid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService`) |
+| `/saml2p:AuthnRequest/@ForceAuthn` | Jah | Konstantne väärtus: `true` |
+| `/saml2p:AuthnRequest/@ID` | Jah | Unikaalne päringu XML ID. Peab vastama NCName kitsendustele (`https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName`) |
+| `/saml2p:AuthnRequest/@IsPassive` | Jah | Konstantne väärtus: `false` |
+| `/saml2p:AuthnRequest/@IssueInstant` | Jah | Päringu koostamise aeg. |
+| `/saml2p:AuthnRequest/@ProviderName` | Jah | Teenusepakkuja nimetus. Lepitakse kokku RIA-ga. |
+| `/saml2p:AuthnRequest/@Version` | Jah | Konstantne väärtus: `2.0` |
+| `/saml2p:AuthnRequest/saml2:Issuer` | Jah | Teenusepakkuja metadatale viitav URL. |
+| `/saml2p:AuthnRequest/ds:Signature/*` | Jah | Teenusepakkuja privaatvõtmega antud allkiri ja sellega seotud detailid. Toetatud krüptoalgoritmid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:Extensions/alg:SigningMethod/*`) |
+| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType` | Jah | Konstantne väärtus: `public` (avaliku sektori asutus). Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
+| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuute soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true`. Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
+| `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (`/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat`) |
+| `/saml2p:AuthnRequest/saml2:RequestedAuthnContext` | Jah |	Määrab, millist autentimistaset nõutakse sihtriigi autentimisteenuselt. <br><p>Võimalikud väärtused:<br> `http://eidas.europa.eu/LoA/low`<br>`http://eidas.europa.eu/LoA/substantial`<br>`http://eidas.europa.eu/LoA/high`</p>  |
+
+
+
+## 8 Autentimisvastus
+
+Autentimise tulemuse kohta saadetakse teenusepakkujale autentimisvastus (vt Näidised 3.1 ja 3.2). Eduka autentimise korral on autentimisvastuses andmed autentimistoimingu ja autenditud isiku kohta. Ebaeduka autentimise korral saadetakse veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL peab olema määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
+
+Vastus on allkirjastatud konnektorteenuse poolt. Saadetavad isikuandmed (Assertion elemendi sisu) esitatakse krüpteeritud kujul.
+
+Autentimisvastuses tagastatakse järgmised andmed (tabel 4).
+
+Tabel 4 - Autentimisvastuse parameetrid
+
+| Parameetri nimi        | Kohustuslik           | Selgitus  |
+|-------------|:-------------:|-----|
+| `SAMLResponse` | Jah | Parameeter, mis sisaldab Base64 kodeeritud SAML vormingus autentimise vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
+| `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
+
+Tabel 5 - SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmetega).
+
+| XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kohustuslik           | Selgitus  |
+|:-------------|:-------------:|:----|
+| `/saml2p:Response/@Consent`	| Ei | Info kasutajalt isikuandmete avaldamise nõusoleku küsimise kohta. |
+| `/saml2p:Response/@Destination`	| Jah | Teenusepakkuja metateabes kajastatud URL. |
+| `/saml2p:Response/@InResponseTo`	| Jah | Päringu ID, mille kohta vastus on tagastatud (vt ka `/saml2p:AuthnRequest/@ID`). |
+| `/saml2p:Response/@IssueInstant`	| Jah | Kuupäeva ja kellaaeg, millal vastus koostati. |
+| `/saml2p:Response/@Version`	| Jah | Konstantne väärtus: `2.0` |
+| `/saml2p:Response/saml2:Issuer` | Jah | Konstante väärtus: Eesti konnektorteenuse HTTPS URL. |
+| `/saml2p:Response/saml2:Issuer/@Format` | Jah | Konstantne väärtus: `urn:oasis:names:tc:SAML:2.0:nameid-format:entity` |
+| `/saml2p:Response/ds:Signature` | Jah | Konnektorteenuse privaatvõtme abil koostatud digitaalallkiri. |
+| `/saml2p:Response/saml2:Status/saml2p:StatusCode/@Value` | Jah | Eduka vastuse korral konstante väärtus:  `urn:oasis:names:tc:SAML:2.0:status:Success`|
+| `/saml2p:Response/saml2:Status/saml2p:StatusMessage` | Ei | Vastuse staatust täpsustav kirjeldus. |
+| `/saml2p:Response/saml2:EncryptedAssertion/xenc:EncryptedData` | Jah | Isikuandmete info krüpteeritud kujul. |
+
+
+// TODO vaja teha isikuandmete esitamise detailsem kirjeldus
+
+## 9 Veaolukordade käsitlemine
+
+Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahenduse dokumentatsioonis (vt [eIDAS-veakoodid]).
+
+Tabel 5 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatavatest vigadest
+
+| Veakood | Lühikirjeldus            | Selgitus  |
+|:-------------:|-------------|-----|
+| 202007 | Isiku nõusolek puudub | Isik keeldus autentimise jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
+// TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
+
+## 10 Toetatud riikide nimekiri
+
+Nimekiri riikidest, kelle autentimisteenuseid RIA eIDAS konnektorteenus vahendab, on masinloetavas vormingus avaldatud aadressil.
+
+`https://www.ria.ee/eidasinfo`
+
+Nimekiri on esitatud JSON-failina, milles on üks JSON-objekt. Objektis sisaldub objekt `CountriesSupported`, milles omakorda on objektid `Test` ja `Production`. Viimaste väärtusteks on massiivid riikide nimekirjadega. Riik esitatakse [ISO 3166-1 alpha-2] standardi kohaselt, kahekohalise koodiga. Ülemise taseme objektis võib olla ka muid välju.
+- Toetatud riikide nimekirja URL PEAB olema liidestuvas rakenduses konf-is seatav.
+- Liidestuv rakendus PEAB kasutama nimekirja, kuvades kasutajale ainult nende riikide "lipukesed", kelle autentimisi tegelikult suudetakse vahendada.
+- Nimekirja uuendamine eeldatavalt saab olema harv. Liidestuv rakendus PEAKS nimekirja alla tõmbama ja seda puhverdama.
+- Puhvri uuendamise intervall PEAKS olema liidestuva rakenduse seadistuses seatav.
+
+ Näide.
+
+```
+{
+   "CountriesSupported":{
+      "Test":[
+         "SE",
+         "NO"
+      ],
+      "Production":[
+      ]
+   }
+}
+```
+
+Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Toodanguteenus ei toeta ühtki riiki.
+
+[ISO 3166-1 alpha-2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+
+## LISA 1 - XML nimeruumid
+
+Näidistes kasutatud ja xml struktuurides viidatud XML nimeruumid on toodud alljärgnevas tabelis:
+
+| Prefiks | Nimeruum | Selgitus |
+|:--------|:-------------|:-------------|
+| md | urn:oasis:names:tc:SAML:2.0:metadata | SAML 2.0 metadata elemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf  |
+| ds | http://www.w3.org/2000/09/xmldsig# | Digitaalallkirja vormingu elemendid. www.w3.org/TR/xmldsig-core/  |
+| alg | urn:oasis:names:tc:SAML:metadata:algsupport | Krüptoalgoritmide kirjeldus. http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-metadata-algsupport-v1.0-cs01.pdf |
+| saml2 | urn:oasis:names:tc:SAML:2.0:assertion | OASIS SAML 2.0 vormingu põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
+| saml2p | urn:oasis:names:tc:SAML:2.0:protocol | OASIS SAML 2.0 protokolli põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
+
+### LISA 2 - Näidised
+
+Näidis 1. - Vastus metateabe otspunktilt.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://eidastest.eesti.ee/SP/metadata" validUntil="2018-02-10T08:57:21.953Z">
@@ -276,41 +406,6 @@ GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
 </md:EntityDescriptor>
 ```
 
-Tabel 1
-
-## 7 Autentimispäring
-
-Nõutud parameetrite loetelu HTTP POST päringus on toodud Tabelis 2.
-
-`SAMLRequest` parameetris saadetav SAML XML päringu sisu (vt Näidis 2) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]).
-
-
-Tabel 2 - Autentimispäringu parameetrid
-
-| Parameetri nimi        | Kohustuslik           | Selgitus  |
-|:-------------|:-------------:|-----|
-| `SAMLRequest` |	Jah | SAML protokolli spetsiifiline parameeter, mis sisaldab Base64 kodeeritud kujul SAML XML päringut (`AuthnRequest` koos detailidega). `AuthnRequest` päringus olevate kohustuslike elementide ja kitsenduste loetelu on toodud tabelis 3.  SAML `AuthnRequest` peab olema allkirjastatud teenusepakkuja privaatvõtmega ja moodustatud vastavalt eIDAS nõuetele.|
-| `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille eIDAS Node vastuses töötlemata tagasi peegeldab. |
-| `country` |	Jah | Kodaniku riigikood, kelle isikut tuvastatakse. ISO 3166-1 alpha-2 standardi alusel. |
-
-Tabel 3 - SAML `AuthnRequest` parameetrid
-
-| XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kohustuslik           | Selgitus  |
-|:-------------|:-------------:|:----|
-| `/saml2p:AuthnRequest/@Destination`	| Jah | Siseriikliku eIDAS Node-i SSO otspunkti aadress. Bindingule vastavad otspunktide aadressid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:IDPSSODescriptor/md:SingleSignOnService`) |
-| `/saml2p:AuthnRequest/@ForceAuthn` | Jah | Konstantne väärtus: `true` |
-| `/saml2p:AuthnRequest/@ID` | Jah | Unikaalne päringu XML ID. Peab vastama NCName kitsendustele (`https://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName`) |
-| `/saml2p:AuthnRequest/@IsPassive` | Jah | Konstantne väärtus: `false` |
-| `/saml2p:AuthnRequest/@IssueInstant` | Jah | Päringu koostamise aeg. |
-| `/saml2p:AuthnRequest/@ProviderName` | Jah | Teenusepakkuja nimetus. Lepitakse kokku RIA-ga. |
-| `/saml2p:AuthnRequest/@Version` | Jah | Konstantne väärtus: `2.0` |
-| `/saml2p:AuthnRequest/saml2:Issuer` | Jah | Teenusepakkuja metadatale viitav URL. |
-| `/saml2p:AuthnRequest/ds:Signature/*` | Jah | Teenusepakkuja privaatvõtmega antud allkiri ja sellega seotud detailid. Toetatud krüptoalgoritmid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:Extensions/alg:SigningMethod/*`) |
-| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType` | Jah | Konstantne väärtus: `public` (avaliku sektori asutus) |
-| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuute soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true` |
-| `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (`/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat`) |
-| `/saml2p:AuthnRequest/saml2p:RequestedAuthnContext` | Jah |	// Variandid. Vajab analüüsi // |
-
 Näidis 2 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kujul)
 
 ```xml
@@ -368,23 +463,7 @@ Näidis 2 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kuj
 </saml2p:AuthnRequest>
 ```
 
-## 8 Autentimisvastus
-
-Autentimise tulemuse kohta saadetakse teenusepakkujale autentimisvastus (vt Näidis 3). Eduka autentimise korral on autentimisvastuses andmed autentimistoimingu ja autenditud isiku kohta. Ebaeduka autentimise korral saadetakse veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL peab olema määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
-
-Autentimisvastuses tagastatakse järgmised andmed (tabel 4).
-
-Tabel 4 - Autentimisvastuse parameetrid
-
-| Parameetri nimi        | Kohustuslik           | Selgitus  |
-|-------------|:-------------:|-----|
-| `SAMLResponse` | Jah | Parameeter, mis sisaldab Base64 kodeeritud SAML vormingus autentimise vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
-| `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
-
-### RelayState parameetri kontrollimine
-
-
-Näidis 3. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
+Näidis 3.1 Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
 
 ```xml
 <saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/SP/ReturnPage" ID="_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu" InResponseTo="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IssueInstant="2018-01-05T13:42:44.472Z" Version="2.0">
@@ -442,7 +521,7 @@ Näidis 3. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
 </saml2p:Response>
 ```
 
-Näidis 3 - Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
+Näidis 3.2 - Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
 
 ```xml
 <saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/EidasNode/ColleagueResponse" ID="_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI" InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY" IssueInstant="2018-01-05T13:42:11.944Z" Version="2.0">
@@ -496,54 +575,11 @@ Näidis 3 - Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnestum
 </saml2p:Response>
 ```
 
-## 9 Veaolukordade käsitlemine
-
-Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahenduse dokumentatsioonis (vt [eIDAS-veakoodid]).
-
-Tabel 5 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatavatest vigadest
-
-| Veakood | Lühikirjeldus            | Selgitus  |
-|:-------------:|-------------|-----|
-| 202007 | Isiku nõusolek puudub | Isik keeldus autentimise jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
-
-// TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
-
-## 10 Toetatud riikide nimekiri
-
-Nimekiri riikidest, kelle autentimisteenuseid RIA eIDAS konnektorteenus vahendab, on masinloetavas vormingus avaldatud aadressil.
-
-`https://www.ria.ee/eidasinfo`
-
-Nimekiri on esitatud JSON-failina, milles on üks JSON-objekt. Objektis sisaldub objekt `CountriesSupported`, milles omakorda on objektid `Test` ja `Production`. Viimaste väärtusteks on massiivid riikide nimekirjadega. Riik esitatakse [ISO 3166-1 alpha-2] standardi kohaselt, kahekohalise koodiga. Ülemise taseme objektis võib olla ka muid välju.
-
-- Toetatud riikide nimekirja URL PEAB olema liidestuvas rakenduses konf-is seatav.
-- Liidestuv rakendus PEAB kasutama nimekirja, kuvades kasutajale ainult nende riikide "lipukesed", kelle autentimisi tegelikult suudetakse vahendada.
-- Nimekirja uuendamine eeldatavalt saab olema harv. Liidestuv rakendus PEAKS nimekirja alla tõmbama ja seda puhverdama.
-- Puhvri uuendamise intervall PEAKS olema liidestuva rakenduse seadistuses seatav.
-
- Näide.
-
-```
-{
-   "CountriesSupported":{
-      "Test":[
-         "SE",
-         "NO"
-      ],
-      "Production":[
-      ]
-   }
-}
-```
-
-Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Toodanguteenus ei toeta ühtki riiki.
-
-[ISO 3166-1 alpha-2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
-
 ## Muutelugu
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.5, 13.02.2018   | Korrastus. Vastuse täpsustused. XML nimeruumid |
 | 0.4, 09.02.2018   | Metateabe otspunkti vastuse täpsustused |
 | 0.3, 29.01.2018   | Korrastus |
 | 0.2, 22.01.2018   | Lisatud toetatud riikide nimekiri |
