@@ -2,73 +2,67 @@
 permalink: Spetsifikatsioon
 ---
 
-<img src='img/ee_cef_0.png'>
-
 Märkus. Lahtised küsimused on markeeritud sümbolitega `//`. 
 {:.teade}
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.5
+v 0.6
 
 - TOC
 {:toc}
 
 ## 1 Ülevaade
 
-Käesolev spetsifikatsioon on suunatud riigiasutusele, edaspidi *teenusepakkuja*, kes soovib oma e-teenuse välismaalastest kasutajaid autentida eIDAS konnektorteenuse abil. Spetsifikatsioon:
+Käesolev spetsifikatsioon on suunatud riigiasutusele, edaspidi *teenusepakkuja*, kes soovib oma e-teenuse välismaalastest kasutajaid autentida eIDAS konnektorteenuse abil.
+
+Spetsifikatsioon:
 - annab tehnilise ülevaate autentimisprotsessist
 - määratleb liidestatavatele süsteemidele esitatavaid nõuded
 - ja annab soovitusi liidese ehitamiseks.
 
 ## 2 Tehnilised parameetrid
 
-protokoll | SAML 2.0, Web Browser SSO profiil, koos eIDAS täiendustega | Vt [Viited](Viited)
-sõnumivahetusmeetod | `HTTP POST` | Vt `HTTP POST binding` SAML 2.0 standardikirjelduses, ptk 5.12.
-
-## Otspunktid
-
-Joonisel 1 on kujutatud liidestuva süsteemi seisukohalt olulised metateabe ja SAML-sõnumite vastuvõtu otspunktid:
-
-- RIA eIDAS konnektorteenuse
+- protokoll
+    - SAML 2.0, Web Browser SSO profiil, koos eIDAS täiendustega. Vt [Viited](Viited)
+- sõnumivahetusmeetod
+    - `HTTP POST`, kasutaja sirviku ümbersuunamise (_redirect_) abil. Vt "HTTP POST binding" SAML 2.0 standardikirjelduses, ptk 5.12.
+- otspunktid
     - metateabe otspunkt `/ConnectorResponderMetadata`
     - SAML autentimispäringsõnumite vastuvõtupunkt `/ServiceProvider`
-- teenusepakkuja
-    - metateabe otspunkt `/Metadata`
-    - SAML autentimisvastussõnumite vastuvõtupunkt `/ReturnPage`.
 
-Kõigi otspunktide URL-id on seadistatavad. Konkreetsed URL-id määravad osapooled metateabes.
+- Märkus. Teenusepakkuja peab omama (vt joonis 1):
+    - metateabe otspunkti, nt `/Metadata`
+    - SAML autentimisvastussõnumite vastuvõtupunkti, nt `/ReturnPage`.
 
 <img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:500px;'>
 
 Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
 
-## 2 Kontekst
+## 2 Autentimisvoog
 
-RIA eIDAS konnektorteenus on ühendajaks asutuse e-teenuse ja EL eIDAS-taristu vahel (joonisel 1 kasutusvoog 3b). Vt lähemalt [eIDAS autentimise lisamine e-teenusele](https://e-gov.github.io/TARA-Doku/files/TARA-tutvustus.pdf).
+Teenusepakkuja süsteemi suhtlus eIDAS konnektorteenusega hõlmab kahte sõnumiedastust:
+- SAML autentimispäringu saatmine eIDAS konnektorteenusele
+- SAML autentimisvastuse vastuvõtmine eIDAS konnektorteenuselt.
+
+RIA eIDAS konnektorteenus on ühendajaks asutuse e-teenuse ja EL eIDAS-taristu vahel (joonisel 1 kasutusvoog 3b).
 
 <img src='img/SUURPILT.PNG' style='width:700px'>
 
 Joonis 1. eIDAS taristu
 
-e-teenuse ja eIDAS konnektorteenuse vaheline suhtlus on osa eIDAS autentimisvoost, hõlmates sellest kahte sõnumiedastust:
-
-- autentimispäringut esitava SAML tõendi (_token_) saatmine e-teenusest eIDAS konnektorteenusele
-- autentimisvastust esitava SAML tõendi saatmine eIDAS konnektorteenuselt e-teenusele.
-
-Sõnumiedastus teostatakse veebisirvija ümbersuunamise (_redirect_) abil.
-
 ## 3 Autentimisprotsess
 
-Piiriülene autentimisprotsess eIDAS-autentimisvõrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [Viited](Viited). Sõnumivahetus osapoolte vahel toimib SAML 2.0 protokolli alusel.
+Piiriülene autentimisprotsess eIDAS-autentimisvõrgus hõlmab mitut osapoolt:
+- kasutaja
+- e-teenus (teenusepakkuja infosüsteem); eIDAS terminoloogias - _Service Provider_
+- RIA eIDAS konnektorteenus (RIA eIDAS Node-i koosseisus)
+- välisriigi eIDAS vahendusteenus (eIDAS Node-i koosseisus)
+- välisriigi autentimisteenus; eIDAS terminoloogias - _Identity Provider_
 
-Järgnevas näidisstsenaariumis (vt Joonis 2) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel. Lihtsuse mõttes ei ole näidatud SAML protokolli kohaseid metadata otspunktide poole pöördumisi.
+Osapooled järgivad eIDAS koosvõime nõudeid (vt [Viited](Viited)).
 
-Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
-
-<img src='img/Autentimisvoog-eIDAS_demorakenduses.png'>
-
-Joonis 2.
+Järgnevas näidisstsenaariumis (joonis vt lisas 6) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel. Lihtsuse mõttes ei ole näidatud SAML protokolli kohaseid metadata otspunktide poole pöördumisi.
 
 1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab piiriülest autentimist.
     - Kasutaja isik on tuvastamata, puudub kehtiv sessioon.
@@ -124,7 +118,6 @@ Joonis 2.
     - ja otsustab, kas käesolev isik on õigustatud ligi pääsema algselt küsitud ressursile.
     - kui jah, siis luuakse sessioon
     - ning tagastatakse kasutajale esialgselt URL-lt soovitud sisu.
-
 
 ## Metateabe kasutamise ülevaade
 
@@ -265,8 +258,6 @@ atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuu
 - `md:ContactPerson` - teave teenuse kontaktisiku kohta.
 
 Vt ka [Metadata seletus](https://e-gov.github.io/eIDAS-Connector/MetadataSeletus#eidas-konnektorteenus-suhtluses-siseriikliku-liidestatud-s%C3%BCsteemiga), jaotis "Konnektorteenus suhtluses siseriikliku liidestatud süsteemiga".
-
-
 
 ## 6 Metateabe otspunkt
 
@@ -416,7 +407,7 @@ Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Tood
 
 [ISO 3166-1 alpha-2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
-## LISA 1 - XML nimeruumid
+## Lisa 1. XML nimeruumid
 
 Näidistes kasutatud ja xml struktuurides viidatud XML nimeruumid on toodud alljärgnevas tabelis:
 
@@ -428,9 +419,8 @@ Näidistes kasutatud ja xml struktuurides viidatud XML nimeruumid on toodud allj
 | saml2 | urn:oasis:names:tc:SAML:2.0:assertion | OASIS SAML 2.0 vormingu põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
 | saml2p | urn:oasis:names:tc:SAML:2.0:protocol | OASIS SAML 2.0 protokolli põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
 
-## LISA 2 - Näidised
+## Lisa 2. Sõnuminäidis. Vastus metateabe otspunktilt.
 
-Näidis 1. - Vastus metateabe otspunktilt.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://eidastest.eesti.ee/SP/metadata" validUntil="2018-02-10T08:57:21.953Z">
@@ -548,7 +538,7 @@ GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
 </md:EntityDescriptor>
 ```
 
-Näidis 2 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kujul)
+## Lisa 3. Sõnuminäidis. SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kujul)
 
 ```xml
 <saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/saml-extensions" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified" Destination="http://localhost:8080/EidasNode/ServiceProvider" ForceAuthn="true" ID="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IsPassive="false" IssueInstant="2018-01-05T13:42:08.036Z" ProviderName="DEMO-SP-CA" Version="2.0">
@@ -605,7 +595,7 @@ Näidis 2 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kuj
 </saml2p:AuthnRequest>
 ```
 
-Näidis 3.1 Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
+## Lisa 4. Sõnuminäidis. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral
 
 ```xml
 <saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/SP/ReturnPage" ID="_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu" InResponseTo="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IssueInstant="2018-01-05T13:42:44.472Z" Version="2.0">
@@ -663,7 +653,7 @@ Näidis 3.1 Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral
 </saml2p:Response>
 ```
 
-Näidis 3.2 - Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
+## Lisa 5. Sõnuminäidis. Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
 
 ```xml
 <saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/EidasNode/ColleagueResponse" ID="_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI" InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY" IssueInstant="2018-01-05T13:42:11.944Z" Version="2.0">
@@ -717,10 +707,17 @@ Näidis 3.2 - Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnest
 </saml2p:Response>
 ```
 
+## Lisa 6. Eduka autentimisvoo jadadiagramm
+
+Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
+
+<img src='img/Autentimisvoog-eIDAS_demorakenduses.png'>
+
 ## Muutelugu
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.6, 13.02.2018  | Ühendatud "eIDASe siseriiklike usaldus- ja krüptonõuetega" üheks dokumendiks. Väiksemaid täiendusi |
 | 0.5, 13.02.2018   | Korrastus. Vastuse täpsustused. XML nimeruumid |
 | 0.4, 09.02.2018   | Metateabe otspunkti vastuse täpsustused |
 | 0.3, 29.01.2018   | Korrastus |
