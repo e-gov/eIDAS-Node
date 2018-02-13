@@ -24,9 +24,9 @@ Spetsifikatsioon:
 ## 2 Tehnilised parameetrid
 
 - protokoll
-    - SAML 2.0, Web Browser SSO profiil, koos eIDAS täiendustega. Vt [Viited](Viited)
+    - SAML 2.0, Web Browser SSO profiil, koos eIDAS täiendustega. Vt [Viited](Viited), eIDAS Technical specification
 - sõnumivahetusmeetod
-    - `HTTP POST`, kasutaja sirviku ümbersuunamise (_redirect_) abil. Vt "HTTP POST binding" SAML 2.0 standardikirjelduses, ptk 5.12.
+    - `HTTP POST`, kasutaja sirviku ümbersuunamise (_redirect_) abil. Vt [Viited](Viited), "HTTP POST binding" SAML 2.0 standardikirjelduses, ptk 5.12.
 - otspunktid
     - metateabe otspunkt `/ConnectorResponderMetadata`
     - SAML autentimispäringsõnumite vastuvõtupunkt `/ServiceProvider`
@@ -39,105 +39,7 @@ Spetsifikatsioon:
 
 Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
 
-## 2 Autentimisvoog
-
-Teenusepakkuja süsteemi suhtlus eIDAS konnektorteenusega hõlmab kahte sõnumiedastust:
-- SAML autentimispäringu saatmine eIDAS konnektorteenusele
-- SAML autentimisvastuse vastuvõtmine eIDAS konnektorteenuselt.
-
-RIA eIDAS konnektorteenus on ühendajaks asutuse e-teenuse ja EL eIDAS-taristu vahel (joonisel 1 kasutusvoog 3b).
-
-<img src='img/SUURPILT.PNG' style='width:700px'>
-
-Joonis 1. eIDAS taristu
-
-## 3 Autentimisprotsess
-
-Piiriülene autentimisprotsess eIDAS-autentimisvõrgus hõlmab mitut osapoolt:
-- kasutaja
-- e-teenus (teenusepakkuja infosüsteem); eIDAS terminoloogias - _Service Provider_
-- RIA eIDAS konnektorteenus (RIA eIDAS Node-i koosseisus)
-- välisriigi eIDAS vahendusteenus (eIDAS Node-i koosseisus)
-- välisriigi autentimisteenus; eIDAS terminoloogias - _Identity Provider_
-
-Osapooled järgivad eIDAS koosvõime nõudeid (vt [Viited](Viited)).
-
-Järgnevas näidisstsenaariumis (joonis vt lisas 6) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel. Lihtsuse mõttes ei ole näidatud SAML protokolli kohaseid metadata otspunktide poole pöördumisi.
-
-1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab piiriülest autentimist.
-    - Kasutaja isik on tuvastamata, puudub kehtiv sessioon.
-    - Teenusepakkuja jätab soovitud URL-i meelde ja suunab kasutaja lehele, kus kuvatakse eIDAS võrguga liidestatud riikide nimekiri.
-
-2. Kasutaja on valinud riigi ja saadab vormi teenusepakkujale.
-    - Teenusepakkuja moodustab isikutuvastamiseks vajaliku `SAMLRequest` parameetri sisu
-    - ja saadab kasutajale vormi ümbersuunamisega riiklikusse eIDAS Node'i (vormi parameetriteks `SAMLRequest`, `country` ja vajadusel ka `RelayState`).
-        - NB! `RelayState` on mittekohustuslik parameeter, mille teenusepakkuja võib kaasa panna oma päringu oleku hilisemaks tuvastuseks sammul 10 (algse päringu saab tuvastada ka vastuses oleva `SAMLResponse` parameetris sisalduvas XML atribuudis `InResponseTo`, kuid see info on kodeeritud kujul)
-
-3. Kasutaja suunatakse automaatselt riiklikku eIDAS Node'i,
-    - kus kontrollitakse `SAMLRequest` parameetris oleva SAML XML päringu sisu valiidsust ja allkirja vastu teenusepakkuja metainfos olevat avalikku võtit.
-    - siseriiklik eIDAS Node moodustab uue SAML XML päringu, võttes aluseks teenusepakkujalt tuleva info
-    - ja allkirjastab selle oma privaatvõtmega.
-    - siseriiklik eIDAS Node saadab kasutajale vastuseks vormi, mis on suunatud sihtriigi eIDAS Node'i vastu koos `SAMLRequest` parameetriga ja vajadusel `RelayState`-ga.
-
-4. Kasutaja suunatakse automaatselt koos vormiga edasi sihtriigi eIDAS Node'i koos `SAMLRequest` ja `RelayState` parameetritega.
-    - piiriülene eIDAS Node teenus valideerib `SAMLRequest`-i parameetris kodeeritud kujul oleva XML päringu sisu ja allkirja.
-    - piiriülene eIDAS Node teenus saadab vastuseks vormi kasutaja nõusoleku küsimiseks.
-
-5. Kui kasutaja oli vormil esitatud andmete jagamisega nõus,
-    - saadab kasutaja kinnitamiseks päringu piiriülesele eIDAS Node teenusele.
-    - piiriülene eIDAS Node teenus täiendab saadud `SAMLRequest`-i sisu
-    - ja saadab kasutajale vastuseks piiriülesele autentimisteenusele ümbersuunamiseks mõeldud vormi.
-
-6. Kasutaja suunatakse automaatselt edasi piiriülese autentimisteenusepakkuja lehele koos `SAMLRequest` ja `RelayState` parameetritega.
-    - teenusepakkuja saadab kasutajale vastuseks autentimismeetmete valiku (ID-kaart, paroolikaart, parool, Mobiil-ID vastavalt sellele, mida antud riigi teenusepakkuja toetab).
-
-7. Kasutaja autendib ennast autentimisteenuses (näiteks ID-kaardiga).
-    - eduka tuvastuse korral teenusepakkuja tagastab vastusena ümbersuunamisvormi piiriülesse eIDAS Node teenusesse, millest pärines algne autentimispäring.
-    - ümbersuundamisvormi `SAMLResponse` parameetris on teenusepakkuja poolt palutud info isiku kohta.
-    - `SAMLResponse` allkirjastatakse ja isiku andmed krüpteeritakse piiriülese eIDAS Node avaliku võtmega.
-
-8. Kasutaja suunatakse automaatselt tagasi piiriülese eIDAS Node teenusesse.
-    - `SAMLResponse` parameetri sisus olev XML sisu koos allkirjaga valideeritakse.
-    - sisu dekrüpteeritakse.
-    - moodustatakse uus `SAMLResponse` parameeter,
-    - mis allkirjastatakse
-    - ja mille sisu krüpteeritakse (siseriikliku eIDAS Node avaliku võtmega).
-    - kasutajale saadetakse siseriiklikusse eIDAS Node'ile adresseeritud ümbersuunamisvorm koos `SAMLResponse` parameetriga.
-
-9. Kasutaja suunatakse automaatselt tagasi siseriiklikku eIDAS Node teenusesse.
-    - `SAMLResponse` parameetri sisus olev XML sisu koos allkirjaga valideeritakse.
-    - sisu dekrüpteeritakse.
-    - moodustatakse uus `SAMLResponse` parameeter,
-    - mis allkirjastatakse
-    - ja mille sisu krüpteeritakse teenusepakkuja avaliku võtmega.
-    - kasutajale saadetakse siseriiklikule teenusepakkujale adresseeritud ümbersuundamisvorm koos `SAMLResponse` parameetriga.
-
-10. Kasutaja suunatakse automaatselt tagasi siseriikliku teenusepakkuja lehele.
-    - teenusepakkuja veendub `SAMLResponse` parameetri sisu vastavuses nõuetele (sh formaadi, sisu ja allkirja kontrollid).
-    - teenusepakkuja dekrüpteerib isikuandmed
-    - ja otsustab, kas käesolev isik on õigustatud ligi pääsema algselt küsitud ressursile.
-    - kui jah, siis luuakse sessioon
-    - ning tagastatakse kasutajale esialgselt URL-lt soovitud sisu.
-
-## Metateabe kasutamise ülevaade
-
-Konnektorteenus määrab oma metateabega milliseid algoritme ta toetab (algoritmid määratakse ära konfiguratsioonifailis). Liidestujad peavad selle info arvesse võtma. Teenusepakkuja metadata kirjeldab milliseid algoritme tema ise SAML sõnumit vastu võttes toetab.
-
-Autentimispäringu töötlemisel: 
-1. Teenusepakkuja teeb enne SAML autentimispäringsõnumi koostamist päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (või kasutab puhverdatud metateavet).
-2. Teenusepakkuja valib allkirjastamisalgoritmi, konnektorteenuse metadata alusel (peab olema üks neist, mis on toodud konnektorteenuse metadatas).
-3. Teenusepakkuja allkirjastab autentimispäringu oma privaatvõtmega.
-4. Teenusepakkuja saadab SAML autentimispäringsõnumi konnektorteenuse otspunkti `/ServiceProvider` (sirviku ümbersuunamisega).
-5. Konnektorteenus teeb päringu Teenusepakkuja metaandmete otspunkti `/Metadata` (või kasutab puhverdatud metateavet).
-6. Konnektorteenus otsustab, kas ta usaldab saatjat (kas tulnud päringu sees olev allkirja võti kuulub ka tegelikult saatjaga seotud metateabesse). Konnektorteenus valideerib `SAMLRequest` päringu allkirja ainult juhul, kui see on moodustatud algoritmiga, mis on tema lubatud allkirjameetodite nimekirjas (sama nimekiri, mida ta reklaamib välja oma metadatas - konfis toodud kui whitelist). Muul juhul annab vea.
-
-Autentimisvastuse töötlemisel:
-7. Sihtriigi vahendusteenusest tulev päring võetakse vastu, kontrollitakse ärireeglite vastu ja moodustatakse uus vastus, mis on allkirjastatud konnektorteenuse enda privaatvõtmega. NB! Allkirja algoritm otsustatakse konnektorteenuse seadetes oleva algoritmi alusel.
-8. Konnektorteenus, enne SAML autentimisvastussõnumi saatmist, teeb päringu Teenusepakkuja metaandmete otspunkti `/Metadata`.
-9. Konnektorteenus saadab SAML autentimisvastussõnumi Teenusepakkuja otspunkti `/ReturnPage`.
-10. Teenusepakkuja teeb päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (sarnaselt autentimispäringu töötlemise p 6).
-
-## 4 Nõuded liituvale teenusepakkujale
+## 3 Nõuded liituvale teenusepakkujale
 
 Kokkuvõtlikult peab teenusepakkuja:
 - pakkuma SAML metateabe otspunkti teenust
@@ -196,8 +98,107 @@ Kokkuvõtlikult peab teenusepakkuja:
         - `http://www.w3.org/2009/xmlenc11#aes256-gcm` (peamine)
         - `http://www.w3.org/2009/xmlenc11#aes128-gcm` (alternatiiv)   
 
+## 4 Autentimisvoog
 
-## eIDAS konnektorteenuse metateave
+Teenusepakkuja süsteemi suhtlus eIDAS konnektorteenusega on osa eIDAS autentimisvoost, hõlmates sellest kahte sõnumiedastust:
+- SAML autentimispäringu saatmine eIDAS konnektorteenusele
+- SAML autentimisvastuse vastuvõtmine eIDAS konnektorteenuselt.
+
+Vt joonisel 2 kasutusvoog 3b.
+
+<img src='img/SUURPILT.PNG' style='width:700px'>
+
+Joonis 2. eIDAS taristu
+
+eIDAS autentimisvoogus osalevad viis osapoolt:
+
+ nr | osapool | eIDAS terminoloogias
+ 1 | kasutaja | User
+ 2 | e-teenus (teenusepakkuja infosüsteem) | _Service Provider_ (SP)
+ 3 | RIA eIDAS konnektorteenus (RIA eIDAS Node-i koosseisus) | _Connector Service_
+ 4 | välisriigi eIDAS vahendusteenus (eIDAS Node-i koosseisus) | _Proxy Service_ | 
+ 5 | välisriigi autentimisteenus | _Identity Provider_
+
+Edukas autentimine koosneb järgmistest sammudest:
+
+(HTTP POST näitel. Lihtsuse mõttes ei ole näidatud SAML pöördumisi metateabeotspunktide poole. Vt ka joonis lisas 6) 
+
+1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab piiriülest autentimist.
+    - Kasutaja isik on tuvastamata, puudub kehtiv sessioon.
+    - Teenusepakkuja jätab soovitud URL-i meelde ja suunab kasutaja lehele, kus kuvatakse eIDAS võrguga liidestatud riikide nimekiri.
+
+2. Kasutaja on valinud riigi ja saadab vormi teenusepakkujale.
+    - Teenusepakkuja moodustab isikutuvastamiseks vajaliku `SAMLRequest` parameetri sisu
+    - ja saadab kasutajale vormi ümbersuunamisega riiklikusse eIDAS Node'i (vormi parameetriteks `SAMLRequest`, `country` ja vajadusel ka `RelayState`).
+        - `RelayState` on mittekohustuslik parameeter, mille teenusepakkuja võib kaasa panna oma päringu oleku hilisemaks tuvastuseks sammul 10 (algse päringu saab tuvastada ka vastuses oleva `SAMLResponse` parameetris sisalduvas XML atribuudis `InResponseTo`, kuid see info on kodeeritud kujul)
+
+3. Kasutaja suunatakse automaatselt RIA eIDAS konnektorteenusesse,
+    - kus kontrollitakse `SAMLRequest` parameetris oleva SAML XML päringu sisu valiidsust ja allkirja vastu teenusepakkuja metainfos olevat avalikku võtit.
+    - RIA eIDAS konnektorteenus moodustab uue SAML XML päringu, võttes aluseks teenusepakkujalt tuleva info
+    - ja allkirjastab selle oma privaatvõtmega.
+    - seejärel saadab kasutajale vastuseks vormi, mis on suunatud sihtriigi eIDAS vahendusteenuse vastu, koos `SAMLRequest` parameetriga ja vajadusel `RelayState`-ga.
+
+4. Kasutaja suunatakse automaatselt koos vormiga edasi sihtriigi eIDAS vahendusteenusesse, koos `SAMLRequest` ja `RelayState` parameetritega.
+    - välisriigi eIDAS vahendusteenus valideerib `SAMLRequest`-i parameetris kodeeritud kujul oleva XML päringu sisu ja allkirja.
+    - ja saadab vastuseks vormi kasutaja nõusoleku küsimiseks.
+
+5. Kui kasutaja oli vormil esitatud andmete jagamisega nõus,
+    - saadab kasutaja kinnitamiseks päringu välisriigi eIDAS vahendusteenusele.
+    - vahendusteenus täiendab saadud `SAMLRequest`-i sisu
+    - ja saadab kasutajale vastuseks välisriigi autentimisteenusele ümbersuunamiseks mõeldud vormi.
+
+6. Kasutaja suunatakse automaatselt edasi välisriigi autentimisteenus lehele, koos `SAMLRequest` ja `RelayState` parameetritega.
+    - väliriigi autentimisteenus saadab kasutajale vastuseks autentimismeetmete valiku (ID-kaart, paroolikaart, parool, Mobiil-ID vm).
+
+7. Kasutaja autendib ennast autentimisteenuses.
+    - eduka autentimise korral autentimisteenus tagastab vastusena ümbersuunamisvormi välisriigi eIDAS vahendusteenusesse (millest pärines autentimispäring).
+    - ümbersuundamisvormi `SAMLResponse` parameetris on teenusepakkuja poolt palutud info isiku kohta.
+    - `SAMLResponse` allkirjastatakse ja isiku andmed krüpteeritakse väliriigi eIDAS vahendusteenuse avaliku võtmega.
+
+8. Kasutaja suunatakse automaatselt tagasi välisriigi eIDAS vahendusteenusesse.
+    - `SAMLResponse` parameetri sisus olev XML sisu koos allkirjaga valideeritakse.
+    - sisu dekrüpteeritakse.
+    - moodustatakse uus `SAMLResponse` parameeter,
+    - mis allkirjastatakse
+    - ja mille sisu krüpteeritakse (RIA eIDAS konnektorteenuse avaliku võtmega).
+    - kasutajale saadetakse RIA eIDAS konnektorteenusesse adresseeritud ümbersuunamisvorm koos `SAMLResponse` parameetriga.
+
+9. Kasutaja suunatakse automaatselt tagasi RIA eIDAS konnektorteenusesse.
+    - `SAMLResponse` parameetri sisus olev XML sisu koos allkirjaga valideeritakse.
+    - sisu dekrüpteeritakse.
+    - moodustatakse uus `SAMLResponse` parameeter,
+    - mis allkirjastatakse
+    - ja mille sisu krüpteeritakse teenusepakkuja avaliku võtmega.
+    - kasutajale saadetakse teenusepakkujale adresseeritud ümbersuundamisvorm koos `SAMLResponse` parameetriga.
+
+10. Kasutaja suunatakse automaatselt tagasi teenusepakkuja lehele.
+    - teenusepakkuja veendub `SAMLResponse` parameetri sisu vastavuses nõuetele (sh formaadi, sisu ja allkirja kontrollid).
+    - teenusepakkuja dekrüpteerib isikuandmed
+    - ja otsustab, kas käesolev isik on õigustatud ligi pääsema algselt küsitud ressursile.
+    - kui jah, siis luuakse sessioon
+    - ning tagastatakse kasutajale esialgselt URL-lt soovitud sisu.
+
+## 5 Metateave
+
+### 5.1 Ülevaade
+
+Konnektorteenus määrab oma metateabega milliseid algoritme ta toetab (algoritmid määratakse ära konfiguratsioonifailis). Liidestujad peavad selle info arvesse võtma. Teenusepakkuja metadata kirjeldab milliseid algoritme tema ise SAML sõnumit vastu võttes toetab.
+
+Autentimispäringu töötlemisel: 
+1. Teenusepakkuja teeb enne SAML autentimispäringsõnumi koostamist päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (või kasutab puhverdatud metateavet).
+2. Teenusepakkuja valib allkirjastamisalgoritmi, konnektorteenuse metadata alusel (peab olema üks neist, mis on toodud konnektorteenuse metadatas).
+3. Teenusepakkuja allkirjastab autentimispäringu oma privaatvõtmega.
+4. Teenusepakkuja saadab SAML autentimispäringsõnumi konnektorteenuse otspunkti `/ServiceProvider` (sirviku ümbersuunamisega).
+5. Konnektorteenus teeb päringu Teenusepakkuja metaandmete otspunkti `/Metadata` (või kasutab puhverdatud metateavet).
+6. Konnektorteenus otsustab, kas ta usaldab saatjat (kas tulnud päringu sees olev allkirja võti kuulub ka tegelikult saatjaga seotud metateabesse). Konnektorteenus valideerib `SAMLRequest` päringu allkirja ainult juhul, kui see on moodustatud algoritmiga, mis on tema lubatud allkirjameetodite nimekirjas (sama nimekiri, mida ta reklaamib välja oma metadatas - konfis toodud kui whitelist). Muul juhul annab vea.
+
+Autentimisvastuse töötlemisel:
+7. Sihtriigi vahendusteenusest tulev päring võetakse vastu, kontrollitakse ärireeglite vastu ja moodustatakse uus vastus, mis on allkirjastatud konnektorteenuse enda privaatvõtmega. NB! Allkirja algoritm otsustatakse konnektorteenuse seadetes oleva algoritmi alusel.
+8. Konnektorteenus, enne SAML autentimisvastussõnumi saatmist, teeb päringu Teenusepakkuja metaandmete otspunkti `/Metadata`.
+9. Konnektorteenus saadab SAML autentimisvastussõnumi Teenusepakkuja otspunkti `/ReturnPage`.
+10. Teenusepakkuja teeb päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (sarnaselt autentimispäringu töötlemise p 6).
+
+### 5.2 eIDAS konnektorteenuse metateave
 
 Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metateabe tähendust.
 
@@ -259,7 +260,7 @@ atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuu
 
 Vt ka [Metadata seletus](https://e-gov.github.io/eIDAS-Connector/MetadataSeletus#eidas-konnektorteenus-suhtluses-siseriikliku-liidestatud-s%C3%BCsteemiga), jaotis "Konnektorteenus suhtluses siseriikliku liidestatud süsteemiga".
 
-## 6 Metateabe otspunkt
+### 5.3 Teenusepakkuja metateave
 
 Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks ühendumiseks ning usalduse loomiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid.
 
@@ -267,7 +268,7 @@ Teenusepakkuja peab konnektorteenusele kättesaadavaks tegema oma metaandmed ül
 
 Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata xml skeemile](https://docs.oasis-open.org/security/saml/v2.0/saml-schema-metadata-2.0.xsd).
 
-Metateave peab olema allkirjastatud, kasutades krüptoalgoritme, mis on toodud dokumendis [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
+Metateave peab olema allkirjastatud, kasutades nõutud krüptoalgoritme, vt jaotis [Nõuded liituvale teenusepakkujale](#4-n%C3%B5uded-liituvale-teenusepakkujale).
 
 Konnektorteenusega liidestumise seisukohalt olulised väljad koos kirjeldusega on toodud Tabelis 1.2 ja 1.3 (vt ka näidisvastust - Näidis 1). Kasutatud XML nimeruumide prefiksitele vastava kirjelduse leiab LISA 1 (kui ei ole esitatud täpsustavaid selgitusi elemendi kohta selgituses).
 
@@ -297,8 +298,7 @@ Tabel 1.2 - Organisatsiooni info
 | /md:EntityDescriptor/md:Organization | Ei | XML struktuur, mis kirjaldab ära info liidestuva organisatsiooni kohta. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 | /md:EntityDescriptor/md:ContactPerson | Ei | XML struktuur, mis kirjeldab organisatsiooni kontaktisikute info. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 
-
-## 7 Autentimispäring
+## 6 Autentimispäring
 
 Autentimispäring esitatakse kodeeritud vormiparameetrina HTTP POST päringus. Võimalike vormiparameetrite loetelu HTTP POST päringus on toodud Tabelis 2.
 
@@ -330,7 +330,7 @@ Tabel 3 - SAML `AuthnRequest` parameetrid.
 | `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (`/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat`) |
 | `/saml2p:AuthnRequest/saml2:RequestedAuthnContext` | Jah |	Määrab, millist autentimistaset nõutakse sihtriigi autentimisteenuselt. <br><p>Võimalikud väärtused:<br> `http://eidas.europa.eu/LoA/low`<br>`http://eidas.europa.eu/LoA/substantial`<br>`http://eidas.europa.eu/LoA/high`</p>  |
 
-## 8 Autentimisvastus
+## 7 Autentimisvastus
 
 Autentimise tulemuse kohta saadetakse teenusepakkujale autentimisvastus (vt Näidised 3.1 ja 3.2). Eduka autentimise korral on autentimisvastuses andmed autentimistoimingu ja autenditud isiku kohta. Ebaeduka autentimise korral saadetakse veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL peab olema määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
 
@@ -364,7 +364,7 @@ Tabel 5 - SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmeteg
 
 // TODO vaja teha isikuandmete esitamise detailsem kirjeldus
 
-## 9 Veaolukordade käsitlemine
+## 8 Veaolukorrad
 
 Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahenduse dokumentatsioonis (vt [eIDAS-veakoodid]).
 
@@ -376,7 +376,7 @@ Tabel 5 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatav
 
 // TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
 
-## 10 Toetatud riikide nimekiri
+## 9 Toetatud riikide nimekiri
 
 Nimekiri riikidest, kelle autentimisteenuseid RIA eIDAS konnektorteenus vahendab, on masinloetavas vormingus avaldatud aadressil.
 
