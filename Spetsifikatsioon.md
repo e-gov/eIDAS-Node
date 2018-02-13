@@ -241,6 +241,7 @@ Tabel 5 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatav
 | Veakood | Lühikirjeldus            | Selgitus  |
 |:-------------:|-------------|-----|
 | 202007 | Isiku nõusolek puudub | Isik keeldus autentimise jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
+
 // TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
 
 ## 10 Toetatud riikide nimekiri
@@ -286,7 +287,7 @@ Näidistes kasutatud ja xml struktuurides viidatud XML nimeruumid on toodud allj
 | saml2 | urn:oasis:names:tc:SAML:2.0:assertion | OASIS SAML 2.0 vormingu põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
 | saml2p | urn:oasis:names:tc:SAML:2.0:protocol | OASIS SAML 2.0 protokolli põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
 
-### LISA 2 - Näidised
+## LISA 2 - Näidised
 
 Näidis 1. - Vastus metateabe otspunktilt.
 ```xml
