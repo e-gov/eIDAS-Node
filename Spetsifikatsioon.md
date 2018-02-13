@@ -7,7 +7,7 @@ permalink: Spetsifikatsioon
 Märkus. Lahtised küsimused on markeeritud sümbolitega `//`. 
 {:.teade}
 
-# RIA eIDAS konnektorteenuse liidese spetsifikatsioon
+# RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
 v 0.5
 
@@ -16,21 +16,40 @@ v 0.5
 
 ## 1 Ülevaade
 
-Käesolev juhend on suunatud riigiasutustele (edaspidi *teenusepakkuja*), kes soovivad välisriikide kodanikke oma infosüsteemi tarvis tuvastada otse eIDAS konnektorteenusega ühendudes. Juhend kirjeldab nõuded, isikustuvastusprotsessi tehnilisi detaile ja vajalikke arendustegevusi konnektorteenusega liidestumiseks.
+Käesolev spetsifikatsioon on suunatud riigiasutusele, edaspidi *teenusepakkuja*, kes soovib oma e-teenuse välismaalastest kasutajaid autentida eIDAS konnektorteenuse abil. Spetsifikatsioon:
+- annab tehnilise ülevaate autentimisprotsessist
+- määratleb liidestatavatele süsteemidele esitatavaid nõuded
+- ja annab soovitusi liidese ehitamiseks.
 
-Vt ka: [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil)
+## 2 Tehnilised parameetrid
+
+protokoll | SAML 2.0, Web Browser SSO profiil, koos eIDAS täiendustega | Vt [Viited](Viited)
+sõnumivahetusmeetod | `HTTP POST` | Vt `HTTP POST binding` SAML 2.0 standardikirjelduses, ptk 5.12.
+
+## Otspunktid
+
+Joonisel 1 on kujutatud liidestuva süsteemi seisukohalt olulised metateabe ja SAML-sõnumite vastuvõtu otspunktid:
+
+- RIA eIDAS konnektorteenuse
+    - metateabe otspunkt `/ConnectorResponderMetadata`
+    - SAML autentimispäringsõnumite vastuvõtupunkt `/ServiceProvider`
+- teenusepakkuja
+    - metateabe otspunkt `/Metadata`
+    - SAML autentimisvastussõnumite vastuvõtupunkt `/ReturnPage`.
+
+Kõigi otspunktide URL-id on seadistatavad. Konkreetsed URL-id määravad osapooled metateabes.
+
+<img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:500px;'>
+
+Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
 
 ## 2 Kontekst
 
-RIA eIDAS konnektorteenus on Eesti riigiasutustele mõeldud vahendusteenus eIDAS-autentimisvõrku. eIDAS-autentimisvõrk on Euroopa Liidu liikmesriikide elektroonilist autentimist pakkuv ühisteenus. Võrk koosneb turvalise kanali abil ühendatud riiklikest sõlmpunktidest (ingl _eIDAS Node_). Sõlmpunktid vahetavad omavahel isikutuvastuspäringuid ja kinnitusi vastava riigi kodaniku identiteedi kohta. Iga Euroopa Liidu liikmesriik opereerib vähemalt ühte riiklikku sõlmpunkti ja pakub kohalikele teenusepakkujatele välisriigi kodanike tuvastamiseks konnektorteenust.
-
-Eestis pakub eIDAS Node võrguga liitumiseks konnektorteenust RIA.
+RIA eIDAS konnektorteenus on ühendajaks asutuse e-teenuse ja EL eIDAS-taristu vahel (joonisel 1 kasutusvoog 3b). Vt lähemalt [eIDAS autentimise lisamine e-teenusele](https://e-gov.github.io/TARA-Doku/files/TARA-tutvustus.pdf).
 
 <img src='img/SUURPILT.PNG' style='width:700px'>
 
 Joonis 1. eIDAS taristu
-
-eIDAS konnektorteenus on ühendajaks asutuse e-teenuse ja EL eIDAS-taristu vahel (joonisel 1 kasutusvoog 3b). Vt lähemalt [eIDAS autentimise lisamine e-teenusele](https://e-gov.github.io/TARA-Doku/files/TARA-tutvustus.pdf).
 
 e-teenuse ja eIDAS konnektorteenuse vaheline suhtlus on osa eIDAS autentimisvoost, hõlmates sellest kahte sõnumiedastust:
 
@@ -106,21 +125,148 @@ Joonis 2.
     - kui jah, siis luuakse sessioon
     - ning tagastatakse kasutajale esialgselt URL-lt soovitud sisu.
 
+
+## Metateabe kasutamise ülevaade
+
+Konnektorteenus määrab oma metateabega milliseid algoritme ta toetab (algoritmid määratakse ära konfiguratsioonifailis). Liidestujad peavad selle info arvesse võtma. Teenusepakkuja metadata kirjeldab milliseid algoritme tema ise SAML sõnumit vastu võttes toetab.
+
+Autentimispäringu töötlemisel: 
+1. Teenusepakkuja teeb enne SAML autentimispäringsõnumi koostamist päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (või kasutab puhverdatud metateavet).
+2. Teenusepakkuja valib allkirjastamisalgoritmi, konnektorteenuse metadata alusel (peab olema üks neist, mis on toodud konnektorteenuse metadatas).
+3. Teenusepakkuja allkirjastab autentimispäringu oma privaatvõtmega.
+4. Teenusepakkuja saadab SAML autentimispäringsõnumi konnektorteenuse otspunkti `/ServiceProvider` (sirviku ümbersuunamisega).
+5. Konnektorteenus teeb päringu Teenusepakkuja metaandmete otspunkti `/Metadata` (või kasutab puhverdatud metateavet).
+6. Konnektorteenus otsustab, kas ta usaldab saatjat (kas tulnud päringu sees olev allkirja võti kuulub ka tegelikult saatjaga seotud metateabesse). Konnektorteenus valideerib `SAMLRequest` päringu allkirja ainult juhul, kui see on moodustatud algoritmiga, mis on tema lubatud allkirjameetodite nimekirjas (sama nimekiri, mida ta reklaamib välja oma metadatas - konfis toodud kui whitelist). Muul juhul annab vea.
+
+Autentimisvastuse töötlemisel:
+7. Sihtriigi vahendusteenusest tulev päring võetakse vastu, kontrollitakse ärireeglite vastu ja moodustatakse uus vastus, mis on allkirjastatud konnektorteenuse enda privaatvõtmega. NB! Allkirja algoritm otsustatakse konnektorteenuse seadetes oleva algoritmi alusel.
+8. Konnektorteenus, enne SAML autentimisvastussõnumi saatmist, teeb päringu Teenusepakkuja metaandmete otspunkti `/Metadata`.
+9. Konnektorteenus saadab SAML autentimisvastussõnumi Teenusepakkuja otspunkti `/ReturnPage`.
+10. Teenusepakkuja teeb päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (sarnaselt autentimispäringu töötlemise p 6).
+
 ## 4 Nõuded liituvale teenusepakkujale
 
-Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas. eIDAS Node kasutab suhtlemiseks täiendavate kitsendustega SAML 2.0 protokolli. Vt [Viited](Viited).
-
 Kokkuvõtlikult peab teenusepakkuja:
-
 - pakkuma SAML metateabe otspunkti teenust
 - omama SAML päringute ja vastuste töötlemise võimekust.
 
-Vt lähemalt [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
+1. teenusepakkuja peab koostama oma süsteemi kohta metateabe, vastavalt eIDAS-e nõuetele (vt jaotis [Teenusepakkuja metateave](#teenusepakkuja-metateave))
+2. metateabe transport teisele osapoolele
+    1. konnektorteenuse metateave publitseeritakse HTTPS otspunktis:
+        - [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) (testkeskkond)
+        - [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) (toodangukeskkond)
+    2. teenusepakkuja publitseerib metateabe samuti HTTPS otspunktis
+        - teatab otspunkti RIA-le
+    3. soovi korral annab osapool (tulemüüriga) juurdepääsu metateabele ainult partnerile
+    4. täiendavate metateabe transpordi kaitsemeetmete (IPSec, VPN) toetus põhjendatud turvavajaduse korral, läbirääkimisega RIA-ga
+    5. manuaalne vm _out of band_ metateabe edastus - ei ole toetatud
+3. metateabe allkirjastamine
+    1. on kohustuslik
+    2. allkirja tuleb metateabe võtmisel valideerida, kogu usaldusahela ulatuses
+    3. usaldusankruks SK ID Solutions AS juursert
+    4. toetama peab samu algoritme, mis p 7
+4. metateabe uuendamine
+    1. osapool võib metateavet puhverdada, kuni `md:EntityDescriptor` atribuudis `validUntil` määratud ajamomendini
+    2. metadatas tuleb määrata `validUntil` väärtus. Soovitatav väärtus on 24 h
+5. serdid
+    1. teenusepakkujal on vaja allkirjastamise serti ja krüpteerimise serti
+    2. sertide ristkasutus:
+        - on lubatud allkirjastamise puhul - metateabe ja SAML-sõnumi võib allkirjastada sama serdiga
+    3. väljaandja:
+        - soovitame SK ID Solutions AS väljaantud serte; muu väljaandja serdi kasutamine kooskõlastada RIA-ga
+            - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima 
+    4. usaldusankur:
+        - SK ID Solutions AS juursert
+    5. serdi parameetrid:
+        - asutusele antud, KLASS3 sert
+            - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima. Dokument võib selles osas täpsustuda
+    6. self-signed sertide kasutus
+        - on lubatud testkeskkonnas
+6. räsialgoritm
+    - toetama peab algoritme:
+        - `http://www.w3.org/2001/04/xmlenc#sha512` (peamine)
+        - `http://www.w3.org/2001/04/xmlenc#sha256` (alternatiiv)   
+7. allkirjastamine
+    1. vahetatavad SAML-sõnumid allkirjastatakse
+    2. toetama peab algoritme:
+        - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` (peamine)
+        - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` (alternatiiv)
+            - võtmepikkus: 384 bitti
+        - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` (alternatiiv)
+        - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` (alternatiiv)
+            - võtmepikkus: 4096 bitti
+            - Märkus. eIDAS krüptonõuetes esineb RSA-MGF1 nimetuse RSASSA-PSS all   
+8. krüpteerimine
+    1. teenusepakkuja poolt konnektorteenusele saadetavat SAML-sõnumit ei krüpteerita
+    2. konnektorteenus krüpteerib teenusepakkujale saadetava SAML-sõnumi,  teenusepakkuja metateabes sisalduvas krüpteerimisotstarbelises serdis sisalduvat avaliku võtmega
+    3. toetama peab algoritme:
+        - `http://www.w3.org/2009/xmlenc11#aes256-gcm` (peamine)
+        - `http://www.w3.org/2009/xmlenc11#aes128-gcm` (alternatiiv)   
 
-## 5 Sõnumivahetusmeetod
+
+## eIDAS konnektorteenuse metateave
+
+Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metateabe tähendust.
+
+- testteenus: [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata) 
+- toodangteenus: [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata) 
+
+- `md:EntityDescriptor` - kirjeldatud on SAML olem (entity)
+    - `entityID` - nimega `https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata`
+    - `validUntil` - kirjeldus kehtib 24 h
+
+- `ds:Signature` - kirjeldus on allkirjastatud XML allkirjaga
+    - `ds:CanonicalizationMethod` - kanoniseerimisalgoritm - `xml-exc-c14n`
+    - `ds:SignatureMethod` - allkirjaalgoritm on `rsa-sha512`
+    - `ds:Transform` - _enveloped signature_, algoritm `xml-exc-c14n`
+    - `ds:DigestMethod` - räsialgoritm `xmlenc#sha512`
+    - `ds:Digestvalue` - räsiväärtus
+    - `ds:SignatureValue` - allkirjaväärtus
+    - `ds:KeyInfo` - X509 sertifikaat
+
+- `md: Extensions` - metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
+
+- `alg:Digestmethod` - konnektorteenus toetab räsialgoritme
+    - `http://www.w3.org/2001/04/xmlenc#sha512` 
+    - `http://www.w3.org/2001/04/xmlenc#sha256`
+
+- `alg:SigningMethod` - toetatavad allkirjaalgoritmid
+    - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512`
+    - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256`
+    - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1`
+    - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1`
+
+- `md: IDPSSODescriptor` - “SSO võimekusega IdP” - kirjeldatava olemi “roll”
+    - `WantAuthnRequestsSigned` - nõuab, et autentimispäringu sõnum p.o allkirjastatud
+    - `protocolSupportEnumeration` - ütleb, et toetab SAML 2.0-i
+
+- `md:KeyDescriptor` - avaldab konnektorteenuse sertifikaadid ja kirjeldab toetatavad krüpteerimisalgoritmid
+    - `signing` > `KeyInfo` - allkirjastamissertifikaat
+    - `encryption` > `KeyInfo` - krüpteerimissertifikaat
+
+- `md:EncryptionMethod` - toetatavad algoritmid
+    - `http://www.w3.org/2009/xmlenc11#aes256-gcm` 
+    - `http://www.w3.org/2009/xmlenc11#aes128-gcm` 
+
+- `md:NameIDFormat` - Määrata tuleb: 
+    - `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`
+    - `urn:oasis:names:tc:SAML:2.0:nameid-format:transient`
+    - `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified`
+    - Vt ka märkus 5. 
+
+- `md:SingleSignOnService`
+atribuutidega `Binding` ja `Location` määratakse, et konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider`.  Saatmisviisiks on HTTP `POST` (HTTP Redirect ei ole toetatud).
+
+- `saml2:Attribute`
+atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuudid, mida konnektorteenuse kaudu saab küsida (40+)
+
+- `md:Organization` - teave RIA kohta
+
+- `md:ContactPerson` - teave teenuse kontaktisiku kohta.
+
+Vt ka [Metadata seletus](https://e-gov.github.io/eIDAS-Connector/MetadataSeletus#eidas-konnektorteenus-suhtluses-siseriikliku-liidestatud-s%C3%BCsteemiga), jaotis "Konnektorteenus suhtluses siseriikliku liidestatud süsteemiga".
 
 
-Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud `HTTP POST` põhinevat sõnumivahetusmeetodit (vt. `HTTP POST binding` [SAML 2.0] standardikirjelduses - ptk 5.12).
 
 ## 6 Metateabe otspunkt
 
@@ -132,9 +278,7 @@ Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata x
 
 Metateave peab olema allkirjastatud, kasutades krüptoalgoritme, mis on toodud dokumendis [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
 
-
 Konnektorteenusega liidestumise seisukohalt olulised väljad koos kirjeldusega on toodud Tabelis 1.2 ja 1.3 (vt ka näidisvastust - Näidis 1). Kasutatud XML nimeruumide prefiksitele vastava kirjelduse leiab LISA 1 (kui ei ole esitatud täpsustavaid selgitusi elemendi kohta selgituses).
-
 
 Tabel 1.1 - Metateabe kirjeldus
 
@@ -165,7 +309,6 @@ Tabel 1.2 - Organisatsiooni info
 
 ## 7 Autentimispäring
 
-
 Autentimispäring esitatakse kodeeritud vormiparameetrina HTTP POST päringus. Võimalike vormiparameetrite loetelu HTTP POST päringus on toodud Tabelis 2.
 
 Tabel 2 - Autentimispäringu parameetrid
@@ -195,8 +338,6 @@ Tabel 3 - SAML `AuthnRequest` parameetrid.
 | `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuute soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true`. Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
 | `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (`/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat`) |
 | `/saml2p:AuthnRequest/saml2:RequestedAuthnContext` | Jah |	Määrab, millist autentimistaset nõutakse sihtriigi autentimisteenuselt. <br><p>Võimalikud väärtused:<br> `http://eidas.europa.eu/LoA/low`<br>`http://eidas.europa.eu/LoA/substantial`<br>`http://eidas.europa.eu/LoA/high`</p>  |
-
-
 
 ## 8 Autentimisvastus
 
@@ -584,5 +725,5 @@ Näidis 3.2 - Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnest
 | 0.4, 09.02.2018   | Metateabe otspunkti vastuse täpsustused |
 | 0.3, 29.01.2018   | Korrastus |
 | 0.2, 22.01.2018   | Lisatud toetatud riikide nimekiri |
-| 0.1, 16.01.2018   | Esimene versioon. |
+| 0.1, 16.01.2018   | Esimene versioon |
 
