@@ -39,7 +39,7 @@ Spetsifikatsioon:
 
 Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
 
-## 3 Nõuded liituvale teenusepakkujale
+## 3 Nõuded liitujale
 
 Kokkuvõtlikult peab teenusepakkuja:
 - pakkuma SAML metateabe otspunkti teenust
@@ -205,60 +205,45 @@ Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metatea
 - testteenus: [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata) 
 - toodangteenus: [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata) 
 
-- `md:EntityDescriptor` - kirjeldatud on SAML olem (entity)
-    - `entityID` - nimega `https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata`
-    - `validUntil` - kirjeldus kehtib 24 h
-
-- `ds:Signature` - kirjeldus on allkirjastatud XML allkirjaga
-    - `ds:CanonicalizationMethod` - kanoniseerimisalgoritm - `xml-exc-c14n`
-    - `ds:SignatureMethod` - allkirjaalgoritm on `rsa-sha512`
-    - `ds:Transform` - _enveloped signature_, algoritm `xml-exc-c14n`
-    - `ds:DigestMethod` - räsialgoritm `xmlenc#sha512`
-    - `ds:Digestvalue` - räsiväärtus
-    - `ds:SignatureValue` - allkirjaväärtus
-    - `ds:KeyInfo` - X509 sertifikaat
-
-- `md: Extensions` - metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
-
-- `alg:Digestmethod` - konnektorteenus toetab räsialgoritme
-    - `http://www.w3.org/2001/04/xmlenc#sha512` 
-    - `http://www.w3.org/2001/04/xmlenc#sha256`
-
-- `alg:SigningMethod` - toetatavad allkirjaalgoritmid
-    - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512`
-    - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256`
-    - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1`
-    - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1`
-
-- `md: IDPSSODescriptor` - “SSO võimekusega IdP” - kirjeldatava olemi “roll”
-    - `WantAuthnRequestsSigned` - nõuab, et autentimispäringu sõnum p.o allkirjastatud
-    - `protocolSupportEnumeration` - ütleb, et toetab SAML 2.0-i
-
-- `md:KeyDescriptor` - avaldab konnektorteenuse sertifikaadid ja kirjeldab toetatavad krüpteerimisalgoritmid
-    - `signing` > `KeyInfo` - allkirjastamissertifikaat
-    - `encryption` > `KeyInfo` - krüpteerimissertifikaat
-
-- `md:EncryptionMethod` - toetatavad algoritmid
-    - `http://www.w3.org/2009/xmlenc11#aes256-gcm` 
-    - `http://www.w3.org/2009/xmlenc11#aes128-gcm` 
-
-- `md:NameIDFormat` - Määrata tuleb: 
-    - `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`
-    - `urn:oasis:names:tc:SAML:2.0:nameid-format:transient`
-    - `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified`
-    - Vt ka märkus 5. 
-
-- `md:SingleSignOnService`
-atribuutidega `Binding` ja `Location` määratakse, et konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider`.  Saatmisviisiks on HTTP `POST` (HTTP Redirect ei ole toetatud).
-
-- `saml2:Attribute`
-atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuudid, mida konnektorteenuse kaudu saab küsida (40+)
-
-- `md:Organization` - teave RIA kohta
-
-- `md:ContactPerson` - teave teenuse kontaktisiku kohta.
-
-Vt ka [Metadata seletus](https://e-gov.github.io/eIDAS-Connector/MetadataSeletus#eidas-konnektorteenus-suhtluses-siseriikliku-liidestatud-s%C3%BCsteemiga), jaotis "Konnektorteenus suhtluses siseriikliku liidestatud süsteemiga".
+`md:EntityDescriptor` |  kirjeldatud on SAML olem (entity)
+`entityID` | nimega `https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata`
+`validUntil` | kirjeldus kehtib 24 h
+`ds:Signature` | kirjeldus on allkirjastatud XML allkirjaga
+`ds:CanonicalizationMethod` | kanoniseerimisalgoritm - `xml-exc-c14n`
+`ds:SignatureMethod` | allkirjaalgoritm on `rsa-sha512`
+`ds:Transform` | _enveloped signature_, algoritm `xml-exc-c14n`
+`ds:DigestMethod` | räsialgoritm `xmlenc#sha512`
+`ds:Digestvalue` | räsiväärtus
+`ds:SignatureValue` | allkirjaväärtus
+`ds:KeyInfo` | X509 sertifikaat
+`md: Extensions` | metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
+`alg:Digestmethod` | konnektorteenus toetab räsialgoritme
+`http://www.w3.org/2001/04/xmlenc#sha512` | 
+`http://www.w3.org/2001/04/xmlenc#sha256` |
+`alg:SigningMethod` | toetatavad allkirjaalgoritmid
+`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` |
+`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` |
+`http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` |
+`http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` |
+`md: IDPSSODescriptor` | “SSO võimekusega IdP” - kirjeldatava olemi “roll”
+`WantAuthnRequestsSigned` | nõuab, et autentimispäringu sõnum p.o allkirjastatud
+`protocolSupportEnumeration` | ütleb, et toetab SAML 2.0-i
+`md:KeyDescriptor` | avaldab konnektorteenuse sertifikaadid ja kirjeldab toetatavad krüpteerimisalgoritmid
+`signing` > `KeyInfo` | allkirjastamissertifikaat
+`encryption` > `KeyInfo` | krüpteerimissertifikaat
+`md:EncryptionMethod` | toetatavad algoritmid
+`http://www.w3.org/2009/xmlenc11#aes256-gcm` |
+`http://www.w3.org/2009/xmlenc11#aes128-gcm` | 
+`md:NameIDFormat` |  Vt märkus 5. 
+`urn:oasis:names:tc:SAML:2.0:nameid-format:persistent` | 
+`urn:oasis:names:tc:SAML:2.0:nameid-format:transient` |
+`urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
+`md:SingleSignOnService` |
+atribuut `Binding` | sõnumid saata HTTP `POST` meetodiga (HTTP Redirect ei ole toetatud)
+atribuut `Location` | konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider`
+`saml2:Attribute` | atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuudid, mida konnektorteenuse kaudu saab küsida (40+)
+`md:Organization` | teave RIA kohta
+`md:ContactPerson` | teave teenuse kontaktisiku kohta.
 
 ### 5.3 Teenusepakkuja metateave
 
@@ -361,7 +346,6 @@ Tabel 5 - SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmeteg
 | `/saml2p:Response/saml2:Status/saml2p:StatusMessage` | Ei | Vastuse staatust täpsustav kirjeldus. |
 | `/saml2p:Response/saml2:EncryptedAssertion/xenc:EncryptedData` | Jah | Isikuandmete info krüpteeritud kujul. |
 
-
 // TODO vaja teha isikuandmete esitamise detailsem kirjeldus
 
 ## 8 Veaolukorrad
@@ -419,114 +403,110 @@ Näidistes kasutatud ja xml struktuurides viidatud XML nimeruumid on toodud allj
 | saml2 | urn:oasis:names:tc:SAML:2.0:assertion | OASIS SAML 2.0 vormingu põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
 | saml2p | urn:oasis:names:tc:SAML:2.0:protocol | OASIS SAML 2.0 protokolli põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
 
-## Lisa 2. Sõnuminäidis. Vastus metateabe otspunktilt.
+## Lisa 2. Teenusepakkuja metateabe näide
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://eidastest.eesti.ee/SP/metadata" validUntil="2018-02-10T08:57:21.953Z">
-	<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<md:EntityDescriptor
+    xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+    entityID="https://eidastest.eesti.ee/SP/metadata"
+    validUntil="2018-02-10T08:57:21.953Z">
+	<ds:Signature
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
 		<ds:SignedInfo>
-			<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-			<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+			<ds:CanonicalizationMethod
+                Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+			<ds:SignatureMethod
+                Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
 			<ds:Reference URI="">
 				<ds:Transforms>
-					<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-					<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+					<ds:Transform
+                        Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+					<ds:Transform
+                        Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
 				</ds:Transforms>
-				<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-				<ds:DigestValue>jneOWVHD7TSBa8CUX47N5CQE5jscnVAS8olM89/nEZyG4fhWY9OfZjv431Xa/M0YGW3GmikpDhIowBJ4sEr1Hw==</ds:DigestValue>
+				<ds:DigestMethod
+                    Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+				<ds:DigestValue>
+                ...
+                </ds:DigestValue>
 			</ds:Reference>
 		</ds:SignedInfo>
-		<ds:SignatureValue>Pc1M2yc9ptVwko5vYR6EKVCJeMrxEt6BMGKrzsC3HTr8Mzx8dXASFNyy4ERpwrZxDjm48a/T1zqB6W4z4IdUvMyerlDx8KP0qtDGqVc9Dn4X/6CmjL+0oIwG4bmHgWrl4hx9UHUEQnFC5PLaF+RxJhP90at/pX0amG9vpuE7DOfFjIsyPxeyeDsVWObuI2sYjVGTq3DbUyfKKNaXH/F6dbBdqdokDLxqtdMivZtODZrxet9ZdBeMuCVSxf2R6LRGrHYpDZR2RnSScmM2gNopeHlzoUFw2HjZ+Pd8FOTxwC2Virreh8GV9sGMurYSmNwcgakl0sNQOJWqKT1jvhzPMddz2REwSUYQqiKffP7dhHQcGs3pMdqh7zYqyylDdqpZEvZFdBEYA/DMwWOOZgNlnnnTG85MF2DRpseBZZOKRDnul4kQkJkYcOIRYxHGCsjzEDATr6rEYNg/5WSCopk61Q+C3boU9AXCciD+kzBeD+bOvT64kJDTDGSB4p/1V7ScuLfRMNOoyyHyXOT+AgzyJ6+R0PFpQZX4YLCQAH8GZNsFO1LCpmCMAoQ7ftYiGtdD5qtxvs96d9MOZ6Br3hHp2fmy+CtAaiBuzAAEODRMAe1xCRNIPVUZ0YGFS6eOwwpkSrmKuL9Iu5F/ZdfPaczeEttUk5nOnDvnbWi2xzDyeRU=</ds:SignatureValue>
+		<ds:SignatureValue>
+        ...
+        </ds:SignatureValue>
 		<ds:KeyInfo>
 			<ds:X509Data>
-				<ds:X509Certificate>MIIFVTCCAz2gAwIBAgIEGNTPHDANBgkqhkiG9w0BAQ0FADBbMQswCQYDVQQGEwJFRTELMAkGA1UE
-CBMCRVUxEDAOBgNVBAcTB1RhbGxpbm4xDDAKBgNVBAoTA01LTTEMMAoGA1UECxMDUklBMREwDwYD
-VQQDEwhtZXRhZGF0YTAeFw0xNzA1MzExMTQ4MzlaFw0yMjA1MzAxMTQ4MzlaMFsxCzAJBgNVBAYT
-AkVFMQswCQYDVQQIEwJFVTEQMA4GA1UEBxMHVGFsbGlubjEMMAoGA1UEChMDTUtNMQwwCgYDVQQL
-EwNSSUExETAPBgNVBAMTCG1ldGFkYXRhMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA
-rX2WocksJPHWtE3WqK+F+O1sioy6ysCTQAsZ0esIMSrb7096o1WGr2e+EE2aV9eayHOxiXc1j0JG
-X1/ycAO/szCuLCgsjpayUHXC4a72vXCezYSkxuld59CEgST+C5q5zr/gHUrJg+b2dHtrvA5rBh4U
-9bcYHZftUbU+uGIYjzFwAs2D1+smDUwiJQcQ+KBwUmMvhdeQ6CLhJwZB13C+wX5wdDu3CgOlBCwD
-3fYI3HcAIxvRPPdPLutc75rLmk6H4+h4DVsjg0qlY4Ck4m6XMccnoEZhj0mtWJEBcoPw+kT6HiKU
-amuYPnPfEf5NKARpqFZXukZbnPk3tStny1349rTI2bq4adaPr0KNETBNLNoeuFM61833ZhI3u7q0
-w5y9sw0R+RTf/C+OfydZ7iWNKrH59vtBcKkt4b/7Qd6bn5pL35lLvzz3bZAnv0+/Sd7y3/OGsWsD
-eksVKjehO4ieONFt9VH2Za2af+cJcq4DNy5P/69bqWz8a1o3a4qANZ5YyKGu90+LQ3NunhFh9Eml
-kL9ka+NLsN2gDxQZcDB/GpeXdkl6ojPpcEuoSQ/REu9Eb4KbC6gPqeOmot/AnAu5rwzYidE4Bfor
-+ZasVRt+BbqYf7TAzQ4hZ5pDh0Vn4yFLYSXaXf2LZLmG0I1thsheNfiyKfNAgvAr5mZbNr2HjeEC
-AwEAAaMhMB8wHQYDVR0OBBYEFB6te2Gbr29UPL8Ksb0tmgq6Q5nwMA0GCSqGSIb3DQEBDQUAA4IC
-AQBrvo1ynYDQa2CxxhcZbkehgk5fwCyA9ksFtpXgo3cgLHJgoFmkrYnHgsV908Rga5WfZTOFqzrr
-7zVTpHyGWUFt2BL35QNU8k1CTiCxC5NhgcrxBeCIczBeTg2pv+kLvD0lLyGvHFZXx8qLCpNgIYJa
-un3nkY6PuQWJCS9j5GKcT7o5UKuemecKHIiWSKCa7OHnTkCzvPLzNlpt5kFIs3Vi+Tc5DfPAP/eb
-o5dZ8rq2UL3ra+iKFIT/iXl7JteRmPRDcBc0HvhtH8u27wm+y/CyruuGWZ13EPGvNVCxwzJv7CVe
-W+HqAMAGsVvAV8zknbjl8K11Ry0kH2GOBtPXzO639x1xpQ39T/9kTdkmwiD6ZM/60lZx8chP/nV/
-rrwyv/r+z4/oMehbCOFdUYHO1Agp6FmAP6Ck1+x/I95ANJOUt1dJc9xizcZ2012LEXO7cpt3DHie
-1bHlV4d8o/53VWlofdeDS/VyWSbdkL2lLWd8JKlTAAUwfg+SW1CjmQZ5Jr3ew+yhMMvOzMzi/+ZE
-A8c5MwMb8jP1wP9+vqIRg6U8RRBbY96sq9zxPMaGeM6Eli1zEuNYqOv0rIBXts6I2FQYOZSLLxgR
-P2lHqMx9u4JMHGaj0sTDbHxz5BWw6MDMc08WtyqX5B2xOt0VZbAyR7fXrFvLmutpY0/nCKBfRXxx
-Zw==</ds:X509Certificate>
+				<ds:X509Certificate>
+                ...
+                </ds:X509Certificate>
 			</ds:X509Data>
 		</ds:KeyInfo>
 	</ds:Signature>
 	<md:Extensions>
-		<eidas:SPType xmlns:eidas="http://eidas.europa.eu/saml-extensions">public</eidas:SPType>
-		<alg:DigestMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-        <alg:DigestMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-		<alg:SigningMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1"/>
-		<alg:SigningMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1"/>
+		<eidas:SPType
+            xmlns:eidas="http://eidas.europa.eu/saml-extensions">
+            public
+        </eidas:SPType>
+		<alg:DigestMethod
+            xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"
+            Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+        <alg:DigestMethod
+            xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"
+            Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+		<alg:SigningMethod
+            xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"
+            Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1"/>
+		<alg:SigningMethod
+            xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"
+            Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1"/>
 	</md:Extensions>
-	<md:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-		<md:KeyDescriptor use="signing">
-			<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+	<md:SPSSODescriptor
+        AuthnRequestsSigned="true"
+        WantAssertionsSigned="true"
+        protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+		<md:KeyDescriptor
+            use="signing">
+			<ds:KeyInfo
+                xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
 				<ds:X509Data>
-					<ds:X509Certificate>MIIDaTCCAlGgAwIBAgIEH5P86jANBgkqhkiG9w0BAQsFADBlMQswCQYDVQQGEwJFRTELMAkGA1UE
-CBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwGA1UECxMFU1RPUksxHzAdBgNVBAMT
-FnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwHhcNMTcwNTE5MTI1MDA3WhcNMTkwNTA5MTI1MDA3WjBl
-MQswCQYDVQQGEwJFRTELMAkGA1UECBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwG
-A1UECxMFU1RPUksxHzAdBgNVBAMTFnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwggEiMA0GCSqGSIb3
-DQEBAQUAA4IBDwAwggEKAoIBAQCqZC7CJi3WVCzsSh3mV9FNoVYgeiOIR65EAOapyyt7Xgqchn1s
-Sppq3hszCbjgQ8mK1huDkw8iL5qmXg4rd6TUV4nxPuEVbX348Q2P7JH6UmHcedWElYvzbI2Yw388
-v/dOwzp7jza8DaKBtAJlk8hY1riPbe4CfiOr5aTYbpyG0CsbnozRXpij562SNVkbvWz4EdW/3C5W
-i73vHNRzvIoMgwF28YzCpf6DFMk5QpejSc+F6zsYeK1uMqNtJVxGybGhlq61BBmGMxFBmt0LdLWt
-UOnzjqgB5/Y8cNShEk+yxT/QBMJ8BbO8vgO2InhFUyEBlbxzqGsvdP6BZJ37lzBfAgMBAAGjITAf
-MB0GA1UdDgQWBBSF+NmEgjDnVSNucn9cFWU28xHG8DANBgkqhkiG9w0BAQsFAAOCAQEAP/cJT+ti
-HTJ7aGESfSouKUccnsS89VKY4zu1Cj6IuGBOtsi7ORx8iBid3mFeX3bS9XcnK0kV3vbIEfXr2U9L
-YHtAeERNwMk111y0sU2pnwHpWae5YX7cCBjbEd72CV7BQ5cPExUEdORGrpHrEE445o2LC7Nif0Qx
-kO/2BFMlKJWsr2HyccYXWSFdyie3ar1HzkMGbebyK7cmRVTHqohNwPtVmS+bLcyjY5OiL/NVArGR
-VP6DSep3h+/G6GnmrpeQxsLwolhASNLQbylifA8v6E3toHu9ditx9qynFFn9CeDT3g1LKhwQkB6/
-GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
+					<ds:X509Certificate>
+                    ...
+                    </ds:X509Certificate>
 				</ds:X509Data>
 			</ds:KeyInfo>
 		</md:KeyDescriptor>
-        <md:KeyDescriptor use="encryption">
-			<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <md:KeyDescriptor
+            use="encryption">
+			<ds:KeyInfo
+                xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
 				<ds:X509Data>
-					<ds:X509Certificate>MIIDaTCCAlGgAwIBAgIEH5P86jANBgkqhkiG9w0BAQsFADBlMQswCQYDVQQGEwJFRTELMAkGA1UE
-CBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwGA1UECxMFU1RPUksxHzAdBgNVBAMT
-FnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwHhcNMTcwNTE5MTI1MDA3WhcNMTkwNTA5MTI1MDA3WjBl
-MQswCQYDVQQGEwJFRTELMAkGA1UECBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwG
-A1UECxMFU1RPUksxHzAdBgNVBAMTFnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwggEiMA0GCSqGSIb3
-DQEBAQUAA4IBDwAwggEKAoIBAQCqZC7CJi3WVCzsSh3mV9FNoVYgeiOIR65EAOapyyt7Xgqchn1s
-Sppq3hszCbjgQ8mK1huDkw8iL5qmXg4rd6TUV4nxPuEVbX348Q2P7JH6UmHcedWElYvzbI2Yw388
-v/dOwzp7jza8DaKBtAJlk8hY1riPbe4CfiOr5aTYbpyG0CsbnozRXpij562SNVkbvWz4EdW/3C5W
-i73vHNRzvIoMgwF28YzCpf6DFMk5QpejSc+F6zsYeK1uMqNtJVxGybGhlq61BBmGMxFBmt0LdLWt
-UOnzjqgB5/Y8cNShEk+yxT/QBMJ8BbO8vgO2InhFUyEBlbxzqGsvdP6BZJ37lzBfAgMBAAGjITAf
-MB0GA1UdDgQWBBSF+NmEgjDnVSNucn9cFWU28xHG8DANBgkqhkiG9w0BAQsFAAOCAQEAP/cJT+ti
-HTJ7aGESfSouKUccnsS89VKY4zu1Cj6IuGBOtsi7ORx8iBid3mFeX3bS9XcnK0kV3vbIEfXr2U9L
-YHtAeERNwMk111y0sU2pnwHpWae5YX7cCBjbEd72CV7BQ5cPExUEdORGrpHrEE445o2LC7Nif0Qx
-kO/2BFMlKJWsr2HyccYXWSFdyie3ar1HzkMGbebyK7cmRVTHqohNwPtVmS+bLcyjY5OiL/NVArGR
-VP6DSep3h+/G6GnmrpeQxsLwolhASNLQbylifA8v6E3toHu9ditx9qynFFn9CeDT3g1LKhwQkB6/
-GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
+					<ds:X509Certificate>
+                    ...
+                    </ds:X509Certificate>
 				</ds:X509Data>
 			</ds:KeyInfo>
 		</md:KeyDescriptor>
-		<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
-		<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://eidastest.eesti.ee/SP/ReturnPage" index="0" isDefault="true"/>
+		<md:NameIDFormat>
+            urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+        </md:NameIDFormat>
+		<md:AssertionConsumerService
+            Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+            Location="https://eidastest.eesti.ee/SP/ReturnPage"
+            index="0"
+            isDefault="true"/>
 	</md:SPSSODescriptor>
 	<md:Organization>
-		<md:OrganizationName xml:lang="en">DEMO-SP</md:OrganizationName>
-		<md:OrganizationDisplayName xml:lang="en">Näidisasutus</md:OrganizationDisplayName>
-		<md:OrganizationURL xml:lang="en">https://naidisasutus.ee/info</md:OrganizationURL>
+		<md:OrganizationName
+            xml:lang="en">
+            DEMO-SP
+        </md:OrganizationName>
+		<md:OrganizationDisplayName xml:lang="en">
+            Näidisasutus
+        </md:OrganizationDisplayName>
+		<md:OrganizationURL xml:lang="en">
+            https://naidisasutus.ee/info
+        </md:OrganizationURL>
 	</md:Organization>
 	<md:ContactPerson contactType="support">
 		<md:Company>Teenusepakkuja</md:Company>
@@ -538,168 +518,304 @@ GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
 </md:EntityDescriptor>
 ```
 
-## Lisa 3. Sõnuminäidis. SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kujul)
+## Lisa 3. Autentimispäringu näide
 
 ```xml
-<saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/saml-extensions" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified" Destination="http://localhost:8080/EidasNode/ServiceProvider" ForceAuthn="true" ID="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IsPassive="false" IssueInstant="2018-01-05T13:42:08.036Z" ProviderName="DEMO-SP-CA" Version="2.0">
-    <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">http://localhost:8080/SP/metadata</saml2:Issuer>
-    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<saml2p:AuthnRequest
+    xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    mlns:eidas="http://eidas.europa.eu/saml-extensions"
+    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+    Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified"
+    Destination="http://localhost:8080/EidasNode/ServiceProvider"
+    ForceAuthn="true"
+    ID="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx"
+    IsPassive="false"
+    IssueInstant="2018-01-05T13:42:08.036Z"
+    ProviderName="DEMO-SP-CA"
+    Version="2.0">
+    <saml2:Issuer
+        Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">
+        http://localhost:8080/SP/metadata
+    </saml2:Issuer>
+    <ds:Signature
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
         <ds:SignedInfo>
-            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-            <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
-            <ds:Reference URI="#_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx">
+            <ds:CanonicalizationMethod
+                Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod
+                Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+            <ds:Reference
+                URI="#_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx">
                 <ds:Transforms>
-                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-                    <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
                 </ds:Transforms>
-                <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-                <ds:DigestValue>Ux9px3sqV4ClQvz8SYaMCzAs4EHUc4jUVrmuDJwbF4iNzd5y2g/LJr9b4lZmU5JtVr5gXWW8ICYZZPo5dXx3PA==</ds:DigestValue>
+                <ds:DigestMethod
+                    Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+                <ds:DigestValue>
+                    ...
+                </ds:DigestValue>
             </ds:Reference>
         </ds:SignedInfo>
- <ds:SignatureValue>Vyg... </ds:SignatureValue>
+ <ds:SignatureValue>
+   ...
+</ds:SignatureValue>
         <ds:KeyInfo>
             <ds:X509Data>
-                <ds:X509Certificate>MII... </ds:X509Certificate>
+                <ds:X509Certificate>
+                  ...
+                </ds:X509Certificate>
             </ds:X509Data>
         </ds:KeyInfo>
     </ds:Signature>
     <saml2p:Extensions>
-        <eidas:SPType>public</eidas:SPType>
+        <eidas:SPType>
+            public
+        </eidas:SPType>
         <eidas:RequestedAttributes>
-            <eidas:RequestedAttribute FriendlyName="D-2012-17-EUIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="EORI" Name="http://eidas.europa.eu/attributes/legalperson/EORI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="LEI" Name="http://eidas.europa.eu/attributes/legalperson/LEI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="LegalAdditionalAttribute" Name="http://eidas.europa.eu/attributes/legalperson/LegalAdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="LegalName" Name="http://eidas.europa.eu/attributes/legalperson/LegalName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="LegalAddress" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="LegalPersonIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="SEED" Name="http://eidas.europa.eu/attributes/legalperson/SEED" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="SIC" Name="http://eidas.europa.eu/attributes/legalperson/SIC" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="TaxReference" Name="http://eidas.europa.eu/attributes/legalperson/TaxReference" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="VATRegistration" Name="http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="AdditionalAttribute" Name="http://eidas.europa.eu/attributes/naturalperson/AdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="BirthName" Name="http://eidas.europa.eu/attributes/naturalperson/BirthName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="CurrentAddress" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="FamilyName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="FirstName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="DateOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/DateOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="Gender" Name="http://eidas.europa.eu/attributes/naturalperson/Gender" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="PersonIdentifier" Name="http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="PlaceOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+            <eidas:RequestedAttribute
+                FriendlyName="FamilyName"
+                Name="http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName"
+                NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                isRequired="true"/>
+            <eidas:RequestedAttribute
+                FriendlyName="FirstName"
+                Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName"
+                NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                isRequired="true"/>
+            <eidas:RequestedAttribute
+                FriendlyName="DateOfBirth"
+                Name="http://eidas.europa.eu/attributes/naturalperson/DateOfBirth"
+                NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                isRequired="true"/>
+            <eidas:RequestedAttribute
+                FriendlyName="PersonIdentifier"
+                Name="http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier"
+                NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                isRequired="true"/>
         </eidas:RequestedAttributes>
     </saml2p:Extensions>
-    <saml2p:NameIDPolicy AllowCreate="true" Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"/>
-    <saml2p:RequestedAuthnContext Comparison="minimum">
-        <saml2:AuthnContextClassRef>http://eidas.europa.eu/LoA/low</saml2:AuthnContextClassRef>
+    <saml2p:NameIDPolicy
+        AllowCreate="true"
+        Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"/>
+    <saml2p:RequestedAuthnContext
+        Comparison="minimum">
+        <saml2:AuthnContextClassRef>
+            http://eidas.europa.eu/LoA/low
+        </saml2:AuthnContextClassRef>
     </saml2p:RequestedAuthnContext>
 </saml2p:AuthnRequest>
 ```
 
-## Lisa 4. Sõnuminäidis. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral
+## Lisa 4. Autentimisvastus (edukas autentimine)
 
 ```xml
-<saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/SP/ReturnPage" ID="_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu" InResponseTo="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IssueInstant="2018-01-05T13:42:44.472Z" Version="2.0">
-
-    <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">http://localhost:8080/EidasNode/ConnectorResponderMetadata</saml2:Issuer>
-
-    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-
+<saml2p:Response
+    xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson"
+    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+    Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained"
+    Destination="http://localhost:8080/SP/ReturnPage"
+    ID="_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu"
+    InResponseTo="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx"
+    IssueInstant="2018-01-05T13:42:44.472Z"
+    Version="2.0">
+    <saml2:Issuer
+        Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity"
+        xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+        http://localhost:8080/EidasNode/ConnectorResponderMetadata
+    </saml2:Issuer>
+    <ds:Signature
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
         <ds:SignedInfo>
-            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-            <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
-            <ds:Reference URI="#_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu">
+            <ds:CanonicalizationMethod
+                Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod
+                Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+            <ds:Reference
+                URI="#_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu">
                 <ds:Transforms>
-                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-                    <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
                 </ds:Transforms>
-                <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-                <ds:DigestValue>t9kt+8h5m3r0reIBKgy5KmfRmmQoXxQNpgSMMdn/PD2nb87VVFGqHP1qKEUMmXAjnwLmZzEfydRoG/IeUXbGkg==</ds:DigestValue>
+                <ds:DigestMethod
+                    Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+                <ds:DigestValue>
+                    ...
+                </ds:DigestValue>
             </ds:Reference>
         </ds:SignedInfo>
-        <ds:SignatureValue>TnU... </ds:SignatureValue>
+        <ds:SignatureValue>
+            ...
+        </ds:SignatureValue>
         <ds:KeyInfo>
             <ds:X509Data>
-                <ds:X509Certificate>MII... </ds:X509Certificate>
+                <ds:X509Certificate>
+                    ...
+                </ds:X509Certificate>
             </ds:X509Data>
         </ds:KeyInfo>
     </ds:Signature>
-    <saml2p:Status xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol">
-        <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>
-        <saml2p:StatusMessage>urn:oasis:names:tc:SAML:2.0:status:Success</saml2p:StatusMessage>
+    <saml2p:Status
+        xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol">
+        <saml2p:StatusCode
+            Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>
+        <saml2p:StatusMessage>
+            urn:oasis:names:tc:SAML:2.0:status:Success
+        </saml2p:StatusMessage>
     </saml2p:Status>
-    <saml2:EncryptedAssertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
-        <xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" Id="_a056bea0846b4cff6ef971252c691d60" Type="http://www.w3.org/2001/04/xmlenc#Element">
-            <xenc:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes256-gcm" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"/>
-            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-                <xenc:EncryptedKey Id="_5a8536fc20547e76206512fa4bd39711" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-                    <xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-                        <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"/>
+    <saml2:EncryptedAssertion
+        xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+        <xenc:EncryptedData
+            xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
+            Id="_a056bea0846b4cff6ef971252c691d60"
+            Type="http://www.w3.org/2001/04/xmlenc#Element">
+            <xenc:EncryptionMethod
+                Algorithm="http://www.w3.org/2009/xmlenc11#aes256-gcm"
+                xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"/>
+            <ds:KeyInfo
+                xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <xenc:EncryptedKey
+                    Id="_5a8536fc20547e76206512fa4bd39711"
+                    xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                    <xenc:EncryptionMethod
+                        Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"
+                        xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                        <ds:DigestMethod
+                            Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"
+                            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"/>
                     </xenc:EncryptionMethod>
                     <ds:KeyInfo>
                         <ds:X509Data>
-                            <ds:X509Certificate>MIIF... </ds:X509Certificate>
+                            <ds:X509Certificate>
+                                ...
+                            </ds:X509Certificate>
                         </ds:X509Data>
                     </ds:KeyInfo>
-                    <xenc:CipherData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-                        <xenc:CipherValue>acy... </xenc:CipherValue>
+                    <xenc:CipherData
+                        xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                        <xenc:CipherValue>
+                            ...
+                        </xenc:CipherValue>
                     </xenc:CipherData>
                 </xenc:EncryptedKey>
             </ds:KeyInfo>
-            <xenc:CipherData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-                <xenc:CipherValue>... </xenc:CipherValue>
+            <xenc:CipherData
+                xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                <xenc:CipherValue>
+                    ...
+                </xenc:CipherValue>
             </xenc:CipherData>
         </xenc:EncryptedData>
     </saml2:EncryptedAssertion>
 </saml2p:Response>
 ```
 
-## Lisa 5. Sõnuminäidis. Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
+## Lisa 5. Autentimisvastus (isik ei andnud nõusolekut andmete edastamiseks)
 
 ```xml
-<saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/EidasNode/ColleagueResponse" ID="_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI" InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY" IssueInstant="2018-01-05T13:42:11.944Z" Version="2.0">
-    <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">http://localhost:8080/EidasNode/ServiceMetadata</saml2:Issuer>
-    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+<saml2p:Response
+    xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson"
+    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+    Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained"
+    Destination="http://localhost:8080/EidasNode/ColleagueResponse"
+    ID="_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI"
+    InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY"
+    IssueInstant="2018-01-05T13:42:11.944Z"
+    Version="2.0">
+    <saml2:Issuer
+        Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">
+        http://localhost:8080/EidasNode/ServiceMetadata
+    </saml2:Issuer>
+    <ds:Signature
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
         <ds:SignedInfo>
-            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-            <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
-            <ds:Reference URI="#_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI">
+            <ds:CanonicalizationMethod
+                Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod
+                Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+            <ds:Reference
+                URI="#_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI">
                 <ds:Transforms>
-                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-                    <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
                 </ds:Transforms>
-                <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-                <ds:DigestValue>RWmP... </ds:DigestValue>
+                <ds:DigestMethod
+                    Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+                <ds:DigestValue>
+                    ...
+                </ds:DigestValue>
             </ds:Reference>
         </ds:SignedInfo>
-        <ds:SignatureValue>Vsv... </ds:SignatureValue>
+        <ds:SignatureValue>
+            ...
+        </ds:SignatureValue>
         <ds:KeyInfo>
             <ds:X509Data>
-                <ds:X509Certificate>MII... </ds:X509Certificate>
+                <ds:X509Certificate>
+                    ...
+                </ds:X509Certificate>
             </ds:X509Data>
         </ds:KeyInfo>
     </ds:Signature>
     <saml2p:Status>
-        <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Requester">
-            <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:RequestDenied"/>
+        <saml2p:StatusCode
+            Value="urn:oasis:names:tc:SAML:2.0:status:Requester">
+            <saml2p:StatusCode
+                Value="urn:oasis:names:tc:SAML:2.0:status:RequestDenied"/>
         </saml2p:StatusCode>
-        <saml2p:StatusMessage>202007 - Consent not given for a mandatory attribute.</saml2p:StatusMessage>
+        <saml2p:StatusMessage>
+            202007 - Consent not given for a mandatory attribute.
+        </saml2p:StatusMessage>
     </saml2p:Status>
-    <saml2:Assertion ID="_ub5Gp8pKv32ZI08bFy-VSYWgCu8JP3HP1F2FXpre7BzJHkFPbfxLdxZniVMB0pv" IssueInstant="2018-01-05T13:42:11.944Z" Version="2.0">
-        <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">http://localhost:8080/EidasNode/ServiceMetadata</saml2:Issuer>
+    <saml2:Assertion
+        ID="_ub5Gp8pKv32ZI08bFy-VSYWgCu8JP3HP1F2FXpre7BzJHkFPbfxLdxZniVMB0pv"
+        IssueInstant="2018-01-05T13:42:11.944Z"
+        Version="2.0">
+        <saml2:Issuer
+            Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">
+            http://localhost:8080/EidasNode/ServiceMetadata
+        </saml2:Issuer>
         <saml2:Subject>
-            <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified" NameQualifier="http://C-PEPS.gov.xx">NotAvailable</saml2:NameID>
-            <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
-                <saml2:SubjectConfirmationData Address="127.0.0.1" InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY" NotOnOrAfter="2018-01-05T13:47:11.944Z" Recipient="http://localhost:8080/EidasNode/ColleagueResponse"/>
+            <saml2:NameID
+                Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
+                NameQualifier="http://C-PEPS.gov.xx">
+                NotAvailable
+            </saml2:NameID>
+            <saml2:SubjectConfirmation
+                Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+                <saml2:SubjectConfirmationData
+                    Address="127.0.0.1"
+                    InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY"
+                    NotOnOrAfter="2018-01-05T13:47:11.944Z"
+                    Recipient="http://localhost:8080/EidasNode/ColleagueResponse"/>
             </saml2:SubjectConfirmation>
         </saml2:Subject>
-        <saml2:Conditions NotBefore="2018-01-05T13:42:11.944Z" NotOnOrAfter="2018-01-05T13:47:11.944Z">
+        <saml2:Conditions
+            NotBefore="2018-01-05T13:42:11.944Z"
+            NotOnOrAfter="2018-01-05T13:47:11.944Z">
             <saml2:AudienceRestriction>
-                <saml2:Audience>http://localhost:8080/EidasNode/ConnectorMetadata</saml2:Audience>
+                <saml2:Audience>
+                    http://localhost:8080/EidasNode/ConnectorMetadata
+                </saml2:Audience>
             </saml2:AudienceRestriction>
         </saml2:Conditions>
-        <saml2:AuthnStatement AuthnInstant="2018-01-05T13:42:11.944Z">
+        <saml2:AuthnStatement
+            AuthnInstant="2018-01-05T13:42:11.944Z">
             <saml2:AuthnContext>
-                <saml2:AuthnContextClassRef>http://eidas.europa.eu/LoA/substantial</saml2:AuthnContextClassRef>
+                <saml2:AuthnContextClassRef>
+                    http://eidas.europa.eu/LoA/substantial
+                </saml2:AuthnContextClassRef>
                 <saml2:AuthnContextDecl/>
             </saml2:AuthnContext>
         </saml2:AuthnStatement>
