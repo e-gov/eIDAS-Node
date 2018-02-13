@@ -2,6 +2,9 @@
 permalink: Profiil
 ---
 
+KEHTETU. Dokument on viidud [spetsifikatsiooni](Spetsifikatsioon) koosseisu. 
+{:.teade}
+
 # eIDAS siseriiklikud usaldus- ja krüptonõuded
 {:.no_toc}
 
@@ -105,22 +108,6 @@ Profiili koostamisel on arvestatud eIDAS krüptonõuetega ja RIA krüptoalgoritm
         - `http://www.w3.org/2009/xmlenc11#aes256-gcm` (peamine)
         - `http://www.w3.org/2009/xmlenc11#aes128-gcm` (alternatiiv)   
 
-## Otspunktid
-
-Joonisel 1 on kujutatud liidestuva süsteemi seisukohalt olulised metateabe ja SAML-sõnumite vastuvõtu otspunktid:
-
-- RIA eIDAS konnektorteenuse
-    - metateabe otspunkt `/ConnectorResponderMetadata`
-    - SAML autentimispäringsõnumite vastuvõtupunkt `/ServiceProvider`
-- teenusepakkuja
-    - metateabe otspunkt `/Metadata`
-    - SAML autentimisvastussõnumite vastuvõtupunkt `/ReturnPage`.
-
-Kõigi otspunktide URL-id on seadistatavad. Konkreetsed URL-id määravad osapooled metateabes.
-
-<img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:500px;'>
-
-Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
 
 ## Sõnumivahetuse ülevaade
 

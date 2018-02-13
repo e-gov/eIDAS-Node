@@ -184,7 +184,7 @@ Edukas autentimine koosneb järgmistest sammudest:
 
 ### 5.1 Ülevaade
 
-Konnektorteenus määrab oma metateabega milliseid algoritme ta toetab (algoritmid määratakse ära konfiguratsioonifailis). Liidestujad peavad selle info arvesse võtma. Teenusepakkuja metadata kirjeldab milliseid algoritme tema ise SAML sõnumit vastu võttes toetab.
+Konnektorteenus määrab oma metateabega milliseid algoritme ta toetab (algoritmid määratakse konfiguratsioonifailis). Liidestujad peavad selle info arvesse võtma. Teenusepakkuja metadata kirjeldab milliseid algoritme tema ise SAML sõnumit vastu võttes toetab.
 
 Autentimispäringu töötlemisel: 
 1. Teenusepakkuja teeb enne SAML autentimispäringsõnumi koostamist päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (või kasutab puhverdatud metateavet).
@@ -238,7 +238,7 @@ Tabel 2
 `md:EncryptionMethod` | toetatavad algoritmid
 `http://www.w3.org/2009/xmlenc11#aes256-gcm` |
 `http://www.w3.org/2009/xmlenc11#aes128-gcm` | 
-`md:NameIDFormat` |  Vt märkus 5. 
+`md:NameIDFormat` |  `md:NameIDFormat` väärtused iseloomustavad autenditava isiku identifikaatori või nime "püsivust" (kestvust üle mitme sisselogimise vms). eIDASe kontekstis tähendus on segane. Teema kohta võib soovi korral lugeda [https://wiki.shibboleth.net/confluence/display/CONCEPT/NameIdentifiers](https://wiki.shibboleth.net/confluence/display/CONCEPT/NameIdentifiers) ja [http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf), jaotised 8.3.7, 8.3.8 ja 8.3.1. 
 `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent` | 
 `urn:oasis:names:tc:SAML:2.0:nameid-format:transient` |
 `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
@@ -251,13 +251,7 @@ atribuut `Location` | konnektorteenus võtab SAML sõnumeid vastu URL-il `https:
 
 ### 5.3 Teenusepakkuja metateave
 
-Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks ühendumiseks ning usalduse loomiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid.
-
-Teenusepakkuja peab konnektorteenusele kättesaadavaks tegema oma metaandmed üle HTTPS protokolli.
-
-Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata xml skeemile](https://docs.oasis-open.org/security/saml/v2.0/saml-schema-metadata-2.0.xsd).
-
-Metateave peab olema allkirjastatud, kasutades nõutud krüptoalgoritme, vt jaotis [Nõuded liituvale teenusepakkujale](#4-n%C3%B5uded-liituvale-teenusepakkujale).
+Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks ühendumiseks ning usalduse loomiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid. Teenusepakkuja teeb oma metaandmed konnektorteenusele kättesaadavaks üle HTTPS protokolli. Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata xml skeemile](https://docs.oasis-open.org/security/saml/v2.0/saml-schema-metadata-2.0.xsd). Metateave peab olema allkirjastatud, kasutades nõutud krüptoalgoritme, vt jaotis [Nõuded liituvale teenusepakkujale](#4-n%C3%B5uded-liituvale-teenusepakkujale).
 
 Konnektorteenusega liidestumise seisukohalt olulised väljad koos kirjeldusega on toodud tabelis 3 (vt ka näidisvastust lisas 2). XML nimeruumide kirjeldused on lisas 1.
 
@@ -396,13 +390,13 @@ Tabel 9.
 
 | Prefiks | Nimeruum | Selgitus |
 |:--------|:-------------|:-------------|
-| md | urn:oasis:names:tc:SAML:2.0:metadata | SAML 2.0 metadata elemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf  |
-| ds | http://www.w3.org/2000/09/xmldsig# | Digitaalallkirja vormingu elemendid. www.w3.org/TR/xmldsig-core/  |
-| alg | urn:oasis:names:tc:SAML:metadata:algsupport | Krüptoalgoritmide kirjeldus. http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-metadata-algsupport-v1.0-cs01.pdf |
-| saml2 | urn:oasis:names:tc:SAML:2.0:assertion | OASIS SAML 2.0 vormingu põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
-| saml2p | urn:oasis:names:tc:SAML:2.0:protocol | OASIS SAML 2.0 protokolli põhielemendid. http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf |
+| `md` | urn:oasis:names:tc:SAML:2.0:metadata | SAML 2.0 metadata elemendid. [http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)  |
+| `ds` | http://www.w3.org/2000/09/xmldsig# | Digitaalallkirja vormingu elemendid. [www.w3.org/TR/xmldsig-core/](www.w3.org/TR/xmldsig-core/)  |
+| `alg` | urn:oasis:names:tc:SAML:metadata:algsupport | Krüptoalgoritmide kirjeldus. [http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-metadata-algsupport-v1.0-cs01.pdf](http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-metadata-algsupport-v1.0-cs01.pdf) |
+| `saml2` | urn:oasis:names:tc:SAML:2.0:assertion | OASIS SAML 2.0 vormingu põhielemendid. [http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) |
+| `saml2p` | urn:oasis:names:tc:SAML:2.0:protocol | OASIS SAML 2.0 protokolli põhielemendid. [http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) |
 
-## Lisa 2. Teenusepakkuja metateabe näide
+## Lisa 2. Näide. Teenusepakkuja metateabe
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -517,7 +511,7 @@ Tabel 9.
 </md:EntityDescriptor>
 ```
 
-## Lisa 3. Autentimispäringu näide
+## Lisa 3. Näide. Autentimispäring
 
 ```xml
 <saml2p:AuthnRequest
@@ -609,7 +603,7 @@ Tabel 9.
 </saml2p:AuthnRequest>
 ```
 
-## Lisa 4. Autentimisvastus (edukas autentimine)
+## Lisa 4. Näide. Autentimisvastus (edukas autentimine)
 
 ```xml
 <saml2p:Response
@@ -716,7 +710,7 @@ Tabel 9.
 </saml2p:Response>
 ```
 
-## Lisa 5. Autentimisvastus (isik ei andnud nõusolekut andmete edastamiseks)
+## Lisa 5. Näide. Autentimisvastus (isik ei andnud nõusolekut andmete edastamiseks)
 
 ```xml
 <saml2p:Response
