@@ -102,11 +102,7 @@ pre code,
 code code {
   font-size: 100%;
 }
-pre {
-  margin-top: 1em; margin-bottom: 1em;
-  white-space: pre-wrap; 
-  /* overflow: hidden; */
-}
+pre { margin-top: 1em; margin-bottom: 1em; }
 /*#endregion */
 
 /*#region Lingid */
@@ -143,19 +139,20 @@ a[href]:hover {
   color: Cadetblue;
   background-color: lightcyan;
 }
-
-/*#endregion */
-
-/*#region Eksperimentaalne */
-.psa-note {
-  position: relative;
-  margin-bottom: 15px;
-  background-color: #faf9ce;
-  border: 1px solid #e1df8f;
-  border-radius: 6px;
-  padding: 20px 40px 20px 20px;
-  overflow: hidden;
+a.nupp {
+  display: inline-block;
+  border-radius: 8px; padding: 0.5rem 1rem !important; margin: 1rem !important;
+  color: Black;
+  border: 1px solid CadetBlue;
+  text-decoration: none !important;
+}
+a.nupp:focus,
+a.nupp:hover {
+  border-bottom-width: 1px;
+  margin-bottom: 1rem;
+  border: 1px solid Black !important;
+  text-decoration: none !important;
 }
 
-/*#endregion */
 
+/*#endregion */
