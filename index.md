@@ -36,27 +36,7 @@ eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 
 ----
 
-## eIDAS-Client-i arendajale
+## Teenuse arendajale
 
-Töödokumentatsioon, mille ajakohasus ega muutumatus ei ole tagatud.
-{:.teade}
-
-[eIDAS Node SAML metadata seletus](MetadataSeletus)
-
-[Dokumentatsiooni täiendamise juhend](Dokujuhend)
-
-[Usaldustoimingud](Usaldustoimingud)
-
-[FAQ](FAQ)
-
-[eIDAS-autentimise end-to-end turvaanalüüs](Ahel)
-
-Arhiiv:
-
-[eIDAS päringuvoog - Demo SP - HTTP Redirect](Vookirjeldus-1)<br>
-[eIDAS päringuvoog - Demo SP - HTTP POST](Vookirjeldus-2)<br>
-[Demo SP uurimine](DemoSP-uurimine)<br>
-[eIDAS päringuvoog - Demo SP - HTTP Redirect - kompaktne](Vookirjeldus-1a)
-
-
+[Kood ja arendaja dokumentatsioon](Arendajale)
 
