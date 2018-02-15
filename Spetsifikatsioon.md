@@ -307,17 +307,23 @@ Tabel 5. SAML `AuthnRequest` parameetrid.
 | `/saml2p:AuthnRequest/saml2:Issuer` | Jah | Teenusepakkuja metadatale viitav URL. |
 | `/saml2p:AuthnRequest/ds:Signature/*` | Jah | Teenusepakkuja privaatvõtmega antud allkiri ja sellega seotud detailid. Toetatud krüptoalgoritmid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:Extensions/alg:SigningMethod/*`) |
 | `/saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType` | Jah | Konstantne väärtus: `public` (avaliku sektori asutus). Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
-| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuute soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true`. Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
+| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuute soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). <br><br>Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true`. NB! Juhul kui kohustuslikuna märgistatud atribuute ei suudeta täita, tagastatakse viga. <br><br>Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions`. Täiendav selgitus atribuutide kohta - eIDAS Message Format v1.1-2 (vt [Viited](Viited)) |
 | `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (`/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat`) |
 | `/saml2p:AuthnRequest/saml2:RequestedAuthnContext` | Jah |	Määrab, millist autentimistaset nõutakse sihtriigi autentimisteenuselt. <br><p>Võimalikud väärtused:<br> `http://eidas.europa.eu/LoA/low`<br>`http://eidas.europa.eu/LoA/substantial`<br>`http://eidas.europa.eu/LoA/high`</p>  |
 
 ## 7 Autentimisvastus
 
-Autentimise tulemuse kohta saadetakse teenusepakkujale autentimisvastus (vt näited lisades 4 ja 5). Eduka autentimise korral on autentimisvastuses andmed autentimistoimingu ja autenditud isiku kohta. Ebaeduka autentimise korral saadetakse veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL peab olema määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
+Konkreetse autentimispäringu tulemuse kohta saadetakse teenusepakkujale autentimisvastus (vt näited lisades 4 ja 5). Autentimisvastuses tuuakse muuhulgas välja päringu töötlemise tulemus ning eduka töötlemise korral ka päringus soovitud isikuandmed.
 
-Vastus on allkirjastatud konnektorteenuse poolt. Saadetavad isikuandmed (Assertion elemendi sisu) esitatakse krüpteeritud kujul.
+Autentimisvastus saadetakse teenusepakkuja vastus-URL'le, mis on toodud tema metateabes (`/md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location` atribuut). Päring loetakse edukalt töödelduks kui selles olev `/saml2p:Response/saml2p:Status/saml2p:StatusCode` element on väärtusega `urn:oasis:names:tc:SAML:2.0:status:Success`.
 
-Autentimisvastuses tagastatakse järgmised andmed (tabelid 6 ja 7).
+Konnektorteenuse poolt tagastatav SAML vastus on alati allkirjastatud.
+
+Eduka isikutuvastuse korral on kogu sõnumi väite osa täiendavalt krüpteeritud ja allkirjastatud (sisaldab täpselt ühte `EncryptedAssertion` elementi).
+
+Teenusepakkuja peab vastust töötlema vastavalt SAML2 Web SSO profiili nõuetele vastavalt (vt [Viited](Viited)). Sealhulgas peab teenusepakkuja veenduma vastuse autentsuses enne selles sisalduvate väidete töötlemist. NB! Autentsuses veendumiseks tuleb vastuses sisalduvaid allkirju valideerida konnektorteenuse metateabe otspunktist saadud allkirjastamissertifikaadi alusel (mitte kasutada vastuses olevas allkirjas endas sisalduvat sertifikaati). Sõnumi või `Assertion` elemendi allkirja mittevalideerumise korral tuleb sõnumi vastuvõtt katkestada.
+
+Tüüpilises autentimisvastuses tagastatakse järgmised andmed (tabelid 6 ja 7).
 
 Tabel 6 - Autentimisvastuse parameetrid
 
@@ -330,7 +336,6 @@ Tabel 7. SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmetega
 
 | XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kohustuslik           | Selgitus  |
 |:-------------|:-------------:|:----|
-| `/saml2p:Response/@Consent`	| Ei | Info kasutajalt isikuandmete avaldamise nõusoleku küsimise kohta. |
 | `/saml2p:Response/@Destination`	| Jah | Teenusepakkuja metateabes kajastatud URL. |
 | `/saml2p:Response/@InResponseTo`	| Jah | Päringu ID, mille kohta vastus on tagastatud (vt ka `/saml2p:AuthnRequest/@ID`). |
 | `/saml2p:Response/@IssueInstant`	| Jah | Kuupäeva ja kellaaeg, millal vastus koostati. |
@@ -338,25 +343,26 @@ Tabel 7. SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmetega
 | `/saml2p:Response/saml2:Issuer` | Jah | Konstante väärtus: Eesti konnektorteenuse HTTPS URL. |
 | `/saml2p:Response/saml2:Issuer/@Format` | Jah | Konstantne väärtus: `urn:oasis:names:tc:SAML:2.0:nameid-format:entity` |
 | `/saml2p:Response/ds:Signature` | Jah | Konnektorteenuse privaatvõtme abil koostatud digitaalallkiri. |
-| `/saml2p:Response/saml2:Status/saml2p:StatusCode/@Value` | Jah | Eduka vastuse korral konstante väärtus:  `urn:oasis:names:tc:SAML:2.0:status:Success`|
-| `/saml2p:Response/saml2:Status/saml2p:StatusMessage` | Ei | Vastuse staatust täpsustav kirjeldus. |
-| `/saml2p:Response/saml2:EncryptedAssertion/xenc:EncryptedData` | Jah | Isikuandmete info krüpteeritud kujul. |
+| `/saml2p:Response/saml2:Status/saml2p:StatusCode/@Value` | Jah | Esimese taseme staatuskood. Väärtus vastavalt SAML 2.0 Core spetsifikatsioonile. <br><br>`urn:oasis:names:tc:SAML:2.0:status:Success` - eduka vastuse korral <br><br>`urn:oasis:names:tc:SAML:2.0:status:Requester` - teenusepakkuja vea korral (näiteks kasutaja ei anna nõusolekut andmete pärimiseks). <br><br>`urn:oasis:names:tc:SAML:2.0:status:Responder` - konnektorteenuse või identiteenusepoolse vea korral (näiteks autentimine ebaõnnestub) |
+| `/saml2p:Response/saml2p:Status/saml2p:StatusCode/saml2p:StatusCode` | Ei | Teise taseme staatuskood. Väärtus vastavalt SAML 2.0 Core spetsifikatsioonile. |
+| `/saml2p:Response/saml2:Status/saml2p:StatusMessage` | Ei | Täpsustav veakirjeldus. Konnektorteenuse spetsiifilised veakoodid toodud eIDAS-Node Error Codes raames (vt [Viited](Viited)) . |
+| `/saml2p:Response/saml2:EncryptedAssertion/` | Jah | Isikuandmete info krüpteeritud kujul. Eduka vastuse korral ainult üks element. |
 
-// TODO vaja teha isikuandmete esitamise detailsem kirjeldus
 
-## 8 Veaolukorrad
+Tabel 7.1 SAML `Assertion` sisu eduka isikutuvastuse korral.
 
-Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahenduse dokumentatsioonis (vt [eIDAS-veakoodid]).
+| XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kardinaalsus           | Selgitus  |
+|:-------------|:-------------:|:----|
+| `/saml2:Assertion/saml2:Issuer` | 1 | Viitab konnektorteenuse metateabe otspunktile. |
+| `/saml2:Assertion/ds:Signature` | 1 | Digitaalallkiri. |
+| `/saml2:Assertion/saml2:Subject/saml2:NameID` | 1 |  Isikut identifitseeriv kood. Füüsilise isiku puhul `PersonIdentifier`, juriidilise puhul `LegalPersonIdentifier` atribuudi väärtus. ) |
+| `/saml2:Assertion/saml2:Conditions` | 1 | Kitsendused isikutuvastuse väidete kasutamise kohta. |
+| `/saml2:Assertion/saml2:AuthnStatement/saml2:AuthnContext/saml2:AuthnContextClassRef` | 1 | Isiku identiteedi tagatistase (madal, märkimisväärne ja kõrge). Võimalikud väärtused: `http://eidas.europa.eu/LoA/low`, `http://eidas.europa.eu/LoA/substantial`, `http://eidas.europa.eu/LoA/high` |
+| `/saml2:Assertion/saml2:AttributeStatement/` | 1 | Koondab väited autenditud isiku andmete kohta. |
+| `/saml2:Assertion/saml2:AttributeStatement/saml2:Attribute` | 1..n | Sh atribuudid füüsilise isiku, juriidilise isiku, esindatava füüsilise isiku või esindatava juriidilise isiku kohta. <br><br>Sisaldab vähemalt miinimumkomplekti väidetest, mida SAML AuthnRequestis küsiti (sisaldas atribuuti isRequired="True"). |
 
-Tabel 8. Veakoodid
 
-| Veakood | Lühikirjeldus            | Selgitus  |
-|:-------------:|-------------|-----|
-| 202007 | Isiku nõusolek puudub | Isik keeldus autentimise jaoks vajalikke andmeid avaldamast. Ei vaja teenusepakkuja poolseid lisategevusi |
-
-// TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
-
-## 9 Toetatud riikide nimekiri
+## 8 Toetatud riikide nimekiri
 
 Nimekiri riikidest, kelle autentimisteenuseid RIA eIDAS konnektorteenus vahendab, on masinloetavas vormingus avaldatud aadressil.
 
