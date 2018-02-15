@@ -7,7 +7,7 @@ Märkus. Lahtised küsimused on markeeritud sümbolitega `//`.
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.6
+v 0.7
 
 - TOC
 {:toc}
@@ -316,9 +316,9 @@ Konnektorteenuse poolt tagastatav SAML vastus on alati allkirjastatud.
 
 Eduka isikutuvastuse korral on kogu sõnumi väite osa täiendavalt krüpteeritud ja allkirjastatud (sisaldab täpselt ühte `EncryptedAssertion` elementi).
 
-Teenusepakkuja peab vastust töötlema vastavalt SAML2 Web SSO profiili nõuetele vastavalt (vt [Viited](Viited)). Sealhulgas peab teenusepakkuja veenduma vastuse autentsuses enne selles sisalduvate väidete töötlemist. NB! Autentsuses veendumiseks tuleb vastuses sisalduvaid allkirju valideerida konnektorteenuse metateabe otspunktist saadud allkirjastamissertifikaadi alusel (mitte kasutada vastuses olevas allkirjas endas sisalduvat sertifikaati). Sõnumi või `Assertion` elemendi allkirja mittevalideerumise korral tuleb sõnumi vastuvõtt katkestada.
+Teenusepakkuja peab autentimisvastust töötlema SAML2 Web SSO profiili nõuetele vastavalt (vt [Viited](Viited)). Sealhulgas peab teenusepakkuja veenduma vastuse autentsuses enne selles sisalduvate väidete töötlemist. NB! Autentsuses veendumiseks tuleb vastuses sisalduvaid allkirju valideerida konnektorteenuse metateabe otspunktist saadud allkirjastamissertifikaadi alusel (mitte kasutada vastuses olevas allkirjas endas sisalduvat sertifikaati). Sõnumi või `Assertion` elemendi allkirja mittevalideerumise korral tuleb sõnumi edasine töötlemine katkestada.
 
-Tüüpilises autentimisvastuses tagastatakse järgmised andmed (tabelid 6 ja 7).
+Edukalt töödeldud autentimisvastuses tagastatakse järgmised andmed (tabelid 6, 7.1 ja 7.2).
 
 Tabel 6 - Autentimisvastuse parameetrid
 
@@ -327,7 +327,7 @@ Tabel 6 - Autentimisvastuse parameetrid
 | `SAMLResponse` | Jah | Parameeter, mis sisaldab Base64 kodeeritud SAML vormingus autentimise vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
 
-Tabel 7. SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmetega)
+Tabel 7.1 SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmetega)
 
 | XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kohustuslik           | Selgitus  |
 |:-------------|:-------------:|:----|
@@ -344,7 +344,7 @@ Tabel 7. SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmetega
 | `/saml2p:Response/saml2:EncryptedAssertion/` | Jah | Isikuandmete info krüpteeritud kujul. Eduka vastuse korral ainult üks element. |
 
 
-Tabel 7.1 SAML `Assertion` sisu eduka isikutuvastuse korral.
+Tabel 7.2 SAML `Assertion` sisu eduka isikutuvastuse korral.
 
 | XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kardinaalsus           | Selgitus  |
 |:-------------|:-------------:|:----|
@@ -354,7 +354,7 @@ Tabel 7.1 SAML `Assertion` sisu eduka isikutuvastuse korral.
 | `/saml2:Assertion/saml2:Conditions` | 1 | Kitsendused isikutuvastuse väidete kasutamise kohta. |
 | `/saml2:Assertion/saml2:AuthnStatement/saml2:AuthnContext/saml2:AuthnContextClassRef` | 1 | Isiku identiteedi tagatistase (madal, märkimisväärne ja kõrge). Võimalikud väärtused: `http://eidas.europa.eu/LoA/low`, `http://eidas.europa.eu/LoA/substantial`, `http://eidas.europa.eu/LoA/high` |
 | `/saml2:Assertion/saml2:AttributeStatement/` | 1 | Koondab väited autenditud isiku andmete kohta. |
-| `/saml2:Assertion/saml2:AttributeStatement/saml2:Attribute` | 1..n | Sh atribuudid füüsilise isiku, juriidilise isiku, esindatava füüsilise isiku või esindatava juriidilise isiku kohta. <br><br>Sisaldab vähemalt miinimumkomplekti väidetest, mida SAML AuthnRequestis küsiti (sisaldas atribuuti isRequired="True"). |
+| `/saml2:Assertion/saml2:AttributeStatement/saml2:Attribute` | 1..n | Sh atribuudid füüsilise isiku, juriidilise isiku, esindatava füüsilise isiku või esindatava juriidilise isiku kohta. <br><br>Peab sisaldama minimaalselt väiteid, mille puhul `AuthnRequest`-s kasutati atribuuti isRequired="True". Vt eIDAS Message Format v1.1-2 (vt [Viited](Viited)) |
 
 
 ## 8 Toetatud riikide nimekiri
@@ -832,6 +832,7 @@ Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.7, 15.02.2018  | Autentimisvastuse täpsustused. |
 | 0.6, 13.02.2018  | Ühendatud "eIDASe siseriiklike usaldus- ja krüptonõuetega" üheks dokumendiks. Väiksemaid täiendusi |
 | 0.5, 13.02.2018   | Korrastus. Vastuse täpsustused. XML nimeruumid |
 | 0.4, 09.02.2018   | Metateabe otspunkti vastuse täpsustused |
