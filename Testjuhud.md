@@ -40,18 +40,30 @@ Antud testide eesmärk on kontrollida liidestuva teenuse võimekust suhelda eIDA
 
 Kuidas teste käivitada:
 1) Tõmba githubist alla [eIDAS klient makettrakendus](https://github.com/e-gov/eIDAS-Client)
+
 2) Seadistada eIDAS sõlme (eIDAS Node) metadata otspunkt [eIDAS-client-webapp application.properties](https://github.com/e-gov/eIDAS-Client/blob/master/eidas-client-webapp/src/main/resources/application.properties)
-failis
+failis.
+
 `eidas.client.idpMetadataUrl = http://localhost:8080/EidasNode/ConnectorResponderMetadata`
+
 3) Juhul kui kasutatakse muud eIDAS sõlme kui https://eidastest.eesti.ee/EidasNode/ServiceMetadata siis tuleb vastav sert lisada ka [eidas-client-webapp keystore-i](https://github.com/e-gov/eIDAS-Client/blob/master/eidas-client-webapp/src/main/resources/samlKeystore.jks)
+
 4) Seadistada testid enda SAML liidese otspunktidele [eidas-client-test application.properties](https://github.com/e-gov/eIDAS-Client/blob/master/eidas-client-test/src/test/resources/application-test.properties) failis
+
 `server.port = 8080` - testitava liidese port
+
 `eidas.client.idpMetadataUrl = http://localhost:8080/EidasNode/ConnectorResponderMetadata` - eIDAS sõlme metaandmete otspunkt
+
 `eidas.client.spEntityId = http://localhost:8080/SP/metadata` - tesitava liidese metaandmete otspunkt
+
 `eidas.client.spStartUrl = http://localhost:8080/start` - testitava liidese autentimise alustamise otspunkt
+
 `eidas.client.spReturnUrl = http://localhost:8080/SP/ReturnPage` - testitava liidese returnUrli otspunkt
+
 5) Käivitada testid kasutades mavenit või maven wrapperit
+
 `./mvnw -PrunIntegrationTests -Dit.test=Common* verify`
 
 [Testide klassid](https://github.com/e-gov/eIDAS-Client/tree/master/eidas-client-test/src/test/java/ee/ria/eidas) mille nimed hakkavad Common algusega on universaalsed ning sobivad kasutamiseks ilma muutmata. Enda liidestumise testimisel võib uurida, täiendada ja kasutada ka teisi testiklasse. Kõikide testide käivitamiseks kasutada käsku:
+
 `./mvnw -PrunIntegrationTests verify`
