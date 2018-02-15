@@ -123,20 +123,25 @@ Tabel 1
 
 Edukas autentimine koosneb järgmistest sammudest:
 
-(HTTP POST näitel. Lihtsuse mõttes ei ole näidatud SAML pöördumisi metateabeotspunktide poole. Vt ka joonis lisas 6) 
+(HTTP POST näitel. Lihtsuse mõttes ei ole näidatud SAML pöördumisi metateabeotspunktide poole. Vt ka joonis [lisas 6](#lisa-6-eduka-autentimisvoo-jadadiagramm)).
 
 1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab piiriülest autentimist.
-    - Kasutaja isik on tuvastamata, puudub kehtiv sessioon.
-    - Teenusepakkuja jätab soovitud URL-i meelde ja suunab kasutaja lehele, kus kuvatakse eIDAS võrguga liidestatud riikide nimekiri.
+    - kasutaja isik on tuvastamata, puudub sessioon.
+    - teenusepakkuja jätab soovitud URL-i meelde ja suunab kasutaja sisselogimislehele.
+    - sisselogimislehel kuvatakse eIDAS-taristuga liidestatud riikide nimekiri (nn "lipukesed").
 
-2. Kasutaja on valinud riigi ja saadab vormi teenusepakkujale.
-    - Teenusepakkuja moodustab isikutuvastamiseks vajaliku `SAMLRequest` parameetri sisu
-    - ja saadab kasutajale vormi ümbersuunamisega riiklikusse eIDAS Node'i (vormi parameetriteks `SAMLRequest`, `country` ja vajadusel ka `RelayState`).
-        - `RelayState` on mittekohustuslik parameeter, mille teenusepakkuja võib kaasa panna oma päringu oleku hilisemaks tuvastuseks sammul 10 (algse päringu saab tuvastada ka vastuses oleva `SAMLResponse` parameetris sisalduvas XML atribuudis `InResponseTo`, kuid see info on kodeeritud kujul)
+2. Kasutaja valib riigi
+    - sirviku saadab päringu teenusepakkujale.
+    - teenusepakkuja moodustab SAML autentimispäringu `SAMLRequest`
+    - ja saadab kasutajale vormi ümbersuunamisega RIA eIDAS konnektorteenusesse
+        - vormi parameetriteks on `SAMLRequest`, `country` ja vajadusel ka `RelayState`.
+        - `RelayState` on mittekohustuslik parameeter, mille teenusepakkuja võib kaasa panna oma päringu oleku hilisemaks tuvastuseks sammul 10. Algse päringu saab tuvastada ka vastuses oleva `SAMLResponse` parameetris sisalduvas XML atribuudis `InResponseTo`, kuid see info on kodeeritud kujul.
 
 3. Kasutaja suunatakse automaatselt RIA eIDAS konnektorteenusesse,
-    - kus kontrollitakse `SAMLRequest` parameetris oleva SAML XML päringu sisu valiidsust ja allkirja vastu teenusepakkuja metainfos olevat avalikku võtit.
-    - RIA eIDAS konnektorteenus moodustab uue SAML XML päringu, võttes aluseks teenusepakkujalt tuleva info
+    - kus kontrollitakse `SAMLRequest` parameetris oleva SAML autentimispäringu valiidsust
+        - kontroll sisaldab päringu sisu kontrolli
+        - ja päringu allkirja kontrolli; seda tehakse teenusepakkuja metainfos oleva avaliku võtmega.
+    - RIA eIDAS konnektorteenus moodustab uue SAML autentimispäringu, võttes aluseks teenusepakkujalt tuleva info
     - ja allkirjastab selle oma privaatvõtmega.
     - seejärel saadab kasutajale vastuseks vormi, mis on suunatud sihtriigi eIDAS vahendusteenuse vastu, koos `SAMLRequest` parameetriga ja vajadusel `RelayState`-ga.
 
@@ -149,7 +154,7 @@ Edukas autentimine koosneb järgmistest sammudest:
     - vahendusteenus täiendab saadud `SAMLRequest`-i sisu
     - ja saadab kasutajale vastuseks välisriigi autentimisteenusele ümbersuunamiseks mõeldud vormi.
 
-6. Kasutaja suunatakse automaatselt edasi välisriigi autentimisteenus lehele, koos `SAMLRequest` ja `RelayState` parameetritega.
+6. Kasutaja suunatakse automaatselt edasi välisriigi autentimisteenuse lehele, koos `SAMLRequest` ja `RelayState` parameetritega.
     - väliriigi autentimisteenus saadab kasutajale vastuseks autentimismeetmete valiku (ID-kaart, paroolikaart, parool, Mobiil-ID vm).
 
 7. Kasutaja autendib ennast autentimisteenuses.
