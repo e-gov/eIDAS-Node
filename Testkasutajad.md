@@ -35,4 +35,4 @@ Võimalik on kasutada ka Eesti autentimisteenust. Antud lähenemine ei võimalda
 
 | Riigi kood päringus | ID-kaar | Mobiil-ID|
 |---------------------|---------|----------|
-| ZZ | Vajalik [test sertifikaatidega ID kaart](https://www.id.ee/index.php?id=30379) | [Test Mobiil-ID numbrid](https://www.id.ee/index.php?id=36373)|
+| ZZ | Vajalik [test sertifikaatidega ID kaart](https://www.id.ee/index.php?id=30379) või seadistada sertifikaadid [test OCSP teenuses](https://demo.sk.ee/upload_cert/).  | [Test Mobiil-ID numbrid](https://www.id.ee/index.php?id=36373)|

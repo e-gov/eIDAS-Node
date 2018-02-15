@@ -21,8 +21,9 @@ Asutus selgitab välja, kas ja millistes oma e-teenustes soovib eIDAS konnektort
 
 ## 2 Kavandada ja teostada arendus
 Asutus kavandab ja teostab teenuse kasutamiseks vajalikud arendustööd.
-  - klientrakenduse täiendamine eIDAS SAML protokolli kohase klientkomponendiga
-  - ...
+  - Klientrakenduse täiendamine eIDAS SAML protokolli kohase klientkomponendiga vt. [Viited](https://e-gov.github.io/eIDAS-Connector/Viited)
+  - Kindlasti tutvuda eIDAS konnektorteenuse [spetsifikatsiooniga](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon)
+  - Lahenduse näidisena võib tutvuda [makettrakendusega](https://github.com/e-gov/eIDAS-Client)
 
 Eriti tähele panna:<br>
 
@@ -38,7 +39,7 @@ Asutus esitab taotluse testteenusega liitumiseks. Taotluse võib esitada juba en
 
 4) ...
 
-Kirja tuleb panna kuidas käib test sertifikaatide vahetus.
+Kirja tuleb panna kuidas käib test sertifikaatide vahetus!
 
 Taotlus esitatakse ja edasine suhtlus teenuse haldamisel käib läbi RIA kasutajatoe, `help@ria.ee`. Vt lähemalt [RIA autentimisteenuste lehel](https://www.ria.ee/ee/autentimisteenused.html).
 
@@ -58,9 +59,9 @@ Testida tuleb vähemalt järgnevaid aspekte:
 
 | ID | Eesmärk | Viide |
 |----|--------|--------|
-| 1 | Metateave peab olema korrektselt publitseeritud ning sisaldama kohustuslikke elemente | [Nõuded metateabe otspunktile](https://e-gov.github.io/eIDAS-Connector/Profiil#teenusepakkuja-metateave) |
-| 2 | Autentimispäring peab olema korrektselt koostatud ning sisaldama kohustuslikke elemente| [Nõuded autentimispäringule](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#7-autentimisp%C3%A4ring) |
-| 3 | Autentimise voog peab olema tervenesti läbitav | [Kasutusvoog](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#3-autentimisprotsess), [Juhend testkasutajatega autentimiseks](Testkasutajad) |
+| 1 | Metateave peab olema korrektselt publitseeritud ning sisaldama kohustuslikke elemente | [Nõuded metateabe otspunktile](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#53-teenusepakkuja-metateave) |
+| 2 | Autentimispäring peab olema korrektselt koostatud ning sisaldama kohustuslikke elemente| [Nõuded autentimispäringule](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#6-autentimisp%C3%A4ring) |
+| 3 | Autentimise voog peab olema tervenesti läbitav | [Kasutusvoog](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#lisa-6-eduka-autentimisvoo-jadadiagramm), [Juhend testkasutajatega autentimiseks](Testkasutajad) |
 
 Testimise hõlbustamiseks on loodud [testijuhtude kogum](Testjuhud), mida tuleb (või on soovituslik?) järgida.
 
