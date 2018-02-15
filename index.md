@@ -2,6 +2,8 @@
 permalink: /
 ---
 
+<img src='img/ee_cef_0.png' style='width:400px'>
+
 <img src='img/LOVID.png' style='width: 80px;'>
 
 <span style='color:Tomato;'>Vali õige meetod:</span> [Piiriülene eIDAS-autentimine. Liidestamismeetodi valik](Valik)
@@ -22,37 +24,19 @@ eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 
 [Ärikirjeldus](Arikirjeldus)<br>
 
+<p><a href='https://www.ria.ee/ee/autentimisteenused.html' class='nupp'>Liitumine</a></p>
+
 ## Liidestuse arendajale
 
-[eIDAS konnektorteenuse liidese spetsifikatsioon](Spetsifikatsioon)<br>
-[eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
+[eIDAS konnektorteenuse spetsifikatsioon](Spetsifikatsioon)<br>
 
-[eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil)
+[eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil) KEHTETU (lõimitud spetsifikatsiooni, vt [Nõuded liitujale](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#3-n%C3%B5uded-liitujale))
+
+[eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
 
 [Viited](Viited)
 
-----
+## Konnektorteenuse arendajale
 
-## eIDAS-Client-i arendajale
-
-[eIDAS Node SAML metadata seletus](MetadataSeletus)
-
-[Dokumentatsiooni täiendamise juhend](Dokujuhend)
-
-NIST 800-130 (2013) [A Framework for Designing Cryptographic Key Management Systems](http://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-130.pdf)
-
-[Usaldustoimingud](Usaldustoimingud)
-
----- 
-
-🗑  Arhiiv
-
-Aktuaalsuse kaotanud teave.
-
-[eIDAS päringuvoog - Demo SP - HTTP Redirect](Vookirjeldus-1)<br>
-[eIDAS päringuvoog - Demo SP - HTTP POST](Vookirjeldus-2)<br>
-[Demo SP uurimine](DemoSP-uurimine)<br>
-[eIDAS päringuvoog - Demo SP - HTTP Redirect - kompaktne](Vookirjeldus-1a)
-
-
+[Kood ja arendaja dokumentatsioon](Arendajale)
 

@@ -1,7 +1,7 @@
 # 
 repo: "https://github.com/e-gov/eIDAS-Connector"
 baseurl: "https://e-gov.github.io/eIDAS-Connector"
-viimatiMuudetud: '08.02.2018'
+viimatiMuudetud: '13.02.2018'
 
 defaults:
   -

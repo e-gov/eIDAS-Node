@@ -2,54 +2,128 @@
 permalink: Spetsifikatsioon
 ---
 
-<img src='img/ee_cef_0.png'>
-
 Märkus. Lahtised küsimused on markeeritud sümbolitega `//`. 
 {:.teade}
 
-# RIA eIDAS konnektorteenuse liidese spetsifikatsioon
+# RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.4
+v 0.6
 
 - TOC
 {:toc}
 
 ## 1 Ülevaade
 
-Käesolev juhend on suunatud riigiasutustele (edaspidi *teenusepakkuja*), kes soovivad välisriikide kodanikke oma infosüsteemi tarvis tuvastada otse eIDAS konnektorteenusega ühendudes. Juhend kirjeldab nõuded, isikustuvastusprotsessi tehnilisi detaile ja vajalikke arendustegevusi riikliku konnektorteenusega liidestumiseks.
+Käesolev spetsifikatsioon on suunatud riigiasutusele, edaspidi *teenusepakkuja*, kes soovib oma e-teenuse välismaalastest kasutajaid autentida eIDAS konnektorteenuse abil.
 
-Vt ka: [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil)
+Spetsifikatsioon:
+- annab tehnilise ülevaate autentimisprotsessist
+- määratleb liidestatavatele süsteemidele esitatavaid nõuded
+- ja annab soovitusi liidese ehitamiseks.
 
-## 2 Kontekst
+## 2 Tehnilised parameetrid
 
-RIA eIDAS konnektorteenus on Eesti riigiasutustele mõeldud vahendusteenus eIDAS-autentimisvõrku. eIDAS-autentimisvõrk on Euroopa Liidu liikmesriikide elektroonilist autentimist pakkuv ühisteenus. Võrk koosneb turvalise kanali abil ühendatud riiklikest sõlmpunktidest (ingl _eIDAS Node_). Sõlmpunktid vahetavad omavahel isikutuvastuspäringuid ja kinnitusi vastava riigi kodaniku identiteedi kohta. Iga Euroopa Liidu liikmesriik opereerib vähemalt ühte riiklikku sõlmpunkti ja pakub kohalikele teenusepakkujatele välisriigi kodanike tuvastamiseks konnektorteenust.
+- protokoll
+    - SAML 2.0, Web Browser SSO profiil, koos eIDAS täiendustega. Vt [Viited](Viited), eIDAS Technical specification
+- sõnumivahetusmeetod
+    - `HTTP POST`, kasutaja sirviku ümbersuunamise (_redirect_) abil. Vt [Viited](Viited), "HTTP POST binding" SAML 2.0 standardikirjelduses, ptk 5.12.
+- otspunktid
+    - metateabe otspunkt `/ConnectorResponderMetadata`
+    - SAML autentimispäringsõnumite vastuvõtupunkt `/ServiceProvider`
 
-Eestis pakub eIDAS Node võrguga liitumiseks konnektorteenust RIA.
+- Märkus. Teenusepakkuja peab omama (vt joonis 1):
+    - metateabe otspunkti, nt `/Metadata`
+    - SAML autentimisvastussõnumite vastuvõtupunkti, nt `/ReturnPage`.
+
+<img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:500px;'>
+
+Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
+
+## 3 Nõuded liitujale
+
+Kokkuvõtlikult peab teenusepakkuja:
+- pakkuma SAML metateabe otspunkti teenust
+- omama SAML päringute ja vastuste töötlemise võimekust.
+
+1. teenusepakkuja peab koostama oma süsteemi kohta metateabe, vastavalt eIDAS-e nõuetele (vt jaotis [Teenusepakkuja metateave](#teenusepakkuja-metateave))
+2. metateabe transport teisele osapoolele
+    1. konnektorteenuse metateave publitseeritakse HTTPS otspunktis:
+        - [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) (testkeskkond)
+        - [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) (toodangukeskkond)
+    2. teenusepakkuja publitseerib metateabe samuti HTTPS otspunktis
+        - teatab otspunkti RIA-le
+    3. soovi korral annab osapool (tulemüüriga) juurdepääsu metateabele ainult partnerile
+    4. täiendavate metateabe transpordi kaitsemeetmete (IPSec, VPN) toetus põhjendatud turvavajaduse korral, läbirääkimisega RIA-ga
+    5. manuaalne vm _out of band_ metateabe edastus - ei ole toetatud
+3. metateabe allkirjastamine
+    1. on kohustuslik
+    2. allkirja tuleb metateabe võtmisel valideerida, kogu usaldusahela ulatuses
+    3. usaldusankruks SK ID Solutions AS juursert
+    4. toetama peab samu algoritme, mis p 7
+4. metateabe uuendamine
+    1. osapool võib metateavet puhverdada, kuni `md:EntityDescriptor` atribuudis `validUntil` määratud ajamomendini
+    2. metadatas tuleb määrata `validUntil` väärtus. Soovitatav väärtus on 24 h
+5. serdid
+    1. teenusepakkujal on vaja allkirjastamise serti ja krüpteerimise serti
+    2. sertide ristkasutus:
+        - on lubatud allkirjastamise puhul - metateabe ja SAML-sõnumi võib allkirjastada sama serdiga
+    3. väljaandja:
+        - soovitame SK ID Solutions AS väljaantud serte; muu väljaandja serdi kasutamine kooskõlastada RIA-ga
+            - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima 
+    4. usaldusankur:
+        - SK ID Solutions AS juursert
+    5. serdi parameetrid:
+        - asutusele antud, KLASS3 sert
+            - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima. Dokument võib selles osas täpsustuda
+    6. self-signed sertide kasutus
+        - on lubatud testkeskkonnas
+6. räsialgoritm
+    - toetama peab algoritme:
+        - `http://www.w3.org/2001/04/xmlenc#sha512` (peamine)
+        - `http://www.w3.org/2001/04/xmlenc#sha256` (alternatiiv)   
+7. allkirjastamine
+    1. vahetatavad SAML-sõnumid allkirjastatakse
+    2. toetama peab algoritme:
+        - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` (peamine)
+        - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` (alternatiiv)
+            - võtmepikkus: 384 bitti
+        - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` (alternatiiv)
+        - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` (alternatiiv)
+            - võtmepikkus: 4096 bitti
+            - Märkus. eIDAS krüptonõuetes esineb RSA-MGF1 nimetuse RSASSA-PSS all   
+8. krüpteerimine
+    1. teenusepakkuja poolt konnektorteenusele saadetavat SAML-sõnumit ei krüpteerita
+    2. konnektorteenus krüpteerib teenusepakkujale saadetava SAML-sõnumi,  teenusepakkuja metateabes sisalduvas krüpteerimisotstarbelises serdis sisalduvat avaliku võtmega
+    3. toetama peab algoritme:
+        - `http://www.w3.org/2009/xmlenc11#aes256-gcm` (peamine)
+        - `http://www.w3.org/2009/xmlenc11#aes128-gcm` (alternatiiv)   
+
+## 4 Autentimisvoog
+
+Teenusepakkuja süsteemi suhtlus eIDAS konnektorteenusega on osa eIDAS autentimisvoost, hõlmates sellest kahte sõnumiedastust:
+- SAML autentimispäringu saatmine eIDAS konnektorteenusele
+- SAML autentimisvastuse vastuvõtmine eIDAS konnektorteenuselt.
+
+Vt joonisel 2 kasutusvoog 3b.
 
 <img src='img/SUURPILT.PNG' style='width:700px'>
 
-Joonis 1. eIDAS taristu
+Joonis 2. eIDAS taristu
 
-eIDAS konnektorteenus on ühendajaks asutuse e-teenuse ja EL eIDAS-taristu vahel (joonisel 1 kasutusvoog 3b). Vt lähemalt [eIDAS autentimise lisamine e-teenusele](https://e-gov.github.io/TARA-Doku/files/TARA-tutvustus.pdf).
+eIDAS autentimisvoogus osalevad viis osapoolt (vt tabel 1).
 
-e-teenuse ja eIDAS konnektorteenuse vaheline suhtlus on osa eIDAS autentimisvoost, hõlmates sellest kahte sõnumiedastust:
+Tabel 1
 
-- autentimispäringut esitava SAML tõendi (_token_) saatmine e-teenusest eIDAS konnektorteenusele
-- autentimisvastust esitava SAML tõendi saatmine eIDAS konnektorteenuselt e-teenusele.
+ nr | osapool | eIDAS terminoloogias
+ 1 | kasutaja | _User_
+ 2 | e-teenus (teenusepakkuja infosüsteem) | _Service Provider_ (SP)
+ 3 | RIA eIDAS konnektorteenus (RIA eIDAS Node-i koosseisus) | _Connector Service_
+ 4 | välisriigi eIDAS vahendusteenus (eIDAS Node-i koosseisus) | _Proxy Service_ | 
+ 5 | välisriigi autentimisteenus | _Identity Provider_
 
-Sõnumiedastus teostatakse veebisirvija ümbersuunamise (_redirect_) abil.
+Edukas autentimine koosneb järgmistest sammudest:
 
-## 3 Autentimisprotsess
-
-Piiriülene autentimisprotsess eIDAS-autentimisvõrgus hõlmab mitut osapoolt, kes järgivad eIDAS profiili raames kirjeldatud koosvõime nõudeid [Viited](Viited). Sõnumivahetus osapoolte vahel toimib SAML 2.0 protokolli alusel.
-
-Järgnevas näidisstsenaariumis (vt Joonis 2) on välja toodud edukas isikutuvastamise protsess SAML HTTP POST näitel. Lihtsuse mõttes ei ole näidatud SAML protokolli kohaseid metadata otspunktide poole pöördumisi.
-
-Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
-
-<img src='img/Autentimisvoog-eIDAS_demorakenduses.png'>
-
-Joonis 2.
+(HTTP POST näitel. Lihtsuse mõttes ei ole näidatud SAML pöördumisi metateabeotspunktide poole. Vt ka joonis lisas 6) 
 
 1. Kasutaja navigeerib teenusepakkuja lehele, mis nõuab piiriülest autentimist.
     - Kasutaja isik on tuvastamata, puudub kehtiv sessioon.
@@ -58,220 +132,163 @@ Joonis 2.
 2. Kasutaja on valinud riigi ja saadab vormi teenusepakkujale.
     - Teenusepakkuja moodustab isikutuvastamiseks vajaliku `SAMLRequest` parameetri sisu
     - ja saadab kasutajale vormi ümbersuunamisega riiklikusse eIDAS Node'i (vormi parameetriteks `SAMLRequest`, `country` ja vajadusel ka `RelayState`).
-        - NB! `RelayState` on mittekohustuslik parameeter, mille teenusepakkuja võib kaasa panna oma päringu oleku hilisemaks tuvastuseks sammul 10 (algse päringu saab tuvastada ka vastuses oleva `SAMLResponse` parameetris sisalduvas XML atribuudis `InResponseTo`, kuid see info on kodeeritud kujul)
+        - `RelayState` on mittekohustuslik parameeter, mille teenusepakkuja võib kaasa panna oma päringu oleku hilisemaks tuvastuseks sammul 10 (algse päringu saab tuvastada ka vastuses oleva `SAMLResponse` parameetris sisalduvas XML atribuudis `InResponseTo`, kuid see info on kodeeritud kujul)
 
-3. Kasutaja suunatakse automaatselt riiklikku eIDAS Node'i,
+3. Kasutaja suunatakse automaatselt RIA eIDAS konnektorteenusesse,
     - kus kontrollitakse `SAMLRequest` parameetris oleva SAML XML päringu sisu valiidsust ja allkirja vastu teenusepakkuja metainfos olevat avalikku võtit.
-    - siseriiklik eIDAS Node moodustab uue SAML XML päringu, võttes aluseks teenusepakkujalt tuleva info
+    - RIA eIDAS konnektorteenus moodustab uue SAML XML päringu, võttes aluseks teenusepakkujalt tuleva info
     - ja allkirjastab selle oma privaatvõtmega.
-    - siseriiklik eIDAS Node saadab kasutajale vastuseks vormi, mis on suunatud sihtriigi eIDAS Node'i vastu koos `SAMLRequest` parameetriga ja vajadusel `RelayState`-ga.
+    - seejärel saadab kasutajale vastuseks vormi, mis on suunatud sihtriigi eIDAS vahendusteenuse vastu, koos `SAMLRequest` parameetriga ja vajadusel `RelayState`-ga.
 
-4. Kasutaja suunatakse automaatselt koos vormiga edasi sihtriigi eIDAS Node'i koos `SAMLRequest` ja `RelayState` parameetritega.
-    - piiriülene eIDAS Node teenus valideerib `SAMLRequest`-i parameetris kodeeritud kujul oleva XML päringu sisu ja allkirja.
-    - piiriülene eIDAS Node teenus saadab vastuseks vormi kasutaja nõusoleku küsimiseks.
+4. Kasutaja suunatakse automaatselt koos vormiga edasi sihtriigi eIDAS vahendusteenusesse, koos `SAMLRequest` ja `RelayState` parameetritega.
+    - välisriigi eIDAS vahendusteenus valideerib `SAMLRequest`-i parameetris kodeeritud kujul oleva XML päringu sisu ja allkirja.
+    - ja saadab vastuseks vormi kasutaja nõusoleku küsimiseks.
 
 5. Kui kasutaja oli vormil esitatud andmete jagamisega nõus,
-    - saadab kasutaja kinnitamiseks päringu piiriülesele eIDAS Node teenusele.
-    - piiriülene eIDAS Node teenus täiendab saadud `SAMLRequest`-i sisu
-    - ja saadab kasutajale vastuseks piiriülesele autentimisteenusele ümbersuunamiseks mõeldud vormi.
+    - saadab kasutaja kinnitamiseks päringu välisriigi eIDAS vahendusteenusele.
+    - vahendusteenus täiendab saadud `SAMLRequest`-i sisu
+    - ja saadab kasutajale vastuseks välisriigi autentimisteenusele ümbersuunamiseks mõeldud vormi.
 
-6. Kasutaja suunatakse automaatselt edasi piiriülese autentimisteenusepakkuja lehele koos `SAMLRequest` ja `RelayState` parameetritega.
-    - teenusepakkuja saadab kasutajale vastuseks autentimismeetmete valiku (ID-kaart, paroolikaart, parool, Mobiil-ID vastavalt sellele, mida antud riigi teenusepakkuja toetab).
+6. Kasutaja suunatakse automaatselt edasi välisriigi autentimisteenus lehele, koos `SAMLRequest` ja `RelayState` parameetritega.
+    - väliriigi autentimisteenus saadab kasutajale vastuseks autentimismeetmete valiku (ID-kaart, paroolikaart, parool, Mobiil-ID vm).
 
-7. Kasutaja autendib ennast autentimisteenuses (näiteks ID-kaardiga).
-    - eduka tuvastuse korral teenusepakkuja tagastab vastusena ümbersuunamisvormi piiriülesse eIDAS Node teenusesse, millest pärines algne autentimispäring.
+7. Kasutaja autendib ennast autentimisteenuses.
+    - eduka autentimise korral autentimisteenus tagastab vastusena ümbersuunamisvormi välisriigi eIDAS vahendusteenusesse (millest pärines autentimispäring).
     - ümbersuundamisvormi `SAMLResponse` parameetris on teenusepakkuja poolt palutud info isiku kohta.
-    - `SAMLResponse` allkirjastatakse ja isiku andmed krüpteeritakse teenusepakkuja privaatvõtmega.
+    - `SAMLResponse` allkirjastatakse ja isiku andmed krüpteeritakse väliriigi eIDAS vahendusteenuse avaliku võtmega.
 
-8. Kasutaja suunatakse automaatselt tagasi piiriülese eIDAS Node teenusesse.
+8. Kasutaja suunatakse automaatselt tagasi välisriigi eIDAS vahendusteenusesse.
     - `SAMLResponse` parameetri sisus olev XML sisu koos allkirjaga valideeritakse.
     - sisu dekrüpteeritakse.
     - moodustatakse uus `SAMLResponse` parameeter,
     - mis allkirjastatakse
-    - ja mille sisu krüpteeritakse piiriülese eIDAS Node privaatvõtmega.
-    - kasutajale saadetakse siseriiklikusse eIDAS Node'ile adresseeritud ümbersuundamisvorm koos `SAMLResponse` parameetriga.
+    - ja mille sisu krüpteeritakse (RIA eIDAS konnektorteenuse avaliku võtmega).
+    - kasutajale saadetakse RIA eIDAS konnektorteenusesse adresseeritud ümbersuunamisvorm koos `SAMLResponse` parameetriga.
 
-9. Kasutaja suunatakse automaatselt tagasi siseriiklikku eIDAS Node teenusesse.
+9. Kasutaja suunatakse automaatselt tagasi RIA eIDAS konnektorteenusesse.
     - `SAMLResponse` parameetri sisus olev XML sisu koos allkirjaga valideeritakse.
     - sisu dekrüpteeritakse.
     - moodustatakse uus `SAMLResponse` parameeter,
     - mis allkirjastatakse
-    - ja mille sisu krüpteeritakse siseriikliku eIDASNode privaatvõtmega.
-    - kasutajale saadetakse siseriiklikule teenusepakkujale adresseeritud ümbersuundamisvorm koos `SAMLResponse` parameetriga.
+    - ja mille sisu krüpteeritakse teenusepakkuja avaliku võtmega.
+    - kasutajale saadetakse teenusepakkujale adresseeritud ümbersuundamisvorm koos `SAMLResponse` parameetriga.
 
-10. Kasutaja suunatakse automaatselt tagasi siseriikliku teenusepakkuja lehele.
+10. Kasutaja suunatakse automaatselt tagasi teenusepakkuja lehele.
     - teenusepakkuja veendub `SAMLResponse` parameetri sisu vastavuses nõuetele (sh formaadi, sisu ja allkirja kontrollid).
     - teenusepakkuja dekrüpteerib isikuandmed
     - ja otsustab, kas käesolev isik on õigustatud ligi pääsema algselt küsitud ressursile.
     - kui jah, siis luuakse sessioon
     - ning tagastatakse kasutajale esialgselt URL-lt soovitud sisu.
 
-## 4 Nõuded liituvale teenusepakkujale
+## 5 Metateave
 
-Liidestuv teenusepakkuja peab vastama eIDAS profiilis toodud koostöövõime nõuetele SAML protokolli kasutuse ja krüptoalgoritmide osas. eIDAS Node kasutab suhtlemiseks täiendavate kitsendustega SAML 2.0 protokolli. Vt [Viited](Viited).
+### 5.1 Ülevaade
 
-Kokkuvõtlikult peab teenusepakkuja:
+Konnektorteenus määrab oma metateabega milliseid algoritme ta toetab (algoritmid määratakse konfiguratsioonifailis). Liidestujad peavad selle info arvesse võtma. Teenusepakkuja metadata kirjeldab milliseid algoritme tema ise SAML sõnumit vastu võttes toetab.
 
-- pakkuma SAML metateabe otspunkti teenust
-- omama SAML päringute ja vastuste töötlemise võimekust.
+Autentimispäringu töötlemisel: 
+1. Teenusepakkuja teeb enne SAML autentimispäringsõnumi koostamist päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (või kasutab puhverdatud metateavet).
+2. Teenusepakkuja valib allkirjastamisalgoritmi, konnektorteenuse metadata alusel (peab olema üks neist, mis on toodud konnektorteenuse metadatas).
+3. Teenusepakkuja allkirjastab autentimispäringu oma privaatvõtmega.
+4. Teenusepakkuja saadab SAML autentimispäringsõnumi konnektorteenuse otspunkti `/ServiceProvider` (sirviku ümbersuunamisega).
+5. Konnektorteenus teeb päringu Teenusepakkuja metaandmete otspunkti `/Metadata` (või kasutab puhverdatud metateavet).
+6. Konnektorteenus otsustab, kas ta usaldab saatjat (kas tulnud päringu sees olev allkirja võti kuulub ka tegelikult saatjaga seotud metateabesse). Konnektorteenus valideerib `SAMLRequest` päringu allkirja ainult juhul, kui see on moodustatud algoritmiga, mis on tema lubatud allkirjameetodite nimekirjas (sama nimekiri, mida ta reklaamib välja oma metadatas - konfis toodud kui whitelist). Muul juhul annab vea.
 
-Vt lähemalt [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
+Autentimisvastuse töötlemisel:
+7. Sihtriigi vahendusteenusest tulev päring võetakse vastu, kontrollitakse ärireeglite vastu ja moodustatakse uus vastus, mis on allkirjastatud konnektorteenuse enda privaatvõtmega. NB! Allkirja algoritm otsustatakse konnektorteenuse seadetes oleva algoritmi alusel.
+8. Konnektorteenus, enne SAML autentimisvastussõnumi saatmist, teeb päringu Teenusepakkuja metaandmete otspunkti `/Metadata`.
+9. Konnektorteenus saadab SAML autentimisvastussõnumi Teenusepakkuja otspunkti `/ReturnPage`.
+10. Teenusepakkuja teeb päringu konnektorteenuse metaandmete otspunkti `/ConnectorResponderMetadata` (sarnaselt autentimispäringu töötlemise p 6).
 
-## 5 Sõnumivahetusmeetod
+### 5.2 eIDAS konnektorteenuse metateave
 
-Siseriiklik eIDAS konnektorteenus toetab teenusepakkuja poolt algatatud `HTTP POST` põhinevat sõnumivahetusmeetodit (vt. `HTTP POST binding` [SAML 2.0] standardikirjelduses - ptk 5.12).
+Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metateabe tähendust.
 
-## 6 Metateabe otspunkt
+- testteenus: [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata) 
+- toodangteenus: [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata) 
 
-Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks kogu ühendumiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid.
+Tabel 2
 
-Teenusepakkuja peab konnektorteenusele kättesaadavaks tegema oma metaandmed üle HTTPS protokolli.
+`md:EntityDescriptor` |  kirjeldatud on SAML olem (entity)
+`entityID` | nimega `https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata`
+`validUntil` | kirjeldus kehtib 24 h
+`ds:Signature` | kirjeldus on allkirjastatud XML allkirjaga
+`ds:CanonicalizationMethod` | kanoniseerimisalgoritm - `xml-exc-c14n`
+`ds:SignatureMethod` | allkirjaalgoritm on `rsa-sha512`
+`ds:Transform` | _enveloped signature_, algoritm `xml-exc-c14n`
+`ds:DigestMethod` | räsialgoritm `xmlenc#sha512`
+`ds:Digestvalue` | räsiväärtus
+`ds:SignatureValue` | allkirjaväärtus
+`ds:KeyInfo` | X509 sertifikaat
+`md: Extensions` | metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
+`alg:Digestmethod` | konnektorteenus toetab räsialgoritme
+`http://www.w3.org/2001/04/xmlenc#sha512` | 
+`http://www.w3.org/2001/04/xmlenc#sha256` |
+`alg:SigningMethod` | toetatavad allkirjaalgoritmid
+`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` |
+`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` |
+`http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` |
+`http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` |
+`md: IDPSSODescriptor` | “SSO võimekusega IdP” - kirjeldatava olemi “roll”
+`WantAuthnRequestsSigned` | nõuab, et autentimispäringu sõnum p.o allkirjastatud
+`protocolSupportEnumeration` | ütleb, et toetab SAML 2.0-i
+`md:KeyDescriptor` | avaldab konnektorteenuse sertifikaadid ja kirjeldab toetatavad krüpteerimisalgoritmid
+`signing` > `KeyInfo` | allkirjastamissertifikaat
+`encryption` > `KeyInfo` | krüpteerimissertifikaat
+`md:EncryptionMethod` | toetatavad algoritmid
+`http://www.w3.org/2009/xmlenc11#aes256-gcm` |
+`http://www.w3.org/2009/xmlenc11#aes128-gcm` | 
+`md:NameIDFormat` |  `md:NameIDFormat` väärtused iseloomustavad autenditava isiku identifikaatori või nime "püsivust" (kestvust üle mitme sisselogimise vms). eIDASe kontekstis tähendus on segane. Teema kohta võib soovi korral lugeda [https://wiki.shibboleth.net/confluence/display/CONCEPT/NameIdentifiers](https://wiki.shibboleth.net/confluence/display/CONCEPT/NameIdentifiers) ja [http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf), jaotised 8.3.7, 8.3.8 ja 8.3.1. 
+`urn:oasis:names:tc:SAML:2.0:nameid-format:persistent` | 
+`urn:oasis:names:tc:SAML:2.0:nameid-format:transient` |
+`urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
+`md:SingleSignOnService` |
+atribuut `Binding` | sõnumid saata HTTP `POST` meetodiga (HTTP Redirect ei ole toetatud)
+atribuut `Location` | konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider`
+`saml2:Attribute` | atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuudid, mida konnektorteenuse kaudu saab küsida (40+)
+`md:Organization` | teave RIA kohta
+`md:ContactPerson` | teave teenuse kontaktisiku kohta.
 
-Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata xml skeemile](https://docs.oasis-open.org/security/saml/v2.0/saml-schema-metadata-2.0.xsd).
+### 5.3 Teenusepakkuja metateave
 
-Metateave peab olema allkirjastatud, kasutades krüptoalgoritme, mis on toodud dokumendis [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
+Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks ühendumiseks ning usalduse loomiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid. Teenusepakkuja teeb oma metaandmed konnektorteenusele kättesaadavaks üle HTTPS protokolli. Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata xml skeemile](https://docs.oasis-open.org/security/saml/v2.0/saml-schema-metadata-2.0.xsd). Metateave peab olema allkirjastatud, kasutades nõutud krüptoalgoritme, vt jaotis [Nõuded liituvale teenusepakkujale](#4-n%C3%B5uded-liituvale-teenusepakkujale).
 
+Konnektorteenusega liidestumise seisukohalt olulised väljad koos kirjeldusega on toodud tabelis 3 (vt ka näidisvastust lisas 2). XML nimeruumide kirjeldused on lisas 1.
 
-Konnektorteenusega liidestumise seisukohalt olulised nõutud väljad koos kirjeldusega on toodud Tabelis 1 (vt ka näidisvastust - Näidis 1)
+Tabel 3
 
-
-| Parameeter (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
+| XML elemendi või atribuudi nimi (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
 |:-------------|:-------------:|-----|
-| /md:EntityDescriptor/@Issuer | Jah | Peab viitama teenusepakkuja metadata otspunktile (HTTPS URL)|
-| /md:EntityDescriptor/@ValidUntil | Jah | Metateabe kehtivusaeg. Aegumisel küsib konnektorteenus metateave uuesti (Issuer atribuudis viidatud otspunkti käest). |
-| /md:EntityDescriptor/ds:Signature | Jah | Metateabe digitaalallkiri koos allkirjastamissertifikaadiga. XML struktuur vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
-| /md:EntityDescriptor/md:Extensions/eidas:SPType | Jah | Asutuse tüüp. Nõutud väärtus `public`. |
-| /md:EntityDescriptor/md:SPSSODescriptor/@AuthnRequestsSigned | Jah | SAML päringud on allkirjastatud. Nõutud väärtus `true` |
-| /md:EntityDescriptor/md:SPSSODescriptor/@WantAssertionsSigned | Jah | SAML vastuse sisu on allkirjastatud. Nõutud väärtus `true` |
-| /md:EntityDescriptor/md:SPSSODescriptor/@protocolSupportEnumeration | Jah | SAML protokolli tugi. Nõutud on minimaalselt `urn:oasis:names:tc:SAML:2.0:protocol` (võib lisasks toetada ka SAML 1.0 ja 1.1) |
-| /md:EntityDescriptor/md:SPSSODescriptor/md:KeyDescriptor | Jah | Allkirjastamiseks kasutatud võtme kirjeldus. Minimaalselt peab olema kirjeldatud allkirjastamise võti (atribuut @use="signing") |
+| /md:EntityDescriptor/@Issuer | Jah | Nõutud väärtuseks teenusepakkuja metateabe otspunkti URL (HTTPS).|
+| /md:EntityDescriptor/@ValidUntil | Jah | Määrab metateabe kehtivusaja. Aegumisel küsib konnektorteenus metateave uuesti. |
+| /md:EntityDescriptor/ds:Signature | Jah | Kogu metateavet hõlmav digitaalallkiri, koos allkirjastamissertifikaadiga. Vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
+| /md:EntityDescriptor/md:Extensions/eidas:SPType | Jah | Asutuse tüüp. Nõutud väärtus `public`. Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
+| /md:EntityDescriptor/md:SPSSODescriptor/@AuthnRequestsSigned | Jah | Deklareerib, et teenusepakkuja poolt saadetavad SAML päringud peavad olema allkirjastatud. Nõutud väärtus `true` |
+| /md:EntityDescriptor/md:SPSSODescriptor/@WantAssertionsSigned | Jah | Deklareerib, et konnektorteenuselt tuleva vastuse sisu peab olema allkirjastatud. Nõutud väärtus `true` |
+| /md:EntityDescriptor/md:SPSSODescriptor/@protocolSupportEnumeration | Jah | Deklareerib SAML protokolli versiooni toe. Nõutud on minimaalselt `urn:oasis:names:tc:SAML:2.0:protocol` (võib lisaks toetada ka SAML 1.0 ja 1.1) |
+| /md:EntityDescriptor/md:IDPSSODescriptor/md:KeyDescriptor[@use="signing"] | Jah | Teenusepakkuja poolt päringu allkirjastamiseks kasutatud võtme kirjeldus. Võtmeinfo peab sisaldama X509 sertifikaati. |
+| /md:EntityDescriptor/md:IDPSSODescriptor/md:KeyDescriptor[@use="encryption"] | Jah | Kirjeldab võtme, mida konnektorteenus kasutab vastuses oleva info krüpteerimiseks. Võtmeinfo peab sisaldama X509 sertifikaati. |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:NameIDFormat | Jah | Nõutud väärtused: `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`, `urn:oasis:names:tc:SAML:2.0:nameid-format:transient` ja `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
-| /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Binding | Jah | SAML suhtlusmeetod. Nõutud väärtus `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST` |
-| /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location | Jah | Viide vastuse tarbimise otspunktile. HTTP otspunkti url teenusepakkuja süsteemi. |
-
-
-Lisaks on soovituslik asutusel kirjeldada metateabes ka oma organisatsiooni kohta käiv info ning kontaktandmed.
-
-| Parameeter (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
-|:-------------|:-------------:|-----|
-| /md:EntityDescriptor/md:Organization | Ei | XML struktuur, mis kirjaldab ära info liidestuva organisatsiooni kohta. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
+| /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Binding | Jah | Deklareerib SAML suhtlusmeetodi. Nõutud väärtus `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST` |
+| /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location | Jah | Viitab vastuse tarbimise otspunktile. HTTPS otspunkti URL teenusepakkuja süsteemis. |
+| /md:EntityDescriptor/md:Organization | Ei | XML struktuur, mis kirjeldab info liidestuva organisatsiooni kohta. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 | /md:EntityDescriptor/md:ContactPerson | Ei | XML struktuur, mis kirjeldab organisatsiooni kontaktisikute info. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 
+## 6 Autentimispäring
 
-Näidis 1. - Näidisvastus metateabe otspunktilt.
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://eidastest.eesti.ee/SP/metadata" validUntil="2018-02-10T08:57:21.953Z">
-	<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-		<ds:SignedInfo>
-			<ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-			<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
-			<ds:Reference URI="">
-				<ds:Transforms>
-					<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-					<ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-				</ds:Transforms>
-				<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-				<ds:DigestValue>jneOWVHD7TSBa8CUX47N5CQE5jscnVAS8olM89/nEZyG4fhWY9OfZjv431Xa/M0YGW3GmikpDhIowBJ4sEr1Hw==</ds:DigestValue>
-			</ds:Reference>
-		</ds:SignedInfo>
-		<ds:SignatureValue>Pc1M2yc9ptVwko5vYR6EKVCJeMrxEt6BMGKrzsC3HTr8Mzx8dXASFNyy4ERpwrZxDjm48a/T1zqB6W4z4IdUvMyerlDx8KP0qtDGqVc9Dn4X/6CmjL+0oIwG4bmHgWrl4hx9UHUEQnFC5PLaF+RxJhP90at/pX0amG9vpuE7DOfFjIsyPxeyeDsVWObuI2sYjVGTq3DbUyfKKNaXH/F6dbBdqdokDLxqtdMivZtODZrxet9ZdBeMuCVSxf2R6LRGrHYpDZR2RnSScmM2gNopeHlzoUFw2HjZ+Pd8FOTxwC2Virreh8GV9sGMurYSmNwcgakl0sNQOJWqKT1jvhzPMddz2REwSUYQqiKffP7dhHQcGs3pMdqh7zYqyylDdqpZEvZFdBEYA/DMwWOOZgNlnnnTG85MF2DRpseBZZOKRDnul4kQkJkYcOIRYxHGCsjzEDATr6rEYNg/5WSCopk61Q+C3boU9AXCciD+kzBeD+bOvT64kJDTDGSB4p/1V7ScuLfRMNOoyyHyXOT+AgzyJ6+R0PFpQZX4YLCQAH8GZNsFO1LCpmCMAoQ7ftYiGtdD5qtxvs96d9MOZ6Br3hHp2fmy+CtAaiBuzAAEODRMAe1xCRNIPVUZ0YGFS6eOwwpkSrmKuL9Iu5F/ZdfPaczeEttUk5nOnDvnbWi2xzDyeRU=</ds:SignatureValue>
-		<ds:KeyInfo>
-			<ds:X509Data>
-				<ds:X509Certificate>MIIFVTCCAz2gAwIBAgIEGNTPHDANBgkqhkiG9w0BAQ0FADBbMQswCQYDVQQGEwJFRTELMAkGA1UE
-CBMCRVUxEDAOBgNVBAcTB1RhbGxpbm4xDDAKBgNVBAoTA01LTTEMMAoGA1UECxMDUklBMREwDwYD
-VQQDEwhtZXRhZGF0YTAeFw0xNzA1MzExMTQ4MzlaFw0yMjA1MzAxMTQ4MzlaMFsxCzAJBgNVBAYT
-AkVFMQswCQYDVQQIEwJFVTEQMA4GA1UEBxMHVGFsbGlubjEMMAoGA1UEChMDTUtNMQwwCgYDVQQL
-EwNSSUExETAPBgNVBAMTCG1ldGFkYXRhMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA
-rX2WocksJPHWtE3WqK+F+O1sioy6ysCTQAsZ0esIMSrb7096o1WGr2e+EE2aV9eayHOxiXc1j0JG
-X1/ycAO/szCuLCgsjpayUHXC4a72vXCezYSkxuld59CEgST+C5q5zr/gHUrJg+b2dHtrvA5rBh4U
-9bcYHZftUbU+uGIYjzFwAs2D1+smDUwiJQcQ+KBwUmMvhdeQ6CLhJwZB13C+wX5wdDu3CgOlBCwD
-3fYI3HcAIxvRPPdPLutc75rLmk6H4+h4DVsjg0qlY4Ck4m6XMccnoEZhj0mtWJEBcoPw+kT6HiKU
-amuYPnPfEf5NKARpqFZXukZbnPk3tStny1349rTI2bq4adaPr0KNETBNLNoeuFM61833ZhI3u7q0
-w5y9sw0R+RTf/C+OfydZ7iWNKrH59vtBcKkt4b/7Qd6bn5pL35lLvzz3bZAnv0+/Sd7y3/OGsWsD
-eksVKjehO4ieONFt9VH2Za2af+cJcq4DNy5P/69bqWz8a1o3a4qANZ5YyKGu90+LQ3NunhFh9Eml
-kL9ka+NLsN2gDxQZcDB/GpeXdkl6ojPpcEuoSQ/REu9Eb4KbC6gPqeOmot/AnAu5rwzYidE4Bfor
-+ZasVRt+BbqYf7TAzQ4hZ5pDh0Vn4yFLYSXaXf2LZLmG0I1thsheNfiyKfNAgvAr5mZbNr2HjeEC
-AwEAAaMhMB8wHQYDVR0OBBYEFB6te2Gbr29UPL8Ksb0tmgq6Q5nwMA0GCSqGSIb3DQEBDQUAA4IC
-AQBrvo1ynYDQa2CxxhcZbkehgk5fwCyA9ksFtpXgo3cgLHJgoFmkrYnHgsV908Rga5WfZTOFqzrr
-7zVTpHyGWUFt2BL35QNU8k1CTiCxC5NhgcrxBeCIczBeTg2pv+kLvD0lLyGvHFZXx8qLCpNgIYJa
-un3nkY6PuQWJCS9j5GKcT7o5UKuemecKHIiWSKCa7OHnTkCzvPLzNlpt5kFIs3Vi+Tc5DfPAP/eb
-o5dZ8rq2UL3ra+iKFIT/iXl7JteRmPRDcBc0HvhtH8u27wm+y/CyruuGWZ13EPGvNVCxwzJv7CVe
-W+HqAMAGsVvAV8zknbjl8K11Ry0kH2GOBtPXzO639x1xpQ39T/9kTdkmwiD6ZM/60lZx8chP/nV/
-rrwyv/r+z4/oMehbCOFdUYHO1Agp6FmAP6Ck1+x/I95ANJOUt1dJc9xizcZ2012LEXO7cpt3DHie
-1bHlV4d8o/53VWlofdeDS/VyWSbdkL2lLWd8JKlTAAUwfg+SW1CjmQZ5Jr3ew+yhMMvOzMzi/+ZE
-A8c5MwMb8jP1wP9+vqIRg6U8RRBbY96sq9zxPMaGeM6Eli1zEuNYqOv0rIBXts6I2FQYOZSLLxgR
-P2lHqMx9u4JMHGaj0sTDbHxz5BWw6MDMc08WtyqX5B2xOt0VZbAyR7fXrFvLmutpY0/nCKBfRXxx
-Zw==</ds:X509Certificate>
-			</ds:X509Data>
-		</ds:KeyInfo>
-	</ds:Signature>
-	<md:Extensions>
-		<eidas:SPType xmlns:eidas="http://eidas.europa.eu/saml-extensions">public</eidas:SPType>
-		<alg:DigestMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
-        <alg:DigestMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-		<alg:SigningMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1"/>
-		<alg:SigningMethod xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport" Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1"/>
-	</md:Extensions>
-	<md:SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-		<md:KeyDescriptor use="signing">
-			<ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-				<ds:X509Data>
-					<ds:X509Certificate>MIIDaTCCAlGgAwIBAgIEH5P86jANBgkqhkiG9w0BAQsFADBlMQswCQYDVQQGEwJFRTELMAkGA1UE
-CBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwGA1UECxMFU1RPUksxHzAdBgNVBAMT
-FnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwHhcNMTcwNTE5MTI1MDA3WhcNMTkwNTA5MTI1MDA3WjBl
-MQswCQYDVQQGEwJFRTELMAkGA1UECBMCRVUxCzAJBgNVBAcTAkVVMQswCQYDVQQKEwJTUDEOMAwG
-A1UECxMFU1RPUksxHzAdBgNVBAMTFnNwLWVlLWRlbW8tY2VydGlmaWNhdGUwggEiMA0GCSqGSIb3
-DQEBAQUAA4IBDwAwggEKAoIBAQCqZC7CJi3WVCzsSh3mV9FNoVYgeiOIR65EAOapyyt7Xgqchn1s
-Sppq3hszCbjgQ8mK1huDkw8iL5qmXg4rd6TUV4nxPuEVbX348Q2P7JH6UmHcedWElYvzbI2Yw388
-v/dOwzp7jza8DaKBtAJlk8hY1riPbe4CfiOr5aTYbpyG0CsbnozRXpij562SNVkbvWz4EdW/3C5W
-i73vHNRzvIoMgwF28YzCpf6DFMk5QpejSc+F6zsYeK1uMqNtJVxGybGhlq61BBmGMxFBmt0LdLWt
-UOnzjqgB5/Y8cNShEk+yxT/QBMJ8BbO8vgO2InhFUyEBlbxzqGsvdP6BZJ37lzBfAgMBAAGjITAf
-MB0GA1UdDgQWBBSF+NmEgjDnVSNucn9cFWU28xHG8DANBgkqhkiG9w0BAQsFAAOCAQEAP/cJT+ti
-HTJ7aGESfSouKUccnsS89VKY4zu1Cj6IuGBOtsi7ORx8iBid3mFeX3bS9XcnK0kV3vbIEfXr2U9L
-YHtAeERNwMk111y0sU2pnwHpWae5YX7cCBjbEd72CV7BQ5cPExUEdORGrpHrEE445o2LC7Nif0Qx
-kO/2BFMlKJWsr2HyccYXWSFdyie3ar1HzkMGbebyK7cmRVTHqohNwPtVmS+bLcyjY5OiL/NVArGR
-VP6DSep3h+/G6GnmrpeQxsLwolhASNLQbylifA8v6E3toHu9ditx9qynFFn9CeDT3g1LKhwQkB6/
-GBVtKvFEAC4+O4APvtnMvjKhABpOOg==</ds:X509Certificate>
-				</ds:X509Data>
-			</ds:KeyInfo>
-		</md:KeyDescriptor>
-		<md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
-		<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://eidastest.eesti.ee/SP/ReturnPage" index="0" isDefault="true"/>
-	</md:SPSSODescriptor>
-	<md:Organization>
-		<md:OrganizationName xml:lang="en">DEMO-SP</md:OrganizationName>
-		<md:OrganizationDisplayName xml:lang="en">Näidisasutus</md:OrganizationDisplayName>
-		<md:OrganizationURL xml:lang="en">https://naidisasutus.ee/info</md:OrganizationURL>
-	</md:Organization>
-	<md:ContactPerson contactType="support">
-		<md:Company>Teenusepakkuja</md:Company>
-		<md:GivenName>Mari-Liis</md:GivenName>
-		<md:SurName>Männik</md:SurName>
-		<md:EmailAddress>abi@sp.ee</md:EmailAddress>
-		<md:TelephoneNumber>+342 123456</md:TelephoneNumber>
-	</md:ContactPerson>
-</md:EntityDescriptor>
-```
+Autentimispäring esitatakse kodeeritud vormiparameetrina HTTP POST päringus. Võimalike vormiparameetrite loetelu HTTP POST päringus on toodud tabelis 4.
 
-Tabel 1
-
-## 7 Autentimispäring
-
-Nõutud parameetrite loetelu HTTP POST päringus on toodud Tabelis 2.
-
-`SAMLRequest` parameetris saadetav SAML XML päringu sisu (vt Näidis 2) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [eIDAS formaat]: ja [eIDAS-attr]).
-
-
-Tabel 2 - Päringu parameetrid
+Tabel 4. Autentimispäringu parameetrid
 
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 |:-------------|:-------------:|-----|
-| `SAMLRequest` |	Jah | SAML protokolli spetsiifiline parameeter, mis sisaldab Base64 kodeeritud kujul SAML XML päringut (`AuthnRequest` koos detailidega). `AuthnRequest` päringus olevate kohustuslike elementide ja kitsenduste loetelu on toodud tabelis 3.  SAML `AuthnRequest` peab olema allkirjastatud teenusepakkuja privaatvõtmega ja moodustatud vastavalt eIDAS nõuetele.|
+| `SAMLRequest` |	Jah | SAML protokolli spetsiifiline parameeter, mis sisaldab Base64 kodeeritud kujul SAML XML päringut (`AuthnRequest` koos detailidega). |
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille eIDAS Node vastuses töötlemata tagasi peegeldab. |
 | `country` |	Jah | Kodaniku riigikood, kelle isikut tuvastatakse. ISO 3166-1 alpha-2 standardi alusel. |
 
-Tabel 3 - SAML `AuthnRequest` parameetrid
+`SAMLRequest` parameetris saadetav SAML XML päringu sisu (vt näide lisas 3) peab vastama eIDAS sõnumiformaadi kirjeldusele (vt [Viited](Viited), eIDAS Technical specification). Päringus olevate kohustuslike elementide ja kitsenduste loetelu on toodud tabelis 5.  Kasutatud XML nimeruumide kirjelduse leiab lisas 1.
+
+Tabel 5. SAML `AuthnRequest` parameetrid.
 
 | XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kohustuslik           | Selgitus  |
 |:-------------|:-------------:|:----|
@@ -284,199 +301,49 @@ Tabel 3 - SAML `AuthnRequest` parameetrid
 | `/saml2p:AuthnRequest/@Version` | Jah | Konstantne väärtus: `2.0` |
 | `/saml2p:AuthnRequest/saml2:Issuer` | Jah | Teenusepakkuja metadatale viitav URL. |
 | `/saml2p:AuthnRequest/ds:Signature/*` | Jah | Teenusepakkuja privaatvõtmega antud allkiri ja sellega seotud detailid. Toetatud krüptoalgoritmid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:Extensions/alg:SigningMethod/*`) |
-| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType` | Jah | Konstantne väärtus: `public` (avaliku sektori asutus) |
-| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuute soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true` |
+| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType` | Jah | Konstantne väärtus: `public` (avaliku sektori asutus). Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
+| `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuute soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true`. Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
 | `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (`/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat`) |
-| `/saml2p:AuthnRequest/saml2p:RequestedAuthnContext` | Jah |	// Variandid. Vajab analüüsi // |
+| `/saml2p:AuthnRequest/saml2:RequestedAuthnContext` | Jah |	Määrab, millist autentimistaset nõutakse sihtriigi autentimisteenuselt. <br><p>Võimalikud väärtused:<br> `http://eidas.europa.eu/LoA/low`<br>`http://eidas.europa.eu/LoA/substantial`<br>`http://eidas.europa.eu/LoA/high`</p>  |
 
-Näidis 2 - SAMLRequest parameetris esitatav autentimispäring (dekodeeritud kujul)
+## 7 Autentimisvastus
 
-```xml
-<saml2p:AuthnRequest xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/saml-extensions" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified" Destination="http://localhost:8080/EidasNode/ServiceProvider" ForceAuthn="true" ID="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IsPassive="false" IssueInstant="2018-01-05T13:42:08.036Z" ProviderName="DEMO-SP-CA" Version="2.0">
-    <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">http://localhost:8080/SP/metadata</saml2:Issuer>
-    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-        <ds:SignedInfo>
-            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-            <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
-            <ds:Reference URI="#_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx">
-                <ds:Transforms>
-                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-                    <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-                </ds:Transforms>
-                <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-                <ds:DigestValue>Ux9px3sqV4ClQvz8SYaMCzAs4EHUc4jUVrmuDJwbF4iNzd5y2g/LJr9b4lZmU5JtVr5gXWW8ICYZZPo5dXx3PA==</ds:DigestValue>
-            </ds:Reference>
-        </ds:SignedInfo>
- <ds:SignatureValue>Vyg... </ds:SignatureValue>
-        <ds:KeyInfo>
-            <ds:X509Data>
-                <ds:X509Certificate>MII... </ds:X509Certificate>
-            </ds:X509Data>
-        </ds:KeyInfo>
-    </ds:Signature>
-    <saml2p:Extensions>
-        <eidas:SPType>public</eidas:SPType>
-        <eidas:RequestedAttributes>
-            <eidas:RequestedAttribute FriendlyName="D-2012-17-EUIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/D-2012-17-EUIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="EORI" Name="http://eidas.europa.eu/attributes/legalperson/EORI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="LEI" Name="http://eidas.europa.eu/attributes/legalperson/LEI" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="LegalAdditionalAttribute" Name="http://eidas.europa.eu/attributes/legalperson/LegalAdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="LegalName" Name="http://eidas.europa.eu/attributes/legalperson/LegalName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="LegalAddress" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="LegalPersonIdentifier" Name="http://eidas.europa.eu/attributes/legalperson/LegalPersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="SEED" Name="http://eidas.europa.eu/attributes/legalperson/SEED" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="SIC" Name="http://eidas.europa.eu/attributes/legalperson/SIC" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="TaxReference" Name="http://eidas.europa.eu/attributes/legalperson/TaxReference" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="VATRegistration" Name="http://eidas.europa.eu/attributes/legalperson/VATRegistrationNumber" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="AdditionalAttribute" Name="http://eidas.europa.eu/attributes/naturalperson/AdditionalAttribute" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="BirthName" Name="http://eidas.europa.eu/attributes/naturalperson/BirthName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="CurrentAddress" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentAddress" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="FamilyName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="FirstName" Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="DateOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/DateOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="Gender" Name="http://eidas.europa.eu/attributes/naturalperson/Gender" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-            <eidas:RequestedAttribute FriendlyName="PersonIdentifier" Name="http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-            <eidas:RequestedAttribute FriendlyName="PlaceOfBirth" Name="http://eidas.europa.eu/attributes/naturalperson/PlaceOfBirth" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-        </eidas:RequestedAttributes>
-    </saml2p:Extensions>
-    <saml2p:NameIDPolicy AllowCreate="true" Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"/>
-    <saml2p:RequestedAuthnContext Comparison="minimum">
-        <saml2:AuthnContextClassRef>http://eidas.europa.eu/LoA/low</saml2:AuthnContextClassRef>
-    </saml2p:RequestedAuthnContext>
-</saml2p:AuthnRequest>
-```
+Autentimise tulemuse kohta saadetakse teenusepakkujale autentimisvastus (vt näited lisades 4 ja 5). Eduka autentimise korral on autentimisvastuses andmed autentimistoimingu ja autenditud isiku kohta. Ebaeduka autentimise korral saadetakse veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL peab olema määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
 
-## 8 Autentimisvastus
+Vastus on allkirjastatud konnektorteenuse poolt. Saadetavad isikuandmed (Assertion elemendi sisu) esitatakse krüpteeritud kujul.
 
-Autentimise tulemuse kohta saadetakse teenusepakkujale autentimisvastus (vt Näidis 3). Eduka autentimise korral on autentimisvastuses andmed autentimistoimingu ja autenditud isiku kohta. Ebaeduka autentimise korral saadetakse veakood. Autentimisvastus saadetakse teenusepakkuja vastus-URL'le. See URL peab olema määratud teenusepakkuja metateabes, `SAMLResponse` parameetris.
+Autentimisvastuses tagastatakse järgmised andmed (tabelid 6 ja 7).
 
-Autentimisvastuses tagastatakse järgmised andmed (tabel 4).
-
-Tabel 4 - Autentimisvastuse parameetrid
+Tabel 6 - Autentimisvastuse parameetrid
 
 | Parameetri nimi        | Kohustuslik           | Selgitus  |
 |-------------|:-------------:|-----|
 | `SAMLResponse` | Jah | Parameeter, mis sisaldab Base64 kodeeritud SAML vormingus autentimise vastust. SAML vastuses olev `Response` on allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | SAML protokolli spetsiifiline parameeter, fikseeritud pikkusega tekst, mille teenusepakkuja autentimispäringu algatamisel ette andis (peegeldatakse teenusepakkuja poolt tagasi töötlemata kujul). |
 
+Tabel 7. SAML autentimisvastuse väljade kirjeldus (krüpteeritud isikuandmetega)
 
-Näidis 3. Dekodeeritud `SAMLResponse` parameetri sisu eduka autentimise korral.
+| XML elemendi/atribuudi nimi (Xpath notatsioonis)        | Kohustuslik           | Selgitus  |
+|:-------------|:-------------:|:----|
+| `/saml2p:Response/@Consent`	| Ei | Info kasutajalt isikuandmete avaldamise nõusoleku küsimise kohta. |
+| `/saml2p:Response/@Destination`	| Jah | Teenusepakkuja metateabes kajastatud URL. |
+| `/saml2p:Response/@InResponseTo`	| Jah | Päringu ID, mille kohta vastus on tagastatud (vt ka `/saml2p:AuthnRequest/@ID`). |
+| `/saml2p:Response/@IssueInstant`	| Jah | Kuupäeva ja kellaaeg, millal vastus koostati. |
+| `/saml2p:Response/@Version`	| Jah | Konstantne väärtus: `2.0` |
+| `/saml2p:Response/saml2:Issuer` | Jah | Konstante väärtus: Eesti konnektorteenuse HTTPS URL. |
+| `/saml2p:Response/saml2:Issuer/@Format` | Jah | Konstantne väärtus: `urn:oasis:names:tc:SAML:2.0:nameid-format:entity` |
+| `/saml2p:Response/ds:Signature` | Jah | Konnektorteenuse privaatvõtme abil koostatud digitaalallkiri. |
+| `/saml2p:Response/saml2:Status/saml2p:StatusCode/@Value` | Jah | Eduka vastuse korral konstante väärtus:  `urn:oasis:names:tc:SAML:2.0:status:Success`|
+| `/saml2p:Response/saml2:Status/saml2p:StatusMessage` | Ei | Vastuse staatust täpsustav kirjeldus. |
+| `/saml2p:Response/saml2:EncryptedAssertion/xenc:EncryptedData` | Jah | Isikuandmete info krüpteeritud kujul. |
 
-```xml
-<saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/SP/ReturnPage" ID="_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu" InResponseTo="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx" IssueInstant="2018-01-05T13:42:44.472Z" Version="2.0">
+// TODO vaja teha isikuandmete esitamise detailsem kirjeldus
 
-    <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">http://localhost:8080/EidasNode/ConnectorResponderMetadata</saml2:Issuer>
-
-    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-
-        <ds:SignedInfo>
-            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-            <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
-            <ds:Reference URI="#_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu">
-                <ds:Transforms>
-                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-                    <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-                </ds:Transforms>
-                <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-                <ds:DigestValue>t9kt+8h5m3r0reIBKgy5KmfRmmQoXxQNpgSMMdn/PD2nb87VVFGqHP1qKEUMmXAjnwLmZzEfydRoG/IeUXbGkg==</ds:DigestValue>
-            </ds:Reference>
-        </ds:SignedInfo>
-        <ds:SignatureValue>TnU... </ds:SignatureValue>
-        <ds:KeyInfo>
-            <ds:X509Data>
-                <ds:X509Certificate>MII... </ds:X509Certificate>
-            </ds:X509Data>
-        </ds:KeyInfo>
-    </ds:Signature>
-    <saml2p:Status xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol">
-        <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>
-        <saml2p:StatusMessage>urn:oasis:names:tc:SAML:2.0:status:Success</saml2p:StatusMessage>
-    </saml2p:Status>
-    <saml2:EncryptedAssertion xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
-        <xenc:EncryptedData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" Id="_a056bea0846b4cff6ef971252c691d60" Type="http://www.w3.org/2001/04/xmlenc#Element">
-            <xenc:EncryptionMethod Algorithm="http://www.w3.org/2009/xmlenc11#aes256-gcm" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"/>
-            <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-                <xenc:EncryptedKey Id="_5a8536fc20547e76206512fa4bd39711" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-                    <xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-                        <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" xmlns:ds="http://www.w3.org/2000/09/xmldsig#"/>
-                    </xenc:EncryptionMethod>
-                    <ds:KeyInfo>
-                        <ds:X509Data>
-                            <ds:X509Certificate>MIIF... </ds:X509Certificate>
-                        </ds:X509Data>
-                    </ds:KeyInfo>
-                    <xenc:CipherData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-                        <xenc:CipherValue>acy... </xenc:CipherValue>
-                    </xenc:CipherData>
-                </xenc:EncryptedKey>
-            </ds:KeyInfo>
-            <xenc:CipherData xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
-                <xenc:CipherValue>... </xenc:CipherValue>
-            </xenc:CipherData>
-        </xenc:EncryptedData>
-    </saml2:EncryptedAssertion>
-</saml2p:Response>
-```
-
-Näidis 3 - Dekodeeritud `SAMLResponse` parameetri sisu autentimise ebaõnnestumise korral (isik ei andnud nõusolekut oma andmete avaldamiseks)
-
-```xml
-<saml2p:Response xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson" xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion" Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained" Destination="http://localhost:8080/EidasNode/ColleagueResponse" ID="_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI" InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY" IssueInstant="2018-01-05T13:42:11.944Z" Version="2.0">
-    <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">http://localhost:8080/EidasNode/ServiceMetadata</saml2:Issuer>
-    <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
-        <ds:SignedInfo>
-            <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-            <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
-            <ds:Reference URI="#_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI">
-                <ds:Transforms>
-                    <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-                    <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
-                </ds:Transforms>
-                <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
-                <ds:DigestValue>RWmP... </ds:DigestValue>
-            </ds:Reference>
-        </ds:SignedInfo>
-        <ds:SignatureValue>Vsv... </ds:SignatureValue>
-        <ds:KeyInfo>
-            <ds:X509Data>
-                <ds:X509Certificate>MII... </ds:X509Certificate>
-            </ds:X509Data>
-        </ds:KeyInfo>
-    </ds:Signature>
-    <saml2p:Status>
-        <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Requester">
-            <saml2p:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:RequestDenied"/>
-        </saml2p:StatusCode>
-        <saml2p:StatusMessage>202007 - Consent not given for a mandatory attribute.</saml2p:StatusMessage>
-    </saml2p:Status>
-    <saml2:Assertion ID="_ub5Gp8pKv32ZI08bFy-VSYWgCu8JP3HP1F2FXpre7BzJHkFPbfxLdxZniVMB0pv" IssueInstant="2018-01-05T13:42:11.944Z" Version="2.0">
-        <saml2:Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">http://localhost:8080/EidasNode/ServiceMetadata</saml2:Issuer>
-        <saml2:Subject>
-            <saml2:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified" NameQualifier="http://C-PEPS.gov.xx">NotAvailable</saml2:NameID>
-            <saml2:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
-                <saml2:SubjectConfirmationData Address="127.0.0.1" InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY" NotOnOrAfter="2018-01-05T13:47:11.944Z" Recipient="http://localhost:8080/EidasNode/ColleagueResponse"/>
-            </saml2:SubjectConfirmation>
-        </saml2:Subject>
-        <saml2:Conditions NotBefore="2018-01-05T13:42:11.944Z" NotOnOrAfter="2018-01-05T13:47:11.944Z">
-            <saml2:AudienceRestriction>
-                <saml2:Audience>http://localhost:8080/EidasNode/ConnectorMetadata</saml2:Audience>
-            </saml2:AudienceRestriction>
-        </saml2:Conditions>
-        <saml2:AuthnStatement AuthnInstant="2018-01-05T13:42:11.944Z">
-            <saml2:AuthnContext>
-                <saml2:AuthnContextClassRef>http://eidas.europa.eu/LoA/substantial</saml2:AuthnContextClassRef>
-                <saml2:AuthnContextDecl/>
-            </saml2:AuthnContext>
-        </saml2:AuthnStatement>
-    </saml2:Assertion>
-</saml2p:Response>
-```
-
-## 9 Veaolukordade käsitlemine
+## 8 Veaolukorrad
 
 Kõik konnektorteenuse poolt tagastatavad veakoodid on toodud eIDAS näidislahenduse dokumentatsioonis (vt [eIDAS-veakoodid]).
 
-Tabel 5 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatavatest vigadest
+Tabel 8. Veakoodid
 
 | Veakood | Lühikirjeldus            | Selgitus  |
 |:-------------:|-------------|-----|
@@ -484,14 +351,13 @@ Tabel 5 - Loetelu võimalikest veaolukordadest konnektorteenuse poolt tagastatav
 
 // TODO vajab analüüsi - välja tuua vaid konnektorteenuse kasutajaid puudutav nimekiri veakoodidest - täiendada //
 
-## 10 Toetatud riikide nimekiri
+## 9 Toetatud riikide nimekiri
 
 Nimekiri riikidest, kelle autentimisteenuseid RIA eIDAS konnektorteenus vahendab, on masinloetavas vormingus avaldatud aadressil.
 
 `https://www.ria.ee/eidasinfo`
 
 Nimekiri on esitatud JSON-failina, milles on üks JSON-objekt. Objektis sisaldub objekt `CountriesSupported`, milles omakorda on objektid `Test` ja `Production`. Viimaste väärtusteks on massiivid riikide nimekirjadega. Riik esitatakse [ISO 3166-1 alpha-2] standardi kohaselt, kahekohalise koodiga. Ülemise taseme objektis võib olla ka muid välju.
-
 - Toetatud riikide nimekirja URL PEAB olema liidestuvas rakenduses konf-is seatav.
 - Liidestuv rakendus PEAB kasutama nimekirja, kuvades kasutajale ainult nende riikide "lipukesed", kelle autentimisi tegelikult suudetakse vahendada.
 - Nimekirja uuendamine eeldatavalt saab olema harv. Liidestuv rakendus PEAKS nimekirja alla tõmbama ja seda puhverdama.
@@ -516,12 +382,454 @@ Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Tood
 
 [ISO 3166-1 alpha-2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
+## Lisa 1. XML nimeruumid
+
+Näidistes kasutatud ja xml struktuurides viidatud XML nimeruumid on toodud alljärgnevas tabelis.
+
+Tabel 9.
+
+| Prefiks | Nimeruum | Selgitus |
+|:--------|:-------------|:-------------|
+| `md` | urn:oasis:names:tc:SAML:2.0:metadata | SAML 2.0 metadata elemendid. [http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)  |
+| `ds` | http://www.w3.org/2000/09/xmldsig# | Digitaalallkirja vormingu elemendid. [www.w3.org/TR/xmldsig-core/](www.w3.org/TR/xmldsig-core/)  |
+| `alg` | urn:oasis:names:tc:SAML:metadata:algsupport | Krüptoalgoritmide kirjeldus. [http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-metadata-algsupport-v1.0-cs01.pdf](http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-metadata-algsupport-v1.0-cs01.pdf) |
+| `saml2` | urn:oasis:names:tc:SAML:2.0:assertion | OASIS SAML 2.0 vormingu põhielemendid. [http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) |
+| `saml2p` | urn:oasis:names:tc:SAML:2.0:protocol | OASIS SAML 2.0 protokolli põhielemendid. [http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) |
+
+## Lisa 2. Näide. Teenusepakkuja metateabe
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<md:EntityDescriptor
+    xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+    entityID="https://eidastest.eesti.ee/SP/metadata"
+    validUntil="2018-02-10T08:57:21.953Z">
+	<ds:Signature
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+		<ds:SignedInfo>
+			<ds:CanonicalizationMethod
+                Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+			<ds:SignatureMethod
+                Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+			<ds:Reference URI="">
+				<ds:Transforms>
+					<ds:Transform
+                        Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+					<ds:Transform
+                        Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+				</ds:Transforms>
+				<ds:DigestMethod
+                    Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+				<ds:DigestValue>
+                ...
+                </ds:DigestValue>
+			</ds:Reference>
+		</ds:SignedInfo>
+		<ds:SignatureValue>
+        ...
+        </ds:SignatureValue>
+		<ds:KeyInfo>
+			<ds:X509Data>
+				<ds:X509Certificate>
+                ...
+                </ds:X509Certificate>
+			</ds:X509Data>
+		</ds:KeyInfo>
+	</ds:Signature>
+	<md:Extensions>
+		<eidas:SPType
+            xmlns:eidas="http://eidas.europa.eu/saml-extensions">
+            public
+        </eidas:SPType>
+		<alg:DigestMethod
+            xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"
+            Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+        <alg:DigestMethod
+            xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"
+            Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+		<alg:SigningMethod
+            xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"
+            Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1"/>
+		<alg:SigningMethod
+            xmlns:alg="urn:oasis:names:tc:SAML:metadata:algsupport"
+            Algorithm="http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1"/>
+	</md:Extensions>
+	<md:SPSSODescriptor
+        AuthnRequestsSigned="true"
+        WantAssertionsSigned="true"
+        protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+		<md:KeyDescriptor
+            use="signing">
+			<ds:KeyInfo
+                xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<ds:X509Data>
+					<ds:X509Certificate>
+                    ...
+                    </ds:X509Certificate>
+				</ds:X509Data>
+			</ds:KeyInfo>
+		</md:KeyDescriptor>
+        <md:KeyDescriptor
+            use="encryption">
+			<ds:KeyInfo
+                xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+				<ds:X509Data>
+					<ds:X509Certificate>
+                    ...
+                    </ds:X509Certificate>
+				</ds:X509Data>
+			</ds:KeyInfo>
+		</md:KeyDescriptor>
+		<md:NameIDFormat>
+            urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+        </md:NameIDFormat>
+		<md:AssertionConsumerService
+            Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+            Location="https://eidastest.eesti.ee/SP/ReturnPage"
+            index="0"
+            isDefault="true"/>
+	</md:SPSSODescriptor>
+	<md:Organization>
+		<md:OrganizationName
+            xml:lang="en">
+            DEMO-SP
+        </md:OrganizationName>
+		<md:OrganizationDisplayName xml:lang="en">
+            Näidisasutus
+        </md:OrganizationDisplayName>
+		<md:OrganizationURL xml:lang="en">
+            https://naidisasutus.ee/info
+        </md:OrganizationURL>
+	</md:Organization>
+	<md:ContactPerson contactType="support">
+		<md:Company>Teenusepakkuja</md:Company>
+		<md:GivenName>Mari-Liis</md:GivenName>
+		<md:SurName>Männik</md:SurName>
+		<md:EmailAddress>abi@sp.ee</md:EmailAddress>
+		<md:TelephoneNumber>+342 123456</md:TelephoneNumber>
+	</md:ContactPerson>
+</md:EntityDescriptor>
+```
+
+## Lisa 3. Näide. Autentimispäring
+
+```xml
+<saml2p:AuthnRequest
+    xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    mlns:eidas="http://eidas.europa.eu/saml-extensions"
+    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+    Consent="urn:oasis:names:tc:SAML:2.0:consent:unspecified"
+    Destination="http://localhost:8080/EidasNode/ServiceProvider"
+    ForceAuthn="true"
+    ID="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx"
+    IsPassive="false"
+    IssueInstant="2018-01-05T13:42:08.036Z"
+    ProviderName="DEMO-SP-CA"
+    Version="2.0">
+    <saml2:Issuer
+        Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">
+        http://localhost:8080/SP/metadata
+    </saml2:Issuer>
+    <ds:Signature
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:SignedInfo>
+            <ds:CanonicalizationMethod
+                Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod
+                Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+            <ds:Reference
+                URI="#_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx">
+                <ds:Transforms>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                </ds:Transforms>
+                <ds:DigestMethod
+                    Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+                <ds:DigestValue>
+                    ...
+                </ds:DigestValue>
+            </ds:Reference>
+        </ds:SignedInfo>
+ <ds:SignatureValue>
+   ...
+</ds:SignatureValue>
+        <ds:KeyInfo>
+            <ds:X509Data>
+                <ds:X509Certificate>
+                  ...
+                </ds:X509Certificate>
+            </ds:X509Data>
+        </ds:KeyInfo>
+    </ds:Signature>
+    <saml2p:Extensions>
+        <eidas:SPType>
+            public
+        </eidas:SPType>
+        <eidas:RequestedAttributes>
+            <eidas:RequestedAttribute
+                FriendlyName="FamilyName"
+                Name="http://eidas.europa.eu/attributes/naturalperson/CurrentFamilyName"
+                NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                isRequired="true"/>
+            <eidas:RequestedAttribute
+                FriendlyName="FirstName"
+                Name="http://eidas.europa.eu/attributes/naturalperson/CurrentGivenName"
+                NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                isRequired="true"/>
+            <eidas:RequestedAttribute
+                FriendlyName="DateOfBirth"
+                Name="http://eidas.europa.eu/attributes/naturalperson/DateOfBirth"
+                NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                isRequired="true"/>
+            <eidas:RequestedAttribute
+                FriendlyName="PersonIdentifier"
+                Name="http://eidas.europa.eu/attributes/naturalperson/PersonIdentifier"
+                NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
+                isRequired="true"/>
+        </eidas:RequestedAttributes>
+    </saml2p:Extensions>
+    <saml2p:NameIDPolicy
+        AllowCreate="true"
+        Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"/>
+    <saml2p:RequestedAuthnContext
+        Comparison="minimum">
+        <saml2:AuthnContextClassRef>
+            http://eidas.europa.eu/LoA/low
+        </saml2:AuthnContextClassRef>
+    </saml2p:RequestedAuthnContext>
+</saml2p:AuthnRequest>
+```
+
+## Lisa 4. Näide. Autentimisvastus (edukas autentimine)
+
+```xml
+<saml2p:Response
+    xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson"
+    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+    Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained"
+    Destination="http://localhost:8080/SP/ReturnPage"
+    ID="_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu"
+    InResponseTo="_eLkJmjOUF8ONvJqZ9EznURG6sAR_xSBIotsa3oWp1ptBbGw3O0iRZPogyRsxbHx"
+    IssueInstant="2018-01-05T13:42:44.472Z"
+    Version="2.0">
+    <saml2:Issuer
+        Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity"
+        xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+        http://localhost:8080/EidasNode/ConnectorResponderMetadata
+    </saml2:Issuer>
+    <ds:Signature
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:SignedInfo>
+            <ds:CanonicalizationMethod
+                Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod
+                Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+            <ds:Reference
+                URI="#_yiiuyi.nIKvC24mjq693FymZFsmzVeryieoeDD7LRqrCX16OrT2I-cP7x63wfgu">
+                <ds:Transforms>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                </ds:Transforms>
+                <ds:DigestMethod
+                    Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+                <ds:DigestValue>
+                    ...
+                </ds:DigestValue>
+            </ds:Reference>
+        </ds:SignedInfo>
+        <ds:SignatureValue>
+            ...
+        </ds:SignatureValue>
+        <ds:KeyInfo>
+            <ds:X509Data>
+                <ds:X509Certificate>
+                    ...
+                </ds:X509Certificate>
+            </ds:X509Data>
+        </ds:KeyInfo>
+    </ds:Signature>
+    <saml2p:Status
+        xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol">
+        <saml2p:StatusCode
+            Value="urn:oasis:names:tc:SAML:2.0:status:Success"/>
+        <saml2p:StatusMessage>
+            urn:oasis:names:tc:SAML:2.0:status:Success
+        </saml2p:StatusMessage>
+    </saml2p:Status>
+    <saml2:EncryptedAssertion
+        xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">
+        <xenc:EncryptedData
+            xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
+            Id="_a056bea0846b4cff6ef971252c691d60"
+            Type="http://www.w3.org/2001/04/xmlenc#Element">
+            <xenc:EncryptionMethod
+                Algorithm="http://www.w3.org/2009/xmlenc11#aes256-gcm"
+                xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"/>
+            <ds:KeyInfo
+                xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+                <xenc:EncryptedKey
+                    Id="_5a8536fc20547e76206512fa4bd39711"
+                    xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                    <xenc:EncryptionMethod
+                        Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"
+                        xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                        <ds:DigestMethod
+                            Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"
+                            xmlns:ds="http://www.w3.org/2000/09/xmldsig#"/>
+                    </xenc:EncryptionMethod>
+                    <ds:KeyInfo>
+                        <ds:X509Data>
+                            <ds:X509Certificate>
+                                ...
+                            </ds:X509Certificate>
+                        </ds:X509Data>
+                    </ds:KeyInfo>
+                    <xenc:CipherData
+                        xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                        <xenc:CipherValue>
+                            ...
+                        </xenc:CipherValue>
+                    </xenc:CipherData>
+                </xenc:EncryptedKey>
+            </ds:KeyInfo>
+            <xenc:CipherData
+                xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                <xenc:CipherValue>
+                    ...
+                </xenc:CipherValue>
+            </xenc:CipherData>
+        </xenc:EncryptedData>
+    </saml2:EncryptedAssertion>
+</saml2p:Response>
+```
+
+## Lisa 5. Näide. Autentimisvastus (isik ei andnud nõusolekut andmete edastamiseks)
+
+```xml
+<saml2p:Response
+    xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+    xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+    xmlns:eidas="http://eidas.europa.eu/attributes/naturalperson"
+    xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+    Consent="urn:oasis:names:tc:SAML:2.0:consent:obtained"
+    Destination="http://localhost:8080/EidasNode/ColleagueResponse"
+    ID="_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI"
+    InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY"
+    IssueInstant="2018-01-05T13:42:11.944Z"
+    Version="2.0">
+    <saml2:Issuer
+        Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">
+        http://localhost:8080/EidasNode/ServiceMetadata
+    </saml2:Issuer>
+    <ds:Signature
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:SignedInfo>
+            <ds:CanonicalizationMethod
+                Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ds:SignatureMethod
+                Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+            <ds:Reference
+                URI="#_lL971pgUcKgV.ifiv9eQHBBwzUSBFeirUFyxQUVJV_SLzEjETOVZzjU_GEM4CxI">
+                <ds:Transforms>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ds:Transform
+                        Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+                </ds:Transforms>
+                <ds:DigestMethod
+                    Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+                <ds:DigestValue>
+                    ...
+                </ds:DigestValue>
+            </ds:Reference>
+        </ds:SignedInfo>
+        <ds:SignatureValue>
+            ...
+        </ds:SignatureValue>
+        <ds:KeyInfo>
+            <ds:X509Data>
+                <ds:X509Certificate>
+                    ...
+                </ds:X509Certificate>
+            </ds:X509Data>
+        </ds:KeyInfo>
+    </ds:Signature>
+    <saml2p:Status>
+        <saml2p:StatusCode
+            Value="urn:oasis:names:tc:SAML:2.0:status:Requester">
+            <saml2p:StatusCode
+                Value="urn:oasis:names:tc:SAML:2.0:status:RequestDenied"/>
+        </saml2p:StatusCode>
+        <saml2p:StatusMessage>
+            202007 - Consent not given for a mandatory attribute.
+        </saml2p:StatusMessage>
+    </saml2p:Status>
+    <saml2:Assertion
+        ID="_ub5Gp8pKv32ZI08bFy-VSYWgCu8JP3HP1F2FXpre7BzJHkFPbfxLdxZniVMB0pv"
+        IssueInstant="2018-01-05T13:42:11.944Z"
+        Version="2.0">
+        <saml2:Issuer
+            Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">
+            http://localhost:8080/EidasNode/ServiceMetadata
+        </saml2:Issuer>
+        <saml2:Subject>
+            <saml2:NameID
+                Format="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified"
+                NameQualifier="http://C-PEPS.gov.xx">
+                NotAvailable
+            </saml2:NameID>
+            <saml2:SubjectConfirmation
+                Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+                <saml2:SubjectConfirmationData
+                    Address="127.0.0.1"
+                    InResponseTo="_FgE3IvzittrpDPIuOICAufDv8.ppNwVZuHpoO9ALPBZTsnOebKUC6gupqHxXVdY"
+                    NotOnOrAfter="2018-01-05T13:47:11.944Z"
+                    Recipient="http://localhost:8080/EidasNode/ColleagueResponse"/>
+            </saml2:SubjectConfirmation>
+        </saml2:Subject>
+        <saml2:Conditions
+            NotBefore="2018-01-05T13:42:11.944Z"
+            NotOnOrAfter="2018-01-05T13:47:11.944Z">
+            <saml2:AudienceRestriction>
+                <saml2:Audience>
+                    http://localhost:8080/EidasNode/ConnectorMetadata
+                </saml2:Audience>
+            </saml2:AudienceRestriction>
+        </saml2:Conditions>
+        <saml2:AuthnStatement
+            AuthnInstant="2018-01-05T13:42:11.944Z">
+            <saml2:AuthnContext>
+                <saml2:AuthnContextClassRef>
+                    http://eidas.europa.eu/LoA/substantial
+                </saml2:AuthnContextClassRef>
+                <saml2:AuthnContextDecl/>
+            </saml2:AuthnContext>
+        </saml2:AuthnStatement>
+    </saml2:Assertion>
+</saml2p:Response>
+```
+
+## Lisa 6. Eduka autentimisvoo jadadiagramm
+
+Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
+
+<img src='img/Autentimisvoog-eIDAS_demorakenduses.png'>
+
 ## Muutelugu
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.6, 13.02.2018  | Ühendatud "eIDASe siseriiklike usaldus- ja krüptonõuetega" üheks dokumendiks. Väiksemaid täiendusi |
+| 0.5, 13.02.2018   | Korrastus. Vastuse täpsustused. XML nimeruumid |
 | 0.4, 09.02.2018   | Metateabe otspunkti vastuse täpsustused |
 | 0.3, 29.01.2018   | Korrastus |
 | 0.2, 22.01.2018   | Lisatud toetatud riikide nimekiri |
-| 0.1, 16.01.2018   | Esimene versioon. |
+| 0.1, 16.01.2018   | Esimene versioon |
 
