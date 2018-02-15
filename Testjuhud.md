@@ -48,8 +48,9 @@ failis
 `server.port = 8080` - testitava liidese port
 `eidas.client.idpMetadataUrl = http://localhost:8080/EidasNode/ConnectorResponderMetadata` - eIDAS sõlme metaandmete otspunkt
 `eidas.client.spEntityId = http://localhost:8080/SP/metadata` - tesitava liidese metaandmete otspunkt
+`eidas.client.spStartUrl = http://localhost:8080/start` - testitava liidese autentimise alustamise otspunkt
 `eidas.client.spReturnUrl = http://localhost:8080/SP/ReturnPage` - testitava liidese returnUrli otspunkt
-5) Käivitada testid kasutades mavenit või mavenwrapperit
+5) Käivitada testid kasutades mavenit või maven wrapperit
 `./mvnw -PrunIntegrationTests -Dit.test=Common* verify`
 
 [Testide klassid](https://github.com/e-gov/eIDAS-Client/tree/master/eidas-client-test/src/test/java/ee/ria/eidas) mille nimed hakkavad Common algusega on universaalsed ning sobivad kasutamiseks ilma muutmata. Enda liidestumise testimisel võib uurida, täiendada ja kasutada ka teisi testiklasse. Kõikide testide käivitamiseks kasutada käsku:
