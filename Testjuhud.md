@@ -11,6 +11,7 @@ permalink: Testjuhud
 Antud testide eesmärk on kontrollida liidestuva teenuse võimekust suhelda eIDAS sõlme ning eidas võrgustikuga. Tegemist ei ole testikomplektidaga testimaks liidestuvat teenust.
 
 ## 1 Metaandmete publitseerimine
+
 | ID | Testjuht | Tulem |
 |----|----------|-----------|
 | MET-1 | Metateabe XML peab vastama [SAML 2.0 schemale](https://docs.oasis-open.org/security/saml/v2.0/saml-schema-metadata-2.0.xsd) | Metaandmed valideeruvad vastu schemat |
@@ -19,6 +20,7 @@ Antud testide eesmärk on kontrollida liidestuva teenuse võimekust suhelda eIDA
 
 
 ## 2 Autentimispäringu saatmine
+
 | ID | Testjuht | Tulem |
 |----|----------|-----------|
 | AUT-1 | Kohustuslikud väljad ning väärtused on olemas vastavalt [spetsifikatsioonile](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#6-autentimisp%C3%A4ring) | Kõik kohustuslikud väärtused on olemas, lisaks võivad olla valikulised väärtused |
