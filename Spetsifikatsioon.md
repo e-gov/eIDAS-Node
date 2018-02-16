@@ -271,8 +271,8 @@ Tabel 3
 | /md:EntityDescriptor/md:SPSSODescriptor/@AuthnRequestsSigned | Jah | Deklareerib, et teenusepakkuja poolt saadetavad SAML päringud peavad olema allkirjastatud. Nõutud väärtus `true` |
 | /md:EntityDescriptor/md:SPSSODescriptor/@WantAssertionsSigned | Jah | Deklareerib, et konnektorteenuselt tuleva vastuse sisu peab olema allkirjastatud. Nõutud väärtus `true` |
 | /md:EntityDescriptor/md:SPSSODescriptor/@protocolSupportEnumeration | Jah | Deklareerib SAML protokolli versiooni toe. Nõutud on minimaalselt `urn:oasis:names:tc:SAML:2.0:protocol` (võib lisaks toetada ka SAML 1.0 ja 1.1) |
-| /md:EntityDescriptor/md:IDPSSODescriptor/md:KeyDescriptor[@use="signing"] | Jah | Teenusepakkuja poolt päringu allkirjastamiseks kasutatud võtme kirjeldus. Võtmeinfo peab sisaldama X509 sertifikaati. |
-| /md:EntityDescriptor/md:IDPSSODescriptor/md:KeyDescriptor[@use="encryption"] | Jah | Kirjeldab võtme, mida konnektorteenus kasutab vastuses oleva info krüpteerimiseks. Võtmeinfo peab sisaldama X509 sertifikaati. |
+| /md:EntityDescriptor/md:SPSSODescriptor/md:KeyDescriptor[@use="signing"] | Jah | Teenusepakkuja poolt päringu allkirjastamiseks kasutatud võtme kirjeldus. Võtmeinfo peab sisaldama X509 sertifikaati. |
+| /md:EntityDescriptor/md:SPSSODescriptor/md:KeyDescriptor[@use="encryption"] | Jah | Kirjeldab võtme, mida konnektorteenus kasutab vastuses oleva info krüpteerimiseks. Võtmeinfo peab sisaldama X509 sertifikaati. |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:NameIDFormat | Jah | Nõutud väärtused: `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`, `urn:oasis:names:tc:SAML:2.0:nameid-format:transient` ja `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Binding | Jah | Deklareerib SAML suhtlusmeetodi. Nõutud väärtus `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST` |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location | Jah | Viitab vastuse tarbimise otspunktile. HTTPS otspunkti URL teenusepakkuja süsteemis. |
