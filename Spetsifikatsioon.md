@@ -273,7 +273,7 @@ Tabel 3
 | /md:EntityDescriptor/md:SPSSODescriptor/@protocolSupportEnumeration | Jah | Deklareerib SAML protokolli versiooni toe. Nõutud on minimaalselt `urn:oasis:names:tc:SAML:2.0:protocol` (võib lisaks toetada ka SAML 1.0 ja 1.1) |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:KeyDescriptor[@use="signing"] | Jah | Teenusepakkuja poolt päringu allkirjastamiseks kasutatud võtme kirjeldus. Võtmeinfo peab sisaldama X509 sertifikaati. |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:KeyDescriptor[@use="encryption"] | Jah | Kirjeldab võtme, mida konnektorteenus kasutab vastuses oleva info krüpteerimiseks. Võtmeinfo peab sisaldama X509 sertifikaati. |
-| /md:EntityDescriptor/md:SPSSODescriptor/md:NameIDFormat | Jah | Nõutud väärtused: `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent`, `urn:oasis:names:tc:SAML:2.0:nameid-format:transient` ja `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
+| /md:EntityDescriptor/md:SPSSODescriptor/md:NameIDFormat | Jah | Nõutud väärtus: `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Binding | Jah | Deklareerib SAML suhtlusmeetodi. Nõutud väärtus `urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST` |
 | /md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location | Jah | Viitab vastuse tarbimise otspunktile. HTTPS otspunkti URL teenusepakkuja süsteemis. |
 | /md:EntityDescriptor/md:Organization | Ei | XML struktuur, mis kirjeldab info liidestuva organisatsiooni kohta. Kasutus vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
@@ -308,7 +308,7 @@ Tabel 5. SAML `AuthnRequest` parameetrid.
 | `/saml2p:AuthnRequest/ds:Signature/*` | Jah | Teenusepakkuja privaatvõtmega antud allkiri ja sellega seotud detailid. Toetatud krüptoalgoritmid on loetletud eIDAS Node metadatas (`/md:EntityDescriptor/md:Extensions/alg:SigningMethod/*`) |
 | `/saml2p:AuthnRequest/saml2p:Extensions/eidas:SPType` | Jah | Konstantne väärtus: `public` (avaliku sektori asutus). Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
 | `/saml2p:AuthnRequest/saml2p:Extensions/eidas:RequestedAttributes/*` | Jah | Kirjeldab, milliseid isikuandmete atribuute soovitakse ülepiirilise identiteedipakkuja käest. Nimekiri toetatud atribuutidest, on toodud eIDAS konnektorteenues metadatas (vt `/md:EntityDescriptor/md:IDPSSODescriptor/saml2:Attribute`). <br><br>Kohustuslik info, mida identiteediteenuse pakkuja peab tagastama, peab olema märgistatud atribuudiga `isRequired` = `true`. NB! Juhul kui kohustuslikuna märgistatud atribuute ei suudeta täita, tagastatakse viga. <br><br>Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions`. Täiendav selgitus atribuutide kohta - eIDAS Message Format v1.1-2 (vt [Viited](Viited)) |
-| `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Üks eIDAS konnektoreenuse metadatas kirjeldatud toetatud väärtustest (`/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat`) |
+| `/saml2p:AuthnRequest/saml2p:NameIDPolicy` | Jah | Konstante väärtus: `/md:EntityDescriptor/md:IDPSSODescriptor/md:NameIDFormat` |
 | `/saml2p:AuthnRequest/saml2:RequestedAuthnContext` | Jah |	Määrab, millist autentimistaset nõutakse sihtriigi autentimisteenuselt. <br><p>Võimalikud väärtused:<br> `http://eidas.europa.eu/LoA/low`<br>`http://eidas.europa.eu/LoA/substantial`<br>`http://eidas.europa.eu/LoA/high`</p>  |
 
 ## 7 Autentimisvastus
