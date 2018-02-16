@@ -2,7 +2,10 @@
 permalink: Liitumisjuhend
 ---
 
-# Liitumisjuhend
+Märkus. Töödokument. Lahtised küsimused on markeeritud sümbolitega `//`. 
+{:.teade}
+
+# RIA eIDAS konnektorteenus. Liitumisjuhend
 {: .no_toc}
 
 - TOC
@@ -26,7 +29,7 @@ Juhend kirjeldab mida peate eIDAS konnektorteenuse kasutuselevõtmiseks tegema.
     - konnektorteenuse [spetsifikatsioonist](Spetsifikatsioon) leiate kõik vajalikud nõuded ja juhatused
         - kogenud arendajal kulub liidesele u 2 nädalat
         . nõutav SAML ja XML krüpto (allkirjastamine, dekrüpteerimine) tundmine
-        - koodieeskujuks soovitame RIA tellitud [eIDAS-Client] (https://github.com/e-gov/eIDAS-Client) komponenti
+        - koodieeskujuks soovitame RIA enda arendatud [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) komponenti
 3. Andke meile teada liitumissoovist
     - vabas vormis sooviavaldus aadressile `help@ria.ee`
         - märkige (kui on teada), mis e-teenuses soovite konnektorteenust kasutada
@@ -45,7 +48,7 @@ Juhend kirjeldab mida peate eIDAS konnektorteenuse kasutuselevõtmiseks tegema.
         - autentimispäring: `https://eidastest.eesti.ee/EidasNode/ServiceProvider`
     - teie e-teenus peab suutma:
         - publitseerida [nõuetekohase metateabe](Spetsifikatsioon#53-teenusepakkuja-metateave)
-        - kuvada kasutajale "lipukesed"
+        - kuvada kasutajale "lipukesed" // TODO Stiilisoovitused //
         - lasta kasutajal valida sihtriigi
         - moodustadaa SAML autentimispäringu
         - saata autentimispäringu HTTP POST ümbersuunamisega konnektorteenusele
@@ -53,11 +56,11 @@ Juhend kirjeldab mida peate eIDAS konnektorteenuse kasutuselevõtmiseks tegema.
         - ja moodustama autenditud kasutajale seansi
     - sihtriigiks valige esialgu Eesti (EE)
         - proovige, kas Eesti autentimisvahenditega töötab
-            - Eesti autentimine võib olla seadistatud kasutama [mobiil-ID testnumbreid](https://www.id.ee/?id=36373).
+            - Eesti autentimine võib olla seadistatud kasutama [mobiil-ID testnumbreid](https://www.id.ee/?id=36373)
                 - proovige kõigepealt _happy path_ numbriga (´+37200000766´, isikukood ´11412090004´)
                 - seejärel proovige ka teisi testnumbreid  
     - kui saate veateate, siis kasutage veateadete teatmikku [eIDAS-Node Error Codes](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release)
-    - küsimuste korral abistab teid help@ria.ee
+    - küsimuste korral abistab teid `help@ria.ee`
     - kui olete sõnumiliikluse käima saanud, andke meile teada
 6. Liituge toodangukeskkonnaga
     - eelduseks on liidese testimise edukus (vt eelmine punkt)
