@@ -50,7 +50,7 @@ Juhend kirjeldab mida peate eIDAS konnektorteenuse kasutuselevõtmiseks tegema.
         - publitseerida [nõuetekohase metateabe](Spetsifikatsioon#53-teenusepakkuja-metateave)
         - kuvada kasutajale "lipukesed" // TODO Stiilisoovitused //
         - lasta kasutajal valida sihtriigi
-        - moodustadaa SAML autentimispäringu
+        - moodustada SAML autentimispäringu
         - saata autentimispäringu HTTP POST ümbersuunamisega konnektorteenusele
         - autentimispäringu vastu võtma, dešifreerima
         - ja moodustama autenditud kasutajale seansi
