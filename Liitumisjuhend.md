@@ -10,7 +10,7 @@ permalink: Liitumisjuhend
 
 Juhend kirjeldab eIDAS konnektorteenuse kasutusevõtuks vajalikke tegevusi.
 
-\1. Selgitage välja millistes oma e-teenustes soovite RIA eIDAS konnektorteenust kasutada.
+/1. Selgitage välja millistes oma e-teenustes soovite RIA eIDAS konnektorteenust kasutada.
     - selleks tutvuge [ärikirjeldusega](Arikirjeldus) ja [piiriülese eIDAS-autentimise liidestamismeetodi abimaterjaliga](Valik) 
 - Kavandage ja teostage arendustöö
     - otsustage, kas ühendate iga oma e-teenuse eraldi või teete ühe ühenduse, nt asutuse autentimislahenduse kaudu - mis võtab suhtluse konnektorteenusega enda peale - ja jagab autentimist e-teenustele
@@ -23,21 +23,21 @@ Juhend kirjeldab eIDAS konnektorteenuse kasutusevõtuks vajalikke tegevusi.
         . soovitatav, aga mitte vältimatu on SAML ja XML krüpto (allkirjastamine, dekrüpteerimine) kogemus
         - koodi eeskujuna võite kasutada RIA tellitud [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) komponenti
 
-\2. Andke meile teada liitumissoovist
+/2. Andke meile teada liitumissoovist
     - saatke vabas vormis sooviavaldus help@ria.ee
         - märkige, millises e-teenuses (-teenustes) soovite konnektorteenust kasutada (kui see on teada)
     - testkeskkonnaga liitumiseks sellest piisab
     - sooviavalduse võib saata juba enne teie arendustöö algust
     - toodangukeskkonnaga liitumiseks sõlmite pärast liidese edukat testimist meiega eraldi kokkuleppe
 
-\3. Saatke oma metateabe otspunkti allkirjasert
+/3. Saatke oma metateabe otspunkti allkirjasert
     - genereerige _self-signed_ X.509 sert
         - nt [onelogin veebiteenuse abil](https://developers.onelogin.com/saml/online-tools/x509-certs/obtain-self-signed-certs)
     - saatke sert e-postiga meile (help@ria)
     - meie admin paigaldab serdi konnektorteenuse võtmehoidlasse
     - sellega on juurdepääs konnektorteenuse testkeskkonnale teile avatud
 
-\4. Saage liides testkeskkonnas käima
+/4. Saage liides testkeskkonnas käima
     - seadistage oma e-teenus konnektorteenuse otspunktide vastu:
         - metateave: https://eidastest.eesti.ee/EidasNode/ServiceMetadata
         - autentimispäring: https://eidastest.eesti.ee/EidasNode/ServiceProvider
@@ -53,7 +53,7 @@ Juhend kirjeldab eIDAS konnektorteenuse kasutusevõtuks vajalikke tegevusi.
         - küsimuste korral abistab teid help@ria.ee
     - kui olete sõnumiliikluse käima saanud, andke meile teada
 
-\5. Liituge toodangukeskkonnaga
+/5. Liituge toodangukeskkonnaga
     - eelduseks on liidese testimise edukus (vt eelmine punkt)
     - sõlmime teenuslepingu
     - toodangukeskkonnas on vaja juba SK serte
