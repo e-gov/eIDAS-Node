@@ -57,7 +57,7 @@ Juhend kirjeldab mida peate eIDAS konnektorteenuse kasutuselevõtmiseks tegema.
     - sihtriigiks valige esialgu Eesti (EE)
         - proovige, kas Eesti autentimisvahenditega töötab
             - Eesti autentimine võib olla seadistatud kasutama [mobiil-ID testnumbreid](https://www.id.ee/?id=36373)
-                - proovige kõigepealt _happy path_ numbriga (´+37200000766´, isikukood ´11412090004´)
+                - proovige kõigepealt _happy path_ numbriga (`+37200000766`, isikukood `11412090004`)
                 - seejärel proovige ka teisi testnumbreid  
     - kui saate veateate, siis kasutage veateadete teatmikku [eIDAS-Node Error Codes](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release)
     - küsimuste korral abistab teid `help@ria.ee`
