@@ -2,75 +2,59 @@
 permalink: Liitumisjuhend
 ---
 
-# Liitumisjuhend (DRAFT)
+# Liitumisjuhend
 {: .no_toc}
 
 - TOC
 {:toc}
 
-Käesolev juhend kirjeldab teenust kasutava asutuse ja teenusepakkuja (RIA) tegevusi eIDAS konnektorteenuse kasutuselevõtul.
+Juhend kirjeldab eIDAS konnektorteenuse kasutusevõtuks vajalikke tegevusi.
 
-Vt ka: [Viited](Viited)
+\1. Selgitage välja millistes oma e-teenustes soovite RIA eIDAS konnektorteenust kasutada.
+    - selleks tutvuge [ärikirjeldusega](Arikirjeldus) ja [piiriülese eIDAS-autentimise liidestamismeetodi abimaterjaliga](Valik) 
+- Kavandage ja teostage arendustöö
+    - otsustage, kas ühendate iga oma e-teenuse eraldi või teete ühe ühenduse, nt asutuse autentimislahenduse kaudu - mis võtab suhtluse konnektorteenusega enda peale - ja jagab autentimist e-teenustele
+    - teil on vaja oma e-teenuses teha väike tarkvaraarendus:
+        - metaandmete otspunkt
+        - SAML autentimispäringu saatmine konnektorteenusele
+        - SAML autentimisvastuse vastuvõtmine konnektorteenuselt
+    - konnektorteenuse [spetsifikatsioonis](Spetsifikatsioon) leiate kõik vajalikud nõuded ja juhatused
+        - kogenud arendajal võib liidese ehitamiseks kuluda u 2 nädalat
+        . soovitatav, aga mitte vältimatu on SAML ja XML krüpto (allkirjastamine, dekrüpteerimine) kogemus
+        - koodi eeskujuna võite kasutada RIA tellitud [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) komponenti
 
-## 1 Selgitada välja liidetavav e-teenus (või -teenused)
+\2. Andke meile teada liitumissoovist
+    - saatke vabas vormis sooviavaldus help@ria.ee
+        - märkige, millises e-teenuses (-teenustes) soovite konnektorteenust kasutada (kui see on teada)
+    - testkeskkonnaga liitumiseks sellest piisab
+    - sooviavalduse võib saata juba enne teie arendustöö algust
+    - toodangukeskkonnaga liitumiseks sõlmite pärast liidese edukat testimist meiega eraldi kokkuleppe
 
-Asutus selgitab välja, kas ja millistes oma e-teenustes soovib eIDAS konnektorteenust kasutada. Selleks palume:
-- tutvuda [ärikirjeldusega](Arikirjeldus), teenustaseme leppega (SLA-ga), vajadusel ka [liidese spetsifikatsiooniga](Spetsifikatsioon)
-- heita pilk ka teenuse [teekaardiga](https://e-gov.github.io/TARA-Doku/#teekaart)
-- vajadusel pidada nõu RIA-ga, `help@ria.ee`.
+\3. Saatke oma metateabe otspunkti allkirjasert
+    - genereerige _self-signed_ X.509 sert
+        - nt [onelogin veebiteenuse abil](https://developers.onelogin.com/saml/online-tools/x509-certs/obtain-self-signed-certs)
+    - saatke sert e-postiga meile (help@ria)
+    - meie admin paigaldab serdi konnektorteenuse võtmehoidlasse
+    - sellega on juurdepääs konnektorteenuse testkeskkonnale teile avatud
 
-## 2 Kavandada ja teostada arendus
-Asutus kavandab ja teostab teenuse kasutamiseks vajalikud arendustööd.
-  - Klientrakenduse täiendamine eIDAS SAML protokolli kohase klientkomponendiga vt. [Viited](https://e-gov.github.io/eIDAS-Connector/Viited)
-  - Kindlasti tutvuda eIDAS konnektorteenuse [spetsifikatsiooniga](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon)
-  - Lahenduse näidisena võib tutvuda [makettrakendusega](https://github.com/e-gov/eIDAS-Client)
+\4. Saage liides testkeskkonnas käima
+    - seadistage oma e-teenus konnektorteenuse otspunktide vastu:
+        - metateave: https://eidastest.eesti.ee/EidasNode/ServiceMetadata
+        - autentimispäring: https://eidastest.eesti.ee/EidasNode/ServiceProvider
+    - teie e-teenus peab suutma:
+        - kuvada kasutajale "lipukesed"
+        - võimaldama kasutajal valida sihtriigi
+        - moodustama SAML autentimispäringu
+        - saatma selle HTTP POST ümbersuunamisega konnektorteenusele
+    - sihtriigiks valige esialgu Eesti (EE)
+        - proovige, kas Eesti autentimisvahenditega töötab
+            - Eesti autentimine võib olla seadistatud kasutama [mobiil-ID testnumbreid](https://www.id.ee/?id=36373). Proovige kõigepealt _happy path_ numbriga (´+37200000766´, isikukood ´11412090004´). Seejärel proovige ka teisi testnumbreid  
+    - kui saate veateate, siis kasutage veateadete teatmikku [eIDAS-Node Error Codes](https://ec.europa.eu/cefdigital/wiki/display/CEFDIGITAL/eIDAS-Node+-+Current+release)
+        - küsimuste korral abistab teid help@ria.ee
+    - kui olete sõnumiliikluse käima saanud, andke meile teada
 
-Eriti tähele panna:<br>
-
-
-## 3 Liituda test eIDAS konnektorteenusega
-Asutus esitab taotluse testteenusega liitumiseks. Taotluse võib esitada juba enne arenduse algust. Taotluses palume teatada:
-
-1) e-teenus või -teenused, mille kasutajaid soovitakse eIDAS konnektorteenuse abil autentida.
-
-2) kohustumus kasutada teenust eesmärgipäraselt. Sh testteenust kasutada ainult testimiseks, mitte toodangus autentimiseks.
-
-3) klientrakenduse haldaja kontaktandmed (e-post, telefon, isikukood).
-
-4) ...
-
-Kirja tuleb panna kuidas käib test sertifikaatide vahetus!
-
-Taotlus esitatakse ja edasine suhtlus teenuse haldamisel käib läbi RIA kasutajatoe, `help@ria.ee`. Vt lähemalt [RIA autentimisteenuste lehel](https://www.ria.ee/ee/autentimisteenused.html).
-
-RIA, rahuldades taotluse:
-- avab asutuse klientrakenduse testversioonile juurdepääsu testteenusele.
-
-Testeenuse otspunktid on järgnevad:
-- Metateabe otspunkt: https://eidastest.eesti.ee/EidasNode/ServiceMetadata
-- Autentimispäringu otspunkt: https://eidastest.eesti.ee/EidasNode/ServiceProvider
-
-## 4 Testida liidestust
-- Asutus testib liidestust
-- RIA abistab võimalike probleemide lahendamisel.
-- Asutus esitab testiraporti [RIA vormil]()<-Link näidisele mis on vaja luua (dokument vaja panna ka viidete alla)
-
-Testida tuleb vähemalt järgnevaid aspekte:
-
-| ID | Eesmärk | Viide |
-|----|--------|--------|
-| 1 | Metateave peab olema korrektselt publitseeritud ning sisaldama kohustuslikke elemente | [Nõuded metateabe otspunktile](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#53-teenusepakkuja-metateave) |
-| 2 | Autentimispäring peab olema korrektselt koostatud ning sisaldama kohustuslikke elemente| [Nõuded autentimispäringule](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#6-autentimisp%C3%A4ring) |
-| 3 | Autentimise voog peab olema tervenesti läbitav | [Kasutusvoog](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#lisa-6-eduka-autentimisvoo-jadadiagramm), [Juhend testkasutajatega autentimiseks](Testkasutajad) |
-
-Testimise hõlbustamiseks on loodud [testijuhtude kogum](Testjuhud), mida tuleb (või on soovituslik?) järgida.
-
-## 5 Liituda eIDAS konnektor toodanguteenusega
-Eduka testimise järel asutus esitab taotluse toodanguteenuse avamiseks klientrakendusele. Taotluses näidata:
-1) e-teenus või -teenused, mille kasutajaid soovitakse eIDAS konnektorteenuse abil autentida<br>
-2) ...
-
-RIA, rahuldades taotluse:
-- avab asutuse klientrakenduse toodanguversioonile juurdepääsu toodanguteenusele.
-
-
+\5. Liituge toodangukeskkonnaga
+    - eelduseks on liidese testimise edukus (vt eelmine punkt)
+    - sõlmime teenuslepingu
+    - toodangukeskkonnas on vaja juba SK serte
+    - toodangukeskkonnas võivad rakenduda täiendavad turvameetmed; nendest otsesuhtluses.
