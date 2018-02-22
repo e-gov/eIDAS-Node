@@ -9,40 +9,26 @@ permalink: Mikroteenusena
 - paigaldamisega ja kasutamisega mikroteenusena
 - demorakendusena.
 
-Käesolev dokument käsitleb eIDAS Client kasutamist mikroteenusena.
-
-Kirjeldame:
-- eIDAS Client mikroteenuse olulised omadused, liidesed ja töötlusloogika
-- mikroteenuse paigaldamiseks olulise
-
-Kirjeldus on koostatud TARA silmas pidades, kuid käsitlus kehtib ka muudele sama mustriga kasutustele.
-
-<img src='img/Mikroteenusena.PNG' width='400'>
-
-Joonis 1. eIDAS Client liidesed
+Käesolev dokument käsitleb eIDAS Client kasutamist mikroteenusena. Kirjeldame eIDAS Client mikroteenuse olulised omadused, liidesed ja töötlusloogika ja mikroteenuse paigaldamiseks muu olulise. Kirjeldus on koostatud TARA silmas pidades, kuid käsitlus kehtib ka muudele sama mustriga kasutustele.
 
 Miks eIDAS Clienti kasutada mikroteenusena? Võimaldab:
 - vältida sõltuvuskonflikte (eIDAS Clienti ja e-teenuse alusteekide vahel)
 - hoida e-teenus vaba SAML sõnumitöötlusest.
 - vähendada eIDAS loogika e-teenusesse sissekirjutamise vajadust.
 
-Mikroteenuse mõiste. Mikroteenust iseloomustab:
-- selgepiirilisus
-    - väike arv, selgepiirilisi liideseid
-    - pakub konkreetset, lihtsalt hoomatavat teenust
-- suhteline sõltumatus
-    - väike arv sõltuvusi
-    - eraldi paigaldatavus
+Mikroteenuse mõiste. Mikroteenust iseloomustab: 1) selgepiirilisus - väike arv, selgepiirilisi liideseid; pakub konkreetset, lihtsalt hoomatavat teenust; 2) suhteline sõltumatus - väike arv sõltuvusi; eraldi paigaldatavus.
 
 ## Omadused
 
 Ülevaade eIDAS Client mikroteenuse omadustest:
 
-
-
 ## Liidesed
 
 eIDAS Client mikroteenusena pakub ja tarbib järgmisi otspunkte:
+
+<img src='img/Mikroteenusena.PNG' width='400'>
+
+Joonis 1. eIDAS Client liidesed
 
 _nr_ | __pakub/kasutab_ | protokoll [, meetod] |  _välis- v siseliides_ | _URL v selle osa_ | _selgitus_
 1 | pakub | välis | HTTPS, GET | `/metadata` | Otspunkt pakub e-teenuse SAML metateavet, vastavalt [RIA eIDAS konnektorteenuse spetsifikatsiooni nõuetele](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon)
