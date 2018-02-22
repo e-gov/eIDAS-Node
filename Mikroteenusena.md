@@ -56,13 +56,13 @@ Joonis 1. eIDAS Client liidesed
 
 Tabel 4.1 eIDAS Client liidesed
 
-|  nr  |  pakub/kasutab  |  välis- v siseliides | protokoll [, meetod] |  URL v selle osa  | selgitus |
-|:----:|:---------------:|:--------------------:|:----------------------:|:-----------------:|-------------|
-| 1 | pakub | välis | HTTPS, `GET` | `/metadata` | Otspunkt pakub e-teenuse SAML metateavet, vastavalt [RIA eIDAS konnektorteenuse spetsifikatsiooni nõuetele](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon) |
-| 2 | pakub | sise | HTTP(S), `GET` | `/login` | Tagastab eIDASe toetatud riikide nimekirja. |
-| 3 | pakub | sise | HTTP(S), `POST` | `/login` | Moodustab SAML autentimispäringusõnumi. Parameetrid ja töötlusloogika vt allpool. |
-| 4 | pakub | sise | HTTP(S), `POST` | `/AuthRes` | Töötleb SAML autentimisvastussõnumi. Ligipääs otspunktile on ainult ühel, sisevõrgus oleval rakendusel (teenusepakkujal). |
-| 5 | kasutab | välis | HTTPS, `GET` | `/ConnectorResponderMetadata` | Loeb RIA eIDAS konnektorteenuse metateavet |
+|  nr  |  pakub/kasutab  |  välis- v siseliides | protokoll [, meetod] |  URL v selle osa  | selgitus | ligipääs |
+|:----:|:---------------:|:--------------------:|:----------------------:|:-----------------:|-------------|------|
+| 1 | pakub | välis | HTTPS, `GET` | `/metadata` | Otspunkt pakub e-teenuse SAML metateavet, vastavalt [RIA eIDAS konnektorteenuse spetsifikatsiooni nõuetele](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon) | avalik |
+| 2 | pakub | sise | HTTP(S), `GET` | `/login` | Tagastab eIDASe toetatud riikide nimekirja. | ainult teenusepakkujal |
+| 3 | pakub | sise | HTTP(S), `POST` | `/login` | Moodustab SAML autentimispäringusõnumi. Parameetrid ja töötlusloogika vt allpool. | ainult teenusepakkujal |
+| 4 | pakub | sise | HTTP(S), `POST` | `/AuthRes` | Töötleb SAML autentimisvastussõnumi. | ainult teenusepakkujal |
+| 5 | kasutab | välis | HTTPS, `GET` | `/ConnectorResponderMetadata` | Loeb RIA eIDAS konnektorteenuse metateavet | avalik |
 
 Tabel 4.2 HTTP(S) `POST` `/login` parameetrid
 
@@ -80,8 +80,6 @@ Tabel 4.3 HTTP(S) `POST` `/AuthRes`
 | `RelayState` | Ei | Päringuga saadetud `RelayState` parameetri väärtus. |
 
 ## 5 Seadistus
-
-Teenusepakkuja metateabe seadistus
 
 Tabel 5.1 Teenusepakkuja metateabe seadistus
 
