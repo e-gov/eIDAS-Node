@@ -16,13 +16,24 @@ Miks eIDAS Clienti kasutada mikroteenusena? Võimaldab:
 - hoida e-teenus vaba SAML sõnumitöötlusest.
 - vähendada eIDAS loogika e-teenusesse sissekirjutamise vajadust.
 
-Mikroteenuse mõiste. Mikroteenust iseloomustab: 1) selgepiirilisus - väike arv, selgepiirilisi liideseid; pakub konkreetset, lihtsalt hoomatavat teenust; 2) suhteline sõltumatus - väike arv sõltuvusi; eraldi paigaldatavus.
+Mikroteenust iseloomustab: 1) selgepiirilisus - väike arv, selgepiirilisi liideseid; pakub konkreetset, lihtsalt hoomatavat teenust; 2) suhteline sõltumatus - väike arv sõltuvusi; eraldi paigaldatavus. Samas ei tähenda mikroteenus järeleandmisi turvalisusele.
 
 ## Omadused
 
 Ülevaade eIDAS Client mikroteenuse omadustest:
 
+_omadus_ | _väärtus_ | _selgitus_
+olek | _stateless_ | ei kasuta andmebaasi ega muud püsimälu.
+avatud pöördumistele välisvõrgust | jah | `/metadata` otspunkt, vt allpool
+pöördub välisvõrku | jah | RIA konnektorteenuse metateabe otspunkti `/ConnectorResponderMetadata` poole. (TARA puhul pöördumine ei välju välisvõrku)
+UI | ei | otsesuhtlus kasutajaga (sirvikuga) puudub 
+seadistus | seadistusfaili abil, vt allpool 
+logimine | ei | // TODO Analüüsida logimise vajadust //
+isikuandmete töötlus | töödeldakse, teenusepakkuja poolt kasutatava eIDAS autentimisteenuse kontekstis
 
+## Infoturve 
+
+**Ligipääsu `/login` ja `/AuthRes` otspunktidele tohib anda ainult teenusepakkujale (s.t sisevõrgus olevale rakendusele).  Kaitstakse HTTPS-ga, sertidega ja usaldusankru seadmisega mikroteenuse seadistuses.**
 
 ## Liidesed
 
@@ -37,7 +48,7 @@ Joonis 1. eIDAS Client liidesed
 | 1 | pakub | välis | HTTPS, GET | `/metadata` | Otspunkt pakub e-teenuse SAML metateavet, vastavalt [RIA eIDAS konnektorteenuse spetsifikatsiooni nõuetele](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon) |
 | 2 | pakub | sise | HTTP(S), GET | `/login` | Tagastab eIDASe toetatud riikide nimekirja. |
 | 3 | pakub | sise | HTTP(S), POST | `/login` | Moodustab SAML autentimispäringusõnumi. Parameetrid ja töötlusloogika vt allpool. |
-| 4 | pakub | sise | HTTP(S), POST | `/AuthRes` | Töötleb SAML autentimisvastussõnumi |
+| 4 | pakub | sise | HTTP(S), POST | `/AuthRes` | Töötleb SAML autentimisvastussõnumi. Ligipääs otspunktile on ainult ühel, sisevõrgus oleval rakendusel (teenusepakkujal). |
 | 5 | kasutab | välis | HTTPS, GET | `/ConnectorResponderMetadata` | Loeb RIA eIDAS konnektorteenuse metateavet |
 
 | parameetri nimi        | kohustuslik           | selgitus  |
@@ -51,9 +62,36 @@ Joonis 1. eIDAS Client liidesed
 | `SAMLResponse` | Jah | Parameeter, milles tagastatakse Base64-kodeeritud SAML `Response` päring. Vastus peab olema allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | Päringuga saadetud `RelayState` parameetri väärtus. |
 
-## 
+## Seadistus
 
-Mikroteenusena paigaldamisel tuleb arvestada:
+Tabel 3.1 - Teenusepakkuja metateabe seadistus
+
+| Parameeter        | Kohustuslik | Kirjeldus, näide |
+| :---------------- | :---------- | :----------------|
+| `eidas.client.keystore` | Jah | Võtmehoidla asukoht. Peab olema JKS tüüpi. classpath:samlKeystore.jks |
+| `eidas.client.keystorePass` | Jah | Võtmehoidla parool. |
+| `eidas.client.metadataSigningKeyId` | Jah | SAML metateabe allkirjastamisvõtme alias. |
+| `eidas.client.metadataSigningKeyPass` | Jah | SAML metateabe allkirjastamisvõtme parool. |
+| `eidas.client.requestSigningKeyId` | Jah | SAML autentimispäringu allkirjastamisvõtme alias. |
+| `eidas.client.requestSigningKeyPass` | Jah | SAML autentimispäringu allkirjastamisvõtme parool. |
+| `eidas.client.responseDecryptionKeyId` | Jah | SAML autentimisvastuse dekrüpteerimisvõtme alias. |
+| `eidas.client.responseDecryptionKeyPass` | Jah | SAML autentimisvastuse dekrüpteerimisvõtme parool. |
+| `eidas.client.spEntityId` | Jah | `/md:EntityDescriptor/@Issuer` väärtus metateabes. Näiteks: https://hostname:8889/metadata |
+| `eidas.client.callbackUrl` | Jah | `/md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location` väärtus metateabes. |
+
+Tabel 3.2 - Konnektorteenuse metateabe seadistus
+
+| Parameeter        | Kohustuslik | Kirjeldus, näide |
+| :---------------- | :---------- | :----------------|
+| `eidas.client.idpMetadataUrl`  | Jah | Konnektorteenuse metateabe asukoht. https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata |
+| `eidas.client.idpMetadataSigningCertificateKeyId` | Ei | Konnektorteeenuse metateabe allkirjastamiseks kasutatud sertifikaadi alias võtmehoidlas. Vaikimisi alias: `metadata`. |
+
+Tabel 3.3 - AuthnRequesti seadistus
+
+| Parameeter        | Kohustuslik | Kirjeldus, näide |
+| :---------------- | :---------- | :----------------|
+| `eidas.client.providerName` | Jah | `/saml2p:AuthnRequest/@ProviderName` väärtus. |
+
 
 
 
