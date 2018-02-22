@@ -9,6 +9,8 @@ v 0.2, 22.02.2018
 - TOC
 {:toc}
 
+## 1 Ülevaade
+
 [eIDAS Client](https://github.com/e-gov/eIDAS-Client) on tarkvara, mis aitab teostada e-teenuse (nimetame ka teenusepakkujaks) liidest RIA eIDAS konnektorteenusega. eIDAS Clienti võib kasutada kolmel viisil:
 - eIDAS Client teegi lõimimisega e-teenuse tarkvarasse
 - paigaldamisega ja kasutamisega mikroteenusena
@@ -24,9 +26,9 @@ Miks kasutada eIDAS Clienti mikroteenusena? Võimaldab:
 
 Samas ei tähenda mikroteenus järeleandmisi turvalisusele,dokumenteerimisele, testimisele jm arendus- ja käitlusnõuetele.
 
-## 1 Omaduste kokkuvõte
+## 2 Käitlusomadused
 
-eIDAS Client mikroteenuse tähtsamad omadused:
+eIDAS Client mikroteenuse käitluse seisukohalt tähtsamad omadused (infoturve vt jaotis 2):
 
 _omadus_ | _väärtus_ | _selgitus_
 olek | _stateless_ | ei kasuta andmebaasi ega muud püsimälu
@@ -38,11 +40,11 @@ logimine | ei | // TODO Analüüsida logimise vajadust //
 isikuandmete töötlus | töödeldakse, teenusepakkuja poolt kasutatava eIDAS autentimisteenuse kontekstis
 testimine |   | // TODO //
 
-## 2 Infoturve 
+## 3 Infoturve 
 
 Ligipääsu `/login` ja `/AuthRes` otspunktidele tohib anda ainult teenusepakkujale (s.t sisevõrgus olevale rakendusele).  Kaitstakse HTTPS-ga, sertidega ja usaldusankru seadmisega mikroteenuse seadistuses.
 
-## 3 Liidesed
+## 4 Liidesed
 
 eIDAS Client mikroteenusena pakub ja tarbib järgmisi otspunkte (joonis 1). Otspunktid on spetsifitseeritud allpool. 
 
@@ -75,7 +77,7 @@ Tabel 3.3 HTTP(S) `POST` `/AuthRes`
 | `SAMLResponse` | Jah | Base64-kodeeritud SAML `Response` sõnum. Vastus peab olema allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | Päringuga saadetud `RelayState` parameetri väärtus. |
 
-## 4 Seadistus
+## 5 Seadistus
 
 Teenusepakkuja metateabe seadistus
 
