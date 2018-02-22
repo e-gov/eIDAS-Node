@@ -22,22 +22,23 @@ Mikroteenuse mõiste. Mikroteenust iseloomustab: 1) selgepiirilisus - väike arv
 
 Ülevaade eIDAS Client mikroteenuse omadustest:
 
+
+
 ## Liidesed
 
 eIDAS Client mikroteenusena pakub ja tarbib järgmisi otspunkte:
 
-<img src='img/Mikroteenusena.PNG' width='400'>
+<img src='img/Mikroteenusena.PNG' width='600'>
 
 Joonis 1. eIDAS Client liidesed
 
-_nr_ | __pakub/kasutab_ | protokoll [, meetod] |  _välis- v siseliides_ | _URL v selle osa_ | _selgitus_
-1 | pakub | välis | HTTPS, GET | `/metadata` | Otspunkt pakub e-teenuse SAML metateavet, vastavalt [RIA eIDAS konnektorteenuse spetsifikatsiooni nõuetele](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon)
-
-2 | pakub | sise | HTTP(S), GET | `/login` | Tagastab eIDASe toetatud riikide nimekirja.
-3 | pakub | sise | HTTP(S), POST | `/login` | Moodustab SAML autentimispäringusõnumi. Parameetrid ja töötlusloogika vt allpool.
-
-4 | pakub | sise | HTTP(S), POST | `/AuthRes` | Töötleb SAML autentimisvastussõnumi
-5 | kasutab | välis | HTTPS, GET | `/ConnectorResponderMetadata` | Loeb RIA eIDAS konnektorteenuse metateavet
+| _nr_ | _pakub/kasutab_ | protokoll [, meetod] |  _välis- v siseliides_ | _URL v selle osa_ | _selgitus_  |
+|:----:|:---------------:|:--------------------:|:----------------------:|:-----------------:|-------------|
+| 1 | pakub | välis | HTTPS, GET | `/metadata` | Otspunkt pakub e-teenuse SAML metateavet, vastavalt [RIA eIDAS konnektorteenuse spetsifikatsiooni nõuetele](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon) |
+| 2 | pakub | sise | HTTP(S), GET | `/login` | Tagastab eIDASe toetatud riikide nimekirja. |
+| 3 | pakub | sise | HTTP(S), POST | `/login` | Moodustab SAML autentimispäringusõnumi. Parameetrid ja töötlusloogika vt allpool. |
+| 4 | pakub | sise | HTTP(S), POST | `/AuthRes` | Töötleb SAML autentimisvastussõnumi |
+| 5 | kasutab | välis | HTTPS, GET | `/ConnectorResponderMetadata` | Loeb RIA eIDAS konnektorteenuse metateavet |
 
 | parameetri nimi        | kohustuslik           | selgitus  |
 | ------------- |:-------------:| :-----|
