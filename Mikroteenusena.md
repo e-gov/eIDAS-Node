@@ -27,17 +27,18 @@ Miks kasutada eIDAS Clienti mikroteenusena? Mikroteenus võimaldab:
 Mikroteenus ei tähenda järeleandmisi turvalisusele,dokumenteerimisele, testimisele jm arendus- ja käitlusnõuetele.
 
 eIDAS Client mikroteenus:
-- annab e-teenusele RIA eIDAS konnektorteenuse poolt toetatud riikidest
+- annab e-teenusele nimekirja RIA eIDAS konnektorteenuse poolt toetatud riikidest
 - publitseerib konnektorteenusega suhtluseks vajaliku metateabe otspunkti
 - moodustab nõuetekohase SAML autentimispäringu, sh allkirjastab
 - töötleb konnektorteenuselt saadud SAML autentimisvastust - kontrollib allkirja, dekrüpteerib ja teisendab hõlpsamini tarbitavale JSON-kujule.
 
-eIDAS Client mikroteenus teenindab ühtainust teenusepakkujat.
+eIDAS Client mikroteenus seadistatakse teenindama ühtainust teenusepakkujat. **SAML autentimispäringut allkirjastades tegutseb mikroteenus teenusepakkuja nimel.** 
 
-Teenusepakkuja:
-- korraldab riigi ja minimaalse tagatistaseme valiku
-- mikroteenuse poolt moodustatud autentimispäringu edastamise konnektorteenusele (sirviku ümbersuunamiskorraldusega)
-- autentimisvastuse vastuvõtmise konnektorteenuselt.
+Teenusepakkuja ülesandeks on:
+- küsida kasutajale kust riigist ta on ja edastada valik koos minimaalse tagatistasemega mikroteenusele
+- mikroteenuse poolt moodustatud autentimispäringu edastamine konnektorteenusele (sirviku ümbersuunamiskorraldusega)
+- autentimisvastuse vastuvõtmine konnektorteenuselt ja edastamine mikroteenusele töötlemiseks
+- autentimistulemuste vastuvõtmine mikroteenuselt (ja eduka isikutuvastuse korral kasutajaga seansi loomine).
 
 ## 2 Käitlusomadused
 
