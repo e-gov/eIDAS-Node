@@ -3,6 +3,11 @@ permalink: Mikroteenusena
 ---
 
 # eIDAS Client mikroteenusena
+{: .no_toc}
+v 0.2
+
+- TOC
+{:toc}
 
 [eIDAS Client](https://github.com/e-gov/eIDAS-Client) on tarkvara, mis aitab teostada e-teenuse (nimetame ka teenusepakkujaks) liidest RIA eIDAS konnektorteenusega. eIDAS Clienti võib kasutada kolmel viisil:
 - eIDAS Client teegi lõimimisega e-teenuse tarkvarasse
