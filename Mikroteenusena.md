@@ -32,13 +32,14 @@ Miks eIDAS Clienti kasutada mikroteenusena? Võimaldab:
 
 eIDAS Client mikroteenusena pakub ja tarbib järgmisi otspunkte:
 
-pakub/kasutab | välis- v siseliides | nimetus | selgitus
+_pakub/kasutab_ | _välis- v siseliides_ | _nimetus_ | _selgitus_
 pakub | välis | `/metadata` | SAML 2.0 standardijärgne metateabe otspunkt. Vajalik eIDAS konnektorteenuse ja kliendi vahelise usalduse loomiseks. Joonisel: "väljasta konnektorteenusele metateave".
+
 pakub | sise | `/AuthReq` | Moodustab SAML autentimispäringusõnum
 pakub | sise | `/AuthRes` | Töötleb SAML autentimisvastussõnumi
 kasutab | välis | `/ConnectorResponderMetadata` | Loe RIA eIDAS konnektorteenuse metateavet
 
-Mikroteenusena paigaldamise tuleb arvestada:
+Mikroteenusena paigaldamisel tuleb arvestada:
 
 
 
