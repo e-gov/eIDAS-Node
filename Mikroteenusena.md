@@ -66,7 +66,7 @@ Tabel 4.1 eIDAS Client liidesed
 | 4 | pakub | sise | HTTP(S), `POST` | `/AuthRes` | Töötleb SAML autentimisvastussõnumi. | ainult teenusepakkujal |
 | 5 | kasutab | välis | HTTPS, `GET` | `/ConnectorResponderMetadata` | Loeb RIA eIDAS konnektorteenuse metateavet | avalik |
 
-Tabel 4.2 HTTP(S) `POST` `/login` parameetrid
+Tabel 4.2 HTTP(S) `POST` `/login`
 
 | parameetri nimi        | kohustuslik           | selgitus  |
 |:-------------:|:-------------:| :-----|
@@ -74,12 +74,20 @@ Tabel 4.2 HTTP(S) `POST` `/login` parameetrid
 | `LoA` |	Ei | Parameeter, mis määrab ära nõutava isikutuvastuse taseme. Lubatud väärtused: `substantial`, `high`. <br>Kui parameeter on määramata, siis vaikimisi loetakse väärtuseks `substantial`. |
 | `RelayState` |	Ei | Parameeter, mis saadetakse edasi konnektorteenusele muutmata kujul. Väärtus peab vastama regulaaravaldisele `[a-zA-Z0-9-_]{0,80}`. |
 
+// TODO Väljund //
+
+// TODO Näide //
+
 Tabel 4.3 HTTP(S) `POST` `/AuthRes`
 
 | parameetri nimi        | kohustuslik           | selgitus  |
 | ------------- |:-------------:| :-----|
 | `SAMLResponse` | Jah | Base64-kodeeritud SAML `Response` sõnum. Vastus peab olema allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | Päringuga saadetud `RelayState` parameetri väärtus. |
+
+// TODO Väljund //
+
+// TODO Näide //
 
 ## 5 Seadistus
 
