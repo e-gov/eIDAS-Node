@@ -32,6 +32,8 @@ eIDAS Client mikroteenuse käitluse seisukohalt tähtsamad omadused (infoturve v
 
 _omadus_ | _väärtus_ | _selgitus_
 olek | _stateless_ | ei kasuta andmebaasi ega muud püsimälu
+otspunkte | 4 + 2 | pakub 4, ise kasutab 2
+protokoll(id) | HTTP(S) |
 avatud pöördumistele välisvõrgust | jah | `/metadata` otspunkt, vt allpool
 pöördub välisvõrku | jah | RIA konnektorteenuse metateabe (`/ConnectorResponderMetadata`) ja toetatud riikide nimekirja poole. (TARA puhul pöördumised ei tarvitse väljuda välisvõrku)
 kasutajaliides (UI) | ei | otsesuhtlus kasutajaga (sirvikuga) puudub 
