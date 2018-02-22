@@ -31,7 +31,7 @@ Samas ei tähenda mikroteenus järeleandmisi turvalisusele,dokumenteerimisele, t
 eIDAS Client mikroteenuse käitluse seisukohalt tähtsamad omadused (infoturve vt jaotis 2):
 
 _omadus_ | _väärtus_ | _selgitus_
-olek | _stateless_ | ei kasuta andmebaasi ega muud püsimälu
+olek | _stateless_ | ei kasuta andmebaasi ega muud püsimälu (kuid loomulikult sõltub seadistusest. Seadistuse osaks on usaldusankur ja privaatvõti)
 otspunkte | 4 + 2 | pakub 4, ise kasutab 2
 protokoll(id) | HTTP(S) |
 avatud pöördumistele välisvõrgust | jah | `/metadata` otspunkt, vt allpool
@@ -94,7 +94,7 @@ Tabel 4.3 HTTP(S) `POST` `/AuthRes`
 Tabel 5.1 Teenusepakkuja metateabe seadistus
 
 | Parameeter        | Kohustuslik | Kirjeldus, näide |
-| :---------------- | :---------- | :----------------|
+| :---------------- |:----------:| :----------------|
 | `eidas.client.keystore` | Jah | Võtmehoidla asukoht. Peab olema JKS tüüpi. classpath:samlKeystore.jks |
 | `eidas.client.keystorePass` | Jah | Võtmehoidla parool. |
 | `eidas.client.metadataSigningKeyId` | Jah | SAML metateabe allkirjastamisvõtme alias. |
