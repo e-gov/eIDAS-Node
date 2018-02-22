@@ -56,7 +56,7 @@ Joonis 1. eIDAS Client liidesed
 
 Tabel 4.1 eIDAS Client liidesed
 
-| _nr_ | _pakub/kasutab_ | protokoll [, meetod] |  _välis- v siseliides_ | _URL v selle osa_ | _selgitus_  |
+|  nr  |  pakub/kasutab  |  välis- v siseliides | protokoll [, meetod] |  URL v selle osa  | selgitus |
 |:----:|:---------------:|:--------------------:|:----------------------:|:-----------------:|-------------|
 | 1 | pakub | välis | HTTPS, `GET` | `/metadata` | Otspunkt pakub e-teenuse SAML metateavet, vastavalt [RIA eIDAS konnektorteenuse spetsifikatsiooni nõuetele](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon) |
 | 2 | pakub | sise | HTTP(S), `GET` | `/login` | Tagastab eIDASe toetatud riikide nimekirja. |
