@@ -11,7 +11,7 @@ v 0.2, 22.02.2018
 
 ## 1 Ülevaade
 
-[eIDAS Client](https://github.com/e-gov/eIDAS-Client) on tarkvara, mis aitab teostada e-teenuse (nimetame ka teenusepakkujaks) liidest RIA eIDAS konnektorteenusega. eIDAS Clienti võib kasutada kolmel viisil:
+[eIDAS Client](https://github.com/e-gov/eIDAS-Client) on tarkvara, mis hõlbustab e-teenuse (teenusepakkuja) liidestamist RIA eIDAS konnektorteenusega. eIDAS Clienti võib kasutada kolmel viisil:
 - eIDAS Client teegi lõimimisega e-teenuse tarkvarasse
 - paigaldamisega ja kasutamisega mikroteenusena
 - demorakendusena.
@@ -20,11 +20,24 @@ Käesolev dokument käsitleb eIDAS Client kasutamist mikroteenusena. Kirjeldame 
 
 Miks kasutada eIDAS Clienti mikroteenusena? Mikroteenus võimaldab:
 - vältida sõltuvuskonflikte (eIDAS Clienti ja e-teenuse alusteekide vahel)
-- hoida e-teenus vaba SAML sõnumitöötlusest.
+- hoida e-teenus vaba SAML sõnumitöötlusest, sh sellega seotud võtmehaldusest ja keerukast seadistamisest
 - hoida eIDAS loogika teenusepakkujasse sissekirjutamist minimaalsena
 - hoida üldiselt asju lihtsana (mikroteenust iseloomustab: 1) selgepiirilisus - väike arv, selgepiirilisi liideseid; pakub konkreetset, lihtsalt hoomatavat teenust; 2) suhteline sõltumatus - väike arv sõltuvusi; eraldi paigaldatavus).
 
 Mikroteenus ei tähenda järeleandmisi turvalisusele,dokumenteerimisele, testimisele jm arendus- ja käitlusnõuetele.
+
+eIDAS Client mikroteenus:
+- annab e-teenusele RIA eIDAS konnektorteenuse poolt toetatud riikidest
+- publitseerib konnektorteenusega suhtluseks vajaliku metateabe otspunkti
+- moodustab nõuetekohase SAML autentimispäringu, sh allkirjastab
+- töötleb konnektorteenuselt saadud SAML autentimisvastust - kontrollib allkirja, dekrüpteerib ja teisendab hõlpsamini tarbitavale JSON-kujule.
+
+eIDAS Client mikroteenus teenindab ühtainust teenusepakkujat.
+
+Teenusepakkuja:
+- korraldab riigi ja minimaalse tagatistaseme valiku
+- mikroteenuse poolt moodustatud autentimispäringu edastamise konnektorteenusele (sirviku ümbersuunamiskorraldusega)
+- autentimisvastuse vastuvõtmise konnektorteenuselt.
 
 ## 2 Käitlusomadused
 
@@ -50,13 +63,13 @@ Ligipääs otspunktile `/metadata` ei vaja piiramist (metateave on avalik).
 
 ## 4 Liidesed
 
+### 4.1 Ülevaade
+
 eIDAS Client mikroteenusena pakub ja tarbib järgmisi otspunkte (joonis 1). Otspunktid on spetsifitseeritud allpool. 
 
 <img src='img/Mikroteenusena.PNG' width='600' style='margin-left: 6em;'>
 
 Joonis 1. eIDAS Client liidesed
-
-Tabel 4.1 eIDAS Client liidesed
 
 |  nr  |  pakub/kasutab  |  välis- v siseliides | protokoll [, meetod] |  URL v selle osa  | selgitus | ligipääs |
 |:----:|:---------------:|:--------------------:|:----------------------:|:-----------------:|-------------|------|
@@ -66,32 +79,40 @@ Tabel 4.1 eIDAS Client liidesed
 | 4 | pakub | sise | HTTP(S), `POST` | `/AuthRes` | Töötleb SAML autentimisvastussõnumi. | ainult teenusepakkujal |
 | 5 | kasutab | välis | HTTPS, `GET` | `/ConnectorResponderMetadata` | Loeb RIA eIDAS konnektorteenuse metateavet | avalik |
 
-Tabel 4.2 HTTP(S) `POST` `/login`
+### 4.2 `POST` `/login`
+
+Sisend:
 
 | parameetri nimi        | kohustuslik           | selgitus  |
 |:-------------:|:-------------:| :-----|
-| `Country` |	Jah | Kohustuslik POST meetodi puhul. Parameeter määrab ära tuvastatava kodaniku riigi. Väärtus peab vastama [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) standardis toodule. |
+| `Country` |	Jah | Kohustuslik POST meetodi puhul. Parameeter määrab ära tuvastatava kasutaja riigi. Väärtus peab vastama [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) standardis toodule. |
 | `LoA` |	Ei | Parameeter, mis määrab ära nõutava isikutuvastuse taseme. Lubatud väärtused: `substantial`, `high`, `low`. <br>Kui parameeter on määramata, siis vaikimisi loetakse väärtuseks `low`. |
 | `RelayState` |	Ei | Parameeter, mis saadetakse edasi konnektorteenusele muutmata kujul. Väärtus peab vastama regulaaravaldisele `[a-zA-Z0-9-_]{0,80}`. |
 
-// TODO Väljund //
+Väljund:
 
-// TODO Näide //
+// TODO JSON-struktuur saatmisvalmis URL-i ja POST-päringu kehaga? //
 
-Tabel 4.3 HTTP(S) `POST` `/AuthRes`
+// TODO Näide. Või viidata konnektorteenuse speki näitele? //
+
+### 4.3 `POST` `/AuthRes`
+
+Sisend:
 
 | parameetri nimi        | kohustuslik           | selgitus  |
 | ------------- |:-------------:| :-----|
 | `SAMLResponse` | Jah | Base64-kodeeritud SAML `Response` sõnum. Vastus peab olema allkirjastatud ja isiku kohta käivad väited krüpteeritud (eIDAS Node privaatvõtmega). |
 | `RelayState` | Ei | Päringuga saadetud `RelayState` parameetri väärtus. |
 
-// TODO Väljund //
+Väljund:
+
+// TODO - JSON-struktuur? //
 
 // TODO Näide //
 
 ## 5 Seadistus
 
-Tabel 5.1 Teenusepakkuja metateabe seadistus
+Teenusepakkuja metateabe seadistus
 
 | Parameeter        | Kohustuslik | Kirjeldus, näide |
 | :---------------- |:----------:| :----------------|
@@ -106,14 +127,14 @@ Tabel 5.1 Teenusepakkuja metateabe seadistus
 | `eidas.client.spEntityId` | Jah | `/md:EntityDescriptor/@Issuer` väärtus metateabes. Näiteks: https://hostname:8889/metadata |
 | `eidas.client.callbackUrl` | Jah | `/md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location` väärtus metateabes. |
 
-Tabel 5.2 Konnektorteenuse metateabe seadistus
+Konnektorteenuse metateabe seadistus
 
 | Parameeter        | Kohustuslik | Kirjeldus, näide |
 | :---------------- | :---------- | :----------------|
 | `eidas.client.idpMetadataUrl`  | Jah | Konnektorteenuse metateabe asukoht. https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata |
 | `eidas.client.idpMetadataSigningCertificateKeyId` | Ei | Konnektorteeenuse metateabe allkirjastamiseks kasutatud sertifikaadi alias võtmehoidlas. Vaikimisi alias: `metadata`. |
 
-Tabel 5.3 AuthnRequesti seadistus
+AuthnRequesti seadistus
 
 | Parameeter        | Kohustuslik | Kirjeldus, näide |
 | :---------------- | :---------- | :----------------|
