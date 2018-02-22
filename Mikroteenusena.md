@@ -33,7 +33,7 @@ eIDAS Client mikroteenuse käitluse seisukohalt tähtsamad omadused (infoturve v
 _omadus_ | _väärtus_ | _selgitus_
 olek | _stateless_ | ei kasuta andmebaasi ega muud püsimälu
 avatud pöördumistele välisvõrgust | jah | `/metadata` otspunkt, vt allpool
-pöördub välisvõrku | jah | RIA konnektorteenuse metateabe otspunkti `/ConnectorResponderMetadata` poole. (TARA puhul pöördumine ei välju välisvõrku)
+pöördub välisvõrku | jah | RIA konnektorteenuse metateabe (`/ConnectorResponderMetadata`) ja toetatud riikide nimekirja poole. (TARA puhul pöördumised ei tarvitse väljuda välisvõrku)
 kasutajaliides (UI) | ei | otsesuhtlus kasutajaga (sirvikuga) puudub 
 seadistus | seadistusfaili abil, vt allpool 
 logimine | ei | // TODO Analüüsida logimise vajadust //
@@ -44,15 +44,17 @@ testimine |   | // TODO //
 
 Ligipääsu `/login` ja `/AuthRes` otspunktidele tohib anda ainult teenusepakkujale (s.t sisevõrgus olevale rakendusele).  Kaitstakse HTTPS-ga, sertidega ja usaldusankru seadmisega mikroteenuse seadistuses.
 
+Ligipääs otspunktile `/metadata` ei vaja piiramist (metateave on avalik).
+
 ## 4 Liidesed
 
 eIDAS Client mikroteenusena pakub ja tarbib järgmisi otspunkte (joonis 1). Otspunktid on spetsifitseeritud allpool. 
 
-<img src='img/Mikroteenusena.PNG' width='600'>
+<img src='img/Mikroteenusena.PNG' width='600' style='margin-left: 6em;'>
 
 Joonis 1. eIDAS Client liidesed
 
-Tabel 3.1 eIDAS Client liidesed
+Tabel 4.1 eIDAS Client liidesed
 
 | _nr_ | _pakub/kasutab_ | protokoll [, meetod] |  _välis- v siseliides_ | _URL v selle osa_ | _selgitus_  |
 |:----:|:---------------:|:--------------------:|:----------------------:|:-----------------:|-------------|
@@ -62,7 +64,7 @@ Tabel 3.1 eIDAS Client liidesed
 | 4 | pakub | sise | HTTP(S), `POST` | `/AuthRes` | Töötleb SAML autentimisvastussõnumi. Ligipääs otspunktile on ainult ühel, sisevõrgus oleval rakendusel (teenusepakkujal). |
 | 5 | kasutab | välis | HTTPS, `GET` | `/ConnectorResponderMetadata` | Loeb RIA eIDAS konnektorteenuse metateavet |
 
-Tabel 3.2 HTTP(S) `POST` `/login`
+Tabel 4.2 HTTP(S) `POST` `/login` parameetrid
 
 | parameetri nimi        | kohustuslik           | selgitus  |
 |:-------------:|:-------------:| :-----|
@@ -70,7 +72,7 @@ Tabel 3.2 HTTP(S) `POST` `/login`
 | `LoA` |	Ei | Parameeter, mis määrab ära nõutava isikutuvastuse taseme. Lubatud väärtused: `substantial`, `high`. <br>Kui parameeter on määramata, siis vaikimisi loetakse väärtuseks `substantial`. |
 | `RelayState` |	Ei | Parameeter, mis saadetakse edasi konnektorteenusele muutmata kujul. Väärtus peab vastama regulaaravaldisele `[a-zA-Z0-9-_]{0,80}`. |
 
-Tabel 3.3 HTTP(S) `POST` `/AuthRes`
+Tabel 4.3 HTTP(S) `POST` `/AuthRes`
 
 | parameetri nimi        | kohustuslik           | selgitus  |
 | ------------- |:-------------:| :-----|
@@ -81,7 +83,7 @@ Tabel 3.3 HTTP(S) `POST` `/AuthRes`
 
 Teenusepakkuja metateabe seadistus
 
-Tabel 4.1 Teenusepakkuja metateabe seadistus
+Tabel 5.1 Teenusepakkuja metateabe seadistus
 
 | Parameeter        | Kohustuslik | Kirjeldus, näide |
 | :---------------- | :---------- | :----------------|
@@ -96,14 +98,14 @@ Tabel 4.1 Teenusepakkuja metateabe seadistus
 | `eidas.client.spEntityId` | Jah | `/md:EntityDescriptor/@Issuer` väärtus metateabes. Näiteks: https://hostname:8889/metadata |
 | `eidas.client.callbackUrl` | Jah | `/md:EntityDescriptor/md:SPSSODescriptor/md:AssertionConsumerService/@Location` väärtus metateabes. |
 
-Tabel 4.2 Konnektorteenuse metateabe seadistus
+Tabel 5.2 Konnektorteenuse metateabe seadistus
 
 | Parameeter        | Kohustuslik | Kirjeldus, näide |
 | :---------------- | :---------- | :----------------|
 | `eidas.client.idpMetadataUrl`  | Jah | Konnektorteenuse metateabe asukoht. https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata |
 | `eidas.client.idpMetadataSigningCertificateKeyId` | Ei | Konnektorteeenuse metateabe allkirjastamiseks kasutatud sertifikaadi alias võtmehoidlas. Vaikimisi alias: `metadata`. |
 
-Tabel 4.3 AuthnRequesti seadistus
+Tabel 5.3 AuthnRequesti seadistus
 
 | Parameeter        | Kohustuslik | Kirjeldus, näide |
 | :---------------- | :---------- | :----------------|
