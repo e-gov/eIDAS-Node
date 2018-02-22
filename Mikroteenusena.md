@@ -16,19 +16,19 @@ v 0.2, 22.02.2018
 - paigaldamisega ja kasutamisega mikroteenusena
 - demorakendusena.
 
-Käesolev dokument käsitleb eIDAS Client kasutamist mikroteenusena. Kirjeldame eIDAS Client mikroteenuse olulised omadused, liidesed ja töötlusloogika ja mikroteenuse paigaldamiseks muu olulise. Kirjeldus on koostatud TARA silmas pidades, kuid käsitlus kehtib ka muudele sama mustriga kasutustele.
+Käesolev dokument käsitleb eIDAS Client kasutamist mikroteenusena. Kirjeldame eIDAS Client mikroteenuse olulised omadused, liidesed ja töötlusloogika ning mikroteenuse paigaldamiseks muu olulise. Kirjeldus on koostatud TARA silmas pidades, kuid kehtib ka muudele sama mustriga kasutustele.
 
-Miks kasutada eIDAS Clienti mikroteenusena? Võimaldab:
+Miks kasutada eIDAS Clienti mikroteenusena? Mikroteenus võimaldab:
 - vältida sõltuvuskonflikte (eIDAS Clienti ja e-teenuse alusteekide vahel)
 - hoida e-teenus vaba SAML sõnumitöötlusest.
-- vähendada eIDAS loogika e-teenusesse sissekirjutamise vajadust
-- hoida asju lihtsana (mikroteenust iseloomustab: 1) selgepiirilisus - väike arv, selgepiirilisi liideseid; pakub konkreetset, lihtsalt hoomatavat teenust; 2) suhteline sõltumatus - väike arv sõltuvusi; eraldi paigaldatavus)
+- hoida eIDAS loogika teenusepakkujasse sissekirjutamist minimaalsena
+- hoida üldiselt asju lihtsana (mikroteenust iseloomustab: 1) selgepiirilisus - väike arv, selgepiirilisi liideseid; pakub konkreetset, lihtsalt hoomatavat teenust; 2) suhteline sõltumatus - väike arv sõltuvusi; eraldi paigaldatavus).
 
-Samas ei tähenda mikroteenus järeleandmisi turvalisusele,dokumenteerimisele, testimisele jm arendus- ja käitlusnõuetele.
+Mikroteenus ei tähenda järeleandmisi turvalisusele,dokumenteerimisele, testimisele jm arendus- ja käitlusnõuetele.
 
 ## 2 Käitlusomadused
 
-eIDAS Client mikroteenuse käitluse seisukohalt tähtsamad omadused (infoturve vt jaotis 2):
+eIDAS Client mikroteenuse tähtsamad omadused (infoturve vt jaotis 2):
 
 _omadus_ | _väärtus_ | _selgitus_
 olek | _stateless_ | ei kasuta andmebaasi ega muud püsimälu (kuid loomulikult sõltub seadistusest. Seadistuse osaks on usaldusankur ja privaatvõti)
@@ -71,7 +71,7 @@ Tabel 4.2 HTTP(S) `POST` `/login`
 | parameetri nimi        | kohustuslik           | selgitus  |
 |:-------------:|:-------------:| :-----|
 | `Country` |	Jah | Kohustuslik POST meetodi puhul. Parameeter määrab ära tuvastatava kodaniku riigi. Väärtus peab vastama [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) standardis toodule. |
-| `LoA` |	Ei | Parameeter, mis määrab ära nõutava isikutuvastuse taseme. Lubatud väärtused: `substantial`, `high`. <br>Kui parameeter on määramata, siis vaikimisi loetakse väärtuseks `substantial`. |
+| `LoA` |	Ei | Parameeter, mis määrab ära nõutava isikutuvastuse taseme. Lubatud väärtused: `substantial`, `high`, `low`. <br>Kui parameeter on määramata, siis vaikimisi loetakse väärtuseks `low`. |
 | `RelayState` |	Ei | Parameeter, mis saadetakse edasi konnektorteenusele muutmata kujul. Väärtus peab vastama regulaaravaldisele `[a-zA-Z0-9-_]{0,80}`. |
 
 // TODO Väljund //
