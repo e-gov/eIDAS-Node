@@ -264,8 +264,8 @@ Tabel 3
 
 | XML elemendi või atribuudi nimi (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
 |:-------------|:-------------:|-----|
-| /md:EntityDescriptor/@Issuer | Jah | Nõutud väärtuseks teenusepakkuja metateabe otspunkti URL (HTTPS).|
-| /md:EntityDescriptor/@ValidUntil | Jah | Määrab metateabe kehtivusaja. Aegumisel küsib konnektorteenus metateave uuesti. |
+| /md:EntityDescriptor/@entityID | Jah | Nõutud väärtuseks teenusepakkuja metateabe otspunkti URL (HTTPS).|
+| /md:EntityDescriptor/@validUntil | Jah | Määrab metateabe kehtivusaja. Aegumisel küsib konnektorteenus metateave uuesti. |
 | /md:EntityDescriptor/ds:Signature | Jah | Kogu metateavet hõlmav digitaalallkiri, koos allkirjastamissertifikaadiga. Vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 | /md:EntityDescriptor/md:Extensions/eidas:SPType | Jah | Asutuse tüüp. Nõutud väärtus `public`. Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
 | /md:EntityDescriptor/md:SPSSODescriptor/@AuthnRequestsSigned | Jah | Deklareerib, et teenusepakkuja poolt saadetavad SAML päringud peavad olema allkirjastatud. Nõutud väärtus `true` |
