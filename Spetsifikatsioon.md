@@ -7,7 +7,7 @@ Märkus. Lahtised küsimused on markeeritud sümbolitega `//`.
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.7
+v 0.8
 
 - TOC
 {:toc}
@@ -87,7 +87,6 @@ Kokkuvõtlikult peab teenusepakkuja:
         - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` (peamine)
         - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` (alternatiiv)
             - võtmepikkus: 384 bitti
-        - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` (alternatiiv)
         - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` (alternatiiv)
             - võtmepikkus: 4096 bitti
             - Märkus. eIDAS krüptonõuetes esineb RSA-MGF1 nimetuse RSASSA-PSS all   
@@ -837,6 +836,7 @@ Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.8, 27.02.2018  | Allkirjastamise profiili täpsustus. |
 | 0.7, 15.02.2018  | Autentimisvastuse täpsustused. |
 | 0.6, 13.02.2018  | Ühendatud "eIDASe siseriiklike usaldus- ja krüptonõuetega" üheks dokumendiks. Väiksemaid täiendusi |
 | 0.5, 13.02.2018   | Korrastus. Vastuse täpsustused. XML nimeruumid |
