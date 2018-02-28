@@ -11,7 +11,7 @@ v 0.3, 28.02.2018
 
 ## 1 Ülevaade
 
-[eIDAS Client](https://github.com/e-gov/eIDAS-Client) on tarkvara, mis hõlbustab e-teenuse (teenusepakkuja) liidestamist RIA eIDAS konnektorteenusega. eIDAS Clienti võib kasutada kolmel viisil:
+[eIDAS Client](https://github.com/e-gov/eIDAS-Client) on tarkvara, mis hõlbustab e-teenuse (teenusepakkuja) liidestamist RIA eIDAS konnektorteenusega. eIDAS Client-i võib kasutada kolmel viisil:
 - paigaldamisega ja kasutamisega mikroteenusena
 - eIDAS Client teegi lõimimisega e-teenuse tarkvarasse
 - demorakendusena.
@@ -27,19 +27,21 @@ eIDAS Client mikroteenus:
 4. edastab teenusepakkujale toetatud riikide nimekirja
 5. moodustab nõuetekohase SAML autentimispäringu, sh allkirjastab
 6. töötleb konnektorteenuselt saadud SAML autentimisvastust - kontrollib allkirja, dekrüpteerib ja teisendab hõlpsamini tarbitavale JSON-kujule
-7. loeb ja salvestab sõnumite vastavustabelisse.
+7. loeb ja salvestab teavet sõnumite vastavustabelisse. 
 
 eIDAS Client mikroteenus seadistatakse teenindama ühtainust teenusepakkujat. SAML autentimispäringut allkirjastades tegutseb mikroteenus teenusepakkuja nimel.
 
-Teenusepakkuja ülesandeks on:
-- küsida kasutajale kust riigist ta on ja edastada valik koos minimaalse tagatistasemega mikroteenusele
-- mikroteenuse poolt moodustatud autentimispäringu edastamine konnektorteenusele (sirviku ümbersuunamiskorraldusega)
-- autentimisvastuse vastuvõtmine konnektorteenuselt ja edastamine mikroteenusele töötlemiseks
-- autentimistulemuste vastuvõtmine mikroteenuselt (ja eduka isikutuvastuse korral kasutajaga seansi loomine).
+eIDAS Client mikroteenus on paigaldatav mitmes instantsis. Instantsid kasutavad ühist sõnumite vastavustabelit. Teenindatav teenusepakkuja võib olla paigaldatud mitmes instantsis.
+
+Teenusepakkuja ülesandeks eIDAS Client-i kasutamisel on:
+- küsida kasutajalt kust riigist ta tuleb ja edastada valik koos minimaalse tagatistasemega eIDAS Client-le
+- eIDAS Client-i poolt koostatud autentimispäringu edastamine konnektorteenusele (läbi sirviku, ümbersuunamiskorraldusega)
+- autentimisvastuse vastuvõtmine konnektorteenuselt ja edastamine eIDAS Client-le töötlemiseks
+- töödeldud autentimistulemuste vastuvõtmine eIDAS Client-lt (ja seejärel - eduka isikutuvastuse korral - kasutajaga seansi loomine).
 
 ## 3 Pakutavad ja tarbitavad liidesed
 
-eIDAS Client mikroteenusena pakub ja tarbib järgmisi liideseid (otspunkti täpsusega). Detailsem  kirjeldus vt allpool. 
+eIDAS Client mikroteenus pakub ja tarbib järgmisi liideseid (otspunkti täpsusega). Detailsem  kirjeldus vt allpool. 
 
 <img src='img/Mikroteenusena.PNG' width='600' style='margin-left: 6em;'>
 
@@ -47,21 +49,22 @@ eIDAS Client mikroteenusena pakub ja tarbib järgmisi liideseid (otspunkti täps
 
 eIDAS Client mikroteenuse tähtsamad omadused:
 
-_omadus_ | _väärtus_ | _selgitus_
-olek | _stateful_ | kasutab sõnumite vastavustabelit, vt allpool
-otspunkte | 7 | pakub 4, ise kasutab 3
-protokoll(id) | HTTPS | 
-avatud pöördumistele välisvõrgust | jah | metateabe publitseerimise otspunkt, vt allpool
-pöördub välisvõrku | jah | RIA konnektorteenuse metateabe (`/ConnectorResponderMetadata`) ja toetatud riikide nimekirja poole. (TARA puhul pöördumised ei tarvitse väljuda välisvõrku)
-kasutajaliides (UI) | ei | otsesuhtlus kasutajaga (sirvikuga) puudub 
-seadistus | seadistusfaili abil, vt allpool. Seadistuse osaks on privaatvõti, sert ja usaldusankur. | 
-logimine | ei | // TODO Analüüsida logimise vajadust //
-isikuandmete töötlus | töödeldakse, teenusepakkuja poolt kasutatava eIDAS autentimisteenuse kontekstis
-testimine | jah | // TODO Siduda //
+| _omadus_ | _väärtus_ | _selgitus_ |
+|----------|:---------:|-------------|
+| olek | _stateful_ | kasutab sõnumite vastavustabelit, vt allpool | 
+| otspunkte | 7 | pakub 4, ise kasutab 3 | 
+| protokoll(id) | SAML üle HTTPS (metateave), JSON üle HTTPS | 
+| avatud pöördumistele välisvõrgust | jah | metateabe publitseerimise otspunkt, vt allpool | 
+| pöördub välisvõrku | jah | RIA konnektorteenuse metateabe (`/ConnectorResponderMetadata`) ja toetatud riikide nimekirja poole. (TARA puhul pöördumised ei tarvitse väljuda välisvõrku) | 
+| kasutajaliides (UI) | ei | otsesuhtlus kasutajaga (sirvikuga) puudub | 
+| seadistus | jah | seadistusfaili abil, vt allpool. Seadistuse osaks on privaatvõti, sert ja usaldusankur. | 
+| logimine | ei | // TODO Analüüsida logimise vajadust // | 
+| isikuandmete töötlus | jah | töödeldakse, teenusepakkuja poolt kasutatava eIDAS autentimisteenuse kontekstis | 
+| testimine | jah | // TODO Siduda // | 
 
 ## 5 Sõnumite vastavustabel
 
-Sõnumite vastavustabel on vajalik kontrollimaks, et SAML autentimisvastuse kokkuviimiseks autentimispäringuga.
+Sõnumite vastavustabel on vajalik SAML autentimisvastuse kontrollimiseks.
 
 SAML [autentimispäringusse](Spetsifikatsioon#6-autentimispäring) (`AuthnRequest`) pannakse identifikaator `ID` (päringu identifikaator).
 SAML [autentimisvastuses](Spetsifikatsioon#7-autentimisvastus) (`AuthnResponse`), väljas `InResponseTo` tuleb sama identifikaator tagasi. Autentimisvastuse saamisel tuleb muu hulgas kontrollida, et:
@@ -69,26 +72,29 @@ SAML [autentimisvastuses](Spetsifikatsioon#7-autentimisvastus) (`AuthnResponse`)
 - ja vastamisaeg ei ole täis saanud
 - ja vastust ei ole juba töödeldud (kaitse taasesitusründe vastu).
 
-Selleks tuleb meeles pidada väljasaadetud autentimispäringute identifikaatoreid.
+Selleks on vaja väljasaadetud autentimispäringute identifikaatoreid meeles pidada.
 
-eIDAS tehhniline spetsifikatsioon otseselt ei nõua, kuid võimalusel peaksime päringu identifikaatori panema ka küpsisena kasutaja sirvikusse. Autentimiselt tagasi tulles peaksime kontrollima, et küpsises olev väärtus langeks kokku autentimisvastuse `InResponseTo` väärtusega. Sellega saaksime kaitse sõnumite "ristimineku" vastu.
+Märkus. eIDAS tehhniline spetsifikatsioon otseselt ei nõua, kuid võimalusel peaksime päringu identifikaatori panema ka küpsisena kasutaja sirvikusse. Autentimiselt tagasi tulles peaksime kontrollima, et küpsises olev väärtus langeks kokku autentimisvastuse `InResponseTo` väärtusega. Nii saaksime kaitse sõnumite "ristimineku" vastu. Kui teostus osutub keerukaks, siis võib ka loobuda.
 
-Ülalnimetatud kontrollide võimaldamiseks tuleb pidada sõnumite vastavustabelit. Vastavustabel on järgmise struktuuriga:
+Nimetatud kontrollide võimaldamiseks tuleb pidada sõnumite vastavustabelit. Vastavustabel on järgmise struktuuriga:
 
-| ID | saatmisaeg  | vastus saadud |
+| ID | saatmisaeg  | vastus kätte saadud |
 |:--:|:-----------:|:----------------:|
-| 123 | timestamp  |   false          |
+| 123 | timestamp  |   `false`          |
+
 ... 
 
-Autentimispäringu saatmisel lisatakse kirje. Autentimisvastuse töötlemisel leitakse tabelist vastav kirje, kontrollitakse mitte aegumist ja märgitakse vastus saaduks.
+Autentimispäringu saatmisel lisatakse tabelisse kirje, kuhu märgitakse ID ja saatmisaeg. Autentimisvastuse töötlemisel leitakse tabelist vastav kirje, kontrollitakse, kas vastus ei ole aegunud ja märgitakse vastus kättesaaduks.
 
-Vastavustabeli võib lahendada _in-memory_ struktuuriga. eIDAS konnektorteenuses (kus samuti vastavustabelit peetakse) on kasutusel Java Hashtable.
+Vastavustabeli võib lahendada _in-memory_ struktuuriga. Võrdluseks, eIDAS konnektorteenuses (kus samuti vastavustabelit peetakse) on kasutusel Java Hashtable. Kui soovime eIDAS Client-i paigaldada mitmes instantsis, siis tuleb vastavustabel teostada ühiskasutatava, transaktsioone toetava mälulahendusega (andmebaasiga). 
 
 ## 6 Kõrgkäideldavus
 
-Üldine nõue on, et kõik arendatavad komponendid, v.a andmebaasid, oleksid paigaldatavad mitmes instantsis. eIDAS Client-i puhul tuleb siiski arvestada, et koormuse jagamise reaalne vajadus on kaheldav. Me ei ennusta välismaalaste nii suurt tungi meie e-teenustesse, vähemalt esialgu. Teenuse katkestuse vältimine, automaatne _hot switching_ on ehk tähtsam motiiv. Ka siin saaks lahendada ehk varuinstantsi hoidmisega ja selle aktiveerimisega süsteemiadministraatori poolt käsitsi põhinstantsi tõrke korral. 
+Üldine nõue on, et kõik arendatavad komponendid, v.a andmebaasid, oleksid paigaldatavad mitmes instantsis.
 
-Vaatamata sellele tuleks komponendid arendada selliseks, et mitmes instantsis, _hot switching_ kasutamine oleks võimalik. eIDAS Client-i puhul on see võimalik. eIDAS Client saab mitmes instantsis paigaldada (vt järgnev joonis).
+eIDAS Client-i puhul tuleb siiski arvestada, et koormuse jagamise reaalne vajadus on kaheldav. Me ei ennusta välismaalaste nii suurt tungi meie e-teenustesse, vähemalt esialgu. Teenuse katkestuse vältimine, automaatne _hot switching_ on ehk tähtsam motiiv. Kuid ka siin saaks lahendada ehk varuinstantsi hoidmisega ja selle aktiveerimisega süsteemiadministraatori poolt käsitsi põhinstantsi tõrke korral. 
+
+Vaatamata sellele tuleks komponendid arendada selliseks, et mitmes instantsis, _hot switching_ kasutamine oleks võimalik. eIDAS Client-i puhul see on võimalik. eIDAS Client saab mitmes instantsis paigaldada (vt järgnev joonis).
 
 <img src='img/MitmesInstantsis.PNG' width='600' style='margin-left: 6em;'>
 
@@ -96,18 +102,18 @@ Vaatamata sellele tuleks komponendid arendada selliseks, et mitmes instantsis, _
 
 ## 7 Usaldus eIDAS Client-i ja teenusepakkuja vahel
 
-eIDAS Client allkirjastab SAML autentimispäringu, teenusepakkuja privaatvõtmega ja teenusepakkuja nimel. Autentimisvastuse töötlemisel dekrüpteerib eIDAS Client autentimisvastuse, kasutades teenusepakkuja privaatvõtit. Need on tundlikud, kaitset vajavad toimingud. Autentimispäringu koostamise ja autentimisvastuse töötlemise otspunktidele tohib juurdepääs olla ainult teenusepakkujal (eIDAS Client-i kasutamisel TARA-s - TARA Serveril).
+eIDAS Client allkirjastab SAML autentimispäringu, teenusepakkuja privaatvõtmega ja teenusepakkuja nimel. Autentimisvastuse töötlemisel eIDAS Client dekrüpteerib autentimisvastuse, kasutades teenusepakkuja privaatvõtit. Need on tundlikud, kaitset vajavad toimingud. Autentimispäringu koostamise ja autentimisvastuse töötlemise otspunktidele tohib juurdepääs olla ainult teenusepakkujal (eIDAS Client-i kasutamisel TARA-s - TARA Serveril).
 
 eIDAS Client paigaldatakse teenusepakkujaga samas sisevõrgus. Kuid ka siis tuleb ühendust kaitsta. Ühendus tuleb teha HTTPS-ga, vastastikuse autentimisega (_mutual authentication_). Otstarbekas on kasutada asutuse sisemise usaldusteenuse pakkuja (_enterprise CA_) serte. Võtmete ja sertide paigalduse plaan (PEM-failide nimetustes `server` ja `client` väljendavad eIDAS Client-i toimimist HTTP serveri rollis teenusepakkuja suhtes):
 
-                       |  eIDAS Client    | teenusepakkuja
-privaatvõti            |  `server-key.pem`  | `client-key.pem`
-sert                   |  `server-crt.pem`  | `client-crt.pem`
-usaldusankur (CA sert) |  `ca-crt.pem`      | `ca-crt.pem` 
+|                      |  eIDAS Client    | teenusepakkuja |
+| privaatvõti            |  `server-key.pem`  | `client-key.pem` |
+| sert                   |  `server-crt.pem`  | `client-crt.pem` |
+| usaldusankur (CA sert) |  `ca-crt.pem`      | `ca-crt.pem`  |
 
-Sama CA võib serte välja anda ka teistele rakendustele. Seetõttu tuleb kontrollida ka serdis määratud nime (CN). Tühistusnimekirja (CRL) kasutamine ei ole vajalik.
+Kuna CA võib serte välja anda ka teistele rakendustele, siis tuleb kontrollida ka serdis määratud nime (CN). Tühistusnimekirja (CRL) kasutamine ei ole vajalik.
 
-Ligipääs metateabe publitseerimise otspunktile ei vaja piiramist (metateave on avalik).
+Ligipääs metateabe publitseerimise otspunktile ei vaja piiramist, sest metateave on avalik.
 
 ## 8 Liideste spetsifikatsioon
 
