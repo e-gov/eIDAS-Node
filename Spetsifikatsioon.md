@@ -7,7 +7,7 @@ Märkus. Lahtised küsimused on markeeritud sümbolitega `//`.
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.7
+v 0.8
 
 - TOC
 {:toc}
@@ -87,7 +87,6 @@ Kokkuvõtlikult peab teenusepakkuja:
         - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` (peamine)
         - `http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` (alternatiiv)
             - võtmepikkus: 384 bitti
-        - `http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` (alternatiiv)
         - `http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` (alternatiiv)
             - võtmepikkus: 4096 bitti
             - Märkus. eIDAS krüptonõuetes esineb RSA-MGF1 nimetuse RSASSA-PSS all   
@@ -264,8 +263,8 @@ Tabel 3
 
 | XML elemendi või atribuudi nimi (Xpath notatsioonis)        | Kohustuslik | Selgitus  |
 |:-------------|:-------------:|-----|
-| /md:EntityDescriptor/@Issuer | Jah | Nõutud väärtuseks teenusepakkuja metateabe otspunkti URL (HTTPS).|
-| /md:EntityDescriptor/@ValidUntil | Jah | Määrab metateabe kehtivusaja. Aegumisel küsib konnektorteenus metateave uuesti. |
+| /md:EntityDescriptor/@entityID | Jah | Nõutud väärtuseks teenusepakkuja metateabe otspunkti URL (HTTPS).|
+| /md:EntityDescriptor/@validUntil | Jah | Määrab metateabe kehtivusaja. Aegumisel küsib konnektorteenus metateave uuesti. |
 | /md:EntityDescriptor/ds:Signature | Jah | Kogu metateavet hõlmav digitaalallkiri, koos allkirjastamissertifikaadiga. Vastavalt [SAML 2.0 metadata spetsifikatsioonile](https://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)) |
 | /md:EntityDescriptor/md:Extensions/eidas:SPType | Jah | Asutuse tüüp. Nõutud väärtus `public`. Prefiks `eidas` vastab nimeruumile: `http://eidas.europa.eu/saml-extensions` |
 | /md:EntityDescriptor/md:SPSSODescriptor/@AuthnRequestsSigned | Jah | Deklareerib, et teenusepakkuja poolt saadetavad SAML päringud peavad olema allkirjastatud. Nõutud väärtus `true` |
@@ -837,6 +836,7 @@ Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.8, 27.02.2018  | Allkirjastamise profiili täpsustus. |
 | 0.7, 15.02.2018  | Autentimisvastuse täpsustused. |
 | 0.6, 13.02.2018  | Ühendatud "eIDASe siseriiklike usaldus- ja krüptonõuetega" üheks dokumendiks. Väiksemaid täiendusi |
 | 0.5, 13.02.2018   | Korrastus. Vastuse täpsustused. XML nimeruumid |
