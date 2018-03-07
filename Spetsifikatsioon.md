@@ -7,7 +7,7 @@ Märkus. Lahtised küsimused on markeeritud sümbolitega `//`.
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.8
+v 0.9
 
 - TOC
 {:toc}
@@ -92,8 +92,9 @@ Kokkuvõtlikult peab teenusepakkuja:
             - Märkus. eIDAS krüptonõuetes esineb RSA-MGF1 nimetuse RSASSA-PSS all   
 8. krüpteerimine
     1. teenusepakkuja poolt konnektorteenusele saadetavat SAML-sõnumit ei krüpteerita
-    2. konnektorteenus krüpteerib teenusepakkujale saadetava SAML-sõnumi,  teenusepakkuja metateabes sisalduvas krüpteerimisotstarbelises serdis sisalduvat avaliku võtmega
-    3. toetama peab algoritme:
+    2. konnektorteenus krüpteerib teenusepakkujale saadetava SAML-sõnumi,  teenusepakkuja metateabes sisalduvas krüpteerimisotstarbelises serdis sisalduvat avaliku võtmega. 
+    3. võtme transpordialgoritmina kasutatakse: `http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p`
+    4. krüpteerimisalgoritmina peab toetama:
         - `http://www.w3.org/2009/xmlenc11#aes256-gcm` (peamine)
         - `http://www.w3.org/2009/xmlenc11#aes128-gcm` (alternatiiv)   
 
@@ -836,6 +837,7 @@ Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.9, 07.03.2018  | Krüpteerimisalgoritmide täpsustus. |
 | 0.8, 27.02.2018  | Allkirjastamise profiili täpsustus. |
 | 0.7, 15.02.2018  | Autentimisvastuse täpsustused. |
 | 0.6, 13.02.2018  | Ühendatud "eIDASe siseriiklike usaldus- ja krüptonõuetega" üheks dokumendiks. Väiksemaid täiendusi |
