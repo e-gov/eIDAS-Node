@@ -2,9 +2,6 @@
 permalink: Spetsifikatsioon
 ---
 
-Märkus. Lahtised küsimused on markeeritud sümbolitega `//`. 
-{:.teade}
-
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
 v 0.9
