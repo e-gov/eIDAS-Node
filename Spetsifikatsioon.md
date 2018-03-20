@@ -4,7 +4,7 @@ permalink: Spetsifikatsioon
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.9
+v 0.10
 
 - TOC
 {:toc}
