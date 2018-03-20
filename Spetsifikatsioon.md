@@ -24,15 +24,15 @@ Spetsifikatsioon:
     - SAML 2.0, Web Browser SSO profiil, koos eIDAS täiendustega. Vt [Viited](Viited), eIDAS Technical specification
 - sõnumivahetusmeetod
     - `HTTP POST`, kasutaja sirviku ümbersuunamise (_redirect_) abil. Vt [Viited](Viited), "HTTP POST binding" SAML 2.0 standardikirjelduses, ptk 5.12.
-- otspunktid
-    - metateabe otspunkt `/ConnectorResponderMetadata`
-    - SAML autentimispäringsõnumite vastuvõtupunkt `/ServiceProvider`
 - toetatud riigid
     - RIA edastab nimekirja teenusepakkujale e-kirja teel. Masinloetav, reaalajaline toetatud riikide nimekiri on eIDAS kogukonnas alles kavandamisel 
-
-- Märkus. Teenusepakkuja peab omama (vt joonis 1):
-    - metateabe otspunkti, nt `/Metadata`
-    - SAML autentimisvastussõnumite vastuvõtupunkti, nt `/ReturnPage`.
+- otspunktid (vt joonis 1)
+    - konnektorteenus
+        - metateabe otspunkt `/ConnectorResponderMetadata`
+        - SAML autentimispäringsõnumite vastuvõtupunkt `/ServiceProvider`
+    - teenusepakkuja
+        - metateabe otspunkt, nt nimega `/Metadata`
+        - SAML autentimisvastussõnumite vastuvõtupunkt, nt nimega`/ReturnPage`.
 
 <img src='https://e-gov.github.io/eIDAS-Connector/img/Otspunktid.PNG' style='width:500px;'>
 
@@ -40,9 +40,10 @@ Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
 
 ## 3 Nõuded liitujale
 
-Kokkuvõtlikult peab teenusepakkuja:
-- pakkuma SAML metateabe otspunkti teenust
-- omama SAML päringute ja vastuste töötlemise võimekust.
+Üldvaates peab teenusepakkuja:
+- pakkuma SAML metateabe otspunkti kaudu teavet oma süsteemi kohta
+- suutma koostada ja saata SAML autentimispäringut
+- suutma SAML autentimisvastuse konnektorteenusest vastu võtta ja ära töödelda.
 
 1. teenusepakkuja peab koostama oma süsteemi kohta metateabe, vastavalt eIDAS-e nõuetele (vt jaotis [Teenusepakkuja metateave](#teenusepakkuja-metateave))
 2. metateabe transport teisele osapoolele
