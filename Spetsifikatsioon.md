@@ -27,6 +27,8 @@ Spetsifikatsioon:
 - otspunktid
     - metateabe otspunkt `/ConnectorResponderMetadata`
     - SAML autentimispäringsõnumite vastuvõtupunkt `/ServiceProvider`
+- toetatud riigid
+    - RIA edastab nimekirja teenusepakkujale e-kirja teel. Masinloetav, reaalajaline toetatud riikide nimekiri on eIDAS kogukonnas alles kavandamisel 
 
 - Märkus. Teenusepakkuja peab omama (vt joonis 1):
     - metateabe otspunkti, nt `/Metadata`
@@ -357,38 +359,6 @@ Tabel 7.2 SAML `Assertion` sisu eduka isikutuvastuse korral.
 | `/saml2:Assertion/saml2:AuthnStatement/saml2:AuthnContext/saml2:AuthnContextClassRef` | 1 | Isiku identiteedi tagatistase (madal, märkimisväärne ja kõrge). Võimalikud väärtused: `http://eidas.europa.eu/LoA/low`, `http://eidas.europa.eu/LoA/substantial`, `http://eidas.europa.eu/LoA/high` |
 | `/saml2:Assertion/saml2:AttributeStatement/` | 1 | Koondab väited autenditud isiku andmete kohta. |
 | `/saml2:Assertion/saml2:AttributeStatement/saml2:Attribute` | 1..n | Sh atribuudid füüsilise isiku, juriidilise isiku, esindatava füüsilise isiku või esindatava juriidilise isiku kohta. <br><br>Peab sisaldama minimaalselt väiteid, mille puhul `AuthnRequest`-s kasutati atribuuti isRequired="True". Vt eIDAS Message Format v1.1-2 (vt [Viited](Viited)) |
-
-
-## 8 Toetatud riikide nimekiri
-
-Nimekiri riikidest, kelle autentimisteenuseid RIA eIDAS konnektorteenus vahendab, on masinloetavas vormingus avaldatud aadressil.
-
-`https://www.ria.ee/eidasinfo`
-
-Nimekiri on esitatud JSON-failina, milles on üks JSON-objekt. Objektis sisaldub objekt `CountriesSupported`, milles omakorda on objektid `Test` ja `Production`. Viimaste väärtusteks on massiivid riikide nimekirjadega. Riik esitatakse [ISO 3166-1 alpha-2] standardi kohaselt, kahekohalise koodiga. Ülemise taseme objektis võib olla ka muid välju.
-- Toetatud riikide nimekirja URL PEAB olema liidestuvas rakenduses konf-is seatav.
-- Liidestuv rakendus PEAB kasutama nimekirja, kuvades kasutajale ainult nende riikide "lipukesed", kelle autentimisi tegelikult suudetakse vahendada.
-- Nimekirja uuendamine eeldatavalt saab olema harv. Liidestuv rakendus PEAKS nimekirja alla tõmbama ja seda puhverdama.
-- Puhvri uuendamise intervall PEAKS olema liidestuva rakenduse seadistuses seatav.
-
- Näide.
-
-```
-{
-   "CountriesSupported":{
-      "Test":[
-         "SE",
-         "NO"
-      ],
-      "Production":[
-      ]
-   }
-}
-```
-
-Näites eIDAS konnektori testteenus toetab Rootsit ("SE") ja Norrat ("NO"). Toodanguteenus ei toeta ühtki riiki.
-
-[ISO 3166-1 alpha-2]: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
 ## Lisa 1. XML nimeruumid
 
@@ -834,6 +804,7 @@ Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.10, 20.03.2018  | Eemaldatud toetatud riikide nimekiri. |
 | 0.9, 07.03.2018  | Krüpteerimisalgoritmide täpsustus. |
 | 0.8, 27.02.2018  | Allkirjastamise profiili täpsustus. |
 | 0.7, 15.02.2018  | Autentimisvastuse täpsustused. |
