@@ -4,6 +4,11 @@ permalink: Valik
 
 Piiriülene eIDAS-autentimine
 
+NB! 18.04.2018<br><br>
+Seoses muutustega CEF eIDAS tarkvaras (uus versioon 2.0) ei ole tagatud, et RIA eIDAS konnektorteenus säilib tulevikus muutumatul kujul. See tähendab riski, et liidestaja peab liidese ümber tegema. <br><br>
+Standardne, soovitatud viis piiriülese eIDAS-autentimise kasutuselevõtmiseks on liidestada TARAga.
+{:.teade} 
+
 # Liidestamismeetodi valik
 
 Välismaalase autentimiseks e-teenuses on vaja e-teenust pakkuv infosüsteem liidestada piiriülese autentimise e eIDAS-taristuga. Selleks on kaks võimalust:
