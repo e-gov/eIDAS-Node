@@ -21,7 +21,6 @@ Käesolev juhend on suunatud teenusega liituvale asutusele ja esitab teenuse kas
 
 Liidestamise tehnilised üksikasjad vt:
 - [RIA eIDAS konnektorteenuse tehniline spetsifikatsioon](Spetsifikatsioon)
-- [eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil).
 
 ## 2 Mõisted
 
