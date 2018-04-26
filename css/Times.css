@@ -4,7 +4,7 @@
 
 /*#region Paigutus */
 body {
-  max-width: 55rem;
+  max-width: 55em;
   margin: 0 0; 
   padding: 0.6em 1.5em 2em 2em; 
   font-family: 'Segoe UI', Arial, serif;
@@ -29,21 +29,19 @@ body {
 
 /*#region Pealkirjad */
 h1 {
-  font-size: 32px !important;
+  font-size: 24px !important;
   font-family: 'Segoe UI Semibold', Arial, Helvetica, sans-serif;
   margin-top: 1em;
   margin-bottom: 1rem;
 }
 h2 {
-  font-size: 24px !important;
-  font-family: 'Segoe UI Semibold', Arial, Helvetica, sans-serif;
+  font-size: 13pt !important;
   margin-bottom: 0.5rem;
   margin-bottom: 0.5rem;
 }
 h3 {
   font-size: 12pt !important;
-  font-weight: bold;
-  font-style: italic;
+  font-weight: normal;
   margin-bottom: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -60,11 +58,12 @@ p { margin: 0 0 1em 0; }
 /*#endregion */
 
 /*#region Loetelud */
-#Tekst > ul {
+#Tekst ul {
   list-style-type: '-  ';
   margin: 0 0 1em 0;
   padding-left: 1em;
 }  
+
 #Tekst > ol {
   padding-left: 1em;
 }  
@@ -76,8 +75,8 @@ p { margin: 0 0 1em 0; }
     content: none !important;
     margin-left: 0 !important;
 }    
-#markdown-toc > li {
-  list-style: none;
+#markdown-toc li {
+  list-style-type: '   ' !important;
 }  
 /*#endregion */
 
@@ -91,11 +90,12 @@ th { font-weight: normal; font-style: italic; text-align: center; }
 
 /*#region Kood; asciiflow joonised */
 pre, code, samp {
-  font-family: 'Source Code Pro', monospace;
-  font-size: 16px;
-  color: darkslategray !important;
+  font-family: monospace;
+  font-size: 15px;
+  color: black !important;
   background-color: #f6f8fa; /* nagu GitHubis */
-  overflow-y: hidden; overflow-x: scroll;
+  white-space:pre-wrap;
+  overflow-y: hidden; overflow-x: hidden;
   page-break-inside: avoid; hyphens: none;
   text-transform: none;
 }
@@ -136,9 +136,10 @@ a[href]:hover {
   text-align: center;
 }
 .teade {
-  border-radius: 2px; padding: 0.1rem;
-  color: Cadetblue;
-  background-color: lightcyan;
+  border-radius: 2px; padding: 0.3rem;
+  font-style: italic;
+  border: 1px solid Tomato;
+  color: Tomato;
 }
 a.nupp {
   display: inline-block;

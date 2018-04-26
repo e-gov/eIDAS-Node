@@ -6,7 +6,8 @@ permalink: /
 
 <img src='img/LOVID.png' style='width: 80px;'>
 
-<span style='color:Tomato;'>Vali õige meetod:</span> [Piiriülene eIDAS-autentimine. Liidestamismeetodi valik](Valik)
+Oluline: Seoses EL Euroopa ühendamise rahastu (CEF) poolt arendatava eIDAS Node tarkvara muutumisega on uusliidestused RIA eIDAS konnektorteenusega mittesoovitavad (_deprecated_). 
+{:.teade}
 
 # RIA eIDAS konnektorteenus
 
@@ -29,8 +30,6 @@ eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 ## Liidestuse arendajale
 
 [eIDAS konnektorteenuse spetsifikatsioon](Spetsifikatsioon)<br>
-
-[eIDAS siseriiklikud usaldus- ja krüptonõuded](Profiil) KEHTETU (lõimitud spetsifikatsiooni, vt [Nõuded liitujale](https://e-gov.github.io/eIDAS-Connector/Spetsifikatsioon#3-n%C3%B5uded-liitujale))
 
 [eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
 
