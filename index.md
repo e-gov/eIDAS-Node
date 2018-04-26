@@ -6,7 +6,7 @@ permalink: /
 
 <img src='img/LOVID.png' style='width: 80px;'>
 
-Oluline: Seoses EL Euroopa ühendamise rahastu (CEF) poolt arendatava eIDAS Node tarkvara muutumisega on uusliidestused RIA eIDAS konnektorteenusega mittesoovitavad (_deprecated_). 
+Oluline: Seoses EL Euroopa ühendamise rahastu (CEF) poolt arendatava eIDAS Node tarkvara muutumisega on uusliidestused RIA eIDAS konnektorteenusega mittesoovitavad (_deprecated_). Piiriülese autentimise kasutuselevõtu soovitatavaks teeks on liidestuda <a href='https://e-gov.github.io/TARA-Doku/'>autentimisteenusega TARA</a>. 
 {:.teade}
 
 # RIA eIDAS konnektorteenus
