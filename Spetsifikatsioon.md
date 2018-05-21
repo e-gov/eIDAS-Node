@@ -361,6 +361,20 @@ Tabel 7.2 SAML `Assertion` sisu eduka isikutuvastuse korral.
 | `/saml2:Assertion/saml2:AttributeStatement/` | 1 | Koondab väited autenditud isiku andmete kohta. |
 | `/saml2:Assertion/saml2:AttributeStatement/saml2:Attribute` | 1..n | Sh atribuudid füüsilise isiku, juriidilise isiku, esindatava füüsilise isiku või esindatava juriidilise isiku kohta. <br><br>Peab sisaldama minimaalselt väiteid, mille puhul `AuthnRequest`-s kasutati atribuuti isRequired="True". Vt eIDAS Message Format v1.1-2 (vt [Viited](Viited)) |
 
+## 8 Põhivoo testimine
+
+Autentimispäringu lõppkasutaja testimist saab testkeskkonnas teostada vastu kõiki Konnektorteenusega liidestatud EU liikmesriike, vastu Eesti enda autentimisteenust ning vastu CEF-i validaatorteenust.
+Põhivoo läbitestimiseks võtame näite, kus autentimispäring suunatakse vastu Eesti autentimisteenust (riigikoodiga EE). <br>
+1. Moodustame autentimispäringu peatükis [Autentimispäring](Autentimispäring) kirjeldatud viisil. Riigikoodiks määrame `EE`. Autentimispäringus pärida ainult kohustuslikke isikuatribuute.
+2. Peale päringu saatmist tuleb kasutajal brauseri vahendusel anda consent ehk nõusolek andmete pärimiseks.
+3. Peale nõusoleku andmist suunatakse kasutaja Eesti autentimisteenusesse. Autentimisteenus on liidestatud vastu SK testteenust. See tähendab, et autentimisvoo läbimiseks tuleb kasutada ühte järgnevast:
+    1. Kasutada testnumbreid. Testnumbrid on kättesaadavad siit: https://github.com/SK-EID/dds-documentation/wiki/Test-number-for-automated-testing-in-DEMO. Rakendada ainult Eesti (EE) testnumbreid ja isikukoode.
+    2. Tellida test ID-kaart. Test ID-kaardi peab tellima SK-lt: https://www.sk.ee/teenused/testkaardid/. Juhul kui on võimalus enda ID-kaarti kasutada, ei ole test-kaardi tellimine vajalik.
+    3. Isikliku numbri kasutamine (juhul kui on olemas kehtiv mobiil-ID leping). Isikliku mobiilinumbri ja sellega seotud sertifikaadid saab laadida üles siin: https://demo.sk.ee/MIDCertsReg/. Selleks järgida lehel paiknevat juhendit. Peale isikliku numbri üleslaadimist on võimalik TARA testkeskkonda siseneda oma mobiilinumbri ja isikukoodiga.
+    4. Isikliku ID-kaardi kasutamine. Isikliku ID-kaardi sertifikaadid saab laadida üles siin: https://demo.sk.ee/upload_cert/. Selleks järgida lehel paiknevat juhendit. Peale sertifikaadi üleslaadimist test andmebaasi saab isikliku ID-kaardiga siseneda TARAsse.
+4. Peale autentimisvoo läbimist suunatakse päring tagasi eIDAS-Node'i ja sealt peale järgmise nõusoleku andmist tagasi autentimispäringu initsialiseerinud rakendusse.
+5. Autentimispäringusse on lisatud autentitud isiku andmed. 
+
 ## Lisa 1. XML nimeruumid
 
 Näidistes kasutatud ja xml struktuurides viidatud XML nimeruumid on toodud alljärgnevas tabelis.
