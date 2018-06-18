@@ -4,7 +4,7 @@ permalink: Spetsifikatsioon
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.10
+v 0.11
 
 - TOC
 {:toc}
@@ -75,6 +75,7 @@ Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
     5. serdi parameetrid:
         - asutusele antud, KLASS3 sert
             - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima. Dokument võib selles osas täpsustuda
+        - sertifikaadi subjektis toodud riigikood peab olema `EE` (`subject.country = EE`)
     6. self-signed sertide kasutus
         - on lubatud testkeskkonnas
 6. räsialgoritm
@@ -819,6 +820,7 @@ Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.11, 20.03.2018  | Liituja poolt kasutatavate sertifikaatide nõuete täpsustus. |
 | 0.10, 20.03.2018  | Eemaldatud toetatud riikide nimekiri. |
 | 0.9, 07.03.2018  | Krüpteerimisalgoritmide täpsustus. |
 | 0.8, 27.02.2018  | Allkirjastamise profiili täpsustus. |
