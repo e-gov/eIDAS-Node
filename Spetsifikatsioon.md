@@ -251,7 +251,6 @@ element | kirjeldus
 `urn:oasis:names:tc:SAML:2.0:nameid-format:transient` | 
 `urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` | 
 `md:SingleSignOnService` | 
-
 atribuut `Binding` | sõnumid saata HTTP `POST` meetodiga (HTTP Redirect ei ole toetatud)
 atribuut `Location` | konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider`
 `saml2:Attribute` | atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuudid, mida konnektorteenuse kaudu saab küsida (40+)
