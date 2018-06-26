@@ -215,6 +215,8 @@ Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metatea
 
 Tabel 2
 
+element | kirjeldus
+--------|--------------
 `md:EntityDescriptor` |  kirjeldatud on SAML olem (entity)
 `entityID` | nimega `https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata`
 `validUntil` | kirjeldus kehtib 24 h
@@ -229,26 +231,28 @@ Tabel 2
 `md: Extensions` | metaandmete publitseerija ja tarbija vahel kokkulepitud spetsiifilised metaandmed
 `alg:Digestmethod` | konnektorteenus toetab räsialgoritme
 `http://www.w3.org/2001/04/xmlenc#sha512` | 
-`http://www.w3.org/2001/04/xmlenc#sha256` |
+`http://www.w3.org/2001/04/xmlenc#sha256` | 
 `alg:SigningMethod` | toetatavad allkirjaalgoritmid
-`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` |
-`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` |
-`http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` |
-`http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` |
+`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha512` | 
+`http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256` | 
+`http://www.w3.org/2007/05/xmldsig-more#sha512-rsa-MGF1` | 
+`http://www.w3.org/2007/05/xmldsig-more#sha256-rsa-MGF1` | 
 `md: IDPSSODescriptor` | “SSO võimekusega IdP” - kirjeldatava olemi “roll”
 `WantAuthnRequestsSigned` | nõuab, et autentimispäringu sõnum p.o allkirjastatud
 `protocolSupportEnumeration` | ütleb, et toetab SAML 2.0-i
 `md:KeyDescriptor` | avaldab konnektorteenuse sertifikaadid ja kirjeldab toetatavad krüpteerimisalgoritmid
 `signing` > `KeyInfo` | allkirjastamissertifikaat
+
+
 `encryption` > `KeyInfo` | krüpteerimissertifikaat
 `md:EncryptionMethod` | toetatavad algoritmid
-`http://www.w3.org/2009/xmlenc11#aes256-gcm` |
+`http://www.w3.org/2009/xmlenc11#aes256-gcm` | 
 `http://www.w3.org/2009/xmlenc11#aes128-gcm` | 
 `md:NameIDFormat` |  `md:NameIDFormat` väärtused iseloomustavad autenditava isiku identifikaatori või nime "püsivust" (kestvust üle mitme sisselogimise vms). eIDASe kontekstis tähendus on segane. Teema kohta võib soovi korral lugeda [https://wiki.shibboleth.net/confluence/display/CONCEPT/NameIdentifiers](https://wiki.shibboleth.net/confluence/display/CONCEPT/NameIdentifiers) ja [http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf), jaotised 8.3.7, 8.3.8 ja 8.3.1. 
 `urn:oasis:names:tc:SAML:2.0:nameid-format:persistent` | 
-`urn:oasis:names:tc:SAML:2.0:nameid-format:transient` |
-`urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` |
-`md:SingleSignOnService` |
+`urn:oasis:names:tc:SAML:2.0:nameid-format:transient` | 
+`urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified` | 
+`md:SingleSignOnService` | 
 atribuut `Binding` | sõnumid saata HTTP `POST` meetodiga (HTTP Redirect ei ole toetatud)
 atribuut `Location` | konnektorteenus võtab SAML sõnumeid vastu URL-il `https://eidastest.eesti.ee/EidasNode/ServiceProvider`
 `saml2:Attribute` | atribuutidega `FriendlyName`, `Name` ja `Nameformat` kirjeldatakse eIDAS atribuudid, mida konnektorteenuse kaudu saab küsida (40+)
