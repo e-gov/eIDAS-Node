@@ -4,7 +4,7 @@ permalink: Spetsifikatsioon
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.11
+v 0.12
 
 - TOC
 {:toc}
@@ -68,7 +68,7 @@ Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
     2. sertide ristkasutus:
         - on lubatud allkirjastamise puhul - metateabe ja SAML-sõnumi võib allkirjastada sama serdiga
     3. väljaandja:
-        - soovitame SK ID Solutions AS väljaantud serte; muu väljaandja serdi kasutamine kooskõlastada RIA-ga
+        - väljaandja serdi kasutamine kooskõlastada RIA-ga
             - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima 
     4. usaldusankur:
         - SK ID Solutions AS juursert
@@ -211,7 +211,7 @@ Autentimisvastuse töötlemisel:
 Selgitame eIDAS konnektorteenuse poolt liidestuvale süsteemile pakutava metateabe tähendust.
 
 - testteenus: [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata) 
-- toodangteenus: [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata) 
+- toodangteenus: [https://eidas.ria.ee/EidasNode/ConnectorResponderMetadata](https://eidas.ria.ee/EidasNode/ConnectorResponderMetadata) 
 
 Tabel 2
 
@@ -822,6 +822,7 @@ Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.12, 13.08.2018  | Toodanguteenuse URLi muudatus. Väljaandja serdi nõude täpsustus. |
 | 0.11, 20.03.2018  | Liituja poolt kasutatavate sertifikaatide nõuete täpsustus. |
 | 0.10, 20.03.2018  | Eemaldatud toetatud riikide nimekiri. |
 | 0.9, 07.03.2018  | Krüpteerimisalgoritmide täpsustus. |
