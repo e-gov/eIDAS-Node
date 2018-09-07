@@ -4,7 +4,7 @@ permalink: Spetsifikatsioon
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
-v 0.12
+v 0.13
 
 - TOC
 {:toc}
@@ -58,7 +58,7 @@ Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
 3. metateabe allkirjastamine
     1. on kohustuslik
     2. allkirja tuleb metateabe võtmisel valideerida, kogu usaldusahela ulatuses
-    3. usaldusankruks SK ID Solutions AS juursert
+    3. usaldusankru sertifikaat kooskõlastatakse RIA-ga
     4. toetama peab samu algoritme, mis p 7
 4. metateabe uuendamine
     1. osapool võib metateavet puhverdada, kuni `md:EntityDescriptor` atribuudis `validUntil` määratud ajamomendini
@@ -67,16 +67,11 @@ Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
     1. teenusepakkujal on vaja allkirjastamise serti ja krüpteerimise serti
     2. sertide ristkasutus:
         - on lubatud allkirjastamise puhul - metateabe ja SAML-sõnumi võib allkirjastada sama serdiga
-    3. väljaandja:
-        - väljaandja serdi kasutamine kooskõlastada RIA-ga
-            - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima 
-    4. usaldusankur:
-        - SK ID Solutions AS juursert
-    5. serdi parameetrid:
-        - asutusele antud, KLASS3 sert
-            - NB! Sert peab ka tehniliselt eIDAS konnektorteenuse tarkvaraga sobima. Dokument võib selles osas täpsustuda
+    3. väljaandja ja usaldusankur:
+    	- sertifikaatide väljaandja juur- ja vahesertifikaatide ahel tuleb kooskõlastada RIA-ga
+    4. serdi parameetrid:
         - sertifikaadi subjektis toodud riigikood peab olema `EE` (`subject.country = EE`)
-    6. self-signed sertide kasutus
+    5. self-signed sertide kasutus
         - on lubatud testkeskkonnas
 6. räsialgoritm
     - toetama peab algoritme:
@@ -822,6 +817,7 @@ Edukas autentimine eIDAS-autentimisvõrgus näeb välja järgmisena:
 
 | Versioon, kuupäev | Muudatus |
 |-----------------|--------------|
+| 0.13, 07.09.2018  | Täpsustused liitujate allkirja- ja krüpteerimissertifikaatide nõuete osas. |
 | 0.12, 13.08.2018  | Toodanguteenuse URLi muudatus. Väljaandja serdi nõude täpsustus. |
 | 0.11, 20.03.2018  | Liituja poolt kasutatavate sertifikaatide nõuete täpsustus. |
 | 0.10, 20.03.2018  | Eemaldatud toetatud riikide nimekiri. |
