@@ -259,7 +259,7 @@ atribuut `Location` | konnektorteenus võtab SAML sõnumeid vastu URL-il `https:
 
 ### 5.3 Teenusepakkuja metateave
 
-Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks ühendumiseks ning usalduse loomiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid. Teenusepakkuja teeb oma metaandmed konnektorteenusele kättesaadavaks üle HTTPS protokolli. Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata xml skeemile](https://docs.oasis-open.org/security/saml/v2.0/saml-schema-metadata-2.0.xsd). Metateave peab olema allkirjastatud, kasutades nõutud krüptoalgoritme, vt jaotis [Nõuded liituvale teenusepakkujale](#4-n%C3%B5uded-liituvale-teenusepakkujale).
+Teenusepakkuja SAML metateave on XML dokument, mis sisaldab konnektorteenuse jaoks ühendumiseks ning usalduse loomiseks vajaliku info. Sealhulgas kirjeldab sertifikaadi päringu allkirjastamiseks, autentimise algatamise ning vastuse vastuvõtu URL-id ja soovi korral teenusepakkuja kontaktid. Teenusepakkuja teeb oma metaandmed konnektorteenusele kättesaadavaks üle HTTPS protokolli. Metateabe XML peab olema koostatud ja valideeruma vastavalt [SAML 2.0 metadata xml skeemile](https://docs.oasis-open.org/security/saml/v2.0/saml-schema-metadata-2.0.xsd). Metateave peab olema allkirjastatud, kasutades nõutud krüptoalgoritme, vt jaotis [Nõuded liitujale](#3-n%C3%B5uded-liitujale).
 
 Konnektorteenusega liidestumise seisukohalt olulised väljad koos kirjeldusega on toodud tabelis 3 (vt ka näidisvastust lisas 2). XML nimeruumide kirjeldused on lisas 1.
 
