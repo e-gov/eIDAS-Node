@@ -25,7 +25,7 @@ eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 
 [Ärikirjeldus](Arikirjeldus)<br>
 
-<p><a href='https://www.ria.ee/ee/autentimisteenused.html' class='nupp'>Liitumine</a></p>
+<p><a href='https://www.ria.ee/et/riigi-infosusteem/eid/partnerile.html#tara' class='nupp'>Liitumine</a></p>
 
 ## Liidestuse arendajale
 
