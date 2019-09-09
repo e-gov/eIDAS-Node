@@ -72,7 +72,7 @@ Joonis 1. Metateabe otspunktid (punasega) ja SAML sõnumite vastuvõtupunktid
     4. serdi parameetrid:
         - sertifikaadi subjektis toodud riigikood peab olema `EE` (`subject.country = EE`)
     5. self-signed sertide kasutus
-        - on lubatud testkeskkonnas
+        - on lubatud
 6. räsialgoritm
     - toetama peab algoritme:
         - `http://www.w3.org/2001/04/xmlenc#sha512` (peamine)
