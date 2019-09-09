@@ -13,7 +13,6 @@ Käesolev dokument seletab RIA eIDAS Node SAML metaandmeotspunktide kaudu pakuta
 - TOC
 {:toc}
 
-
 ## Kirjandus
 
 |    |    |
