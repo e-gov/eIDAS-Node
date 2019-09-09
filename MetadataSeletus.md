@@ -15,12 +15,13 @@ Käesolev dokument seletab RIA eIDAS Node SAML metaandmeotspunktide kaudu pakuta
 
 
 ## Kirjandus
-
-| [Metadata for the OASIS Security Assertion Markup Language (SAML) V2.0](http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf) | SAML metaandmete standard
-| [SAML V2.0 Metadata Guide](https://www.oasis-open.org/committees/download.php/51890/SAML%20MD%20simplified%20overview.pdf) | SAML metaandmete ülevaade
-| [Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf) | ei kirjelda otseselt SAML metateavet, vaid SAML sõnumivorminguid
-| [XML Signature](https://en.wikipedia.org/wiki/XML_Signature) (Wikipedia) | ülevaade XML allkirjast
-| [XML Security Algorithm Cross-Reference](https://www.w3.org/TR/xmlsec-algorithms/) | standarditud algoritminimed
+|   |   |
+|----------|-------------|
+| [Metadata for the OASIS Security Assertion Markup Language (SAML) V2.0](http://docs.oasis-open.org/security/saml/v2.0/saml-metadata-2.0-os.pdf)   |      SAML metaandmete standard      |
+| [SAML V2.0 Metadata Guide](https://www.oasis-open.org/committees/download.php/51890/SAML%20MD%20simplified%20overview.pdf) |  SAML metaandmete ülevaade  |
+| [Assertions and Protocols for the OASIS Security Assertion Markup Language (SAML) V2.0](http://docs.oasis-open.org/security/saml/v2.0/saml-core-2.0-os.pdf)  |    ei kirjelda otseselt SAML metateavet, vaid SAML sõnumivorminguid   |
+| [XML Signature](https://en.wikipedia.org/wiki/XML_Signature) (Wikipedia) | ülevaade XML allkirjast  |
+| [XML Security Algorithm Cross-Reference](https://www.w3.org/TR/xmlsec-algorithms/)  | standarditud algoritminimed  | 
 
 ## Metaandmeotspunktid
 
