@@ -48,7 +48,7 @@ Juhend kirjeldab mida peate eIDAS konnektorteenuse kasutuselevõtmiseks tegema.
         - autentimispäring: `https://eidastest.eesti.ee/EidasNode/ServiceProvider`
     - teie e-teenus peab suutma:
         - publitseerida [nõuetekohase metateabe](Spetsifikatsioon#53-teenusepakkuja-metateave)
-        - kuvada kasutajale "lipukesed" // TODO Stiilisoovitused //
+        - kuvada kasutajale "lipukesed"
         - lasta kasutajal valida sihtriigi
         - moodustada SAML autentimispäringu
         - saata autentimispäringu HTTP POST ümbersuunamisega konnektorteenusele
@@ -65,6 +65,5 @@ Juhend kirjeldab mida peate eIDAS konnektorteenuse kasutuselevõtmiseks tegema.
 6. Liituge toodangukeskkonnaga
     - eelduseks on liidese testimise edukus (vt eelmine punkt)
     - sõlmime teiega teenuslepingu
-    - toodangukeskkonnas on vaja juba SK serte
     - toodangukeskkonnas võivad rakenduda täiendavad turvameetmed (tulemüür vms)
         - nendest otsesuhtluses
