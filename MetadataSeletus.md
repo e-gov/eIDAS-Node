@@ -27,6 +27,8 @@ Käesolev dokument seletab RIA eIDAS Node SAML metaandmeotspunktide kaudu pakuta
 
 eIDAS Node metaandmeotspunktid on järgmised:
 
+|   |   |   |
+|------|------------|-------------------------------------------------------|
 | eIDAS vahendusteenus (_Proxy Service_) - suhtluses teise eIDAS Node-ga | [https://eidastest.eesti.ee/EidasNode/ServiceMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata)[https://eidas.eesti.ee/EidasNode/ServiceMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) | "Will be used as Issuer in the requests that eIDAS-Node Proxy Service sends" |
 | eIDAS konnektorteenus - suhtluses teise eIDAS Node-ga | [https://eidastest.eesti.ee/EidasNode/ConnectorMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) [https://eidas.eesti.ee/EidasNode/ConnectorMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) | "The URL at which the metadata of eIDAS-Node Connector will be made available. Will be used as Issuer in the requests that eIDAS-Node Connector sends." |
 | eIDAS konnektorteenus - suhtluses siseriikliku liidestatud süsteemiga | [https://eidastest.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidastest.eesti.ee/EidasNode/ConnectorMetadata) [https://eidas.eesti.ee/EidasNode/ConnectorResponderMetadata](https://eidas.eesti.ee/EidasNode/ConnectorMetadata) | "The URL at which the metadata of the eIDAS-Node Connector (presenting itself as an IdP) will be made available. Will be used as Issuer in the responses that eIDAS-Node Connector sends to SP." |
