@@ -2,6 +2,9 @@
 permalink: DemoSP-uurimine
 ---
 
+**Arhiveeritud** 
+{:.teade}
+
 # Demo SP uurimine
 
 Käesolev töödokument kirjeldab eIDAS Node demorakenduse Demo SP kasutamist. Dokument ei ole liidestujale otseselt vajalik.
