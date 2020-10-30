@@ -2,11 +2,10 @@
 permalink: Arendajale
 ---
 
-Arhiveeritud
-{:.teade}
-
 ## Teenuse arendajale
 
+Arhiveeritud 
+{:.teade}
 
 [eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
 
