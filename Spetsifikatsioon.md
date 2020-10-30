@@ -2,7 +2,8 @@
 permalink: Spetsifikatsioon
 ---
 
-
+**ARHIVEERITUD** 
+{:.teade}
 
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
