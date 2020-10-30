@@ -9,17 +9,9 @@ permalink: /
 Oluline: Seoses EL Euroopa ühendamise rahastu (CEF) poolt arendatava eIDAS Node tarkvara muutumisega on uusliidestused RIA eIDAS konnektorteenusega mittesoovitavad (_deprecated_). Piiriülese autentimise kasutuselevõtu soovitatavaks teeks on liidestuda <a href='https://e-gov.github.io/TARA-Doku/'>autentimisteenusega TARA</a>. 
 {:.teade}
 
-# RIA eIDAS konnektorteenus
+# Riiklik eIDAS-Node
 
-eIDAS konnektorteenus on pääsupunkt Euroopa Liidu piiriülesesse autentimistaristusse (nn eIDAS-taristusse).
-
-Konnektorteenus on mõeldud asutustele, kes soovivad piiriülese autentimistaristuga liituda SAML protokolli alusel.
-
-(OpenID Connect protokolli kasutajad pääsevad eIDAS-taristusse [TARA-teenuse](https://e-gov.github.io/TARA-Doku/) kaudu.)
-
-Mudeliks ja näiteks liidese ehitamisel võib kasutada [eIDAS-Client](https://github.com/e-gov/eIDAS-Client) tarkvara.
-
-eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
+Riiklik eIDAS-Node on pääsupunkt Euroopa Liidu piiriülesesse autentimistaristusse (nn eIDAS-taristusse), mida haldab Riigi Infosüsteemi Amet. Ligipääsu eIDAS-Node taristule pakume läbi [Riigi autentimisteenuse (TARA)](https://e-gov.github.io/TARA-Doku/).
 
 ## Ärikasutajale
 
@@ -29,10 +21,8 @@ eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
 
 ## Liidestuse arendajale
 
-[eIDAS konnektorteenuse spetsifikatsioon](Spetsifikatsioon)<br>
-
-[eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
-
+[eIDAS konnektorteenuse spetsifikatsioon](Spetsifikatsioon)
+[Riigi autentimisteenuse (TARA)](https://e-gov.github.io/TARA-Doku/)<br>
 [Viited](Viited)
 
 ## Konnektorteenuse arendajale
