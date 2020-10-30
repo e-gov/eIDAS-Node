@@ -10,11 +10,11 @@ permalink: /
 
 Riiklik eIDAS-Node on pääsupunkt Euroopa Liidu piiriülesesse autentimistaristusse (nn eIDAS-taristusse), mida haldab Riigi Infosüsteemi Amet. Ligipääsu eIDAS-Node taristule pakume läbi [Riigi autentimisteenuse (TARA)](https://e-gov.github.io/TARA-Doku/).
 
+
 ## Ärikasutajale
 
 [Ärikirjeldus](Arikirjeldus)<br>
 
-<p><a href='https://www.ria.ee/et/riigi-infosusteem/eid/partnerile.html#tara' class='nupp'>Liitumine</a></p>
 
 ## Liidese arendajale
 
