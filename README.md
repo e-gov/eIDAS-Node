@@ -1,10 +1,3 @@
-# RIA eIDAS konnektorteenus
+# Riiklik eIDAS-Node
 
-eIDAS konnektorteenus on pääsupunkt Euroopa Liidu piiriülesesse autentimistaristusse (nn eIDAS-taristusse).
-
-eIDAS konnektorteenust osutab Riigi Infosüsteemi Amet.
-
-Vt lähemalt [https://e-gov.github.io/eIDAS-Connector/](https://e-gov.github.io/eIDAS-Connector/)
-
-
-
+Riiklik eIDAS-Node on pääsupunkt Euroopa Liidu piiriülesesse autentimistaristusse (nn eIDAS-taristusse). Teenust osutab Riigi Infosüsteemi Amet.
