@@ -2,6 +2,9 @@
 permalink: MetadataSeletus
 ---
 
+**Arhiveeritud** 
+{:.teade}
+
 # eIDAS Node SAML metadata seletus
 {: .no_toc}
 
