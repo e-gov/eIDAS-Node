@@ -2,7 +2,7 @@
 permalink: DemoSP-uurimine
 ---
 
-**Arhiveeritud** 
+**ARHIVEERITUD** 
 {:.teade}
 
 # Demo SP uurimine
