@@ -2,6 +2,9 @@
 permalink: atribuudid
 ---
 
+**Arhiveeritud** 
+{:.teade}
+
 ## Atribuutide töötlusest
 
 Väljakirjutusi eIDAS spetsifikatsioonist, joonis ja mõned järeldused Node-i metateabe otspunktide ja atribuutide töötluse kohta.
