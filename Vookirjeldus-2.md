@@ -2,6 +2,9 @@
 permalink: Vookirjeldus-2
 ---
 
+**ARHIVEERITUD** 
+{:.teade}
+
 # eIDAS päringuvoog - Demo SP - HTTP POST
 {: .no_toc}
 
