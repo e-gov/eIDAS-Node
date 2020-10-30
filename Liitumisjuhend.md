@@ -2,6 +2,9 @@
 permalink: Liitumisjuhend
 ---
 
+**Arhiveeritud** 
+{:.teade}
+
 Märkus. Töödokument. Lahtised küsimused on markeeritud sümbolitega `//`. 
 {:.teade}
 
