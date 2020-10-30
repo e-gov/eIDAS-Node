@@ -2,6 +2,9 @@
 permalink: Testjuhud
 ---
 
+**ARHIVEERITUD** 
+{:.teade}
+
 # Testijuhtude loetelu eIDAS konnektorteenusega liidestumiseks (DRAFT)
 {: .no_toc}
 
