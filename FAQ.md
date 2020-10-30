@@ -2,6 +2,9 @@
 permalink: FAQ
 ---
 
+**Arhiveeritud** 
+{:.teade}
+
 ## Sagedasi küsimusi
 
 **Küsimus: Mida tähendavad `NameIDFormat` väärtused `persistent`, `transient` ja `unspecified`? Miks neid nõutakse?**
