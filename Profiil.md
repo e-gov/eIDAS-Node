@@ -2,7 +2,7 @@
 permalink: Profiil
 ---
 
-KEHTETU. Dokument on viidud [spetsifikatsiooni](Spetsifikatsioon) koosseisu. 
+**ARHIVEERITUD** 
 {:.teade}
 
 # eIDAS siseriiklikud usaldus- ja krüptonõuded
