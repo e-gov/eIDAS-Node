@@ -17,7 +17,6 @@ v 0.13
 Spetsifikatsioon:
 - annab tehnilise ülevaate autentimisprotsessist
 - määratleb liidestatavatele süsteemidele esitatavaid nõuded
-- ja annab soovitusi liidese ehitamiseks.
 
 ## 2 Tehnilised parameetrid
 
