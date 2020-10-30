@@ -2,6 +2,8 @@
 permalink: Spetsifikatsioon
 ---
 
+
+
 # RIA eIDAS konnektorteenuse spetsifikatsioon
 {: .no_toc}
 v 0.13
@@ -10,8 +12,6 @@ v 0.13
 {:toc}
 
 ## 1 Ülevaade
-
-Käesolev spetsifikatsioon on suunatud riigiasutusele, edaspidi *teenusepakkuja*, kes soovib oma e-teenuse välismaalastest kasutajaid autentida eIDAS konnektorteenuse abil.
 
 Spetsifikatsioon:
 - annab tehnilise ülevaate autentimisprotsessist
