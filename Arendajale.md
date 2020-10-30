@@ -2,7 +2,7 @@
 permalink: Arendajale
 ---
 
-**Arhiveeritud** 
+**ARHIVEERITUD** 
 {:.teade}
 
 ## Teenuse arendajale
