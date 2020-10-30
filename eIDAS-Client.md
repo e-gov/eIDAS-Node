@@ -2,6 +2,9 @@
 permalink: eIDAS-Client
 ---
 
+**ARHIVEERITUD** 
+{:.teade}
+
 # eIDAS Client
 
 - out-of-the-box solution to eIDAS integration problem
