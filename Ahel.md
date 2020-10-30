@@ -2,7 +2,7 @@
 permalink: Ahel
 ---
 
-**Arhiveeritud** 
+**ARHIVEERITUD** 
 {:.teade}
 
 # eIDAS-autentimise end-to-end turvaanalüüs
