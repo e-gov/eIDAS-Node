@@ -2,8 +2,9 @@
 permalink: Liitumisjuhend
 ---
 
-**Arhiveeritud** 
+**ARHIVEERITUD** 
 {:.teade}
+
 
 
 # RIA eIDAS konnektorteenus. Liitumisjuhend
