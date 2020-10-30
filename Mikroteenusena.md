@@ -2,6 +2,9 @@
 permalink: Mikroteenusena
 ---
 
+**Arhiveeritud** 
+{:.teade}
+
 # eIDAS Client mikroteenus
 {: .no_toc}
 v 0.3, 28.02.2018
