@@ -3,12 +3,10 @@ permalink: Arendajale
 ---
 
 Arhiveeritud
-{: .adv}
+{:.teade}
 
 ## Teenuse arendajale
 
-Töödokumentatsioon, mille ajakohasus ega muutumatus ei ole tagatud.
-{:.teade}
 
 [eIDAS-Client](https://github.com/e-gov/eIDAS-Client)
 
