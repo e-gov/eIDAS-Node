@@ -17,20 +17,14 @@ _Riiklik eIDAS-Node_, edaspidi _eIDAS-Node_ on RIA poolt käitatav taristuteenus
 
 Tehniliselt teostab teenust RIA taristusse paigaldatud _eIDAS-Node servertarkvara_, mis on liidestatud ühelt poolt Riigi autentimisteenusega (TARA) ja teiselt poolt EL piiriülese eIDAS-taristuga.
 
-## 2 Mõisted
-
-_Riiklik eIDAS-Node_ - RIA poolt käitatav taristuteenus, mis võimaldab autentida EL teise liikmesriigi eID kasutaja.<br>
-_e-teenus_ - asutuse poolt kasutajale (kes võib olla nii Eesti kui ka EL teise liikmesriigi eID kasutaja) osutatav e-teenus (ja seda teostav infosüsteem); liidestatakse RIA eIDAS konnektorteenusega.<br>
-_asutus_ - eIDAS konnektorteenust kasutava e-teenuse omanikasutus.<br>
-_teenusepakkuja_ - sama, mis _asutus_ - kasutajale teenust pakkuv asutus (_Service Provider_ eIDAS terminoloogias)
 
 ## 3 Teenusega liitumine
 
-Teenuse kasutuselevõtmiseks esitab asutus RIA-le taotluse Riigi autentimisteenusega liitumiseks. Täpsemalt 
+Teenuse kasutuselevõtmiseks esitab asutus RIA-le taotluse Riigi autentimisteenusega liitumiseks. Riigi autentimisteenus on mõeldud liitumiseks valitsussektori asutustele, kes soovivad oma e-teenustes pakkuda erinevad autentimismeetodid, sh ID-kaart, mobiil-ID, Smart-ID ja Euroopa Liidu eID, neid autentimismeetodeid omavahel kombineerides või kasutades eraldi.
 
-## 4 Liidestamistööd
+Liitumiseks peate esitama taotluse. Vastavad vormid leiate Riigi Infosüsteemi Ameti veebilehelt.
 
-Liidestamiseks tuleb teostada järgmised tööd:
+Küsimuste korral ja abi saamiseks pöörduge palun kasutajatoe poole: help@ria.ee.
 
 
 ## Muutelugu
