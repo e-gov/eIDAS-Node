@@ -1,7 +1,7 @@
 # 
-repo: "https://github.com/e-gov/eIDAS-Connector"
-baseurl: "https://e-gov.github.io/eIDAS-Connector"
-viimatiMuudetud: '13.02.2018'
+repo: "https://github.com/e-gov/eIDAS-Node"
+baseurl: "https://e-gov.github.io/eIDAS-Node"
+viimatiMuudetud: '30.10.2020'
 
 defaults:
   -
