@@ -2,6 +2,9 @@
 permalink: Vookirjeldus-1a
 ---
 
+**ARHIVEERITUD** 
+{:.teade}
+
 # Voo ülevaade - Demo SP - HTTP Redirect
 {: .no_toc}
 
