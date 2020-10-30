@@ -5,8 +5,6 @@ permalink: Liitumisjuhend
 **Arhiveeritud** 
 {:.teade}
 
-Märkus. Töödokument. Lahtised küsimused on markeeritud sümbolitega `//`. 
-{:.teade}
 
 # RIA eIDAS konnektorteenus. Liitumisjuhend
 {: .no_toc}
