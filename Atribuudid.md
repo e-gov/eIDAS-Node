@@ -2,7 +2,7 @@
 permalink: atribuudid
 ---
 
-**Arhiveeritud** 
+**ARHIVEERITUD** 
 {:.teade}
 
 ## Atribuutide töötlusest
