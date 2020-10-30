@@ -2,6 +2,9 @@
 permalink: Arendajale
 ---
 
+Arhiveeritud
+{: .adv}
+
 ## Teenuse arendajale
 
 Töödokumentatsioon, mille ajakohasus ega muutumatus ei ole tagatud.
