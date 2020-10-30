@@ -2,6 +2,9 @@
 permalink: POC
 ---
 
+**Arhiveeritud** 
+{:.teade}
+
 BEST PRACTICE
 
 # Kes on Javier Garcia?
