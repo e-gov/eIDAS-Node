@@ -2,8 +2,9 @@
 permalink: FAQ
 ---
 
-**Arhiveeritud** 
+**ARHIVEERITUD** 
 {:.teade}
+
 
 ## Sagedasi küsimusi
 
