@@ -2,6 +2,8 @@
 permalink: Vookirjeldus-1
 ---
 
+
+
 # eIDAS päringuvoog - Demo SP - HTTP Redirect
 {: .no_toc}
 
@@ -14,7 +16,6 @@ Käesolev dokument esitab samm-sammulise HTTP päringute liikumise eIDAS-autenti
 
 Kirjelduse eesmärk on:
 - luua arusaamine, mis sõnumid ja kuidas liiguvad
-- luua alus, mille põhjalt spetsifitseerida protokoll Eesti e-teenusepakkujate ja samuti TARA liidestamiseks RIA eIDAS konnektorteenusega.
 
 Siin ei kirjeldata:
 - laadilehtede ja skriptide laadimise päringuid
